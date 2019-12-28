@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/shared_toolbar_with_back_layout"
+        />
+
+    <!--Search-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csSearch"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <EditText
+            tools:ignore="AutoFill"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_search"
+            android:gravity="center"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="12sp"
+            android:hint="@string/search" />
+
+        <ImageView
+            android:contentDescription="@null"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/img_seach"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--Charts-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csCharts"
+        app:layout_constraintTop_toBottomOf="@+id/csSearch"
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+        <ImageView
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_charts"
+            android:paddingStart="15dp"
+            android:paddingEnd="0dp"
+            android:layout_width="35dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:layout_marginStart="55dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/black"
+            android:text="@string/charts"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        app:layout_constraintTop_toBottomOf="@+id/csCharts"
+        android:background="#eeeeee"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--TOP-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csTop"
+        app:layout_constraintTop_toBottomOf="@+id/csCharts"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:padding="15dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csGamerNo1"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.48"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_member">
+
+            <ImageView
+                android:id="@+id/agRocket"
+                android:layout_width="70dp"
+                android:contentDescription="@null"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_roc" />
+
+            <TextView
+                android:id="@+id/tvGamer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/gamer"
+                android:fontFamily="@font/roboto_regular"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="12sp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgAvtarNo1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvGamer"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/img_avatar_holder" />
+
+            <TextView
+                android:id="@+id/tvNo1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/roboto_regular"
+                app:layout_constraintTop_toBottomOf="@+id/tvGamer"
+                app:layout_constraintStart_toEndOf="@+id/imgAvtarNo1"
+                android:gravity="center_vertical"
+                android:text="@string/no_1"
+                android:textSize="12sp"
+                android:textColor="@color/colorWhite"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toEndOf="@id/imgAvtarNo1"
+                app:layout_constraintTop_toBottomOf="@+id/tvNo1"
+                android:text="@string/bqt_9gate"
+                android:textSize="12sp"
+                android:textColor="@color/colorWhite" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csNPH"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.48"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_nph">
+
+            <ImageView
+                android:contentDescription="@null"
+                android:id="@+id/imgEight"
+                android:layout_width="70dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_eight" />
+
+            <TextView
+                android:id="@+id/tvNPH"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="@string/NPH"
+                android:fontFamily="@font/roboto_regular"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="12sp" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgAvtarNPH"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvNPH"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/img_avatar_holder" />
+
+            <TextView
+                android:id="@+id/tvNo1NPH"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@+id/tvNPH"
+                app:layout_constraintStart_toEndOf="@+id/imgAvtarNPH"
+                android:gravity="center_vertical"
+                android:text="@string/no_1"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toEndOf="@id/imgAvtarNPH"
+                app:layout_constraintTop_toBottomOf="@+id/tvNo1NPH"
+                android:text="@string/vtv_game"
+                android:textSize="12sp"
+                android:textColor="@color/colorWhite" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:background="#eeeeee"
+        app:layout_constraintTop_toBottomOf="@+id/csTop"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+
+    <!--Tab bar-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csTab"
+        app:layout_constraintTop_toBottomOf="@+id/csTop"
+        android:layout_width="match_parent"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_height="46dp">
+
+        <!--Game-->
+        <LinearLayout
+            android:id="@+id/llGame"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            app:layout_constraintWidth_percent="0.43"
+            android:layout_height="45dp"
+            tools:ignore="UseCompoundDrawables">
+            <ImageView
+                android:contentDescription="@null"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/ic_gamer"
+                android:layout_width="13dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/tvGamerTab"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/gamer"
+                android:textSize="13sp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="15dp"
+                android:textColor="@color/colorGamer"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/vGamer"
+            app:layout_constraintTop_toBottomOf="@+id/llGame"
+            app:layout_constraintStart_toStartOf="@+id/llGame"
+            app:layout_constraintEnd_toEndOf="@+id/llGame"
+            android:background="@color/colorGamer"
+            android:layout_width="0dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_height="2dp"/>
+
+        <View
+            android:background="#eeeeee"
+            app:layout_constraintStart_toStartOf="@+id/llGame"
+            app:layout_constraintEnd_toEndOf="@+id/llNPH"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+
+        <!--NPH-->
+        <LinearLayout
+            android:id="@+id/llNPH"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintWidth_percent="0.43"
+            android:layout_height="45dp"
+            tools:ignore="UseCompoundDrawables">
+            <ImageView
+                android:contentDescription="@null"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/ic_leanpub"
+                android:layout_width="15dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/tvNPHTab"
+                android:text="@string/NPH"
+                android:fontFamily="@font/roboto_regular"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="15dp"
+                android:textColor="@color/colorNPH"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/vNPH"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/llNPH"
+            app:layout_constraintStart_toStartOf="@+id/llNPH"
+            app:layout_constraintEnd_toEndOf="@+id/llNPH"
+            android:background="@color/colorNPH"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="0dp"
+            android:layout_height="2dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        app:layout_constraintTop_toBottomOf="@+id/csTab"
+        android:background="#eeeeee"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--ViewPager-->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vpTop"
+        app:layout_constraintTop_toBottomOf="@+id/csTab"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+    </androidx.viewpager.widget.ViewPager>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

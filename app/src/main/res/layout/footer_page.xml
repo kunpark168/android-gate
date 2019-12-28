@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp50"
+    android:background="@android:color/transparent">
+
+    <TextView
+        android:layout_marginEnd="@dimen/dp_10"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/csPage"
+        android:layout_width="@dimen/dp90"
+        android:text="&lt; Trang trước"
+        android:gravity="center"
+        android:textSize="@dimen/sp11"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
+        android:alpha="0.7"
+        android:fontFamily="@font/roboto_regular"
+        android:background="@drawable/bg_pre_page"
+        android:layout_height="@dimen/dp30" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csPage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp30">
+
+
+        <TextView
+            android:id="@+id/tvPage1"
+            android:text="1"
+            android:textColor="@color/colorGray"
+            android:gravity="center"
+            android:textSize="@dimen/sp11"
+            app:layout_constraintEnd_toStartOf="@+id/tvPage2"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:fontFamily="@font/roboto_medium"
+            android:background="@drawable/bg_pre_page"
+            android:layout_width="@dimen/dp30"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tvPage2"
+            android:text="2"
+            android:textSize="@dimen/sp11"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fontFamily="@font/roboto_medium"
+            android:background="@drawable/bg_page_choosen"
+            android:layout_width="@dimen/dp30"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tvPage3"
+            android:text="3"
+            android:textSize="@dimen/sp11"
+            android:textColor="@color/colorGray"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/dp_10"
+            app:layout_constraintStart_toEndOf="@+id/tvPage2"
+            android:fontFamily="@font/roboto_medium"
+            android:background="@drawable/bg_pre_page"
+            android:layout_width="@dimen/dp30"
+            android:layout_height="match_parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_marginStart="@dimen/dp_10"
+        app:layout_constraintStart_toEndOf="@+id/csPage"
+        android:layout_width="@dimen/dp90"
+        android:text="Trang sau &gt;"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="@dimen/sp11"
+        android:textColor="@color/colorError"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingEnd="@dimen/dp_10"
+        android:alpha="0.7"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/bg_next_page"
+        android:layout_height="@dimen/dp30" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.anhtam.gate9.components.custom.BadgeTabItem
+            android:id="@+id/tabGame"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:badgeText="@string/game_tab"
+            app:badgeEnable="true"/>
+        <com.anhtam.gate9.components.custom.BadgeTabItem
+            android:id="@+id/tabMember"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:badgeText="@string/tab_member"/>
+        <com.anhtam.gate9.components.custom.BadgeTabItem
+            android:id="@+id/tabData"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:badgeText="@string/tab_data"/>
+    </LinearLayout>
+
+    <include
+        layout="@layout/share_divider_item_layout"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvGameResultSearch"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"/>
+
+
+
+</LinearLayout>

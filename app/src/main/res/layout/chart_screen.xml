@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="RtlSymmetry"
+    android:fillViewport="true"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true"
+    tools:context=".v2.charts.ChartScreen">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--Header-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csHeader"
+            android:fitsSystemWindows="true"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/colorHome"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp50">
+            <TextView
+                android:textSize="@dimen/sp_16"
+                android:gravity="center"
+                android:text="@string/charts"
+                android:fontFamily="@font/roboto_regular"
+                android:textAllCaps="true"
+                android:textColor="@color/colorWhite"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/csBack"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/dp20"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/imgBack"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@drawable/ic_back"
+                    android:layout_width="@dimen/dp7"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/tvBack"
+                    android:textSize="@dimen/sp_15"
+                    android:textAllCaps="true"
+                    android:layout_marginStart="@dimen/dp5"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/colorWhite"
+                    android:gravity="center"
+                    android:text="@string/back"
+                    app:layout_constraintStart_toEndOf="@+id/imgBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="@dimen/dp5"
+                android:layout_marginEnd="@dimen/dp65"
+                android:src="@drawable/ic_message"
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+            <ImageView
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="@dimen/dp7"
+                android:layout_marginEnd="@dimen/dp35"
+                android:src="@drawable/ic_search"
+                android:layout_width="@dimen/dp30"
+                android:layout_height="match_parent" />
+            <ImageView
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="5dp"
+                android:layout_marginEnd="@dimen/dp5"
+                android:src="@drawable/ic_more"
+                android:layout_width="@dimen/dp30"
+                android:layout_height="match_parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/llTab"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/csHeader"
+            android:layout_height="@dimen/tab_component_height"
+            android:orientation="horizontal">
+            <com.anhtam.gate9.v2.shared.NotificationTabItem
+                android:id="@+id/tabNotify"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                app:notifyText="@string/total"
+                app:notifyEnable="true"
+                app:notifyColorIndicator="@color/colorIndicatorNotification"/>
+            <com.anhtam.gate9.v2.shared.NotificationTabItem
+                android:id="@+id/tabSystem"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                app:notifyText="@string/mouth"
+                app:notifyColorIndicator="@color/colorIndicatorNotification"/>
+        </LinearLayout>
+        <View
+            android:id="@+id/vLineTab"
+            app:layout_constraintTop_toBottomOf="@+id/llTab"
+            android:background="@color/colorGray"
+            android:alpha="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+
+        <!--Personal-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csPersonal"
+            app:layout_constraintTop_toBottomOf="@+id/vLineTab"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp40">
+            <ImageView
+                android:id="@+id/imgCup"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/ic_cup"
+                android:layout_marginStart="@dimen/dp20"
+                android:layout_width="@dimen/dp20"
+                android:layout_height="match_parent" />
+            <TextView
+                android:gravity="center_vertical"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/sp_15"
+                android:paddingStart="@dimen/dp_10"
+                android:fontFamily="@font/roboto_regular"
+                android:text="@string/personal"
+                app:layout_constraintStart_toEndOf="@+id/imgCup"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                />
+            <View
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="@color/colorGray"
+                android:alpha="0.5"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csAdmin"
+            app:layout_constraintTop_toBottomOf="@+id/csPersonal"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgAvatar"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/img_avatar_holder"
+                android:layout_width="@dimen/dp40"
+                android:layout_height="@dimen/dp40">
+            </de.hdodenhof.circleimageview.CircleImageView>
+            <ImageView
+                app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+                app:layout_constraintEnd_toEndOf="@+id/imgAvatar"
+                android:src="@drawable/ic_cup"
+                android:padding="@dimen/dp3"
+                android:tint="@color/colorWhite"
+                android:background="@drawable/bg_circle_red"
+                android:layout_width="@dimen/dp15"
+                android:layout_height="@dimen/dp15" />
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+                app:layout_constraintTop_toTopOf="@+id/imgAvatar"
+                app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+                android:layout_width="wrap_content"
+                android:paddingStart="@dimen/dp15"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvUserName"
+                    android:text="Kun Park"
+                    android:textSize="@dimen/sp_15"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+                    app:layout_constraintTop_toTopOf="@+id/imgAvatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textSize="@dimen/sp11"
+                    android:text="ID : 83648"
+                    android:layout_marginTop="@dimen/dp3"
+                    android:fontFamily="@font/roboto_regular"
+                    android:id="@+id/tvTime"
+                    app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!--No.-->
+            <LinearLayout
+                android:id="@+id/llNo"
+                android:layout_marginEnd="@dimen/dp20"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@+id/llPoint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="73674"
+                    android:textSize="@dimen/sp_15"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorNoCharts"
+                    android:fontFamily="@font/roboto_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="@string/no_charts"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/dp3"
+                    android:fontFamily="@font/roboto_regular"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textSize="@dimen/sp11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!--Point-->
+            <LinearLayout
+                android:id="@+id/llPoint"
+                android:layout_marginEnd="@dimen/dp20"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="73674"
+                    android:textSize="@dimen/sp_15"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPointCharts"
+                    android:fontFamily="@font/roboto_bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:text="@string/point"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/dp3"
+                    android:fontFamily="@font/roboto_regular"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textSize="@dimen/sp11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <View
+                android:background="#eeeeee"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/imgAvatar"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--Time-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csTime"
+            android:paddingTop="@dimen/dp5"
+            app:layout_constraintTop_toBottomOf="@+id/csAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvTimeTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/black"
+                android:text="@string/times"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/sp_14"
+                android:paddingStart="@dimen/dp20"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <TextView
+                android:text="12h:37 30/09/2019"
+                android:paddingStart="@dimen/dp15"
+                android:textSize="@dimen/sp_12"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center_vertical"
+                app:layout_constraintStart_toEndOf="@+id/tvTimeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:layout_marginEnd="@dimen/dp20"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_information_charts"
+                android:layout_width="@dimen/dp15"
+                android:layout_height="@dimen/dp15" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--Top 1-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csTop1"
+            app:layout_constraintTop_toBottomOf="@+id/csTime"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgStstus"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/dp15"
+                android:src="@drawable/ic_rank_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgAvatarTop1"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10"
+                app:layout_constraintStart_toEndOf="@+id/imgStstus"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/img_avatar_holder"
+                android:layout_width="@dimen/dp50"
+                android:layout_height="@dimen/dp50">
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <ImageView
+                android:id="@+id/imgTop1"
+                app:layout_constraintTop_toTopOf="@+id/imgAvatarTop1"
+                app:layout_constraintStart_toStartOf="@+id/imgAvatarTop1"
+                app:layout_constraintEnd_toEndOf="@+id/imgAvatarTop1"
+                android:src="@drawable/img_top1"
+                android:layout_marginTop="@dimen/dp45"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@+id/imgAvatarTop1"
+                app:layout_constraintTop_toTopOf="@+id/imgAvatarTop1"
+                app:layout_constraintBottom_toBottomOf="@+id/imgAvatarTop1"
+                android:layout_width="wrap_content"
+                android:paddingStart="@dimen/dp15"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvUserNameTop1"
+                    android:text="Kun Park"
+                    android:textSize="@dimen/sp_15"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+                    app:layout_constraintTop_toTopOf="@+id/imgAvatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textSize="@dimen/sp11"
+                    android:text="83648"
+                    android:layout_marginTop="@dimen/dp3"
+                    android:fontFamily="@font/roboto_regular"
+                    app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textSize="@dimen/sp11"
+                    android:text="ID : 83648"
+                    android:layout_marginTop="@dimen/dp3"
+                    android:fontFamily="@font/roboto_regular"
+                    app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <View
+                android:background="@color/colorGray"
+                android:alpha="0.5"
+                android:layout_marginTop="@dimen/dp_10"
+                app:layout_constraintTop_toBottomOf="@+id/imgTop1"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
+
+            <ImageView
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="@dimen/dp50"
+                android:layout_marginTop="@dimen/dp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/img_cup_top1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/tvFollowGame"
+                android:textColor="@color/colorHome"
+                android:text="Following"
+                android:fontFamily="@font/roboto_light"
+                android:background="@drawable/bg_following"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="70dp"
+                android:layout_marginEnd="@dimen/dp20"
+                android:gravity="center"
+                android:textSize="@dimen/sp_12"
+                android:layout_height="@dimen/dp25" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--Top 2-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csTop2"
+            app:layout_constraintTop_toBottomOf="@+id/csTop1"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgStastusTop2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/dp15"
+                android:src="@drawable/ic_rank_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgAvatarTop2"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10"
+                app:layout_constraintStart_toEndOf="@+id/imgStastusTop2"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/img_avatar_holder"
+                android:layout_width="@dimen/dp50"
+                android:layout_height="@dimen/dp50">
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <ImageView
+                android:id="@+id/imgTop2"
+                app:layout_constraintTop_toTopOf="@+id/imgAvatarTop2"
+                app:layout_constraintStart_toStartOf="@+id/imgAvatarTop2"
+                app:layout_constraintEnd_toEndOf="@+id/imgAvatarTop2"
+                android:src="@drawable/img_top2"
+                android:layout_marginTop="@dimen/dp45"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@+id/imgAvatarTop2"
+                app:layout_constraintTop_toTopOf="@+id/imgAvatarTop2"
+                app:layout_constraintBottom_toBottomOf="@+id/imgAvatarTop2"
+                android:layout_width="wrap_content"
+                android:paddingStart="@dimen/dp15"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvUserNameTop2"
+                    android:text="Kun Park"
+                    android:textSize="@dimen/sp_15"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toEndOf="@+id/imgAvatarTop2"
+                    app:layout_constraintTop_toTopOf="@+id/imgAvatarTop2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textSize="@dimen/sp11"
+                    android:text="83648"
+                    android:layout_marginTop="@dimen/dp3"
+                    android:fontFamily="@font/roboto_regular"
+                    app:layout_constraintStart_toEndOf="@+id/imgAvatarTop2"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgAvatarTop2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textSize="@dimen/sp11"
+                    android:text="ID : 83648"
+                    android:layout_marginTop="@dimen/dp3"
+                    android:fontFamily="@font/roboto_regular"
+                    app:layout_constraintStart_toEndOf="@+id/imgAvatarTop2"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgAvatarTop2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <View
+                android:background="@color/colorGray"
+                android:alpha="0.5"
+                android:layout_marginTop="@dimen/dp_10"
+                app:layout_constraintTop_toBottomOf="@+id/imgTop2"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
+
+
+            <TextView
+                android:id="@+id/tvFollowGameTop2"
+                android:textColor="@color/colorError"
+                android:text="+ Follow"
+                android:fontFamily="@font/roboto_light"
+                android:background="@drawable/bg_follow"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="@dimen/dp70"
+                android:layout_marginEnd="@dimen/dp20"
+                android:gravity="center"
+                android:textSize="@dimen/sp_12"
+                android:layout_height="@dimen/dp25" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--Top 3-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csTop3"
+            app:layout_constraintTop_toBottomOf="@+id/csTop2"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgStastusTop3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/dp15"
+                android:src="@drawable/ic_rank_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgAvatarTop3"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10"
+                app:layout_constraintStart_toEndOf="@+id/imgStastusTop3"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/img_avatar_holder"
+                android:layout_width="@dimen/dp50"
+                android:layout_height="@dimen/dp50">
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <ImageView
+                android:id="@+id/imgTop3"
+                app:layout_constraintTop_toTopOf="@+id/imgAvatarTop3"
+                app:layout_constraintStart_toStartOf="@+id/imgAvatarTop3"
+                app:layout_constraintEnd_toEndOf="@+id/imgAvatarTop3"
+                android:src="@drawable/img_top3"
+                android:layout_marginTop="@dimen/dp45"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                app:layout_constraintStart_toEndOf="@+id/imgAvatarTop3"
+                app:layout_constraintTop_toTopOf="@+id/imgAvatarTop3"
+                app:layout_constraintBottom_toBottomOf="@+id/imgAvatarTop3"
+                android:layout_width="wrap_content"
+                android:paddingStart="@dimen/dp15"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tvUserNameTop3"
+                    android:text="Kun Park"
+                    android:textSize="@dimen/sp_15"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/black"
+                    app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+                    app:layout_constraintTop_toTopOf="@+id/imgAvatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:textSize="@dimen/sp11"
+                    android:text="83648"
+                    android:layout_marginTop="@dimen/dp3"
+                    android:fontFamily="@font/roboto_regular"
+                    app:layout_constraintStart_toEndOf="@+id/imgAvatarTop3"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgAvatarTop3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:textSize="@dimen/sp11"
+                    android:text="ID : 83648"
+                    android:layout_marginTop="@dimen/dp3"
+                    android:fontFamily="@font/roboto_regular"
+                    app:layout_constraintStart_toEndOf="@+id/imgAvatarTop3"
+                    app:layout_constraintBottom_toBottomOf="@+id/imgAvatarTop3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+            <View
+                android:background="@color/colorGray"
+                android:alpha="0.5"
+                android:layout_marginTop="@dimen/dp_10"
+                app:layout_constraintTop_toBottomOf="@+id/imgTop3"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
+
+
+            <TextView
+                android:id="@+id/tvFollowGameTop3"
+                android:textColor="@color/colorHome"
+                android:text="Following"
+                android:fontFamily="@font/roboto_light"
+                android:background="@drawable/bg_following"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="@dimen/dp70"
+                android:layout_marginEnd="@dimen/dp20"
+                android:gravity="center"
+                android:textSize="@dimen/sp_12"
+                android:layout_height="@dimen/dp25" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCharts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/csTop3"
+            tools:listitem="@layout/item_charts_user">
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.core.widget.NestedScrollView>

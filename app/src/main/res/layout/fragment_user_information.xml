@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_constraintTop_toTopOf="parent"
+                android:id="@+id/csUserInformation"
+                android:layout_width="match_parent"
+                android:layout_height="36dp">
+                <View
+                    android:layout_marginLeft="15dp"
+                    android:background="@color/colorHome"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:textColor="@color/colorText"
+                    android:text="@string/user_information"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textAllCaps="true"
+                    android:layout_marginLeft="35dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp" />
+                <View
+                    android:alpha="0.5"
+                    android:background="@color/colorGray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--ID Gate-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csID"
+                app:layout_constraintTop_toBottomOf="@+id/csUserInformation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Short Name-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csShortName"
+                app:layout_constraintTop_toBottomOf="@+id/csID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Display Name-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csDisplayName"
+                app:layout_constraintTop_toBottomOf="@+id/csShortName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Danh hieu-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csDanhHieu"
+                app:layout_constraintTop_toBottomOf="@+id/csDisplayName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Total point-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csTotalPoint"
+                app:layout_constraintTop_toBottomOf="@+id/csDanhHieu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Rate-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csRate"
+                app:layout_constraintTop_toBottomOf="@+id/csTotalPoint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Ranking-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csRanking"
+                app:layout_constraintTop_toBottomOf="@+id/csRate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Gender-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csGender"
+                app:layout_constraintTop_toBottomOf="@+id/csRanking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Day of birth-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csBirthDay"
+                app:layout_constraintTop_toBottomOf="@+id/csGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Address-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csAddress"
+                app:layout_constraintTop_toBottomOf="@+id/csBirthDay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Status-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csStatus"
+                app:layout_constraintTop_toBottomOf="@+id/csAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Create Date-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csCreateDate"
+                app:layout_constraintTop_toBottomOf="@+id/csStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Instruction-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/csInstruction"
+                app:layout_constraintTop_toBottomOf="@+id/csCreateDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:text="Giới Thiệu"
+                    android:textSize="13sp"
+                    android:paddingLeft="15dp"
+                    android:gravity="center_vertical"
+                    app:layout_constraintWidth_percent="0.4"
+                    android:layout_width="0dp"
+                    android:layout_height="32dp" />
+                <TextView
+                    android:id="@+id/tvContentInstruction"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:minHeight="32dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:gravity="center_vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintWidth_percent="0.6"
+                    android:layout_width="0dp"
+                    android:textSize="13sp"
+                    android:layout_height="wrap_content" />
+                <View
+                    android:alpha="0.5"
+                    android:background="@color/colorGray"
+                    app:layout_constraintTop_toBottomOf="@+id/tvContentInstruction"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/vBottom1"
+                app:layout_constraintTop_toBottomOf="@+id/csInstruction"
+                android:background="#eeeeee"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_constraintTop_toBottomOf="@+id/vBottom1"
+                android:id="@+id/csContact"
+                android:layout_width="match_parent"
+                android:layout_height="36dp">
+                <View
+                    android:layout_marginLeft="15dp"
+                    android:background="@color/colorHome"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:textColor="@color/colorText"
+                    android:text="@string/contact_information"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textAllCaps="true"
+                    android:layout_marginLeft="35dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp" />
+                <View
+                    android:alpha="0.5"
+                    android:background="@color/colorGray"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!--Home-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csHome"
+                app:layout_constraintTop_toBottomOf="@+id/csContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Facebook-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csFacebook"
+                app:layout_constraintTop_toBottomOf="@+id/csHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Email-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csEmail"
+                app:layout_constraintTop_toBottomOf="@+id/csFacebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Phone-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csPhone"
+                app:layout_constraintTop_toBottomOf="@+id/csEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Skype-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csSkype"
+                app:layout_constraintTop_toBottomOf="@+id/csPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+
+            <!--Skype-->
+            <com.anhtam.gate9.share.view.GateLine
+                android:id="@+id/csQQ"
+                app:layout_constraintTop_toBottomOf="@+id/csSkype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </com.anhtam.gate9.share.view.GateLine>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

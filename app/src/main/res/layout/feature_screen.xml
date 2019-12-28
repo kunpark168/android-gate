@@ -1,0 +1,260 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--Header-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csHeader"
+        android:fitsSystemWindows="true"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorHome"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_marginStart="@dimen/dp20"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="7dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tvBackCategory"
+            android:textSize="15sp"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_medium"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"
+            android:text="@string/back"
+            android:layout_marginStart="@dimen/dp33"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tvTtileTab"
+            android:textSize="16sp"
+            android:gravity="center"
+            tools:text="@string/game_title"
+            android:fontFamily="@font/roboto_regular"
+            android:textAllCaps="true"
+            android:textColor="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            app:layout_constraintEnd_toStartOf="@+id/imgAvatar"
+            android:layout_marginEnd="@dimen/dp_10"
+            android:src="@drawable/ic_message"
+            android:layout_width="@dimen/dp25"
+            android:layout_height="match_parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAvatar"
+            app:layout_constraintEnd_toStartOf="@+id/imgMore"
+            android:src="@drawable/img_avatar_holder"
+            android:layout_width="@dimen/dp25"
+            android:layout_marginEnd="@dimen/dp5"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/imgMore"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="5dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_more"
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--Tab-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csTab2"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@color/colorWhite"
+        app:layout_constraintTop_toBottomOf="@+id/csHeader">
+
+        <!--Video-->
+        <LinearLayout
+            android:id="@+id/llVideo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.25">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_video2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp5"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/video"
+                android:textColor="@color/colorVideo"
+                android:textSize="@dimen/text_size_12sp" />
+        </LinearLayout>
+
+        <!--Rating-->
+        <LinearLayout
+            android:id="@+id/llTheme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toEndOf="@+id/llVideo"
+            app:layout_constraintWidth_percent="0.25">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_themes_2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp5"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/theme"
+                android:textColor="@color/colorFavorite"
+                android:textSize="@dimen/text_size_12sp" />
+        </LinearLayout>
+
+        <!--Downloaded-->
+        <LinearLayout
+            android:id="@+id/llSpecial"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toEndOf="@+id/llTheme"
+            app:layout_constraintWidth_percent="0.25">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:tint="@color/colorError"
+                android:src="@drawable/ic_fire_2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp5"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/special"
+                android:textColor="@color/colorError"
+                android:textSize="@dimen/text_size_12sp" />
+        </LinearLayout>
+
+        <!--Following-->
+        <LinearLayout
+            android:id="@+id/llEvent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toEndOf="@+id/llSpecial"
+            app:layout_constraintWidth_percent="0.25">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/dp_10"
+                android:layout_height="@dimen/dp_10"
+                android:src="@drawable/ic_event_2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp5"
+                android:fontFamily="@font/roboto_medium"
+                android:text="@string/event"
+                android:textColor="@color/tab_pink"
+                android:textSize="@dimen/text_size_12sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:alpha="0.5"
+            android:background="@color/colorGray"
+            app:layout_constraintEnd_toStartOf="@+id/llVideo"
+            app:layout_constraintStart_toEndOf="@+id/llTheme" />
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:alpha="0.5"
+            android:background="@color/colorGray"
+            app:layout_constraintEnd_toStartOf="@+id/llSpecial"
+            app:layout_constraintStart_toEndOf="@+id/llTheme" />
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:alpha="0.5"
+            android:background="@color/colorGray"
+            app:layout_constraintEnd_toStartOf="@+id/llEvent"
+            app:layout_constraintStart_toEndOf="@+id/llSpecial" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--Line Tab-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csTabLine"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        app:layout_constraintTop_toBottomOf="@+id/csTab2">
+
+        <View
+            android:id="@+id/vLineVideo"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorVideo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.25" />
+
+        <View
+            android:id="@+id/vLineTheme"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorTheme"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@+id/vLineVideo"
+            app:layout_constraintWidth_percent="0.25" />
+
+        <View
+            android:id="@+id/vLineSpecial"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorError"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@+id/vLineTheme"
+            app:layout_constraintWidth_percent="0.25" />
+
+        <View
+            android:id="@+id/vLineEvent"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/tab_pink"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@+id/vLineSpecial"
+            app:layout_constraintWidth_percent="0.25" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--ViewPager-->
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vpCategory"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/csTabLine"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+    </androidx.viewpager.widget.ViewPager>
+</androidx.constraintlayout.widget.ConstraintLayout>

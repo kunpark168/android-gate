@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/colorBlurDialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csContent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/dp40"
+        android:layout_marginEnd="@dimen/dp40"
+        android:background="@drawable/bg_dialog"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvTitle"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/dp15"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/black"
+            android:text="@string/you_want_donate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvTotalPoint"
+            android:gravity="center"
+            android:textSize="@dimen/sp11"
+            android:fontFamily="@font/roboto_regular"
+            android:text="(Số Point đang có: 3000)"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:id="@+id/llPonit1"
+            android:layout_marginTop="@dimen/dp15"
+            app:layout_constraintTop_toBottomOf="@+id/tvTotalPoint"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:paddingStart="@dimen/dp40"
+            android:paddingEnd="@dimen/dp40"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv1P"
+                android:textSize="@dimen/sp_12"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:text="@string/one_point"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:background="@drawable/bg_donate_chosen"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp30" />
+            <TextView
+                android:id="@+id/tv5P"
+                android:textSize="@dimen/sp_12"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:textColor="@color/colorHome"
+                android:text="@string/five_point"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:background="@drawable/bg_donate"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp30" />
+
+            <TextView
+                android:id="@+id/tv10P"
+                android:textSize="@dimen/sp_12"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:textColor="@color/colorHome"
+                android:text="@string/ten_point"
+                android:layout_weight="1"
+                android:background="@drawable/bg_donate"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp30" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llPonit2"
+            android:layout_marginTop="@dimen/dp_10"
+            app:layout_constraintTop_toBottomOf="@+id/llPonit1"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:paddingStart="@dimen/dp40"
+            android:paddingEnd="@dimen/dp40"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv50P"
+                android:textSize="@dimen/sp_12"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:textColor="@color/colorHome"
+                android:text="@string/fifty_point"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:background="@drawable/bg_donate"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp30" />
+            <TextView
+                android:id="@+id/tv100P"
+                android:textSize="@dimen/sp_12"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:textColor="@color/colorHome"
+                android:text="@string/one_hunbered_point"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/dp_10"
+                android:background="@drawable/bg_donate"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp30" />
+
+            <TextView
+                android:id="@+id/tv520P"
+                android:textSize="@dimen/sp_12"
+                android:fontFamily="@font/roboto_regular"
+                android:gravity="center"
+                android:textColor="@color/colorHome"
+                android:text="@string/five_hundered_twenty_point"
+                android:layout_weight="1"
+                android:background="@drawable/bg_donate"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp30" />
+        </LinearLayout>
+        
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csInputPoint"
+            android:layout_width="match_parent"
+            android:background="@drawable/bg_edittext"
+            android:layout_marginTop="@dimen/dp15"
+            android:layout_marginEnd="@dimen/dp40"
+            android:layout_marginStart="@dimen/dp40"
+            app:layout_constraintTop_toBottomOf="@+id/llPonit2"
+            android:layout_height="@dimen/dp30">
+            <TextView
+                android:id="@+id/tvInputTitle"
+                android:gravity="center_vertical|end"
+                android:textSize="@dimen/sp11"
+                android:layout_marginStart="@dimen/dp40"
+                android:text="@string/input_point_donate"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/black"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <EditText
+                android:id="@+id/etDonate"
+                android:textSize="@dimen/sp11"
+                android:hint="Từ 1 - 3000"
+                android:textColor="@color/colorHome"
+                android:background="@android:color/transparent"
+                android:paddingStart="@dimen/dp_10"
+                android:gravity="center_vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvInputTitle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toBottomOf="@+id/csInputPoint"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/dp15"
+            android:layout_height="@dimen/dp40">
+            <TextView
+                android:id="@+id/tvCancel"
+                android:text="@string/cancel"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp_13"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                app:layout_constraintWidth_percent="0.5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:text="@string/confirm"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp_13"
+                android:gravity="center"
+                android:background="@drawable/bg_cancel_button_confirm"
+                android:fontFamily="@font/roboto_regular"
+                app:layout_constraintWidth_percent="0.5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

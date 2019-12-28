@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgFire"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/ic_fire_2"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="15dp"
+        android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/tvCountFire"
+        android:text="@string/zero_number"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintStart_toEndOf="@+id/imgFire"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+    <!--Love-->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgCountLove"
+        app:layout_constraintEnd_toStartOf="@+id/tvCountLove"
+        android:src="@drawable/ic_heart"
+        android:layout_width="15dp"
+        android:layout_marginStart="5dp"
+        android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/tvCountLove"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/imgCountLike"
+        android:gravity="center"
+        android:text="@string/zero_number"
+        android:layout_marginStart="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+    <!--Like-->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgCountLike"
+        android:tint="@color/colorGray"
+        app:layout_constraintEnd_toStartOf="@+id/tvCountLike"
+        android:src="@drawable/ic_like"
+        android:layout_marginStart="5dp"
+        android:layout_width="15dp"
+        android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/tvCountLike"
+        android:text="8"
+        android:textSize="12sp"
+        android:layout_marginRight="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/imgCountDisLike"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+    <!--Dislike-->
+    <ImageView
+        android:id="@+id/imgCountDisLike"
+        android:tint="@color/colorGray"
+        android:layout_marginRight="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/tvCountDisLike"
+        android:src="@drawable/ic_unlinke"
+        android:layout_width="15dp"
+        android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/tvCountDisLike"
+        android:text="0"
+        android:textSize="12sp"
+        android:layout_marginRight="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/imgCmt"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+    <!--postEntity-->
+    <ImageView
+        android:id="@+id/imgCmt"
+        android:tint="@color/colorGray"
+        app:layout_constraintEnd_toStartOf="@+id/tvCountCmt"
+        android:src="@drawable/ic_chat"
+        android:layout_width="16dp"
+        android:layout_marginRight="5dp"
+        android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/tvCountCmt"
+        android:text="10"
+        android:layout_marginRight="20dp"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csReact"
+        app:layout_goneMarginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/csGame"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

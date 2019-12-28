@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintTop_toBottomOf="@id/bigDivider2">
+
+    <com.anhtam.gate9.v2.shared.TagIndicatorComponent
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tag_text="@string/doi_thuong"
+        android:layout_margin="@dimen/layout_margin_8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/InfoSection2">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/tong_point"
+            android:textColor="@color/text_color_dark"
+            android:layout_weight="3"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:drawableStart="@drawable/ic_total_point_green"
+            android:drawablePadding="@dimen/padding_8dp"
+            android:drawableEnd="@drawable/ic_next_more"
+            android:gravity="center|start" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/InfoSection2">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cua_hang"
+            android:textColor="@color/text_color_dark"
+            android:layout_weight="3"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:drawableStart="@drawable/ic_store_green"
+            android:drawablePadding="@dimen/padding_8dp"
+            android:drawableEnd="@drawable/ic_next_more"
+            android:gravity="center|start" />
+    </LinearLayout>
+</LinearLayout>

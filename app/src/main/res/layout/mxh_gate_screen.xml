@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:background="@color/color_main_orange"
+        app:title=""
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:id="@+id/backFrameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <ImageView
+                android:id="@+id/imgBack"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/ic_back"
+                android:layout_width="7dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/tvBack"
+                android:textSize="15sp"
+                android:textAllCaps="true"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="@color/colorWhite"
+                android:gravity="center"
+                android:text="@string/back"
+                android:layout_marginStart="33dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        <com.anhtam.gate9.v2.shared.CustomTabItem
+            android:id="@+id/tabAll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:icon="@drawable/ic_post_red"
+            app:text="@string/tin_game"
+            app:colorIndicator="@color/tab_orange"
+            app:enable="true"/>
+        <com.anhtam.gate9.v2.shared.CustomTabItem
+            android:id="@+id/tabLove"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:icon="@drawable/ic_cam_nang_yellow"
+            app:text="@string/cam_nang"
+            app:colorIndicator="@color/tab_orange_light"/>
+        <com.anhtam.gate9.v2.shared.CustomTabItem
+            android:id="@+id/tabDownload"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:icon="@drawable/ic_video2"
+            app:text="@string/video"
+            android:layout_weight="1"
+            app:colorIndicator="@color/tab_green_light"/>
+        <com.anhtam.gate9.v2.shared.CustomTabItem
+            android:id="@+id/tabFollowing"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_pick_image"
+            app:text="@string/anh"
+            android:layout_weight="1"
+            app:colorIndicator="@color/tab_blue"/>
+    </LinearLayout>
+    <include
+        layout="@layout/share_divider_item_layout"/>
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vpGate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

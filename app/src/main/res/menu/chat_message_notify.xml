@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/icChat"
+        android:title="@string/chat"
+        android:icon="@drawable/ic_message"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/icSearch"
+        android:title="@string/search_menu"
+        android:icon="@drawable/ic_message_white"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/icNotification"
+        android:title="@string/chat"
+        android:icon="@drawable/wrap_ic_notification"
+        app:showAsAction="always"/>
+</menu>

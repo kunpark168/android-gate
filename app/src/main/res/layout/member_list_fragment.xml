@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include
+        layout="@layout/shared_toolbar_with_back_layout"/>
+
+    <include
+        layout="@layout/shared_search_layout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/layout_margin_8dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/alphabetRecyclerView"
+            android:layout_width="46dp"
+            android:layout_height="match_parent"
+            android:background="#f2f2f2"
+            android:paddingEnd="0.5dp"
+            android:paddingStart="0.5dp"
+            tools:listItem="@layout/alphabet_item_layout"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAllMembers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff" />
+
+    </LinearLayout>
+</LinearLayout>

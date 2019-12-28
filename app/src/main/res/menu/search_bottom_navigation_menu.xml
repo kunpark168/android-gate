@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/homeNav"
+        android:title="@string/home"
+        android:icon="@drawable/ic_home_nav"/>
+    <item android:id="@+id/dataNav"
+        android:title="@string/data"
+        android:icon="@drawable/ic_data_nav"/>
+    <item android:id="@+id/gameNav"
+        android:title="@string/game_tab"
+        android:icon="@drawable/ic_tab_game"/>
+    <item android:id="@+id/personNav"
+        android:title="@string/person"
+        android:icon="@drawable/ic_person_nav"/>
+    <item android:id="@+id/socialNav"
+        android:title="@string/social"
+        android:icon="@drawable/ic_chat_gray"/>
+</menu>

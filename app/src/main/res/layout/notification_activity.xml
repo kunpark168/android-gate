@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tab_component_height"
+        android:orientation="horizontal">
+        <com.anhtam.gate9.v2.shared.NotificationTabItem
+            android:id="@+id/tabNotify"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:notifyText="@string/all"
+            app:notifyEnable="true"
+            app:notifyColorIndicator="@color/colorIndicatorNotification"/>
+        <com.anhtam.gate9.v2.shared.NotificationTabItem
+            android:id="@+id/tabSystem"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:notifyText="@string/system"
+            app:notifyColorIndicator="@color/colorIndicatorNotification"/>
+    </LinearLayout>
+
+    <include
+        layout="@layout/share_divider_item_layout"/>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vpNotification"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

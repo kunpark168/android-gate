@@ -1,0 +1,49 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+android {
+    compileSdkVersion AppSdk.compile
+    buildToolsVersion "29.0.2"
+
+
+    defaultConfig {
+        minSdkVersion AppSdk.min
+        targetSdkVersion AppSdk.target
+        versionCode AppSdk.versionCode
+        versionName AppSdk.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // kotlin
+    implementation Libs.kotlin
+    implementation Libs.appCompat
+    implementation Libs.androidxCore
+    // test
+    testImplementation TestLibs.jUnit
+    androidTestImplementation TestLibs.testRunner
+    androidTestImplementation TestLibs.testEspresso
+
+    implementation Libs.timber
+    implementation Libs.recyclerView
+    implementation project(':domain')
+
+
+
+    // coroutines
+    def coroutines_version = "1.2.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+}

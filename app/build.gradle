@@ -1,0 +1,98 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "com.anhtam.gate9"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            crunchPngs false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // network
+    implementation Libs.retrofit
+    implementation Libs.retrofitGsonConverter
+    implementation Libs.retrofitMoshiConverter
+    implementation Libs.moshi
+    implementation Libs.okhttp3
+    implementation Libs.okhttp3Interceptor
+    // hawk
+    implementation Libs.hawk
+    // dagger
+    implementation Libs.dagger
+    implementation Libs.daggerAndroid
+    implementation Libs.daggerSupport
+    implementation 'io.supercharge:shimmerlayout:2.1.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    kapt Annotations.dagger
+    kapt Annotations.daggerAndroid
+    // multi dex
+    implementation Libs.multidex
+    // jet pack
+    implementation Libs.androidxCore
+    implementation "com.google.android.material:material:1.0.0"
+    // Livedata ViewModel ReactiveStreams
+    implementation Libs.lifecycleExtensions
+    implementation Libs.navFragment
+    implementation Libs.navUI
+    implementation Libs.navRuntime
+    // ui
+    implementation Libs.recyclerView
+    implementation Libs.baseRecyclerView
+    implementation Libs.constraintLayout
+    implementation Libs.appCompat
+    implementation Libs.circleImage
+    implementation Libs.glide
+    annotationProcessor Annotations.glide
+
+    implementation 'com.jakewharton.rxbinding:rxbinding:0.3.0'
+    implementation 'com.squareup.phrase:phrase:1.1.0'
+
+    //UI
+    implementation 'me.relex:circleindicator:2.1.4'
+
+    implementation 'com.beloo.widget:ChipsLayoutManager:0.3.7@aar'
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    // kotlin
+    implementation Libs.kotlin
+    // App
+    implementation Libs.timber
+    // module
+    implementation project(':network')
+    implementation project(':reactLibs')
+    implementation project(':domain')
+
+    testImplementation TestLibs.jUnit
+    androidTestImplementation TestLibs.testRunner
+    androidTestImplementation TestLibs.testEspresso
+}

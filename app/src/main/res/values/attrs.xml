@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RatingGame">
+        <attr name="rating" format="string"/>
+        <attr name="titleGame" format="string"/>
+        <attr name="countingUser" format="string"/>
+        <attr name="follow" format="string"/>
+        <attr name="post" format="string"/>
+        <attr name="isShowInfor" format="boolean"/>
+    </declare-styleable>
+    <declare-styleable name="CustomTabItem">
+        <attr name="icon" format="reference"/>
+        <attr name="backgroundIcon" format="reference"/>
+        <attr name="text" format="string"/>
+        <attr name="colorIndicator" format="color"/>
+        <attr name="enable" format="boolean"/>
+        <attr name="colorTint" format="color"/>
+        <attr name="margin" format="dimension"/>
+    </declare-styleable>
+    <declare-styleable name="NotificationTabItem">
+        <attr name="notifyText" format="string"/>
+        <attr name="notifyColorIndicator" format="color"/>
+        <attr name="notifyEnable" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="BadgeTabItem">
+        <attr name="badgeText" format="string"/>
+        <attr name="badgeColorIndicator" format="color"/>
+        <attr name="badgeEnable" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="TagIndicatorComponent">
+        <attr name="tag_text" format="string"/>
+        <attr name="tag_enable" format="boolean"/>
+    </declare-styleable>
+</resources>

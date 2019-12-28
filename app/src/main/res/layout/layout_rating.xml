@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/imgStar1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleGame"
+        android:src="@drawable/ic_star_done"
+        android:layout_width="10dp"
+        android:layout_height="10dp" />
+
+    <ImageView
+        android:id="@+id/imgStar2"
+        app:layout_constraintStart_toEndOf="@+id/imgStar1"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleGame"
+        android:src="@drawable/ic_star_done"
+        android:layout_width="10dp"
+        android:layout_height="10dp" />
+
+    <ImageView
+        android:id="@+id/imgStar3"
+        app:layout_constraintStart_toEndOf="@+id/imgStar2"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleGame"
+        android:src="@drawable/ic_star_done"
+        android:layout_width="10dp"
+        android:layout_height="10dp" />
+
+    <ImageView
+        android:id="@+id/imgStar4"
+        app:layout_constraintStart_toEndOf="@+id/imgStar3"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleGame"
+        android:src="@drawable/ic_half_star"
+        android:layout_width="10dp"
+        android:layout_height="10dp" />
+
+    <ImageView
+        android:id="@+id/imgStar5"
+        app:layout_constraintStart_toEndOf="@+id/imgStar4"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleGame"
+        android:src="@drawable/ic_star_non"
+        android:layout_width="10dp"
+        android:layout_height="10dp" />
+    <TextView
+        android:id="@+id/tvPoint"
+        android:layout_marginStart="10dp"
+        android:textSize="@dimen/sp_10"
+        tools:text="7.0 /"
+        app:layout_constraintStart_toEndOf="@+id/imgStar5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/imgUser"
+        android:src="@drawable/ic_gamer"
+        android:layout_marginStart="10dp"
+        android:tint="@color/colorGray"
+        android:layout_width="10dp"
+        android:layout_height="10dp" />
+
+    <TextView
+        android:id="@+id/tvCountingUser"
+        android:layout_marginStart="5dp"
+        android:textSize="@dimen/sp_10"
+        tools:text="78736"
+        app:layout_constraintStart_toEndOf="@+id/imgStar5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

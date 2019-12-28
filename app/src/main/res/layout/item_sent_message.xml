@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center|end"
+    android:orientation="horizontal"
+    android:padding="@dimen/layout_margin_8dp">
+
+    <TextView
+        android:id="@+id/tvTimestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/layout_margin_8dp"
+        app:layout_constraintBaseline_toBaselineOf="@id/tvMessage"
+        app:layout_constraintEnd_toStartOf="@id/tvMessage"
+        tools:text="19:23" />
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_sent_message_item"
+        android:paddingStart="@dimen/padding_16dp"
+        android:paddingEnd="@dimen/padding_16dp"
+        android:paddingTop="@dimen/layout_margin_8dp"
+        android:paddingBottom="@dimen/layout_margin_8dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:maxWidth="240dp"
+        tools:text="Please give e a codePlease give e a codePlease give e a codePlease give e a codePlease give e a code" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

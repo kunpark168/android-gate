@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/csHeader"
+    android:fitsSystemWindows="true"
+    android:background="@color/colorHome"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/tool_bar_height"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:id="@+id/tvTitle"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:text="@string/game_title"
+        android:fontFamily="@font/roboto_regular"
+        android:textColor="@color/colorWhite"
+        android:layout_width="wrap_content"
+        tools:text="@string/following"
+        android:drawableEnd="@drawable/ic_dropdown_white"
+        android:drawablePadding="@dimen/padding_8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:id="@+id/chatFrameLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/dp_10"
+        app:layout_constraintEnd_toStartOf="@id/imgAvatarUser">
+        <ImageView
+            android:src="@drawable/ic_message"
+            android:layout_width="26dp"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:layout_gravity="center_vertical"/>
+    </FrameLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgAvatarUser"
+        app:layout_constraintEnd_toStartOf="@+id/imgMore"
+        android:src="@drawable/img_avatar_holder"
+        android:layout_width="24dp"
+        android:layout_marginEnd="@dimen/layout_margin_8dp"
+        android:layout_height="match_parent" />
+    <ImageView
+        android:contentDescription="@null"
+        android:id="@+id/imgMore"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="5dp"
+        android:layout_marginEnd="@dimen/layout_margin_8dp"
+        android:src="@drawable/ic_more"
+        android:layout_width="24dp"
+        android:layout_height="match_parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,92 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    android:fillViewport="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".v2.categories.FeatureChildrenFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--Banner-->
+        <ImageView
+            android:id="@+id/imgBanner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp130"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_holder_banner"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--NewGame-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvNewGame"
+            android:background="@color/colorWhite"
+            android:layout_marginTop="@dimen/dp5"
+            app:layout_constraintTop_toBottomOf="@+id/imgBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <!--Post-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:id="@+id/csOrder"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorWhite"
+            app:layout_goneMarginTop="@dimen/dp5"
+            app:layout_constraintTop_toBottomOf="@id/rvNewGame"
+            android:layout_height="35dp">
+            <TextView
+                android:textSize="13sp"
+                android:textColor="@color/colorText"
+                android:gravity="center"
+                android:text="@string/sort"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/roboto_regular"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:textSize="13sp"
+                android:textColor="@color/colorText"
+                app:layout_constraintEnd_toStartOf="@+id/imgDropDown"
+                android:gravity="center"
+                android:text="@string/sort_as"
+                android:layout_width="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/imgDropDown"
+                android:padding="9dp"
+                android:tint="@color/colorText"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_dropdown"
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/vSort"
+            android:background="#eeeeee"
+            app:layout_constraintTop_toBottomOf="@+id/csOrder"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPostCategory"
+            android:scrollbars="none"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            app:layout_constraintTop_toBottomOf="@+id/vSort"
+            tools:listitem="@layout/item_post">
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="170dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="@null"
+        android:src="@drawable/img_temp_game" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBlurGameCover" />
+
+    <!--Header-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <!--Avatar-->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="@dimen/dp20"
+            android:src="@drawable/img_avatar_holder"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgGender"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_marginStart="40dp"
+            tools:src="@drawable/ic_female"
+            app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+            app:layout_constraintStart_toStartOf="@+id/imgAvatar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/follow"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp11"
+            app:layout_constraintBottom_toTopOf="@+id/v1"
+            app:layout_constraintEnd_toEndOf="@+id/v1"
+            app:layout_constraintStart_toStartOf="@+id/v1" />
+
+        <View
+            android:id="@+id/v1"
+            android:layout_width="65dp"
+            android:layout_height="1dp"
+            android:background="#8d8d8d"
+            app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+            app:layout_constraintEnd_toStartOf="@+id/imgAvatar"
+            app:layout_constraintTop_toTopOf="@+id/imgAvatar" />
+
+        <TextView
+            android:id="@+id/tvFollow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/zero_number"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp11"
+            app:layout_constraintEnd_toEndOf="@+id/v1"
+            app:layout_constraintStart_toStartOf="@+id/v1"
+            app:layout_constraintTop_toBottomOf="@+id/v1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/follower"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp11"
+            app:layout_constraintBottom_toTopOf="@+id/v2"
+            app:layout_constraintEnd_toEndOf="@+id/v2"
+            app:layout_constraintStart_toStartOf="@+id/v2" />
+
+        <View
+            android:id="@+id/v2"
+            android:layout_width="65dp"
+            android:layout_height="1dp"
+            android:background="#8d8d8d"
+            app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+            app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+            app:layout_constraintTop_toTopOf="@+id/imgAvatar" />
+
+        <TextView
+            android:id="@+id/tvFollower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/zero_number"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp11"
+            app:layout_constraintEnd_toEndOf="@+id/v2"
+            app:layout_constraintStart_toStartOf="@+id/v2"
+            app:layout_constraintTop_toBottomOf="@+id/v2"/>
+
+        <TextView
+            android:id="@+id/tvUserName"
+            tools:text="Anderson"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintEnd_toEndOf="@+id/imgAvatar"
+            app:layout_constraintStart_toStartOf="@+id/imgAvatar"
+            app:layout_constraintTop_toBottomOf="@+id/imgAvatar"/>
+
+        <TextView
+            android:id="@+id/tvCounting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp3"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/so_point_and_danh_hieu"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp11"
+            app:layout_constraintEnd_toEndOf="@+id/tvUserName"
+            app:layout_constraintStart_toStartOf="@+id/tvUserName"
+            app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
+
+        <TextView
+            android:id="@+id/tvSlogan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp3"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/sp11"
+            app:layout_constraintEnd_toEndOf="@+id/tvCounting"
+            app:layout_constraintStart_toStartOf="@+id/tvCounting"
+            app:layout_constraintTop_toBottomOf="@+id/tvCounting" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/bg_charts"
+            android:padding="7dp"
+            android:src="@drawable/ic_charts"
+            android:tint="@color/colorWhite"
+            android:contentDescription="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

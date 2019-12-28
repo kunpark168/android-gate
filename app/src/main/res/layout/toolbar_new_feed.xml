@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/BlueToolBar"
+    tools:showIn="@layout/new_feed_screen">
+
+    <ImageView
+        android:id="@+id/icGroup"
+        style="@style/MaterialIconSize"
+        android:src="@drawable/ic_user_home"
+        android:padding="1dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="15dp" />
+
+    <ImageView
+        android:id="@+id/icChat"
+        style="@style/MaterialIconSize"
+        android:src="@drawable/ic_comment_home"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/icGroup"
+        android:layout_marginStart="22dp" />
+
+    <ImageView
+        android:contentDescription="@null"
+        android:id="@+id/imgLogo"
+        app:layout_constraintStart_toEndOf="@id/icChat"
+        app:layout_constraintEnd_toStartOf="@id/icNotification"
+        android:padding="10dp"
+        android:src="@drawable/img_logo"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp" />
+
+    <ImageView
+        android:id="@+id/icNotification"
+        style="@style/MaterialIconSize"
+        android:src="@drawable/ic_notification"
+        android:layout_marginEnd="22dp"
+        android:padding="1dp"
+        app:layout_constraintEnd_toStartOf="@id/imgAvatar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <FrameLayout
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:background="@drawable/circle_red"
+        android:visibility="visible"
+        tools:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/icNotification"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="9dp">
+
+        <TextView
+            android:id="@+id/view_alert_count_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            tools:text="3"
+            android:text="2" />
+
+    </FrameLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgAvatar"
+        style="@style/MaterialIconSize"
+        android:src="@color/color_loading_gray_darker"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/layout_margin_16dp" />
+</androidx.constraintlayout.widget.ConstraintLayout>

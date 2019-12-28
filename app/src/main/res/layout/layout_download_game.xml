@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/colorBlurDialog"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginStart="@dimen/sp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvCantDownload"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/sp_13"
+            android:paddingStart="@dimen/dp15"
+            android:textColor="@color/black"
+            android:textAllCaps="true"
+            android:text="@string/choose_download_source"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp45" />
+
+        <View
+            android:id="@+id/vCantDownload"
+            app:layout_constraintTop_toBottomOf="@+id/tvCantDownload"
+            android:background="@color/colorGray"
+            android:alpha="0.3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+
+        <!--Google Play-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csGooglePlay"
+            app:layout_constraintTop_toBottomOf="@+id/vCantDownload"
+            android:layout_width="match_parent"
+            android:paddingStart="@dimen/dp5"
+            android:layout_height="@dimen/dp50">
+            <ImageView
+                android:padding="@dimen/dp_10"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/ic_google_play"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_marginStart="@dimen/dp60"
+                android:text="@string/google_play"
+                android:textColor="@color/colorText"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="@dimen/sp_13"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/imgGooglePlay"
+                android:padding="@dimen/dp15"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_checked_radio"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="match_parent" />
+            <View
+                android:background="@color/colorGray"
+                android:alpha="0.3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--APK-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csAPK"
+            app:layout_constraintTop_toBottomOf="@+id/csGooglePlay"
+            android:layout_width="match_parent"
+            android:paddingStart="@dimen/dp5"
+            android:layout_height="@dimen/dp50">
+            <ImageView
+                android:padding="@dimen/dp_10"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/ic_apk"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_marginStart="@dimen/dp60"
+                android:text="@string/apk"
+                android:textColor="@color/colorText"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="@dimen/sp_13"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/imgAPK"
+                android:padding="@dimen/dp15"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_non_check"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="match_parent" />
+            <View
+                android:background="@color/colorGray"
+                android:alpha="0.3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--App Store-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csAppStore"
+            app:layout_constraintTop_toBottomOf="@+id/csAPK"
+            android:layout_width="match_parent"
+            android:paddingStart="@dimen/dp5"
+            android:layout_height="@dimen/dp50">
+            <ImageView
+                android:padding="@dimen/dp_10"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/ic_app_store"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_marginStart="@dimen/dp60"
+                android:text="@string/app_store"
+                android:textColor="@color/colorText"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="@dimen/sp_13"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/imgAppStore"
+                android:padding="@dimen/dp15"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_non_check"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="match_parent" />
+            <View
+                android:background="@color/colorGray"
+                android:alpha="0.3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--IPA-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csIPA"
+            app:layout_constraintTop_toBottomOf="@+id/csAppStore"
+            android:layout_width="match_parent"
+            android:paddingStart="@dimen/dp5"
+            android:layout_height="@dimen/dp50">
+            <ImageView
+                android:padding="@dimen/dp_10"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/ic_ipa"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_marginStart="@dimen/dp60"
+                android:text="@string/ipa"
+                android:textColor="@color/colorText"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="@dimen/sp_13"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/imgIPA"
+                android:padding="@dimen/dp15"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_non_check"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="match_parent" />
+            <View
+                android:background="@color/colorGray"
+                android:alpha="0.3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--WindownsPhone-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csWindowsPhone"
+            app:layout_constraintTop_toBottomOf="@+id/csIPA"
+            android:layout_width="match_parent"
+            android:paddingStart="@dimen/dp5"
+            android:layout_height="@dimen/dp50">
+            <ImageView
+                android:padding="@dimen/dp_10"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/ic_windowns_phone"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_marginStart="@dimen/dp60"
+                android:text="@string/windows_phone"
+                android:textColor="@color/colorText"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="@dimen/sp_13"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:padding="@dimen/dp15"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_non_check"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="match_parent" />
+            <TextView
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center_vertical"
+                android:paddingEnd="@dimen/dp15"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="@dimen/sp_13"
+                android:text="@string/not_yet"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <View
+                android:background="@color/colorGray"
+                android:alpha="0.3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--PC-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/csPC"
+            app:layout_constraintTop_toBottomOf="@+id/csWindowsPhone"
+            android:layout_width="match_parent"
+            android:paddingStart="@dimen/dp5"
+            android:layout_height="@dimen/dp50">
+            <ImageView
+                android:padding="@dimen/dp_10"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/ic_pc"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_marginStart="@dimen/dp60"
+                android:text="@string/pc"
+                android:textColor="@color/colorText"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="@dimen/sp_13"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/imgPC"
+                android:padding="@dimen/dp15"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_non_check"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="match_parent" />
+            <View
+                android:background="@color/colorGray"
+                android:alpha="0.3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toBottomOf="@+id/csPC"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/dp15"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/btDownload"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/download"
+                android:layout_marginStart="@dimen/dp15"
+                android:textColor="@color/colorWhite"
+                android:gravity="center"
+                android:layout_marginEnd="@dimen/dp5"
+                app:layout_constraintWidth_percent="0.44"
+                android:background="@drawable/bg_button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp35" />
+
+            <TextView
+                android:id="@+id/btnReportError"
+                android:layout_marginEnd="@dimen/dp15"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="@dimen/dp5"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/download"
+                android:textColor="@color/colorWhite"
+                android:gravity="center"
+                app:layout_constraintWidth_percent="0.44"
+                android:background="@drawable/bg_donate_chosen"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dp35" />
+
+            <View
+                android:background="@color/colorGray"
+                android:alpha="0.3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

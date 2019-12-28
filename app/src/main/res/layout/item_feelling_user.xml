@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/csGame"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorWhite"
+    app:layout_constraintTop_toBottomOf="@id/tvReadMore"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgNewGame"
+        android:layout_marginTop="@dimen/dp7"
+        android:layout_marginStart="@dimen/dp_10"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_temp_game"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="@dimen/dp50"
+        android:layout_height="@dimen/dp50">
+    </de.hdodenhof.circleimageview.CircleImageView>
+
+    <LinearLayout
+        app:layout_constraintBottom_toBottomOf="@+id/imgNewGame"
+        app:layout_constraintTop_toTopOf="@+id/imgNewGame"
+        app:layout_constraintEnd_toStartOf="@+id/tvFollowGame"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/dp20"
+        app:layout_constraintStart_toEndOf="@+id/imgNewGame"
+        android:layout_width="0dp"
+        android:weightSum="2"
+        android:gravity="center"
+        android:layout_height="0dp">
+        <TextView
+            android:id="@+id/tvTitle"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="@dimen/sp_13"
+            android:text="Anderson"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+        <TextView
+            android:id="@+id/tvCategoryGame"
+            android:textSize="@dimen/sp11"
+            android:text="ID: 63546"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="top"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvFollowGame"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:textColor="@color/colorError"
+        android:background="@drawable/bg_follow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imgNewGame"
+        app:layout_constraintBottom_toBottomOf="@+id/imgNewGame"
+        android:layout_width="@dimen/dp70"
+        android:text="+Follow"
+        android:textSize="@dimen/sp_12"
+        android:fontFamily="@font/roboto_light"
+        android:gravity="center"
+        android:layout_height="@dimen/dp25" />
+
+
+    <View
+        android:layout_marginTop="@dimen/dp7"
+        app:layout_constraintTop_toBottomOf="@+id/imgNewGame"
+        android:background="@color/colorBgLine"
+        android:layout_width="match_parent"
+        android:layout_marginStart="@dimen/dp_10"
+        android:layout_marginEnd="@dimen/dp_10"
+        android:layout_height="1dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+

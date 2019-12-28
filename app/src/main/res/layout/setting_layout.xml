@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintTop_toBottomOf="@id/bigDivider2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/InfoSection2">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/ngon_ngu"
+            android:textColor="@color/text_color_dark"
+            android:layout_weight="3"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:drawableStart="@drawable/ic_language"
+            android:drawablePadding="@dimen/padding_8dp"
+            android:drawableEnd="@drawable/ic_next_more"
+            android:gravity="center|start" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/InfoSection2">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/mobile_app"
+            android:textColor="@color/text_color_dark"
+            android:layout_weight="3"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:drawableStart="@drawable/ic_mobile"
+            android:drawablePadding="@dimen/padding_8dp"
+            android:drawableEnd="@drawable/ic_next_more"
+            android:gravity="center|start" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/InfoSection2">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/phien_ban_pc"
+            android:textColor="@color/text_color_dark"
+            android:layout_weight="3"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:drawableStart="@drawable/ic_pc_version"
+            android:drawablePadding="@dimen/padding_8dp"
+            android:drawableEnd="@drawable/ic_next_more"
+            android:gravity="center|start" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/InfoSection2">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/doi_mat_khau"
+            android:textColor="@color/text_color_dark"
+            android:layout_weight="3"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:drawableStart="@drawable/ic_change_password"
+            android:drawablePadding="@dimen/padding_8dp"
+            android:drawableEnd="@drawable/ic_next_more"
+            android:gravity="center|start" />
+    </LinearLayout>
+</LinearLayout>

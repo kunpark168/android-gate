@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/csMain"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csHeader"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/color_main_orange"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:textSize="16sp"
+            android:gravity="center"
+            android:fontFamily="@font/roboto_regular"
+            android:textColor="@color/colorWhite"
+            android:text="@string/register"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="7dp"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tvBackRegister"
+            android:textSize="15sp"
+            android:textAllCaps="true"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"
+            android:text="@string/back"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_marginStart="33dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <ImageView
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="5dp"
+            android:layout_marginEnd="65dp"
+            android:src="@drawable/ic_message"
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="7dp"
+            android:layout_marginEnd="35dp"
+            android:src="@drawable/ic_search"
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+        <ImageView
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="5dp"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_more"
+            android:layout_width="30dp"
+            android:layout_height="match_parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--Email-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csEmail"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/bg_edittext"
+        app:layout_constraintTop_toBottomOf="@id/csHeader"
+        android:layout_width="match_parent"
+        android:layout_height="47dp">
+        <ImageView
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="15dp"
+            android:tint="@color/colorGray"
+            android:src="@drawable/ic_email"
+            android:layout_width="47dp"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/etEmail"
+            android:textSize="@dimen/sp_14"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="@string/email"
+            android:background="@android:color/transparent"
+            android:paddingLeft="47dp"
+            android:maxLines="1"
+            android:paddingRight="47dp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="15dp"
+            android:visibility="gone"
+            android:tint="@color/colorGray"
+            android:src="@drawable/ic_delete"
+            android:layout_width="50dp"
+            android:layout_height="match_parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--Password-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csPassword"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp20"
+        android:layout_marginEnd="@dimen/dp20"
+        android:background="@drawable/bg_edittext"
+        app:layout_constraintTop_toBottomOf="@id/csEmail"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="16dp"
+            android:src="@drawable/ic_password"
+            android:layout_width="47dp"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/etPassword"
+            android:textSize="@dimen/sp_14"
+            android:inputType="textPassword"
+            android:hint="@string/password_register"
+            android:background="@android:color/transparent"
+            android:paddingLeft="47dp"
+            android:paddingRight="47dp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/imgEye"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="15dp"
+            android:visibility="gone"
+            android:tint="@color/colorGray"
+            android:src="@drawable/ic_show_password"
+            android:layout_width="47dp"
+            android:layout_height="match_parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--ConfirmPassword-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csConfirmPassword"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginStart="@dimen/dp20"
+        android:layout_marginEnd="@dimen/dp20"
+        android:background="@drawable/bg_edittext"
+        app:layout_constraintTop_toBottomOf="@id/csPassword"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp50">
+        <ImageView
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="16dp"
+            android:src="@drawable/ic_password"
+            android:layout_width="@dimen/height_dialog"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/etCofirmPassword"
+            android:textSize="@dimen/sp_14"
+            android:inputType="textPassword"
+            android:hint="@string/confirm_password_register"
+            android:background="@android:color/transparent"
+            android:paddingStart="@dimen/height_dialog"
+            android:paddingEnd="@dimen/height_dialog"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <ImageView
+            android:id="@+id/imgEyeConfirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="@dimen/dp15"
+            android:visibility="gone"
+            android:tint="@color/colorGray"
+            android:src="@drawable/ic_show_password"
+            android:layout_width="47dp"
+            android:layout_height="match_parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--Display Name-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csDisplayName"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp20"
+        android:layout_marginRight="@dimen/dp20"
+        android:background="@drawable/bg_edittext"
+        app:layout_constraintTop_toBottomOf="@id/csConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_dialog">
+        <ImageView
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="15dp"
+            android:tint="@color/colorGray"
+            android:src="@drawable/ic_email_id"
+            android:layout_width="47dp"
+            android:layout_height="match_parent" />
+        <EditText
+            android:id="@+id/etDisplayname"
+            android:textSize="@dimen/sp_14"
+            android:fontFamily="@font/roboto_regular"
+            android:hint="@string/display_name"
+            android:background="@android:color/transparent"
+            android:paddingStart="@dimen/height_dialog"
+            android:maxLines="1"
+            android:paddingRight="@dimen/height_dialog"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="15dp"
+            android:visibility="gone"
+            android:tint="@color/colorGray"
+            android:src="@drawable/ic_delete"
+            android:layout_width="50dp"
+            android:layout_height="match_parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--Note-->
+    <TextView
+        android:id="@+id/tvNote"
+        tools:text="@string/note_register"
+        android:layout_marginTop="@dimen/dp_10"
+        android:textColor="@color/colorText"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="@dimen/sp11"
+        app:layout_constraintEnd_toEndOf="@+id/btnConfirm"
+        app:layout_constraintStart_toStartOf="@+id/btnConfirm"
+        app:layout_constraintTop_toBottomOf="@+id/btnConfirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:id="@+id/btnConfirm"
+        android:gravity="center"
+        android:textSize="@dimen/sp_15"
+        android:textColor="@color/colorWhite"
+        android:text="@string/confirm"
+        android:fontFamily="@font/roboto_medium"
+        android:background="@drawable/bg_button"
+        android:layout_marginEnd="@dimen/dp15"
+        android:layout_marginStart="@dimen/dp15"
+        android:layout_marginTop="@dimen/dp15"
+        app:layout_constraintTop_toBottomOf="@id/csLicense"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_dialog" />
+
+    <!--License-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csLicense"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintStart_toStartOf="@+id/csDisplayName"
+        app:layout_constraintTop_toBottomOf="@+id/csDisplayName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvTitlePrivacy"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/title_privacy"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/sp11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvPrivacy"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/dp5"
+            app:layout_constraintStart_toEndOf="@+id/tvTitlePrivacy"
+            android:text="@string/license"
+            android:textColor="@color/colorError"
+            android:textSize="@dimen/sp11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvAnd"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/dp5"
+            app:layout_constraintStart_toEndOf="@+id/tvPrivacy"
+            android:text="@string/and"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/sp11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tvLicense"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/dp5"
+            app:layout_constraintStart_toEndOf="@+id/tvAnd"
+            android:text="@string/privacy"
+            android:textColor="@color/colorError"
+            android:textSize="@dimen/sp11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="@dimen/dp50">
+        <View
+            android:layout_marginRight="@dimen/dp50"
+            android:layout_marginLeft="@dimen/dp50"
+            android:alpha="0.1"
+            android:background="@color/colorGray"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <ImageView
+            android:padding="10dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/img_logo_splash"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

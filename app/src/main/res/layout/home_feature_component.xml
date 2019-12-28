@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/csTextTheme"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="horizontal"
+    app:layout_constraintTop_toBottomOf="@+id/csCategoryImage"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tvVideo"
+        android:text="@string/theme"
+        android:drawableTop="@drawable/img_video"
+        style="@style/FeatureItem"/>
+
+    <TextView
+        android:id="@+id/tvTheme"
+        android:text="@string/theme"
+        android:drawableTop="@drawable/img_theme"
+        style="@style/FeatureItem"/>
+
+    <TextView
+        android:id="@+id/tvSpecial"
+        android:text="@string/special"
+        android:drawableTop="@drawable/ic_fire"
+        style="@style/FeatureItem"/>
+
+    <TextView
+        android:id="@+id/tvEvent"
+        android:text="@string/even"
+        android:drawableTop="@drawable/img_even"
+        style="@style/FeatureItem" />
+
+    <TextView
+        android:id="@+id/tvGame"
+        android:text="@string/game"
+        android:drawableTop="@drawable/img_game"
+        style="@style/FeatureItem" />
+</LinearLayout>
+

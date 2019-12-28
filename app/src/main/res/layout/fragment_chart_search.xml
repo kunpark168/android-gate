@@ -1,0 +1,143 @@
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorWhite">
+
+        <com.anhtam.gate9.v2.shared.TagIndicatorComponent
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tag_text="@string/hot_game"
+            android:layout_marginStart="@dimen/layout_margin_16dp"
+            android:layout_marginTop="@dimen/layout_margin_16dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#f4f2f0"
+            android:layout_marginTop="@dimen/layout_margin_8dp"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="@dimen/layout_margin_8dp"
+            android:layout_marginBottom="@dimen/layout_margin_8dp">
+
+            <ImageView
+                android:id="@+id/imgBanner01"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/imgBanner02"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:padding="@dimen/padding_8dp"
+                tools:src="@tools:sample/avatars"
+                android:contentDescription="@null"/>
+
+            <ImageView
+                android:id="@+id/imgBanner02"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/imgBanner03"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imgBanner01"
+                app:layout_constraintTop_toTopOf="parent"
+                android:padding="@dimen/padding_8dp"
+                tools:src="@tools:sample/avatars"
+                android:contentDescription="@null"/>
+
+            <ImageView
+                android:id="@+id/imgBanner03"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@+id/imgBanner04"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imgBanner02"
+                app:layout_constraintTop_toTopOf="parent"
+                android:padding="@dimen/padding_8dp"
+                tools:src="@tools:sample/avatars"
+                android:contentDescription="@null" />
+
+            <ImageView
+                android:id="@+id/imgBanner04"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/imgBanner03"
+                app:layout_constraintTop_toTopOf="parent"
+                android:padding="@dimen/padding_8dp"
+                tools:src="@tools:sample/avatars"
+                android:contentDescription="@null"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <include
+            layout="@layout/share_divider_item_layout"/>
+
+        <com.anhtam.gate9.v2.shared.TagIndicatorComponent
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tag_text="@string/hot_tag"
+            android:layout_marginTop="@dimen/dp16"
+            android:layout_marginBottom="@dimen/dp8"
+            android:layout_marginStart="@dimen/layout_margin_16dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#f4f2f0"
+            android:layout_marginBottom="@dimen/layout_margin_8dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvTagGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/item_recently_hot_tag"
+            android:layout_marginBottom="@dimen/dp8"
+            android:layout_marginStart="@dimen/layout_margin_16dp"/>
+
+        <include
+            layout="@layout/share_divider_item_layout"/>
+
+        <com.anhtam.gate9.v2.shared.TagIndicatorComponent
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tag_text="@string/hot_search"
+            android:layout_marginTop="@dimen/dp16"
+            android:layout_marginBottom="@dimen/dp8"
+            android:layout_marginStart="@dimen/layout_margin_16dp"/>
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#f4f2f0"
+            android:layout_marginBottom="@dimen/layout_margin_8dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRecent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"/>
+
+        <include
+            layout="@layout/share_divider_item_layout"/>
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

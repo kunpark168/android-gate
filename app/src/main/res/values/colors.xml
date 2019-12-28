@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#55b3f9</color>
+    <color name="colorPrimaryDark">#55b3f9</color>
+    <color name="colorAccent">#55b3f9</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="colorText">#1A1A1A</color>
+    <color name="colorGray">#E9838383</color>
+    <color name="colorError">#fa5a36</color>
+    <color name="colorHome">#55b3f9</color>
+    <color name="orange_accent">#fa5a36</color>
+    <color name="colorHolder">#cecece</color>
+    <color name="colorStatusBarLogin">#B34B31</color>
+    <color name="colorStatusBarHome">#4F9DD8</color>
+    <color name="colorCircleRed">#fa5a36</color>
+    <color name="colorBGRecyclerView">#f6f6f6</color>
+    <color name="colorGamer">#4dc85a</color>
+    <color name="colorNPH">#f36ec2</color>
+    <color name="colorRed">#fa5a36</color>
+    <color name="colorRate">#fdb201</color>
+    <color name="colorData">#19e77f</color>
+    <color name="colorGame">#fdb201</color>
+    <color name="tab_message">#9b59b6</color>
+    <color name="tab_pink">#f36dc1</color>
+    <color name="colorBlurGameCover">#80090000</color>
+    <color name="colorFavorite">#61bd00</color>
+    <color name="color_following">#55b3f9</color>
+    <color name="color_follow">#fa5a36</color>
+    <color name="colorVideo">#19e77f</color>
+    <color name="colorTheme">#61bd00</color>
+    <color name="colorBlurDialog">#80353535</color>
+    <color name="tab_orange">#fa5a36</color>
+    <color name="tab_orange_light">#fdb201</color>
+    <color name="tab_green">#61bd00</color>
+    <color name="tab_purple">#f36dc1</color>
+    <color name="tab_blue">#55b3f9</color>
+    <color name="tab_green_light">#19e77f</color>
+    <color name="colorBgLine">#eeeeee</color>
+    <color name="colorIndicatorNotification">#fa5a36</color>
+    <color name="notificationAvatarColor">#000000</color>
+    <color name="grey">#777777</color>
+    <color name="colorIndicator">#55b3f9</color>
+    <color name="defaultGrayColor">#777777</color>
+
+
+    <color name="colorTabGame">#fdb201</color>
+    <color name="colorTabData">#19e77f</color>
+    <color name="colorTabRating">#fdb201</color>
+    <color name="colorTabDiscussion">#fa5a36</color>
+
+    <color name="colorFiveRating">#fa5a36</color>
+    <color name="colorFourRating">#fb7b5e</color>
+    <color name="colorThreeRating">#fc9c86</color>
+    <color name="colorTwoRating">#fdbdaf</color>
+    <color name="colorOneRating">#ebebeb</color>
+
+    <color name="colorDivider">#f4f2f0</color>
+    <color name="colorPointCharts">#a39fd4</color>
+    <color name="colorNoCharts">#f6a15b</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffff</color>
+    <color name="text_color_black">#000000</color>
+
+    <color name="color_loading_gray">#eeeeee</color>
+    <color name="color_loading_gray_darker">#dddddd</color>
+    <color name="bg_color_message_receiver">#55b3f9</color>
+    <color name="orange">#fa5a36</color>
+    <color name="color_solid_grey">#f4f2f0</color>
+    <color name="color_main_blue">#55b3f9</color>
+    <color name="color_main_orange">#fa5a36</color>
+    <color name="default_color_text">#777777</color>
+    <color name="text_color_blue">#55b3f9</color>
+    <color name="text_color_red_light">#fa5a36</color>
+    <color name="text_color_dark">#333333</color>
+    <color name="background_color_dark">#DDDDDD</color>
+</resources>

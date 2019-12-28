@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    android:id="@+id/tvTitleGame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:lines="1"
+    android:textSize="@dimen/sp_13"
+    android:textColor="@color/black"
+    android:layout_toEndOf="@id/icon"
+    android:layout_alignBaseline="@id/icon"
+    android:drawableEnd="@drawable/ic_close_black_24dp"
+    android:drawablePadding="@dimen/dp8"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android" />

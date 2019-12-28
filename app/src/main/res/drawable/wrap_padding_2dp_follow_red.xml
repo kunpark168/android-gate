@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset android:drawable="@drawable/ic_follow_grey"
+    android:insetTop="2dp"
+    android:insetBottom="2dp"
+    android:insetRight="2dp"
+    android:insetLeft="2dp"
+    xmlns:android="http://schemas.android.com/apk/res/android" />
