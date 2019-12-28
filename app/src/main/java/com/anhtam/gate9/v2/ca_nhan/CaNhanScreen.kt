@@ -28,8 +28,6 @@ class CaNhanScreen : DaggerNavigationFragment() {
         fun newInstance() = CaNhanScreen()
     }
 
-    private var mViewModel: UserViewModel by autoCleared()
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.ca_nhan_screen, container, false)
     }
@@ -46,7 +44,6 @@ class CaNhanScreen : DaggerNavigationFragment() {
     }
 
     private fun init() {
-        mViewModel = ViewModelProviders.of(this, vmFactory).get(UserViewModel::class.java)
         setSupportActionBar(toolbar)
         eventClick()
         if(StorageManager.getAccessToken().isNotEmpty()) {
@@ -58,26 +55,26 @@ class CaNhanScreen : DaggerNavigationFragment() {
     }
 
     private fun observer() {
-        mViewModel.getInfoUser().enqueue(object: Callback<RestResponse<User>> {
-            override fun onFailure(call: Call<RestResponse<User>>, t: Throwable) {
-                Timber.d("Fail to load user info")
-            }
-
-            override fun onResponse(call: Call<RestResponse<User>>, response: Response<RestResponse<User>>) {
-                if(response.isSuccessful && response.code() == 200) {
-                    val data = response.body() ?: return
-                    Glide.with(this@CaNhanScreen).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder).error(R.drawable.img_avatar_holder)).load(data.data?.mAvatarPath).into(imgAvatar)
-                    tvTitle?.text = data.data?.mName
-                    val genderSrc: Int
-                    genderSrc = when(data.data?.mGender) {
-                        1 -> R.drawable.ic_male
-                        2 -> R.drawable.ic_femail
-                        else -> R.drawable.ic_gender
-                    }
-                    tvTitle?.setCompoundDrawablesWithIntrinsicBounds(0, 0, genderSrc, 0)
-                }
-            }
-        })
+//        mViewModel.getInfoUser().enqueue(object: Callback<RestResponse<User>> {
+//            override fun onFailure(call: Call<RestResponse<User>>, t: Throwable) {
+//                Timber.d("Fail to load user info")
+//            }
+//
+//            override fun onResponse(call: Call<RestResponse<User>>, response: Response<RestResponse<User>>) {
+//                if(response.isSuccessful && response.code() == 200) {
+//                    val data = response.body() ?: return
+//                    Glide.with(this@CaNhanScreen).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder).error(R.drawable.img_avatar_holder)).load(data.data?.mAvatarPath).into(imgAvatar)
+//                    tvTitle?.text = data.data?.mName
+//                    val genderSrc: Int
+//                    genderSrc = when(data.data?.mGender) {
+//                        1 -> R.drawable.ic_male
+//                        2 -> R.drawable.ic_femail
+//                        else -> R.drawable.ic_gender
+//                    }
+//                    tvTitle?.setCompoundDrawablesWithIntrinsicBounds(0, 0, genderSrc, 0)
+//                }
+//            }
+//        })
     }
 
     private fun hide(){

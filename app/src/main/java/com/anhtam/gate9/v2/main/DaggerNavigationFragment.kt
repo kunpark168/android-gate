@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.NavigationFragment
 import com.anhtam.gate9.utils.DialogProgressUtils
+import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.v2.MainViewModel
 import com.anhtam.gate9.viewmodel.ViewModelProviderFactory
 import javax.inject.Inject
@@ -25,12 +26,13 @@ abstract class DaggerNavigationFragment : NavigationFragment(){
     @Inject lateinit var vmFactory: ViewModelProviderFactory
 
     private var mProgressDialog: DialogProgressUtils? = null
-    private var mMainViewModel: MainViewModel? = null
+    protected val mMainViewModel by viewModels<MainViewModel> { vmFactory }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity?.let { mMainViewModel = ViewModelProviders.of(it, vmFactory).get(MainViewModel::class.java) }
-        return super.onCreateView(inflater, container, savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mMainViewModel.getUserDetail()
     }
+
     fun showProgress() {
         mProgressDialog = DialogProgressUtils(context, false)
         mProgressDialog?.setOnCancelListener { mProgressDialog = null }

@@ -13,13 +13,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.domain.Banner
-import com.anhtam.domain.Base
 import com.anhtam.domain.Game
 import com.anhtam.domain.v2.PostEntity
-import com.anhtam.domain.v2.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.GroupBannerAdapter
 import com.anhtam.gate9.adapter.v2.CommentAdapter
+import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.ui.search.SearchActivity
@@ -43,10 +42,6 @@ import kotlinx.android.synthetic.main.new_feed_screen.tvTheme
 import kotlinx.android.synthetic.main.new_feed_screen.tvVideo
 import kotlinx.android.synthetic.main.toolbar_new_feed.*
 import of.bum.network.helper.Resource
-import of.bum.network.helper.RestResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -111,6 +106,32 @@ class NewFeedScreen : DaggerNavigationFragment() {
                 }
             }
         })
+
+        mMainViewModel._user.observe(viewLifecycleOwner, Observer {
+            val avatar = when(it) {
+                is Resource.Loading -> null
+                is Resource.Error -> ""
+                is Resource.Success -> Config.IMG_URL + it.data?.mAvatarPath
+            }
+            avatar?.run {
+                Glide.with(this@NewFeedScreen)
+                        .load(avatar)
+                        .apply {RequestOptions.circleCropTransform().placeholder(R.drawable.img_avatar_holder)
+                                .error(R.drawable.img_avatar_holder) }
+                        .into(imgAvatar)
+            }
+//        }).enqueue(object: Callback<RestResponse<User>>{
+//            override fun onFailure(call: Call<RestResponse<User>>, t: Throwable) {
+//                Timber.d("Fail to load user info")
+//            }
+//
+//            override fun onResponse(call: Call<RestResponse<User>>, response: Response<RestResponse<User>>) {
+//                if(response.isSuccessful && response.code() == 200) {
+//                    val data = response.body() ?: return
+//                    mUserId = data.data?.mUserId ?: return
+//                }
+//            }
+        })
     }
 
     private fun loadMore(){
@@ -136,19 +157,6 @@ class NewFeedScreen : DaggerNavigationFragment() {
                 }
             }
         })
-        mViewModel.getInfoUser().enqueue(object: Callback<RestResponse<User>>{
-            override fun onFailure(call: Call<RestResponse<User>>, t: Throwable) {
-                Timber.d("Fail to load user info")
-            }
-
-            override fun onResponse(call: Call<RestResponse<User>>, response: Response<RestResponse<User>>) {
-                if(response.isSuccessful && response.code() == 200) {
-                    val data = response.body() ?: return
-                    mUserId = data.data?.mUserId ?: return
-                    Glide.with(this@NewFeedScreen).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder).error(R.drawable.img_avatar_holder)).load(data.data?.mAvatarPath).into(imgAvatar)
-                }
-            }
-        })
     }
 
     private fun initCommentRecyclerView() {
@@ -158,17 +166,17 @@ class NewFeedScreen : DaggerNavigationFragment() {
             params["commentId"] = id
             params["type"] = type
             params["userId"] = mUserId
-            mViewModel.react(params).enqueue(object: Callback<Base>{
-                override fun onFailure(call: Call<Base>, t: Throwable) {
-                    Timber.d("Failure")
-                }
-
-                override fun onResponse(call: Call<Base>, response: Response<Base>) {
-                    Timber.d(StorageManager.getAccessToken())
-                    Timber.d("Success")
-                }
-
-            })
+//            mViewModel.react(params).enqueue(object: Callback<Base>{
+//                override fun onFailure(call: Call<Base>, t: Throwable) {
+//                    Timber.d("Failure")
+//                }
+//
+//                override fun onResponse(call: Call<Base>, response: Response<Base>) {
+//                    Timber.d(StorageManager.getAccessToken())
+//                    Timber.d("Success")
+//                }
+//
+//            })
         }
         mCommentAdapter.setLoadMoreView(CustomLoadMoreView())
         mCommentAdapter.setOnLoadMoreListener({

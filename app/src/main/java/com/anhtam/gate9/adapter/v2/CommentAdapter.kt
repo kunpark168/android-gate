@@ -56,12 +56,18 @@ class CommentAdapter(private val navigation: Navigation?, private val listener: 
         // Set user
         val user = unwrapPost.user ?: return
         view.userNameTextView.text = user.mName
+        //logic image
+        val avatar = if(user.mAvatar?.startsWith("http") == true) {
+                    user.mAvatar
+                } else {
+            Config.IMG_URL + user.mAvatar
+        }
         Glide.with(mContext)
                 .applyDefaultRequestOptions(
                         RequestOptions()
                                 .placeholder(R.drawable.img_avatar_holder)
                                 .error(R.drawable.img_avatar_holder)
-                ).load(Config.IMG_URL + user.mAvatar)
+                ).load(avatar)
                 .into(view.avatarImageView)
 
         // Set game
@@ -96,7 +102,7 @@ class CommentAdapter(private val navigation: Navigation?, private val listener: 
         val photos = unwrapPost.photo?.subSequence(1,unwrapPost.photo!!.length - 1)
         if (!photos.isNullOrEmpty()) {
             view.rvPhotos.visibility = View.VISIBLE
-            val listPhotos = photos.split(",").toMutableList()
+            val listPhotos = photos.split(",").toMutableList().map { it.trim() }
             val photoEntity = listPhotos.map { PhotoEntity(when(listPhotos.size) {
                 1 -> PhotoEntity.GRID_1
                 in 2..4 -> PhotoEntity.GRID_4

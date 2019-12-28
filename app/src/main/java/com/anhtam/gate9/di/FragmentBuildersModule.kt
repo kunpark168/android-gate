@@ -14,7 +14,6 @@ import com.anhtam.gate9.v2.main.member.all.MemberListModule
 import com.anhtam.gate9.v2.auth.register.RegisterScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.auth.login.LoginModule
-import com.anhtam.gate9.v2.ca_nhan.CaNhanModule
 import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
 import com.anhtam.gate9.v2.createimage.CreateImageScreen
 import com.anhtam.gate9.v2.createpost.CreatePostScreen
@@ -119,9 +118,7 @@ abstract class FragmentBuildersModule {
     )
     abstract fun contributeGameScreen() :MXHGameScreen
 
-    @ContributesAndroidInjector(
-            modules = [CaNhanModule::class]
-    )
+    @ContributesAndroidInjector
     abstract fun contributeCaNhanScreen() :CaNhanScreen
 
     @ContributesAndroidInjector

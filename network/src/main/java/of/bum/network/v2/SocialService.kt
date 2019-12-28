@@ -15,6 +15,8 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface SocialService {
+    @GET("login")
+    fun getInfo(): LiveData<ApiResponse<RestResponse<User>>>
 
     @GET("social/listing")
     fun getListPosts(

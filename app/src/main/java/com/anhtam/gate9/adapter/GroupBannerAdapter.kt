@@ -5,6 +5,7 @@ import android.widget.ImageView
 import com.anhtam.domain.Game
 import com.anhtam.gate9.adapter.navigator.IBannerNavigator
 import com.anhtam.gate9.R
+import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.ui.discussion.game.GameDiscussionActivity
 import com.anhtam.gate9.utils.debounceClick
@@ -28,7 +29,7 @@ class GroupBannerAdapter(private val navigation: Navigation?, private val reques
             val type = game.types?.get(0)?.name
             holder.setText(R.id.tvContent, type)
             val bannerImageView = holder.getView<ImageView>(R.id.imgNewGame)
-            requestManager.load(game.avatar)
+            requestManager.load(Config.IMG_URL + game.avatarGame)
                     .into(bannerImageView)
             if (holder.adapterPosition < 2) {
                 holder.setVisible(R.id.vHor, true)

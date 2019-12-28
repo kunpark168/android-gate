@@ -8,7 +8,9 @@ data class Game(
         @Json(name = "name")
     val name: String?,
         @Json(name = "avatar")
-    val avatar: String?,
+        val avatar: String?,
+        @Json(name = "avatar_game")
+        val avatarGame: String?,
         @Json(name = "background")
     val background: String?,
         @Json(name = "type")

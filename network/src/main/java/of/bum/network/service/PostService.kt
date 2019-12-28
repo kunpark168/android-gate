@@ -11,7 +11,7 @@ import retrofit2.http.*
 
 interface PostService {
 
-    @POST("/v1/api/social/listPostlink")
+    @POST("api/v1/social/listPostlink")
     fun getAllPostInGame(@Body link: Map<String, String?>,@Query("page") page: Int): LiveData<ApiResponse<RestResponse<List<Post>>>>
 
     @GET("v1/api/social/listing")
