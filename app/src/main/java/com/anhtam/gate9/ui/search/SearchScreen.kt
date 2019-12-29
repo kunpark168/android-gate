@@ -1,20 +1,36 @@
 package com.anhtam.gate9.ui.search
 
-import android.content.Context
-import android.content.Intent
+import android.os.Bundle
+import android.view.*
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import com.anhtam.gate9.R
-import com.anhtam.gate9.ui.base.MvvmActivity
 import com.anhtam.gate9.ui.search.chart.ChartSearchFragment
 import com.anhtam.gate9.ui.search.result.ResultSearchFragment
 import com.anhtam.gate9.ui.search.temp.TempSearchFragment
-import kotlinx.android.synthetic.main.activity_search.*
+import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import kotlinx.android.synthetic.main.search_screen.*
 
 
-class SearchActivity : MvvmActivity() {
+class SearchScreen : DaggerNavigationFragment() {
 
-    override fun initEvents() {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setHasOptionsMenu(true)
+        return inflater.inflate(R.layout.search_screen, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        initEvents()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_chat_search_more, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun initEvents() {
         imgSearch?.setOnClickListener {
            search(edtSearch.text.toString())
         }
@@ -31,11 +47,11 @@ class SearchActivity : MvvmActivity() {
     }
 
     private fun search(content: String){
-        hideKeyBoard()
+        hideKeyboard()
         if(content.isEmpty()){
             return
         } else {
-            supportFragmentManager.beginTransaction().hide(currentFragment).show(fragmentResultSearch).commit()
+            childFragmentManager.beginTransaction().hide(currentFragment).show(fragmentResultSearch).commit()
             currentFragment = fragmentTemp
         }
     }
@@ -45,33 +61,20 @@ class SearchActivity : MvvmActivity() {
     private val fragmentResultSearch: ResultSearchFragment by lazy { ResultSearchFragment.newInstance() }
     private var currentFragment: Fragment = fragmentChartSearch
 
-    override fun getLayoutId() = R.layout.activity_search
-
-    override fun loadData() {
-
-    }
-
-    override fun initView() {
-        supportFragmentManager.beginTransaction().add(R.id.container, fragmentTemp).hide(fragmentTemp).commit()
-        supportFragmentManager.beginTransaction().add(R.id.container, fragmentResultSearch).hide(fragmentResultSearch).commit()
-        supportFragmentManager.beginTransaction().add(R.id.container, fragmentChartSearch).commit()
+    private fun initView() {
+        setSupportActionBar(toolbar)
+        childFragmentManager.beginTransaction().add(R.id.container, fragmentTemp).hide(fragmentTemp).commit()
+        childFragmentManager.beginTransaction().add(R.id.container, fragmentResultSearch).hide(fragmentResultSearch).commit()
+        childFragmentManager.beginTransaction().add(R.id.container, fragmentChartSearch).commit()
 
         //
         backFrameLayout?.setOnClickListener {
-            onBackPressed()
+            navigation?.back()
         }
     }
-
-
-    override fun observer() {
-    }
-
 
     companion object {
-        fun start(context: Context?) {
-            val intent = Intent(context, SearchActivity::class.java)
-            context?.startActivity(intent)
-        }
+        fun newInstance() = SearchScreen()
     }
 
 }

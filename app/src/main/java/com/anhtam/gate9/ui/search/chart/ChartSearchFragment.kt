@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.anhtam.gate9.adapter.BannerGameAdapter
 import com.anhtam.domain.dto.Game
 import com.anhtam.gate9.R
-import com.anhtam.gate9.ui.base.BaseFragment
 import com.anhtam.gate9.ui.search.DataSource
 import com.anhtam.gate9.utils.autoCleared
+import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.beloo.widget.chipslayoutmanager.ChipsLayoutManager
+import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.fragment_chart_search.*
@@ -24,7 +25,7 @@ import kotlinx.android.synthetic.main.item_recently_search.view.*
 /**
  * A simple [Fragment] subclass.
  */
-class ChartSearchFragment : BaseFragment() {
+class ChartSearchFragment : DaggerNavigationFragment() {
 
     private var mAdapter by autoCleared<BannerGameAdapter>()
     private var mRecentAdapter by autoCleared<Adapter>()
@@ -61,10 +62,10 @@ class ChartSearchFragment : BaseFragment() {
         mRecentAdapter.setNewData(games)
 
 
-        mRequestManager.load(games[0].mBanner).into(imgBanner01)
-        mRequestManager.load(games[1].mBanner).into(imgBanner02)
-        mRequestManager.load(games[2].mBanner).into(imgBanner03)
-        mRequestManager.load(games[3].mBanner).into(imgBanner04)
+        Glide.with(this).load(games[0].mBanner).into(imgBanner01)
+        Glide.with(this).load(games[1].mBanner).into(imgBanner02)
+        Glide.with(this).load(games[2].mBanner).into(imgBanner03)
+        Glide.with(this).load(games[3].mBanner).into(imgBanner04)
     }
 
     companion object {

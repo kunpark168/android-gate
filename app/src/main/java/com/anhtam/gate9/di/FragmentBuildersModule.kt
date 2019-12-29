@@ -1,5 +1,7 @@
 package com.anhtam.gate9.di
 
+import com.anhtam.gate9.ui.search.SearchModule
+import com.anhtam.gate9.ui.search.SearchScreen
 import com.anhtam.gate9.v2.newfeed.NewFeedModule
 import com.anhtam.gate9.v2.TestActivity
 import com.anhtam.gate9.v2.categories.CategoryModule
@@ -140,6 +142,11 @@ abstract class FragmentBuildersModule {
             modules = [ThongTinNguoiDungModule::class]
     )
     abstract fun contributeThongTinNguoiDungScreen(): ThongTinNguoiDungScreen
+
+    @ContributesAndroidInjector(
+            modules = [SearchModule::class]
+    )
+    abstract fun contributeSearchScreen(): SearchScreen
 
     /*    Test    */
     @ContributesAndroidInjector

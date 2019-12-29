@@ -15,10 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.anhtam.domain.v2.PostEntity
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.CommentAdapter
+import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.share.view.donate.DonateDialog
 import com.anhtam.gate9.storage.StorageManager
+import com.anhtam.gate9.ui.base.BaseActivity
 import com.anhtam.gate9.ui.discussion.user.UserDiscussionActivity
 import com.anhtam.gate9.ui.reaction.ReactionActivity
+import com.anhtam.gate9.ui.report.post.ReportPostActivity
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.auth.login.LoginScreen
@@ -61,19 +64,19 @@ open class DetailPostScreen : DaggerNavigationFragment(){
     private var more = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.detail_post_screen, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
         setSupportActionBar(toolbar)
         init()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
         inflater.inflate(R.menu.menu_chat_search_more, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -340,6 +343,7 @@ open class DetailPostScreen : DaggerNavigationFragment(){
         tvAction?.setOnClickListener {
             ReactionActivity.start(context)
         }
+        ichome?.setOnClickListener { navigation?.back() }
         csDisLike?.setOnClickListener { checkLogin() }
         csLike?.setOnClickListener { checkLogin() }
         csComment?.setOnClickListener { checkLogin() }
@@ -494,6 +498,15 @@ open class DetailPostScreen : DaggerNavigationFragment(){
             }
             view.userNameTextView?.setOnClickListener { navigation?.addFragment(UserDiscussionActivity.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
             view.avatarImageView?.setOnClickListener { navigation?.addFragment(UserDiscussionActivity.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
+            view.moreImageView?.setOnClickListener {
+                val mMoreDialog = MoreDialog(context!!, object : MoreDialog.IMore {
+                    override fun onreport() {
+                        ReportPostActivity.start(mContext as BaseActivity)
+                    }
+                })
+                mMoreDialog.idPost = unwrapPost.commentId?.toString()
+                mMoreDialog.show()
+            }
         }
 
     }

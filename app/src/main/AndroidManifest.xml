@@ -49,7 +49,7 @@
             android:name=".ui.create_post.RatingActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.search.SearchActivity"
+        <activity android:name=".ui.search.SearchScreen"
             android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.create_post.CreatePostWithFileActivity"

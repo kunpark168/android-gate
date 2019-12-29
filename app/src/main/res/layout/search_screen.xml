@@ -8,19 +8,17 @@
     android:clickable="true"
     android:focusable="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:fitsSystemWindows="true"
-        android:background="@color/colorHome"
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_gravity="top"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
-        <TextView
-            android:textSize="16sp"
-            android:gravity="center"
-            android:fontFamily="@font/roboto_regular"
-            android:text="@string/member"
-            android:textColor="@color/colorWhite"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        android:background="@color/colorPrimary"
+        app:title=""
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        android:layout_height="?attr/actionBarSize">
+
         <FrameLayout
             android:id="@+id/backFrameLayout"
             android:layout_width="wrap_content"
@@ -44,31 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
         </FrameLayout>
-
-        <ImageView
-            app:layout_constraintEnd_toEndOf="parent"
-            android:padding="5dp"
-            android:layout_marginEnd="65dp"
-            android:src="@drawable/ic_chat"
-            android:layout_width="30dp"
-            android:layout_height="match_parent" />
-
-        <ImageView
-            app:layout_constraintEnd_toEndOf="parent"
-            android:padding="7dp"
-            android:layout_marginEnd="35dp"
-            android:src="@drawable/ic_search"
-            android:layout_width="30dp"
-            android:layout_height="match_parent" />
-        <ImageView
-            app:layout_constraintEnd_toEndOf="parent"
-            android:padding="5dp"
-            android:layout_marginEnd="5dp"
-            android:src="@drawable/ic_more"
-            android:layout_width="30dp"
-            android:layout_height="match_parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    </androidx.appcompat.widget.Toolbar>
     <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/csSearch"
         android:layout_width="match_parent"
         android:layout_height="@dimen/search_view_height"

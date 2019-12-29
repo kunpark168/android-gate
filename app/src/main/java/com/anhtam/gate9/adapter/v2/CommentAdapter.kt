@@ -15,6 +15,7 @@ import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.ui.base.BaseActivity
+import com.anhtam.gate9.ui.discussion.game.GameDiscussionActivity
 import com.anhtam.gate9.ui.discussion.user.UserDiscussionActivity
 import com.anhtam.gate9.ui.report.post.ReportPostActivity
 import com.anhtam.gate9.v2.auth.login.LoginScreen
@@ -147,6 +148,10 @@ class CommentAdapter(private val navigation: Navigation?)
             mMoreDialog.idPost = unwrapPost.commentId?.toString()
             mMoreDialog.show()
         }
+
+        // game
+        view.gameImageView?.setOnClickListener { navigation?.addFragment(GameDiscussionActivity.newInstance("", "0")) }
+        view.titleGameTextView?.setOnClickListener { navigation?.addFragment(GameDiscussionActivity.newInstance("", "0")) }
         view.commentIcon.setOnClickListener {
             if(checkLogin()){
                 // change icon color and send request

@@ -13,7 +13,7 @@ import com.anhtam.gate9.ui.report.post.ReportPostActivity
 import com.anhtam.gate9.ui.report.post.ReportPostModule
 import com.anhtam.gate9.ui.report.user.ReportUserActivity
 import com.anhtam.gate9.ui.report.user.ReportUserModule
-import com.anhtam.gate9.ui.search.SearchActivity
+import com.anhtam.gate9.ui.search.SearchScreen
 import com.anhtam.gate9.ui.search.SearchModule
 import com.anhtam.gate9.v2.MainActivity
 import com.anhtam.gate9.v2.messenger.ChannelActivity
@@ -45,10 +45,6 @@ abstract class ActivityBuildersModule {
     )
     abstract fun contributeGameDiscussionActivity(): GameDiscussionActivity
 
-    @ContributesAndroidInjector(
-            modules = [SearchModule::class]
-    )
-    abstract fun contributeSearchActivity(): SearchActivity
     @ContributesAndroidInjector(
             modules = [SearchModule::class]
     )

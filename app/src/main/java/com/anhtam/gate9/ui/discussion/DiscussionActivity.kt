@@ -82,6 +82,7 @@ abstract class DiscussionActivity : MvvmFragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
         inflater.inflate(R.menu.menu_chat_search_more, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }

@@ -21,7 +21,7 @@ import com.anhtam.gate9.adapter.v2.CommentAdapter
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.storage.StorageManager
-import com.anhtam.gate9.ui.search.SearchActivity
+import com.anhtam.gate9.ui.search.SearchScreen
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.v2.InfoService
 import com.anhtam.gate9.v2.categories.CategoryTab
@@ -213,10 +213,10 @@ class NewFeedScreen : DaggerNavigationFragment() {
         }
         icGroup?.setOnClickListener { navigation?.addFragment(MemberHomeFragment.newInstance()) }
         imgSearch?.setOnClickListener{
-            SearchActivity.start(context)
+            navigation?.addFragment(SearchScreen.newInstance())
         }
         tvSearch?.setOnClickListener {
-            SearchActivity.start(context)
+            navigation?.addFragment(SearchScreen.newInstance())
         }
         tvVideo?.setOnClickListener {
             navigation?.addFragment(FeatureScreen.newInstance(CategoryTab.VIDEO.tab))

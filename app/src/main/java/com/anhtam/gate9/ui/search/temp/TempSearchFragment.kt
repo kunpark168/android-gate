@@ -10,9 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.anhtam.domain.dto.Game
 import com.anhtam.gate9.R
-import com.anhtam.gate9.ui.base.BaseFragment
 import com.anhtam.gate9.ui.search.DataSource
 import com.anhtam.gate9.utils.autoCleared
+import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.fragment_temp_search.*
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.layout_rating_game.view.*
 /**
  * A simple [Fragment] subclass.
  */
-class TempSearchFragment : BaseFragment() {
+class TempSearchFragment : DaggerNavigationFragment() {
 
     private var mRecentAdapter by autoCleared<Adapter>()
 
