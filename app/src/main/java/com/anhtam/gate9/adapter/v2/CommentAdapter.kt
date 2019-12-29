@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.photo_n_item_layout.view.*
 import kotlinx.android.synthetic.main.shared_post_item_layout.view.*
 
 
-class CommentAdapter(private val navigation: Navigation?, private val listener: (PostEntity,Int)->Unit)
+class CommentAdapter(private val navigation: Navigation?)
     : BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.shared_post_item_layout, ArrayList()), IPostNavigator {
 
     private var more = 0
@@ -39,12 +39,6 @@ class CommentAdapter(private val navigation: Navigation?, private val listener: 
     override fun convert(helper: BaseViewHolder?, item: PostEntity?) {
         val unwrapPost = item ?: return
         val view = helper?.itemView ?: return
-        when(unwrapPost.like) {
-            "like" -> item.mReactionId = 1
-            "dislike" -> item.mReactionId = 2
-            "love" -> item.mReactionId = 3
-            else -> item.mReactionId = 0
-        }
         // Set content of Post
         view.contentTextView.text = unwrapPost.content?.let { Html.fromHtml(it) }
         view.likeTextView.text = unwrapPost.totalLike
@@ -56,12 +50,18 @@ class CommentAdapter(private val navigation: Navigation?, private val listener: 
         // Set user
         val user = unwrapPost.user ?: return
         view.userNameTextView.text = user.mName
+        //logic image
+        val avatar = if(user.mAvatar?.startsWith("http") == true) {
+                    user.mAvatar
+                } else {
+            Config.IMG_URL + user.mAvatar
+        }
         Glide.with(mContext)
                 .applyDefaultRequestOptions(
                         RequestOptions()
                                 .placeholder(R.drawable.img_avatar_holder)
                                 .error(R.drawable.img_avatar_holder)
-                ).load(Config.IMG_URL + user.mAvatar)
+                ).load(avatar)
                 .into(view.avatarImageView)
 
         // Set game
@@ -96,7 +96,7 @@ class CommentAdapter(private val navigation: Navigation?, private val listener: 
         val photos = unwrapPost.photo?.subSequence(1,unwrapPost.photo!!.length - 1)
         if (!photos.isNullOrEmpty()) {
             view.rvPhotos.visibility = View.VISIBLE
-            val listPhotos = photos.split(",").toMutableList()
+            val listPhotos = photos.split(",").toMutableList().map { it.trim() }
             val photoEntity = listPhotos.map { PhotoEntity(when(listPhotos.size) {
                 1 -> PhotoEntity.GRID_1
                 in 2..4 -> PhotoEntity.GRID_4
@@ -147,30 +147,6 @@ class CommentAdapter(private val navigation: Navigation?, private val listener: 
             mMoreDialog.idPost = unwrapPost.commentId?.toString()
             mMoreDialog.show()
         }
-        view.likeLayout.setOnClickListener {
-            if(checkLogin()){
-                // change icon color and send request
-                reaction(view, 1, unwrapPost)
-            } else {
-                navigation?.addFragment(LoginScreen.newInstance())
-            }
-        }
-        view.loveLayout.setOnClickListener {
-            if(checkLogin()){
-                // change icon color and send request
-                reaction(view, 3, unwrapPost)
-            } else {
-                navigation?.addFragment(LoginScreen.newInstance())
-            }
-        }
-        view.dislikeLayout.setOnClickListener {
-            if(checkLogin()){
-                // change icon color and send request
-                reaction(view, 2, unwrapPost)
-            } else {
-                navigation?.addFragment(LoginScreen.newInstance())
-            }
-        }
         view.commentIcon.setOnClickListener {
             if(checkLogin()){
                 // change icon color and send request
@@ -218,55 +194,6 @@ class CommentAdapter(private val navigation: Navigation?, private val listener: 
         tvFollowGame.text = mContext.getString(R.string.following)
         tvFollowGame.setBackgroundResource(R.drawable.bg_following)
         tvFollowGame.setTextColor(ContextCompat.getColor(mContext, R.color.text_color_blue))
-    }
-
-    private fun reaction(view: View, type: Int, data: PostEntity) {
-        when (data.mReactionId) {
-            0 -> {//change icon color and increase number}
-            }
-            1 -> {
-                // change icon like
-                val like = view.likeTextView.text.toString().toInt()  - 1
-                view.likeTextView.text = like.toString()
-
-            }
-            2 -> {
-                // change icon dislike
-                val dislike = view.dislikeTextView.text.toString().toInt()  - 1
-                view.dislikeTextView.text = dislike.toString()
-            }
-            3 -> {
-                // change icon love
-                val love = view.loveTextView.text.toString().toInt()  - 1
-                view.loveTextView.text = love.toString()
-            }
-        }
-        if(data.mReactionId == type) {
-            data.mReactionId = 0
-            return
-        }
-        reactionRequest(view, type, data)
-    }
-
-    private fun reactionRequest(view: View, type: Int, data: PostEntity) {
-        data.mReactionId = type
-        when(type) {
-            1 -> {
-                val like = view.likeTextView.text.toString().toInt()  + 1
-                view.likeTextView.text = like.toString()
-            }
-            2 -> {
-                val dislike = view.dislikeTextView.text.toString().toInt()  + 1
-                view.dislikeTextView.text = dislike.toString()
-            }
-            3 -> {
-                val love = view.loveTextView.text.toString().toInt()  + 1
-                view.loveTextView.text = love.toString()
-            }
-        }
-        // request api
-        listener(data, type)
-
     }
 
     inner class PhotoAdapter : BaseMultiItemQuickAdapter<PhotoEntity, BaseViewHolder>(mutableListOf()){

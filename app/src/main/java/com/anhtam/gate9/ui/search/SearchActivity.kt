@@ -32,7 +32,7 @@ class SearchActivity : MvvmActivity() {
 
     private fun search(content: String){
         hideKeyBoard()
-        if(content.isNullOrEmpty()){
+        if(content.isEmpty()){
             return
         } else {
             supportFragmentManager.beginTransaction().hide(currentFragment).show(fragmentResultSearch).commit()

@@ -21,6 +21,10 @@ class SocialRepository @Inject constructor(
         override fun createCall() = socialService.getPostAndCommentByUser(userId, type, page, limit)
     }.asLiveData()
 
+    fun getUserDetail() = object: Lv2FetchResource<User>(){
+        override fun createCall() = socialService.getInfo()
+    }.asLiveData()
+
     fun getGameRelatedToUser(userId: Int, type: Int, page: Int, limit: Int)= object: Lv2FetchResource<List<WrapGame>>(){
         override fun createCall() = socialService.getGameRelatedToUser(userId, type, page, limit)
     }.asLiveData()
@@ -29,7 +33,7 @@ class SocialRepository @Inject constructor(
         override fun createCall() = socialService.getDataRelatedToUser(userId, type, page, limit)
     }.asLiveData()
 
-    fun getOtherUserInfoById(userId: Int) = object: Lv1FetchResource<User>(){
+    fun getOtherUserInfoById(userId: Int) = object: Lv2FetchResource<User>(){
         override fun createCall() = socialService.getOtherUserInfoById(userId)
     }.asLiveData()
 

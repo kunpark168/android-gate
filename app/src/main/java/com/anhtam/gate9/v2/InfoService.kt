@@ -10,8 +10,6 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface InfoService {
-    @GET("api/v1/login")
-    fun getInfo(): Call<RestResponse<User>>
 
     @POST("api/v1/social/post-like")
     fun react(@Body params: Map<String, Int>): Call<Base>

@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite">
-                <de.hdodenhof.circleimageview.CircleImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgAvatar"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
@@ -66,8 +66,7 @@
 
                     android:layout_marginTop="@dimen/layout_margin_16dp"
                     android:layout_marginBottom="@dimen/layout_margin_16dp"
-                    android:layout_marginStart="@dimen/layout_margin_16dp">
-                </de.hdodenhof.circleimageview.CircleImageView>
+                    android:layout_marginStart="@dimen/layout_margin_16dp"/>
                 <TextView
                     android:id="@+id/tvUserName"
                     android:textStyle="bold"

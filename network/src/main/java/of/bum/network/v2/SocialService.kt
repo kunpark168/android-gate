@@ -15,6 +15,8 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface SocialService {
+    @GET("login")
+    fun getInfo(): LiveData<ApiResponse<RestResponse<User>>>
 
     @GET("social/listing")
     fun getListPosts(
@@ -70,7 +72,7 @@ interface SocialService {
     ): LiveData<ApiResponse<RestResponse<WrapGames>>>
 
     @GET("user/userInfo")
-    fun getOtherUserInfoById(@Query("userId") userId: Int): LiveData<ApiResponse<User>>
+    fun getOtherUserInfoById(@Query("userId") userId: Int): LiveData<ApiResponse<RestResponse<User>>>
 
     @GET("social/all-game")
     fun GetMXHGame(@Query("type") type: Int,

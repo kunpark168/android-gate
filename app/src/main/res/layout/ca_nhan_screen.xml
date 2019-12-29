@@ -62,14 +62,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-18dp">
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imgAvatar"
                         android:layout_width="64dp"
                         android:layout_height="64dp"
                         tools:src="@tools:sample/avatars"
-                        android:src="@drawable/img_avatar_holder"
-                        app:civ_border_color="#ddd"
-                        app:civ_border_width="4dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

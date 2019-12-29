@@ -15,13 +15,9 @@ import javax.inject.Inject
  */
 
 class NewFeedViewModel @Inject constructor(
-        val socialService: SocialService,
-        val infoService: InfoService) : ViewModel() {
+        val socialService: SocialService) : ViewModel() {
 
     fun getListingPost() = object : FetchBoundResource<WrappedHome>(){
         override fun createCall() = socialService.getListPosts()
     }.asLiveData()
-
-    fun getInfoUser() = infoService.getInfo()
-    fun react(params: Map<String, Int>) = infoService.react(params)
 }
