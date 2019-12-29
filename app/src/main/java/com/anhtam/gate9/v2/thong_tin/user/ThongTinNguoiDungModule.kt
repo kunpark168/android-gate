@@ -2,10 +2,9 @@ package com.anhtam.gate9.v2.thong_tin.user
 
 import androidx.lifecycle.ViewModel
 import com.anhtam.gate9.di.ViewModelKey
-import com.anhtam.gate9.ui.discussion.DiscussionViewModel
-import com.anhtam.gate9.ui.discussion.common.discussion.DiscussionGameViewModel
-import com.anhtam.gate9.ui.discussion.common.newfeed.NewFeedFragment
-import com.anhtam.gate9.ui.discussion.common.newfeed.NewFeedModule
+import com.anhtam.gate9.v2.discussion.DiscussionViewModel
+import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedFragment
+import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedModule
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

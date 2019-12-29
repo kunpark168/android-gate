@@ -451,7 +451,7 @@
                             android:textSize="@dimen/sp_10"
                             android:textColor="@color/black"
                             android:fontFamily="@font/roboto_light"
-                            android:text="@string/dislike_feelling"
+                            android:text="@string/reply"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp25" />
                     </androidx.constraintlayout.widget.ConstraintLayout>

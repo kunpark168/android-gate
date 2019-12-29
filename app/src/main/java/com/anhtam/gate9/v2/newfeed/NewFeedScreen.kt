@@ -21,8 +21,9 @@ import com.anhtam.gate9.adapter.v2.CommentAdapter
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.storage.StorageManager
-import com.anhtam.gate9.ui.search.SearchScreen
+import com.anhtam.gate9.v2.search.SearchScreen
 import com.anhtam.gate9.utils.autoCleared
+import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.InfoService
 import com.anhtam.gate9.v2.categories.CategoryTab
 import com.anhtam.gate9.v2.categories.FeatureScreen
@@ -61,7 +62,7 @@ class NewFeedScreen : DaggerNavigationFragment() {
     private var mCommentAdapter by autoCleared<CommentAdapter>()
     private var mUserId: Int = 0
     private val mViewModel: NewFeedViewModel by viewModels { vmFactory }
-    private val mPostViewModel: com.anhtam.gate9.ui.discussion.common.newfeed.NewFeedViewModel by viewModels { vmFactory }
+    private val mPostViewModel: com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedViewModel by viewModels { vmFactory }
     @Inject lateinit var mInfoService: InfoService
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -109,14 +110,17 @@ class NewFeedScreen : DaggerNavigationFragment() {
 
         mMainViewModel._user.observe(viewLifecycleOwner, Observer {
             val avatar = when(it) {
-                is Resource.Loading -> null
+                is Resource.Loading -> ""
                 is Resource.Error -> ""
-                is Resource.Success -> Config.IMG_URL + it.data?.mAvatarPath
+                is Resource.Success -> it.data?.mAvatarPath
             }
             avatar?.run {
                 Glide.with(this@NewFeedScreen)
-                        .load(avatar)
-                        .apply {RequestOptions.circleCropTransform().placeholder(R.drawable.img_avatar_holder)
+                        .applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder)
+                                .error(R.drawable.img_avatar_holder))
+                        .load(avatar.toImage())
+                        .apply {RequestOptions.circleCropTransform()
+                                .placeholder(R.drawable.img_avatar_holder)
                                 .error(R.drawable.img_avatar_holder) }
                         .into(imgAvatar)
             }

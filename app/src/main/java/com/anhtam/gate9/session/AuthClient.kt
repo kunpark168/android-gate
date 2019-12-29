@@ -3,15 +3,13 @@ package com.anhtam.gate9.session
 import android.text.TextUtils
 import com.anhtam.gate9.App
 import com.anhtam.gate9.storage.StorageManager
-import com.anhtam.gate9.v2.InfoService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import timber.log.Timber
 import javax.inject.Inject
 
 class AuthClient
-@Inject constructor(private val mAuthService: AuthService, private val mInfoService: InfoService) {
+@Inject constructor(private val mAuthService: AuthService) {
 
     fun loginWithPassword(email: String, password: String, callback: AuthCallBack) {
         val params = hashMapOf<String, String>()

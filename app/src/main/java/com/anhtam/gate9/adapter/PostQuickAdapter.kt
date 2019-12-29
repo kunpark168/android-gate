@@ -1,22 +1,16 @@
 package com.anhtam.gate9.adapter
 
-import android.content.Context
 import android.text.Html
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.anhtam.domain.Post
-import com.anhtam.domain.v2.PostEntity
 import com.anhtam.gate9.R
-import com.anhtam.gate9.adapter.navigator.IPostNavigator
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.ui.base.BaseActivity
-import com.anhtam.gate9.ui.discussion.game.GameDiscussionActivity
-import com.anhtam.gate9.ui.discussion.user.UserDiscussionActivity
 import com.anhtam.gate9.ui.report.post.ReportPostActivity
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.utils.ifNotNull
-import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.RequestManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder

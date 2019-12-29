@@ -37,19 +37,19 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.report.post.ReportPostActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.reaction.ReactionActivity"
+        <activity android:name="com.anhtam.gate9.v2.reaction.ReactionScreen"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.discussion.user.UserDiscussionActivity"
+            android:name="com.anhtam.gate9.v2.discussion.user.UserDiscussionActivity"
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.discussion.game.GameDiscussionActivity"
+        <activity android:name="com.anhtam.gate9.v2.discussion.game.GameDiscussionActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.create_post.RatingActivity"
             android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.search.SearchScreen"
+        <activity android:name="com.anhtam.gate9.v2.search.SearchScreen"
             android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.create_post.CreatePostWithFileActivity"

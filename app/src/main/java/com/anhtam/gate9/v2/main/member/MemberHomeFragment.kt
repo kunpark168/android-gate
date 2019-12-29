@@ -9,12 +9,10 @@ import androidx.viewpager.widget.ViewPager
 import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.charts.ChartScreen
-import com.anhtam.gate9.ui.discussion.user.UserDiscussionActivity
 import com.anhtam.gate9.v2.main.member.all.MemberListFragment
 import com.anhtam.gate9.utils.customOnClickHolder
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
-import com.anhtam.gate9.vo.model.Category
 import kotlinx.android.synthetic.main.member_fragment.*
 import kotlinx.android.synthetic.main.shared_toolbar_with_back_layout.*
 

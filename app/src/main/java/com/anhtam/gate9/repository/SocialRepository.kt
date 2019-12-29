@@ -1,6 +1,7 @@
 package com.anhtam.gate9.repository
 
 import androidx.lifecycle.LiveData
+import com.anhtam.domain.Base
 import com.anhtam.domain.v2.User
 import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.domain.v2.wrap.WrapGames
@@ -39,5 +40,10 @@ class SocialRepository @Inject constructor(
 
     fun getGamesByTab(pageNumber: Int, tab: Int) = object: FetchBoundResource<com.anhtam.domain.v2.WrapGame>() {
         override fun createCall() = socialService.GetMXHGame(tab, pageNumber)
+    }.asLiveData()
+
+    fun react(params: Map<String, Int>) = object : Lv1FetchResource<Base>(){
+        override fun createCall() = socialService.react(params)
+
     }.asLiveData()
 }

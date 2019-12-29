@@ -5,10 +5,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.anhtam.domain.User
 import com.anhtam.gate9.R
-import com.anhtam.gate9.ui.discussion.user.UserDiscussionActivity
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.utils.ifNotNull
-import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.RequestManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder

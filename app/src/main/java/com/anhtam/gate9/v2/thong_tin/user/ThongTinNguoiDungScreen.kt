@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.anhtam.gate9.R
-import com.anhtam.gate9.ui.discussion.common.newfeed.NewFeedFragment
+import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
-import javax.inject.Inject
 
 class ThongTinNguoiDungScreen constructor(
         private val _userId: Int

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager.widget.ViewPager
 import com.anhtam.gate9.R
-import com.anhtam.gate9.ui.discussion.user.UserDiscussionActivity
+import com.anhtam.gate9.v2.discussion.user.UserDiscussionActivity
 import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment

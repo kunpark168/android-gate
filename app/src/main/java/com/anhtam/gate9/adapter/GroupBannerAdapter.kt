@@ -7,7 +7,7 @@ import com.anhtam.gate9.adapter.navigator.IBannerNavigator
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.navigation.Navigation
-import com.anhtam.gate9.ui.discussion.game.GameDiscussionActivity
+import com.anhtam.gate9.v2.discussion.game.GameDiscussionActivity
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.utils.ifNotNull
 import com.bumptech.glide.RequestManager

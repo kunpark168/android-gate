@@ -15,8 +15,8 @@ import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.ui.base.BaseActivity
-import com.anhtam.gate9.ui.discussion.game.GameDiscussionActivity
-import com.anhtam.gate9.ui.discussion.user.UserDiscussionActivity
+import com.anhtam.gate9.v2.discussion.game.GameDiscussionActivity
+import com.anhtam.gate9.v2.discussion.user.UserDiscussionActivity
 import com.anhtam.gate9.ui.report.post.ReportPostActivity
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.post.DetailPostScreen

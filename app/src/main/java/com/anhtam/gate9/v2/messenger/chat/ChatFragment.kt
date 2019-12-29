@@ -7,12 +7,10 @@ import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.anhtam.domain.WrappedUser
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.chat.Message
 import com.anhtam.gate9.adapter.chat.MessengerAdapter
-import com.anhtam.gate9.navigation.NavigationFragment
-import com.anhtam.gate9.ui.search.DataSource
+import com.anhtam.gate9.v2.search.DataSource
 import com.anhtam.gate9.v2.lib.loadImage
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.chat_fragment.*

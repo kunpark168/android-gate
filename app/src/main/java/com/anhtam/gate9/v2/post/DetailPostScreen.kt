@@ -19,8 +19,8 @@ import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.share.view.donate.DonateDialog
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.ui.base.BaseActivity
-import com.anhtam.gate9.ui.discussion.user.UserDiscussionActivity
-import com.anhtam.gate9.ui.reaction.ReactionActivity
+import com.anhtam.gate9.v2.discussion.user.UserDiscussionActivity
+import com.anhtam.gate9.v2.reaction.ReactionScreen
 import com.anhtam.gate9.ui.report.post.ReportPostActivity
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
@@ -48,6 +48,7 @@ open class DetailPostScreen : DaggerNavigationFragment(){
         fun newInstance(postEntity: PostEntity, type: Detail): DetailPostScreen {
             val fragment = DetailPostScreen()
             fragment.mPostEntity = postEntity
+            fragment._react = postEntity.like?.toInt() ?: 0
             fragment.mType = type
             Timber.d(StorageManager.getAccessToken())
             Timber.d("DataNDN $postEntity , ${postEntity.commentId}")
@@ -62,6 +63,7 @@ open class DetailPostScreen : DaggerNavigationFragment(){
     private var mType = Detail.POST
     @Inject lateinit var mMediaService: MediaService
     private var more = 0
+    private var _react: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
@@ -106,93 +108,35 @@ open class DetailPostScreen : DaggerNavigationFragment(){
         rvComment?.adapter = mAdapter
         rvComment?.isNestedScrollingEnabled = false
     }
-//
-//    view.likeLayout.setOnClickListener {
-//        if(checkLogin()){
-//            // change icon color and send request
-//            reaction(view, 1, unwrapPost)
-//        } else {
-//            navigation?.addFragment(LoginScreen.newInstance())
-//        }
-//    }
-//    view.loveLayout.setOnClickListener {
-//        if(checkLogin()){
-//            // change icon color and send request
-//            reaction(view, 3, unwrapPost)
-//        } else {
-//            navigation?.addFragment(LoginScreen.newInstance())
-//        }
-//    }
-//    view.dislikeLayout.setOnClickListener {
-//        if(checkLogin()){
-//            // change icon color and send request
-//            reaction(view, 2, unwrapPost)
-//        } else {
-//            navigation?.addFragment(LoginScreen.newInstance())
-//        }
-//    }
-//    private fun reactionRequest(view: View, type: Int, data: PostEntity) {
-//        data.mReactionId = type
-//        when(type) {
-//            1 -> {
-//                val like = view.likeTextView.text.toString().toInt()  + 1
-//                view.likeTextView.text = like.toString()
-//            }
-//            2 -> {
-//                val dislike = view.dislikeTextView.text.toString().toInt()  + 1
-//                view.dislikeTextView.text = dislike.toString()
-//            }
-//            3 -> {
-//                val love = view.loveTextView.text.toString().toInt()  + 1
-//                view.loveTextView.text = love.toString()
-//            }
-//        }
-//        // request api
-//        listener(data, type)
-//
-//    }
-//
-//
-//    private fun reaction(view: View, type: Int, data: PostEntity) {
-//        when (data.mReactionId) {
-//            0 -> {//change icon color and increase number}
-//            }
-//            1 -> {
-//                // change icon like
-//                val like = view.likeTextView.text.toString().toInt()  - 1
-//                view.likeTextView.text = like.toString()
-//
-//            }
-//            2 -> {
-//                // change icon dislike
-//                val dislike = view.dislikeTextView.text.toString().toInt()  - 1
-//                view.dislikeTextView.text = dislike.toString()
-//            }
-//            3 -> {
-//                // change icon love
-//                val love = view.loveTextView.text.toString().toInt()  - 1
-//                view.loveTextView.text = love.toString()
-//            }
-//        }
-//    }
-//{ data, type ->
-//    val id = data.commentId?.toInt() ?: 0
-//    val params = hashMapOf<String, Int>()
-//    params["commentId"] = id
-//    params["type"] = type
-//    params["userId"] = mUserId
-//            mViewModel.react(params).enqueue(object: Callback<Base>{
-//                override fun onFailure(call: Call<Base>, t: Throwable) {
-//                    Timber.d("Failure")
-//                }
-//
-//                override fun onResponse(call: Call<Base>, response: Response<Base>) {
-//                    Timber.d(StorageManager.getAccessToken())
-//                    Timber.d("Success")
-//                }
-//
-//            })
-//}
+        // Change icon display
+    private fun reaction(type: Int) {
+            when (_react) {
+                0 -> {//change icon color and increase number}
+                }
+                1 -> {
+                    // change icon like
+
+
+                }
+                2 -> {
+                    // change icon dislike
+
+                }
+                3 -> {
+                    // change icon love
+
+                }
+            }
+
+            val id = mPostEntity?.commentId?.toInt() ?: 0
+            val params = hashMapOf<String, Int>()
+            params["commentId"] = id
+            params["type"] = type
+            params["userId"] = StorageManager.getUserId().toInt()
+            viewModel.react(params).observe(viewLifecycleOwner, Observer {
+
+            })
+        }
 
     private fun fetchComment() {
         val commentId = mPostEntity?.commentId
@@ -215,6 +159,10 @@ open class DetailPostScreen : DaggerNavigationFragment(){
         val unwrapPost = mPostEntity ?: return
         val user = unwrapPost.user
         Glide.with(this)
+                .applyDefaultRequestOptions(
+                        RequestOptions.circleCropTransform()
+                                .placeholder(R.drawable.img_avatar_holder)
+                                .error(R.drawable.img_avatar_holder))
                 .load(user?.mAvatar?.toImage())
                 .apply {
                     RequestOptions.circleCropTransform()
@@ -322,6 +270,33 @@ open class DetailPostScreen : DaggerNavigationFragment(){
     }
 
     private fun initEvents() {
+        // Reaction
+
+
+        csLike.setOnClickListener {
+            if(checkLogin()){
+                // change icon color and send request
+                reaction(1)
+            } else {
+                navigation?.addFragment(LoginScreen.newInstance())
+            }
+        }
+        csLove.setOnClickListener {
+            if(checkLogin()){
+                // change icon color and send request
+                reaction(3)
+            } else {
+                navigation?.addFragment(LoginScreen.newInstance())
+            }
+        }
+        csDisLike.setOnClickListener {
+            if(checkLogin()){
+                // change icon color and send request
+                reaction(2)
+            } else {
+                navigation?.addFragment(LoginScreen.newInstance())
+            }
+        }
         tvFollowGame?.setOnClickListener {
             if(tvFollowGame?.text == getString(R.string.follow)) {
                 setFollowing()
@@ -332,16 +307,14 @@ open class DetailPostScreen : DaggerNavigationFragment(){
         csShare?.setOnClickListener{
             checkLogin()
         }
-        csLove?.setOnClickListener{
-            checkLogin()
-        }
+
         backFrameLayout?.setOnClickListener{ navigation?.back() }
         btnDonate?.setOnClickListener {
             val unwrapContext = context ?: return@setOnClickListener
             DonateDialog(unwrapContext).show()
         }
         tvAction?.setOnClickListener {
-            ReactionActivity.start(context)
+            navigation?.addFragment(ReactionScreen.newInstance())
         }
         ichome?.setOnClickListener { navigation?.back() }
         csDisLike?.setOnClickListener { checkLogin() }

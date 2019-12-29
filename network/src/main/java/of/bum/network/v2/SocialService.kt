@@ -10,6 +10,7 @@ import com.anhtam.domain.v2.wrap.WrapListing
 import of.bum.network.helper.ApiResponse
 import of.bum.network.helper.Resource
 import of.bum.network.helper.RestResponse
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -78,4 +79,7 @@ interface SocialService {
     fun GetMXHGame(@Query("type") type: Int,
                    @Query("page") page:Int = 0,
                    @Query("limit") limit: Int = 15) : LiveData<ApiResponse<RestResponse<com.anhtam.domain.v2.WrapGame>>>
+
+    @POST("social/post-like")
+    fun react(@Body params: Map<String, Int>): LiveData<ApiResponse<Base>>
 }

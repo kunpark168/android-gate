@@ -73,7 +73,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgAvatar"
         style="@style/MaterialIconSize"
-
+        android:src="@drawable/img_avatar_holder"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
