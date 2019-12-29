@@ -30,8 +30,7 @@ data class PostEntity(
     @Json(name = "game")
     var game: Game? = null,
     @Json(name = "child")
-    var child: List<PostEntity>? = null,
-    var mReactionId: Int = 0
+    var child: List<PostEntity>? = null
 ) : Base()
 
 data class Game(

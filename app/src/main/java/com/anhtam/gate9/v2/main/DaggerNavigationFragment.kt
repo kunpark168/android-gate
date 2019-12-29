@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelStoreOwner
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.NavigationFragment
 import com.anhtam.gate9.utils.DialogProgressUtils
@@ -26,7 +27,7 @@ abstract class DaggerNavigationFragment : NavigationFragment(){
     @Inject lateinit var vmFactory: ViewModelProviderFactory
 
     private var mProgressDialog: DialogProgressUtils? = null
-    protected val mMainViewModel by viewModels<MainViewModel> { vmFactory }
+    protected val mMainViewModel by viewModels<MainViewModel>({activity!!}, {vmFactory})
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

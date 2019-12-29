@@ -72,7 +72,7 @@ interface SocialService {
     ): LiveData<ApiResponse<RestResponse<WrapGames>>>
 
     @GET("user/userInfo")
-    fun getOtherUserInfoById(@Query("userId") userId: Int): LiveData<ApiResponse<User>>
+    fun getOtherUserInfoById(@Query("userId") userId: Int): LiveData<ApiResponse<RestResponse<User>>>
 
     @GET("social/all-game")
     fun GetMXHGame(@Query("type") type: Int,

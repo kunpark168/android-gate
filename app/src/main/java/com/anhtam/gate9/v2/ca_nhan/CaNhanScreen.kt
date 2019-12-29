@@ -2,25 +2,19 @@ package com.anhtam.gate9.v2.ca_nhan
 
 import android.os.Bundle
 import android.view.*
-import androidx.lifecycle.ViewModelProviders
-import com.anhtam.domain.v2.User
+import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
+import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.session.AuthClient
 import com.anhtam.gate9.storage.StorageManager
-import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.auth.register.RegisterScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.main.home.HomeFragment
-import com.anhtam.gate9.v2.newfeed.NewFeedScreen
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.ca_nhan_screen.*
-import of.bum.network.helper.RestResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import timber.log.Timber
+import of.bum.network.helper.Resource
 
 class CaNhanScreen : DaggerNavigationFragment() {
 
@@ -55,26 +49,30 @@ class CaNhanScreen : DaggerNavigationFragment() {
     }
 
     private fun observer() {
-//        mViewModel.getInfoUser().enqueue(object: Callback<RestResponse<User>> {
-//            override fun onFailure(call: Call<RestResponse<User>>, t: Throwable) {
-//                Timber.d("Fail to load user info")
-//            }
-//
-//            override fun onResponse(call: Call<RestResponse<User>>, response: Response<RestResponse<User>>) {
-//                if(response.isSuccessful && response.code() == 200) {
-//                    val data = response.body() ?: return
-//                    Glide.with(this@CaNhanScreen).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder).error(R.drawable.img_avatar_holder)).load(data.data?.mAvatarPath).into(imgAvatar)
-//                    tvTitle?.text = data.data?.mName
-//                    val genderSrc: Int
-//                    genderSrc = when(data.data?.mGender) {
-//                        1 -> R.drawable.ic_male
-//                        2 -> R.drawable.ic_femail
-//                        else -> R.drawable.ic_gender
-//                    }
-//                    tvTitle?.setCompoundDrawablesWithIntrinsicBounds(0, 0, genderSrc, 0)
-//                }
-//            }
-//        })
+        mMainViewModel._user.observe(viewLifecycleOwner, Observer {
+            val avatar = when(it) {
+                is Resource.Loading -> null
+                is Resource.Error -> ""
+                is Resource.Success -> {
+                    tvTitle?.text = it.data?.mName
+                    val genderSrc = when(it.data?.mGender) {
+                        1 -> R.drawable.ic_male
+                        2 -> R.drawable.ic_femail
+                        else -> R.drawable.ic_gender
+                    }
+                    tvTitle?.setCompoundDrawablesWithIntrinsicBounds(0, 0, genderSrc, 0)
+                    Config.IMG_URL + it.data?.mAvatarPath
+                }
+            }
+
+            avatar?.run {
+                Glide.with(this@CaNhanScreen)
+                        .load(avatar)
+                        .apply {RequestOptions.circleCropTransform().placeholder(R.drawable.img_avatar_holder)
+                                .error(R.drawable.img_avatar_holder) }
+                        .into(imgAvatar)
+            }
+        })
     }
 
     private fun hide(){
@@ -95,7 +93,6 @@ class CaNhanScreen : DaggerNavigationFragment() {
             navigation?.addFragment(RegisterScreen.newInstance())
         }
         imgBack?.setOnClickListener {
-//            navigation?.back()
 //            gotoSetting
         }
         logoutLayout?.setOnClickListener {

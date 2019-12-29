@@ -33,7 +33,7 @@ class SocialRepository @Inject constructor(
         override fun createCall() = socialService.getDataRelatedToUser(userId, type, page, limit)
     }.asLiveData()
 
-    fun getOtherUserInfoById(userId: Int) = object: Lv1FetchResource<User>(){
+    fun getOtherUserInfoById(userId: Int) = object: Lv2FetchResource<User>(){
         override fun createCall() = socialService.getOtherUserInfoById(userId)
     }.asLiveData()
 

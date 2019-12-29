@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.GroupBannerAdapter
 import com.anhtam.gate9.adapter.PostQuickAdapter
+import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.utils.loadingToAdapter
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.bumptech.glide.Glide
@@ -86,7 +87,7 @@ class FeatureChildrenFragment : DaggerNavigationFragment() {
     private fun notifyBannerImage(data: Resource<com.anhtam.domain.Banner>) {
         val banner = data.data ?: return
         Glide.with(this)
-                .load(banner.picture)
+                .load(Config.IMG_URL + banner.url)
                 .centerCrop()
                 .into(imgBanner)
     }

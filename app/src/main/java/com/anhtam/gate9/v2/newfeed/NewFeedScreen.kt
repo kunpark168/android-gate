@@ -120,17 +120,7 @@ class NewFeedScreen : DaggerNavigationFragment() {
                                 .error(R.drawable.img_avatar_holder) }
                         .into(imgAvatar)
             }
-//        }).enqueue(object: Callback<RestResponse<User>>{
-//            override fun onFailure(call: Call<RestResponse<User>>, t: Throwable) {
-//                Timber.d("Fail to load user info")
-//            }
-//
-//            override fun onResponse(call: Call<RestResponse<User>>, response: Response<RestResponse<User>>) {
-//                if(response.isSuccessful && response.code() == 200) {
-//                    val data = response.body() ?: return
-//                    mUserId = data.data?.mUserId ?: return
-//                }
-//            }
+            mUserId = it.data?.mUserId ?: return@Observer
         })
     }
 
@@ -145,7 +135,7 @@ class NewFeedScreen : DaggerNavigationFragment() {
             when(it) {
                 is Resource.Success -> {
                     hideProgress()
-                    bindingBanner(it.data?.mBanner)
+                    bindingBanner(it.data?.mBanner?.firstOrNull())
                     bindingGroupGames(it.data?.mGames)
                     bindingComment(it.data?.mListing)
                 }
@@ -160,24 +150,7 @@ class NewFeedScreen : DaggerNavigationFragment() {
     }
 
     private fun initCommentRecyclerView() {
-        mCommentAdapter = CommentAdapter(navigation) { data, type ->
-            val id = data.commentId?.toInt() ?: 0
-            val params = hashMapOf<String, Int>()
-            params["commentId"] = id
-            params["type"] = type
-            params["userId"] = mUserId
-//            mViewModel.react(params).enqueue(object: Callback<Base>{
-//                override fun onFailure(call: Call<Base>, t: Throwable) {
-//                    Timber.d("Failure")
-//                }
-//
-//                override fun onResponse(call: Call<Base>, response: Response<Base>) {
-//                    Timber.d(StorageManager.getAccessToken())
-//                    Timber.d("Success")
-//                }
-//
-//            })
-        }
+        mCommentAdapter = CommentAdapter(navigation)
         mCommentAdapter.setLoadMoreView(CustomLoadMoreView())
         mCommentAdapter.setOnLoadMoreListener({
             loadMore()
@@ -205,7 +178,7 @@ class NewFeedScreen : DaggerNavigationFragment() {
                                 .centerCrop()
                                 .placeholder(R.drawable.img_holder_banner)
                                 .error(R.drawable.img_holder_banner)
-                ).load(data.picture)
+                ).load(Config.IMG_URL + data.url)
                 .into(imgBanner)
     }
 

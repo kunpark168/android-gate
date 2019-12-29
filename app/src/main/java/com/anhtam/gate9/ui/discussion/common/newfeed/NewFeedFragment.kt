@@ -25,24 +25,7 @@ class NewFeedFragment(private val _userId: Int) : CommonDiscussionFragment() {
 
     override fun initView() {
         super.initView()
-        mAdapter = CommentAdapter(null){data, type ->
-            val id = data.commentId?.toInt() ?: 0
-            val params = hashMapOf<String, Int>()
-            params["commentId"] = id
-            params["type"] = type
-            params["userId"] = _userId
-//            viewModel.react(params).enqueue(object: Callback<Base> {
-//                override fun onFailure(call: Call<Base>, t: Throwable) {
-//                    Timber.d("Failure")
-//                }
-//
-//                override fun onResponse(call: Call<Base>, response: Response<Base>) {
-//                    Timber.d(StorageManager.getAccessToken())
-//                    Timber.d("Success")
-//                }
-//
-//            })
-        }
+        mAdapter = CommentAdapter(navigation)
         mAdapter.setLoadMoreView(CustomLoadMoreView())
         rvShareDiscussion?.adapter = mAdapter
         mAdapter.setOnLoadMoreListener ({
