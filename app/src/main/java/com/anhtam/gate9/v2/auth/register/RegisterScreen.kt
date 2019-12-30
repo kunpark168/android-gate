@@ -19,7 +19,6 @@ class RegisterScreen : DaggerNavigationFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_orange)
         return inflater.inflate(R.layout.register_screen, container, false)
     }
 
@@ -28,6 +27,8 @@ class RegisterScreen : DaggerNavigationFragment() {
         setColorText()
         events()
     }
+
+    override fun statusColor() = R.color.color_main_orange
 
     private fun setColorText(){
         val styledText = "<font color='red'>Note: </font> Trong vào 48h, bạn cần vào Email đã đăng ký để kích hoạt tài khoản trước khi sử dụng"

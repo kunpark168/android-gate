@@ -29,9 +29,9 @@ class LoginScreen : DaggerNavigationFragment() {
 
     private val loginViewModel: LoginViewModel by viewModels { vmFactory }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_orange)
         return inflater.inflate(R.layout.login_screen, container, false)
     }
 
@@ -39,6 +39,8 @@ class LoginScreen : DaggerNavigationFragment() {
         super.onViewCreated(view, savedInstanceState)
         events()
     }
+
+    override fun statusColor() = R.color.color_main_orange
 
     private fun events() {
         btnConfirm.setOnClickListener {

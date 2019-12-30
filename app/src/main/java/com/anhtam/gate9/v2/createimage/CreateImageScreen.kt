@@ -16,7 +16,6 @@ class CreateImageScreen : DaggerNavigationFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_blue)
         return inflater.inflate(R.layout.create_image_screen, container, false)
     }
 

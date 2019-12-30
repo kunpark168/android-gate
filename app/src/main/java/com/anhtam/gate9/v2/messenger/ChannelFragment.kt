@@ -51,10 +51,10 @@ class ChannelFragment : DaggerNavigationFragment() {
         })
         initRv()
         events()
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.colorAccent)
     }
 
     override fun menuRes() = R.menu.menu_chat_search_more
+    override fun statusColor() = R.color.color_main_orange
 
     private fun initRv() {
         mAdapter = ChannelAdapter(this)

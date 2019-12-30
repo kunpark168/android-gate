@@ -64,7 +64,6 @@ class NewFeedScreen : DaggerNavigationFragment() {
     private val mPostViewModel: com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedViewModel by viewModels { vmFactory }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_blue)
         return inflater.inflate(R.layout.new_feed_screen, container, false)
     }
 

@@ -1,10 +1,8 @@
 package com.anhtam.gate9.v2.messenger.chat
 
-import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.EditorInfo
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
@@ -40,11 +38,9 @@ class ChatFragment : DaggerNavigationFragment() {
         observer()
         viewModel.userId.value = userId
         events()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val unwrappedContext = context ?: return
-            activity?.window?.statusBarColor = ContextCompat.getColor(unwrappedContext, R.color.colorIndicator)
-        }
     }
+
+    override fun statusColor() = R.color.color_main_blue
 
     private fun events() {
         iconBack?.setOnClickListener {

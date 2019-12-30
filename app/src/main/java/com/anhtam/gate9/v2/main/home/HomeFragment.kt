@@ -28,7 +28,6 @@ import kotlinx.android.synthetic.main.rating_view_header01.*
 class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
 
     override fun onFragmentResult(args: Bundle) {
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_blue)
         mNewFeedScreen?.update()
     }
 
@@ -42,7 +41,6 @@ class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
     private var mNewFeedScreen: NewFeedScreen? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_blue)
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 

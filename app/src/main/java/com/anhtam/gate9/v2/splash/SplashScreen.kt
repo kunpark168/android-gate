@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
@@ -26,7 +25,6 @@ class SplashScreen : DaggerNavigationFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.white)
         return inflater.inflate(R.layout.splash_screen, container, false)
     }
 
@@ -44,6 +42,8 @@ class SplashScreen : DaggerNavigationFragment() {
             }
         })
     }
+
+    override fun statusColor() = R.color.white
 
     private fun startAnimation() {
         val animation = AnimationUtils.loadAnimation(context, R.anim.splash)
