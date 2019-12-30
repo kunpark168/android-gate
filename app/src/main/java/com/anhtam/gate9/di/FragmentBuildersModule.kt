@@ -24,6 +24,7 @@ import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionModule
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionModule
+import com.anhtam.gate9.v2.gallery.GalleryScreen
 import com.anhtam.gate9.v2.mxh_game.MXHGameScreen
 import com.anhtam.gate9.v2.main.home.HomeFragment
 import com.anhtam.gate9.v2.main.home.HomeModule
@@ -159,6 +160,9 @@ abstract class FragmentBuildersModule {
             modules = [GameDiscussionModule::class]
     )
     abstract fun contributeGameDiscussionActivity(): GameDiscussionScreen
+
+    @ContributesAndroidInjector
+    abstract fun contributeGalleryScreen(): GalleryScreen
 
 //    @ContributesAndroidInjector(
 //            modules = [ChannelModule::class, FragmentBuildersModule::class]

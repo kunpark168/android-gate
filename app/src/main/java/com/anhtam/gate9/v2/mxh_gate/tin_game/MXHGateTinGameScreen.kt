@@ -6,6 +6,7 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.anhtam.gate9.R
+import com.anhtam.gate9.navigation.NavigationFragment
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.mxh_gate.MXHGateScreen
@@ -14,7 +15,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.mxh_gate_tin_game_screen.*
 
-class MXHGateTinGameScreen : DaggerNavigationFragment() {
+class MXHGateTinGameScreen : NavigationFragment() {
 
     companion object{
         fun newInstance() = MXHGateTinGameScreen()

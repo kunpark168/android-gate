@@ -26,6 +26,7 @@ import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.categories.CategoryTab
 import com.anhtam.gate9.v2.categories.FeatureScreen
+import com.anhtam.gate9.v2.main.ContainerFragment
 import com.anhtam.gate9.v2.mxh_game.MXHGameScreen
 import com.anhtam.gate9.v2.notification.NotificationFragment
 import com.anhtam.gate9.v2.main.member.MemberHomeFragment
@@ -46,7 +47,7 @@ import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Named
 
-class NewFeedScreen : DaggerNavigationFragment() {
+class NewFeedScreen : ContainerFragment() {
 
     fun update() {
         Timber.d("War")

@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.anhtam.gate9.adapter.navigator.IPostNavigator
 import com.anhtam.domain.v2.PostEntity
+import com.anhtam.domain.v2.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.navigation.Navigation
@@ -17,6 +18,7 @@ import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
+import com.anhtam.gate9.v2.gallery.GalleryScreen
 import com.anhtam.gate9.v2.post.DetailPostScreen
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -99,6 +101,7 @@ class CommentAdapter @Inject constructor(
                 else -> PhotoEntity.GRID_N
             }, it)}
             val adapter = PhotoAdapter()
+            adapter.setUser(user)
             adapter.setSpanSizeLookup { _, position ->
                 adapter.data[position].getSpanSize()
             }
@@ -197,16 +200,26 @@ class CommentAdapter @Inject constructor(
     }
 
     inner class PhotoAdapter : BaseMultiItemQuickAdapter<PhotoEntity, BaseViewHolder>(mutableListOf()){
+
+        private lateinit var mUser: User
+
         init {
             addItemType(PhotoEntity.GRID_1, R.layout.photo_1_item_layout)
             addItemType(PhotoEntity.GRID_4, R.layout.photo_4_item_layout)
             addItemType(PhotoEntity.GRID_N, R.layout.photo_n_item_layout)
         }
 
+        fun setUser(user: User){
+            mUser = user
+        }
+
         override fun convert(helper: BaseViewHolder?, item: PhotoEntity?) {
             val photo = item?.photo ?: return
             val view = helper?.itemView ?: return
             val imgPhoto = view.findViewById<ImageView>(R.id.imgPhoto)
+            imgPhoto.setOnClickListener {
+                navigation?.addFragment(GalleryScreen.newInstance(data.map { it.photo}, mUser))
+            }
             Glide.with(mContext)
                     .load(Config.IMG_URL + photo)
                     .apply(bannerOptions)

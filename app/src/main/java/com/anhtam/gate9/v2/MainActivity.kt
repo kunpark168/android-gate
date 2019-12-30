@@ -22,7 +22,6 @@ import com.anhtam.gate9.v2.splash.SplashScreen
 import dagger.android.support.DaggerAppCompatActivity
 
 
-
 class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
 
     companion object {
@@ -51,7 +50,12 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
         val visibleFragment = supportFragmentManager.fragments.lastOrNull() as? OnFragmentListener
         visibleFragment?.onBack()
         super.onBackPressed()
-        val behindFragment = supportFragmentManager.fragments.lastOrNull() as? OnFragmentListener
+        val fragment = if(supportFragmentManager.fragments.size == 2) {
+            supportFragmentManager.fragments.firstOrNull()
+        } else {
+            supportFragmentManager.fragments.lastOrNull()
+        }
+        val behindFragment = fragment as? OnFragmentListener
         behindFragment?.onFragmentResult()
         when(behindFragment) {
             is UserDiscussionScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_blue)

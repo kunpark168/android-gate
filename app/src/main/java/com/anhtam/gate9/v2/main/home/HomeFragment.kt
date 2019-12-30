@@ -108,12 +108,10 @@ class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
         mNewFeedScreen = NewFeedScreen.newInstance()
         fragments.add(mNewFeedScreen!!)
         fragments.add(BlankFragment.newInstance("2"))
-        fragments.add(BlankFragment.newInstance("3"))
-        fragments.add(BlankFragment.newInstance("4"))
         childFragmentManager.run {
             val adapter = SharePageAdapter(this, fragments)
             viewPager?.adapter = adapter
-            viewPager?.offscreenPageLimit = 4
+            viewPager?.offscreenPageLimit = 2
         }
         bottomView?.syncWithViewPager(viewPager)
         bottomView?.openPersonal {
