@@ -39,6 +39,7 @@ import of.bum.network.helper.Resource
 import of.bum.network.v2.MediaService
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Named
 
 open class DetailPostScreen : DaggerNavigationFragment(){
 
@@ -62,6 +63,9 @@ open class DetailPostScreen : DaggerNavigationFragment(){
     @Inject lateinit var mMediaService: MediaService
     private var more = 0
     private var _react: Int = 0
+
+    @field:Named("avatar") @Inject lateinit var avatarOptions: RequestOptions
+    @field:Named("banner") @Inject lateinit var bannerOptions: RequestOptions
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
@@ -151,16 +155,8 @@ open class DetailPostScreen : DaggerNavigationFragment(){
         val unwrapPost = mPostEntity ?: return
         val user = unwrapPost.user
         Glide.with(this)
-                .applyDefaultRequestOptions(
-                        RequestOptions.circleCropTransform()
-                                .placeholder(R.drawable.img_avatar_holder)
-                                .error(R.drawable.img_avatar_holder))
                 .load(user?.mAvatar?.toImage())
-                .apply {
-                    RequestOptions.circleCropTransform()
-                            .placeholder(R.drawable.img_avatar_holder)
-                            .error(R.drawable.img_avatar_holder)
-                }
+                .apply(avatarOptions)
                 .into(imgAvatar)
         tvUserName?.text = user?.mName
         val follow = Phrase.from(getString(R.string.following_amount_and_follower_amount))
@@ -216,20 +212,12 @@ open class DetailPostScreen : DaggerNavigationFragment(){
         tvNameGame.visibility = View.VISIBLE
         imgDropDown.visibility = View.VISIBLE
         Glide.with(this)
-                .applyDefaultRequestOptions(
-                        RequestOptions()
-                                .placeholder(R.drawable.img_holder_banner)
-                                .error(R.drawable.img_holder_banner)
-                )
                 .load(game.avatar?.toImage())
+                .apply(bannerOptions)
                 .into(imgGame)
         Glide.with(this)
-                .applyDefaultRequestOptions(
-                        RequestOptions()
-                                .placeholder(R.drawable.img_holder_banner)
-                                .error(R.drawable.img_holder_banner)
-                )
                 .load(game.avatar?.toImage())
+                .apply(bannerOptions)
                 .into(imgNewGame)
         tvNameGame.text = game.name
 
@@ -381,12 +369,8 @@ open class DetailPostScreen : DaggerNavigationFragment(){
             val user = unwrapPost.user ?: return
             view.userNameTextView.text = user.mName
             Glide.with(mContext)
-                    .applyDefaultRequestOptions(
-                            RequestOptions.circleCropTransform()
-                                    .placeholder(R.drawable.img_avatar_holder)
-                                    .error(R.drawable.img_avatar_holder)
-                    ).load(user.mAvatar?.toImage())
-                    .apply(RequestOptions.circleCropTransform())
+                    .load(user.mAvatar?.toImage())
+                    .apply(avatarOptions)
                     .into(view.avatarImageView)
             view.contentTextView?.setOnClickListener {
                 navigation?.addFragment(newInstance(unwrapPost, Detail.COMMENT))
@@ -446,12 +430,8 @@ open class DetailPostScreen : DaggerNavigationFragment(){
             val user = unwrapPost.user ?: return
             view.userNameTextView.text = user.mName
             Glide.with(mContext)
-                    .applyDefaultRequestOptions(
-                            RequestOptions()
-                                    .placeholder(R.drawable.img_avatar_holder)
-                                    .error(R.drawable.img_avatar_holder)
-                    ).load(user.mAvatar)
-                    .apply(RequestOptions.circleCropTransform())
+                    .load(user.mAvatar)
+                    .apply(avatarOptions)
                     .into(view.avatarImageView)
             view.contentTextView?.setOnClickListener {
                 navigation?.addFragment(newInstance(unwrapPost, Detail.COMMENT))
@@ -486,12 +466,8 @@ open class DetailPostScreen : DaggerNavigationFragment(){
             val view = helper?.itemView ?: return
             val imgPhoto = view.findViewById<ImageView>(R.id.imgPhoto)
             Glide.with(mContext)
-                    .applyDefaultRequestOptions(
-                            RequestOptions()
-                                    .placeholder(R.drawable.img_holder_banner)
-                                    .error(R.drawable.img_holder_banner)
-                                    .centerCrop()
-                    ).load(photo.toImage())
+                    .load(photo.toImage())
+                    .apply(bannerOptions)
                     .into(imgPhoto)
             if (item.type == CommentAdapter.PhotoEntity.GRID_N) {
                 view.tvMore.text = "+".plus(more.toString())

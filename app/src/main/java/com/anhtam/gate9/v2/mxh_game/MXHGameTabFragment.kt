@@ -25,6 +25,8 @@ import kotlinx.android.synthetic.main.mxh_game_item_layout.view.*
 import kotlinx.android.synthetic.main.mxh_game_tab_fragment.*
 import kotlinx.android.synthetic.main.shared_play_banner_game_layout.view.*
 import of.bum.network.helper.Resource
+import javax.inject.Inject
+import javax.inject.Named
 
 class MXHGameTabFragment : DaggerNavigationFragment() {
     companion object{
@@ -38,6 +40,9 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
     private var mType : MXHGameScreen.MXHGameTab = MXHGameScreen.MXHGameTab.ALL
     private var mAdapter by autoCleared<Adapter>()
     private var mLoading = false
+
+    @field:Named("banner") @Inject lateinit var bannerOptions: RequestOptions
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.mxh_game_tab_fragment, container, false)
     }
@@ -104,17 +109,14 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
         })
     }
 
-    class Adapter : BaseQuickAdapter<GameEntity, BaseViewHolder>(R.layout.mxh_game_item_layout, arrayListOf()){
+    inner class Adapter : BaseQuickAdapter<GameEntity, BaseViewHolder>(R.layout.mxh_game_item_layout, arrayListOf()){
         override fun convert(helper: BaseViewHolder?, item: GameEntity?) {
             val view = helper?.itemView ?: return
             val data = item ?: return
             view.tvTitle.text = item.name
             Glide.with(mContext)
-                    .applyDefaultRequestOptions(
-                            RequestOptions()
-                                    .placeholder(R.drawable.img_holder_banner)
-                                    .error(R.drawable.img_holder_banner)
-                    ).load(data.avatar)
+                    .load(data.avatar)
+                    .apply(bannerOptions)
                     .into(view.imgBannerGame)
             val followDescription = mContext.getString(R.string.follower_amount_and_post_amount)
             val followGame = Phrase.from(followDescription)

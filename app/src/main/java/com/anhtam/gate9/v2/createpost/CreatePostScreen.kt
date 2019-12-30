@@ -35,6 +35,7 @@ import retrofit2.Response
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
+import javax.inject.Named
 
 class CreatePostScreen : DaggerNavigationFragment() {
 
@@ -44,6 +45,8 @@ class CreatePostScreen : DaggerNavigationFragment() {
     private var mPhotos = arrayListOf<String>()
     private var mAdapter: PhotoAdapter? = null
     private var mMedia = arrayListOf<MultipartBody.Part>()
+
+    @field:Named("banner") @Inject lateinit var bannerOptions: RequestOptions
 
     companion object {
         fun newInstance()= CreatePostScreen()
@@ -216,17 +219,14 @@ class CreatePostScreen : DaggerNavigationFragment() {
             startActivityForResult(intent, Config.REQUEST_CODE_CHOOSE_IMAGE_FROM_CREATE_POST)
         }
     }
-    class PhotoAdapter: BaseQuickAdapter<String, BaseViewHolder>(R.layout.select_photo_item_layout, mutableListOf()) {
+    inner class PhotoAdapter: BaseQuickAdapter<String, BaseViewHolder>(R.layout.select_photo_item_layout, mutableListOf()) {
         override fun convert(helper: BaseViewHolder?, item: String?) {
             val path = item ?: return
             val bitmap = BitmapFactory.decodeFile(path)
             val view = helper?.itemView ?: return
             Glide.with(mContext)
-                    .applyDefaultRequestOptions(
-                            RequestOptions().error( R.drawable.img_holder_banner)
-                                    .placeholder(R.drawable.img_holder_banner)
-                                    .centerCrop()
-                    ).load(bitmap)
+                    .load(bitmap)
+                    .apply(bannerOptions)
                     .into(view.imgPhoto)
             helper.addOnClickListener(R.id.tvCancel)
         }
