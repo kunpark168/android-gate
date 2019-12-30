@@ -7,7 +7,7 @@ import com.anhtam.gate9.adapter.navigator.IBannerNavigator
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.navigation.Navigation
-import com.anhtam.gate9.v2.discussion.game.GameDiscussionActivity
+import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.utils.ifNotNull
 import com.bumptech.glide.RequestManager
@@ -19,7 +19,7 @@ class GroupBannerAdapter(private val navigation: Navigation?, private val reques
         IBannerNavigator {
 
     override fun navigateToSocialDiscussion(context: Context?, link: String, gameId: String) {
-        navigation?.addFragment(GameDiscussionActivity.newInstance(link, gameId))
+        navigation?.addFragment(GameDiscussionScreen.newInstance(link, gameId))
     }
 
     override fun convert(helper: BaseViewHolder?, item: Game?) {

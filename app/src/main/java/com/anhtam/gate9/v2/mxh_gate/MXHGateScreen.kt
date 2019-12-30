@@ -26,7 +26,6 @@ class MXHGateScreen : DaggerNavigationFragment() {
     private val mTabs by lazy { arrayOf(tabAll, tabLove, tabDownload, tabFollowing)}
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_orange)
-        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.mxh_gate_screen, container, false)
     }
 
@@ -35,13 +34,9 @@ class MXHGateScreen : DaggerNavigationFragment() {
         init()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_chat_search_more, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+    override fun menuRes() = R.menu.menu_chat_search_more
 
     private fun init() {
-        setSupportActionBar(toolbar)
         setUpViewPager()
         initEvents()
     }
@@ -53,9 +48,6 @@ class MXHGateScreen : DaggerNavigationFragment() {
                 enableTab(index)
                 vpGate?.currentItem = index
             }
-        }
-        backFrameLayout?.setOnClickListener {
-            navigation?.back()
         }
     }
 

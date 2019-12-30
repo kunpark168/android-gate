@@ -14,10 +14,8 @@ import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.storage.StorageManager
-import com.anhtam.gate9.ui.base.BaseActivity
-import com.anhtam.gate9.v2.discussion.game.GameDiscussionActivity
-import com.anhtam.gate9.v2.discussion.user.UserDiscussionActivity
-import com.anhtam.gate9.ui.report.post.ReportPostActivity
+import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
+import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.post.DetailPostScreen
 import com.anhtam.gate9.vo.model.Category
@@ -30,9 +28,9 @@ import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.photo_n_item_layout.view.*
 import kotlinx.android.synthetic.main.shared_post_item_layout.view.*
+import javax.inject.Inject
 
-
-class CommentAdapter(private val navigation: Navigation?)
+class CommentAdapter @Inject constructor(val navigation: Navigation?)
     : BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.shared_post_item_layout, ArrayList()), IPostNavigator {
 
     private var more = 0
@@ -142,7 +140,7 @@ class CommentAdapter(private val navigation: Navigation?)
         view.moreImageView.setOnClickListener {
             val mMoreDialog = MoreDialog(mContext, object : MoreDialog.IMore {
                 override fun onreport() {
-                    ReportPostActivity.start(mContext as BaseActivity)
+//                    ReportPostActivity.start(mContext as BaseActivity)
                 }
             })
             mMoreDialog.idPost = unwrapPost.commentId?.toString()
@@ -150,8 +148,8 @@ class CommentAdapter(private val navigation: Navigation?)
         }
 
         // game
-        view.gameImageView?.setOnClickListener { navigation?.addFragment(GameDiscussionActivity.newInstance("", "0")) }
-        view.titleGameTextView?.setOnClickListener { navigation?.addFragment(GameDiscussionActivity.newInstance("", "0")) }
+        view.gameImageView?.setOnClickListener { navigation?.addFragment(GameDiscussionScreen.newInstance("", "0")) }
+        view.titleGameTextView?.setOnClickListener { navigation?.addFragment(GameDiscussionScreen.newInstance("", "0")) }
         view.commentIcon.setOnClickListener {
             if(checkLogin()){
                 // change icon color and send request
@@ -181,7 +179,7 @@ class CommentAdapter(private val navigation: Navigation?)
     }
 
     override fun navigateToMemberDiscussion(userId: Int) {
-        navigation?.addFragment(UserDiscussionActivity.newInstance(userId, Category.Member))
+        navigation?.addFragment(UserDiscussionScreen.newInstance(userId, Category.Member))
     }
 
     override fun navigateToPostDetail(context: Context?, postEntity: PostEntity) {

@@ -24,9 +24,9 @@ class MemberAdapter(private val requestManager: RequestManager,private val type:
                     .into(imgAvatar)
             mContext?.let {
                 holder.itemView.debounceClick {
-//                    if(type == "member") UserDiscussionActivity.start(mContext, user.user_id?.toInt() ?: 0, Category.Member)
+//                    if(type == "member") UserDiscussionScreen.start(mContext, user.user_id?.toInt() ?: 0, Category.Member)
 //                    else {
-//                        UserDiscussionActivity.start(mContext, user.user_id?.toInt() ?: 0, Category.Publisher)
+//                        UserDiscussionScreen.start(mContext, user.user_id?.toInt() ?: 0, Category.Publisher)
 //                    }
                 }
             }

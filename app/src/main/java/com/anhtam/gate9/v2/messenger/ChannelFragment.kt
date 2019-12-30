@@ -54,6 +54,8 @@ class ChannelFragment : DaggerNavigationFragment() {
         activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.colorAccent)
     }
 
+    override fun menuRes() = R.menu.menu_chat_search_more
+
     private fun initRv() {
         mAdapter = ChannelAdapter(this)
         rv?.adapter = mAdapter
@@ -89,10 +91,5 @@ class ChannelFragment : DaggerNavigationFragment() {
                 DatePickerDialog(unwrappedContext).show()
             }
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_chat_search_more, menu)
-        super.onCreateOptionsMenu(menu, inflater)
     }
 }

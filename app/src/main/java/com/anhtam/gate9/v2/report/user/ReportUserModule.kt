@@ -1,4 +1,4 @@
-package com.anhtam.gate9.ui.report.user
+package com.anhtam.gate9.v2.report.user
 
 import androidx.lifecycle.ViewModel
 import com.anhtam.gate9.di.ViewModelKey

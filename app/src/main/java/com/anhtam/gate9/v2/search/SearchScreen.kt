@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.search_screen.*
 class SearchScreen : DaggerNavigationFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.search_screen, container, false)
     }
 
@@ -25,10 +24,7 @@ class SearchScreen : DaggerNavigationFragment() {
         initEvents()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_chat_search_more, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+    override fun menuRes() = R.menu.menu_chat_search_more
 
     private fun initEvents() {
         imgSearch?.setOnClickListener {
@@ -62,15 +58,9 @@ class SearchScreen : DaggerNavigationFragment() {
     private var currentFragment: Fragment = fragmentChartSearch
 
     private fun initView() {
-        setSupportActionBar(toolbar)
         childFragmentManager.beginTransaction().add(R.id.container, fragmentTemp).hide(fragmentTemp).commit()
         childFragmentManager.beginTransaction().add(R.id.container, fragmentResultSearch).hide(fragmentResultSearch).commit()
         childFragmentManager.beginTransaction().add(R.id.container, fragmentChartSearch).commit()
-
-        //
-        backFrameLayout?.setOnClickListener {
-            navigation?.back()
-        }
     }
 
     companion object {

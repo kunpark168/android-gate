@@ -18,10 +18,8 @@ import com.anhtam.gate9.adapter.v2.CommentAdapter
 import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.share.view.donate.DonateDialog
 import com.anhtam.gate9.storage.StorageManager
-import com.anhtam.gate9.ui.base.BaseActivity
-import com.anhtam.gate9.v2.discussion.user.UserDiscussionActivity
+import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.reaction.ReactionScreen
-import com.anhtam.gate9.ui.report.post.ReportPostActivity
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.auth.login.LoginScreen
@@ -72,16 +70,10 @@ open class DetailPostScreen : DaggerNavigationFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
-        setSupportActionBar(toolbar)
         init()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        inflater.inflate(R.menu.menu_chat_search_more, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+    override fun menuRes() = R.menu.menu_chat_search_more
 
     private fun init() {
         if(!(mPostEntity?.totalReply.isNullOrEmpty() || mPostEntity?.totalReply?.toInt() == 0)){
@@ -307,8 +299,6 @@ open class DetailPostScreen : DaggerNavigationFragment(){
         csShare?.setOnClickListener{
             checkLogin()
         }
-
-        backFrameLayout?.setOnClickListener{ navigation?.back() }
         btnDonate?.setOnClickListener {
             val unwrapContext = context ?: return@setOnClickListener
             DonateDialog(unwrapContext).show()
@@ -404,8 +394,8 @@ open class DetailPostScreen : DaggerNavigationFragment(){
             view.commentImageView?.setOnClickListener {
                 navigation?.addFragment(newInstance(unwrapPost, Detail.COMMENT))
             }
-            view.userNameTextView?.setOnClickListener { navigation?.addFragment(UserDiscussionActivity.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
-            view.avatarImageView?.setOnClickListener { navigation?.addFragment(UserDiscussionActivity.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
+            view.userNameTextView?.setOnClickListener { navigation?.addFragment(UserDiscussionScreen.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
+            view.avatarImageView?.setOnClickListener { navigation?.addFragment(UserDiscussionScreen.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
 
             if(TextUtils.isEmpty(unwrapPost.totalReply)){
                 return
@@ -469,12 +459,12 @@ open class DetailPostScreen : DaggerNavigationFragment(){
             view.commentImageView?.setOnClickListener {
                 navigation?.addFragment(newInstance(unwrapPost, Detail.COMMENT))
             }
-            view.userNameTextView?.setOnClickListener { navigation?.addFragment(UserDiscussionActivity.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
-            view.avatarImageView?.setOnClickListener { navigation?.addFragment(UserDiscussionActivity.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
+            view.userNameTextView?.setOnClickListener { navigation?.addFragment(UserDiscussionScreen.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
+            view.avatarImageView?.setOnClickListener { navigation?.addFragment(UserDiscussionScreen.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
             view.moreImageView?.setOnClickListener {
                 val mMoreDialog = MoreDialog(context!!, object : MoreDialog.IMore {
                     override fun onreport() {
-                        ReportPostActivity.start(mContext as BaseActivity)
+//                        ReportPostActivity.start(mContext as BaseActivity)
                     }
                 })
                 mMoreDialog.idPost = unwrapPost.commentId?.toString()

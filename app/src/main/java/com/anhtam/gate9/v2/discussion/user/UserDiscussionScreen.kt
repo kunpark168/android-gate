@@ -14,7 +14,7 @@ import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
 import com.anhtam.gate9.vo.model.Category
 import of.bum.network.helper.Resource
 
-class UserDiscussionActivity : DiscussionActivity() {
+class UserDiscussionScreen : DiscussionActivity() {
 
     private var mUserId: Int = 0
     private lateinit var mType: Category
@@ -66,8 +66,8 @@ class UserDiscussionActivity : DiscussionActivity() {
     }
 
     companion object {
-        fun newInstance(idUser: Int, type: Category): UserDiscussionActivity {
-            val fragment = UserDiscussionActivity()
+        fun newInstance(idUser: Int, type: Category): UserDiscussionScreen {
+            val fragment = UserDiscussionScreen()
             fragment.mUserId = idUser
             fragment.mType = type
             return fragment

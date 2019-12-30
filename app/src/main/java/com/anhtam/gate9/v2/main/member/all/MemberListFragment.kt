@@ -59,9 +59,6 @@ class MemberListFragment
     }
 
     private fun initEvents() {
-        backFrameLayout?.customOnClickHolder {
-            activity?.onBackPressed()
-        }
     }
 
     private fun setUpRecyclerView() {

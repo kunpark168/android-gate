@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_shared_discussion.*
 import kotlinx.android.synthetic.main.header_game_discussion.*
 import of.bum.network.helper.Resource
 
-class GameDiscussionActivity: DiscussionActivity() {
+class GameDiscussionScreen: DiscussionActivity() {
 
     private lateinit var mLink: String
     private lateinit var mGameId: String
@@ -100,8 +100,8 @@ class GameDiscussionActivity: DiscussionActivity() {
     }
 
     companion object {
-        fun newInstance(linkGame: String, gameId: String): GameDiscussionActivity {
-            val fragment = GameDiscussionActivity()
+        fun newInstance(linkGame: String, gameId: String): GameDiscussionScreen {
+            val fragment = GameDiscussionScreen()
             fragment.mLink = linkGame
             fragment.mGameId = gameId
             return fragment

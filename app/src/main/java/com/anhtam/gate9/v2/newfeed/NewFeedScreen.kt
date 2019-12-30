@@ -24,7 +24,6 @@ import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.v2.search.SearchScreen
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
-import com.anhtam.gate9.v2.InfoService
 import com.anhtam.gate9.v2.categories.CategoryTab
 import com.anhtam.gate9.v2.categories.FeatureScreen
 import com.anhtam.gate9.v2.mxh_game.MXHGameScreen
@@ -61,9 +60,8 @@ class NewFeedScreen : DaggerNavigationFragment() {
     private var mGroup4Adapter by autoCleared<GroupBannerAdapter>()
     private var mCommentAdapter by autoCleared<CommentAdapter>()
     private var mUserId: Int = 0
-    private val mViewModel: NewFeedViewModel by viewModels { vmFactory }
+    private val mViewModel: NewFeedViewModel by viewModels ({requireNotNull(activity)}, {vmFactory })
     private val mPostViewModel: com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedViewModel by viewModels { vmFactory }
-    @Inject lateinit var mInfoService: InfoService
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_blue)
@@ -134,7 +132,7 @@ class NewFeedScreen : DaggerNavigationFragment() {
 
     private fun loadData() {
         Timber.d(StorageManager.getAccessToken())
-        mViewModel.getListingPost().observe(viewLifecycleOwner, Observer {
+        mViewModel.data.observe(viewLifecycleOwner, Observer {
             Timber.d("Status $it")
             when(it) {
                 is Resource.Success -> {

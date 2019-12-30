@@ -25,17 +25,11 @@ class ReactionScreen : DaggerNavigationFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
-        setSupportActionBar(toolbar)
         initViewPager()
         initControl()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        inflater.inflate(R.menu.menu_chat_search_more, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+    override fun menuRes() = R.menu.menu_chat_search_more
 
     private fun initViewPager(){
         val fragments = ArrayList<Fragment>()
@@ -59,8 +53,6 @@ class ReactionScreen : DaggerNavigationFragment() {
     }
 
     private fun initControl(){
-        backFrameLayout?.debounceClick { navigation?.back() }
-
         csShare.debounceClick { vpReaction.currentItem = 0 }
         csLove.debounceClick { vpReaction.currentItem = 1 }
         csLike.debounceClick { vpReaction.currentItem = 2 }

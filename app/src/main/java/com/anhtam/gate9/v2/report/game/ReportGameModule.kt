@@ -1,4 +1,4 @@
-package com.anhtam.gate9.ui.report.game
+package com.anhtam.gate9.v2.report.game
 
 import androidx.lifecycle.ViewModel
 import com.anhtam.gate9.di.ViewModelKey

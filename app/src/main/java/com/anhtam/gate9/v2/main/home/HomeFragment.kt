@@ -29,7 +29,6 @@ class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
 
     override fun onFragmentResult(args: Bundle) {
         activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_blue)
-        MainActivity.mColor = MainActivity.ColorStatus.BLUE
         mNewFeedScreen?.update()
     }
 

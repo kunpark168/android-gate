@@ -40,11 +40,11 @@ class GameQuickAdapter() :
             csRating?.init(unwrappedGame.point ?: "0", "-" ?: "0")
 //
 //            imgAvatarGame?.debounceClick {
-//                GameDiscussionActivity.start(context, unwrappedGame.link, unwrappedGame.gameId)
+//                GameDiscussionScreen.start(context, unwrappedGame.link, unwrappedGame.gameId)
 //            }
 //
 //            tvTitle?.debounceClick {
-//                GameDiscussionActivity.start(context, unwrappedGame.link, unwrappedGame.gameId)
+//                GameDiscussionScreen.start(context, unwrappedGame.link, unwrappedGame.gameId)
 //            }
 
         }

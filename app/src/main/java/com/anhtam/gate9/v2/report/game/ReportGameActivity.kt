@@ -1,25 +1,29 @@
-package com.anhtam.gate9.ui.report.game
+package com.anhtam.gate9.v2.report.game
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.anhtam.gate9.R
 import com.anhtam.gate9.utils.debounceClick
+import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.activity_report_game.*
 
-class ReportGameActivity : AppCompatActivity() {
+class ReportGameActivity : DaggerNavigationFragment() {
 
     companion object {
-        fun start(context: Context?) {
-            val intent = Intent(context, ReportGameActivity::class.java)
-            context?.startActivity(intent)
-        }
+        fun newInstance() = ReportGameActivity()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_report_game)
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.activity_report_game, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initControls()
     }
 

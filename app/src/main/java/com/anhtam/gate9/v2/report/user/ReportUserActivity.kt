@@ -1,27 +1,30 @@
-package com.anhtam.gate9.ui.report.post
+package com.anhtam.gate9.v2.report.user
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.anhtam.gate9.R
-import com.anhtam.gate9.ui.base.BaseActivity
-import com.anhtam.gate9.ui.report.game.ReportGameType
+import com.anhtam.gate9.v2.report.game.ReportGameType
 import com.anhtam.gate9.utils.debounceClick
-import kotlinx.android.synthetic.main.activity_report_post.*
+import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import kotlinx.android.synthetic.main.activity_report_game.*
 
-class ReportPostActivity : AppCompatActivity() {
+class ReportUserActivity : DaggerNavigationFragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_report_post)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.activity_report_user, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initControls()
     }
 
     companion object{
-        fun start(context: BaseActivity){
-            val intent = Intent(context, ReportPostActivity::class.java)
-            context.startActivity(intent)
-        }
+        fun newInstance() = ReportUserActivity()
     }
 
     private fun initControls(){
@@ -29,9 +32,10 @@ class ReportPostActivity : AppCompatActivity() {
         csAPK.debounceClick { chooesTypeReport(ReportGameType.APK.type) }
         csAppStore.debounceClick { chooesTypeReport(ReportGameType.APP_STORE.type) }
         csIPA.debounceClick { chooesTypeReport(ReportGameType.IPA.type) }
+        csPC.debounceClick { chooesTypeReport(ReportGameType.PC.type) }
         csOtherReason.debounceClick { chooesTypeReport(ReportGameType.UNKNOW.type) }
 
-        csBack.debounceClick { onBackPressed() }
+        csBack.debounceClick { navigation?.back() }
     }
 
     private fun chooesTypeReport(type: Int){
@@ -45,6 +49,9 @@ class ReportPostActivity : AppCompatActivity() {
             resources.getDrawable(R.drawable.ic_non_check))
 
         imgIPA.setImageDrawable(if(type == ReportGameType.IPA.type) resources.getDrawable(R.drawable.ic_checked_radio) else
+            resources.getDrawable(R.drawable.ic_non_check))
+
+        imgPC.setImageDrawable(if(type == ReportGameType.PC.type) resources.getDrawable(R.drawable.ic_checked_radio) else
             resources.getDrawable(R.drawable.ic_non_check))
 
         imgUnknow.setImageDrawable(if(type == ReportGameType.UNKNOW.type) resources.getDrawable(R.drawable.ic_checked_radio) else

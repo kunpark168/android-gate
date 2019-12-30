@@ -23,7 +23,7 @@ class MemberHomeFragment : DaggerNavigationFragment(), INavigator {
     }
 
     override fun navigateToMemberDetail(idUser: String?, type: String) {
-//        UserDiscussionActivity.start(context, idUser?.toInt() ?: 0, Category.Member)
+//        UserDiscussionScreen.start(context, idUser?.toInt() ?: 0, Category.Member)
     }
 
     override fun navigateToMemberFragment() {
@@ -49,9 +49,6 @@ class MemberHomeFragment : DaggerNavigationFragment(), INavigator {
     }
 
     private fun initEvents() {
-        backFrameLayout?.customOnClickHolder {
-            activity?.onBackPressed()
-        }
         llGame?.customOnClickHolder {
             vpTop.currentItem = 0
         }

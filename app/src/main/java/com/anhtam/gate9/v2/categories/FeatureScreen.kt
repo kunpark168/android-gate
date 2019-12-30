@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager.widget.ViewPager
 import com.anhtam.gate9.R
-import com.anhtam.gate9.v2.discussion.user.UserDiscussionActivity
+import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
@@ -107,7 +107,7 @@ class FeatureScreen : DaggerNavigationFragment() {
         tvBackCategory.debounceClick { navigation?.back() }
 
         imgAvatar.debounceClick {
-            navigation?.addFragment(UserDiscussionActivity.newInstance(idUser?.toInt()?:0, Category.Member))
+            navigation?.addFragment(UserDiscussionScreen.newInstance(idUser?.toInt()?:0, Category.Member))
         }
     }
 

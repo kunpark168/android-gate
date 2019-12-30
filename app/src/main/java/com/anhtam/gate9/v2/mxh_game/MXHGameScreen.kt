@@ -23,7 +23,6 @@ class MXHGameScreen : DaggerNavigationFragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_blue)
-        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.mxh_game_screen, container, false)
     }
 
@@ -32,13 +31,9 @@ class MXHGameScreen : DaggerNavigationFragment(){
         init()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_search_avatar, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+    override fun menuRes() = R.menu.menu_search_avatar
 
     private fun init(){
-        setSupportActionBar(toolbar)
         setUpViewPager()
         initEvents()
         observer()
@@ -63,9 +58,6 @@ class MXHGameScreen : DaggerNavigationFragment(){
                     }
                 }
             }
-        }
-        backFrameLayout?.setOnClickListener {
-            navigation?.back()
         }
     }
 

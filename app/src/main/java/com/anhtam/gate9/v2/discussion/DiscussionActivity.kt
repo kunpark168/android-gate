@@ -38,9 +38,9 @@ abstract class DiscussionActivity : DaggerNavigationFragment() {
         observer()
     }
 
+    override fun menuRes() = R.menu.menu_chat_search_more
+
     protected open fun initView() {
-        setHasOptionsMenu(true)
-        setSupportActionBar(toolbar)
         toolbar?.title = ""
         setUpContainer()
         childFragmentManager.beginTransaction()
@@ -86,12 +86,6 @@ abstract class DiscussionActivity : DaggerNavigationFragment() {
         tab03.setVisibilityIndicator(position == 2)
         tab04.setVisibilityIndicator(position == 3)
         tabInfo.setVisibilityIndicator(position == -1)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.clear()
-        inflater.inflate(R.menu.menu_chat_search_more, menu)
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     protected open fun initEvents() {

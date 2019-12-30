@@ -1,9 +1,7 @@
 package com.anhtam.gate9.di
 
 import com.anhtam.gate9.config.Config
-import com.anhtam.gate9.di.moshi.DateJsonAdapter
 import com.anhtam.gate9.session.AuthenticationInterceptor
-import com.anhtam.gate9.v2.InfoService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -42,20 +40,6 @@ class NetworkModule {
             connectTimeout(Config.DEFAULT_TIME_OUT, TimeUnit.SECONDS)
         }
         return builder.build()
-    }
-
-
-    @Reusable
-    @Provides
-    fun provideInfoService(
-            moshi: Moshi,
-            client: OkHttpClient): InfoService {
-        return Retrofit.Builder()
-                .baseUrl(Config.BASE_URL)
-                .client(client)
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .build()
-                .create(InfoService::class.java)
     }
 
     @Reusable
