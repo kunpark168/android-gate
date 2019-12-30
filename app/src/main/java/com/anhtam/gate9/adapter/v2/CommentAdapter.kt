@@ -29,8 +29,12 @@ import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.photo_n_item_layout.view.*
 import kotlinx.android.synthetic.main.shared_post_item_layout.view.*
 import javax.inject.Inject
+import javax.inject.Named
 
-class CommentAdapter @Inject constructor(val navigation: Navigation?)
+class CommentAdapter @Inject constructor(
+        val navigation: Navigation?,
+        @Named("avatar") val avatarOptions: RequestOptions,
+        @Named("banner") val bannerOptions: RequestOptions)
     : BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.shared_post_item_layout, ArrayList()), IPostNavigator {
 
     private var more = 0
@@ -55,12 +59,8 @@ class CommentAdapter @Inject constructor(val navigation: Navigation?)
                 } else {
             Config.IMG_URL + user.mAvatar
         }
-        Glide.with(mContext)
-                .applyDefaultRequestOptions(
-                        RequestOptions()
-                                .placeholder(R.drawable.img_avatar_holder)
-                                .error(R.drawable.img_avatar_holder)
-                ).load(avatar)
+        Glide.with(mContext).load(avatar)
+                .apply(avatarOptions)
                 .into(view.avatarImageView)
 
         // Set game
@@ -70,11 +70,8 @@ class CommentAdapter @Inject constructor(val navigation: Navigation?)
         } else {
             view.gameConstraintLayout.visibility = View.VISIBLE
             Glide.with(mContext)
-                    .applyDefaultRequestOptions(
-                            RequestOptions()
-                                    .placeholder(R.drawable.img_holder_banner)
-                                    .error(R.drawable.img_holder_banner)
-                    ).load(Config.IMG_URL + game.avatar)
+                    .load(Config.IMG_URL + game.avatar)
+                    .apply(bannerOptions)
                     .into(view.gameImageView)
             view.titleGameTextView.text = game.name
             val followDescription = mContext.getString(R.string.follower_amount_and_post_amount)
@@ -211,12 +208,8 @@ class CommentAdapter @Inject constructor(val navigation: Navigation?)
             val view = helper?.itemView ?: return
             val imgPhoto = view.findViewById<ImageView>(R.id.imgPhoto)
             Glide.with(mContext)
-                    .applyDefaultRequestOptions(
-                            RequestOptions()
-                                    .placeholder(R.drawable.img_holder_banner)
-                                    .error(R.drawable.img_holder_banner)
-                                    .centerCrop()
-                    ).load(Config.IMG_URL + photo)
+                    .load(Config.IMG_URL + photo)
+                    .apply(bannerOptions)
                     .into(imgPhoto)
             if (item.type == PhotoEntity.GRID_N) {
                 view.tvMore.text = "+".plus(more.toString())

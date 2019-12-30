@@ -44,6 +44,7 @@ import kotlinx.android.synthetic.main.toolbar_new_feed.*
 import of.bum.network.helper.Resource
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Named
 
 class NewFeedScreen : DaggerNavigationFragment() {
 
@@ -58,11 +59,13 @@ class NewFeedScreen : DaggerNavigationFragment() {
     }
 
     private var mGroup4Adapter by autoCleared<GroupBannerAdapter>()
-    private var mCommentAdapter by autoCleared<CommentAdapter>()
     private var mUserId: Int = 0
     private val mViewModel: NewFeedViewModel by viewModels ({requireNotNull(activity)}, {vmFactory })
     private val mPostViewModel: com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedViewModel by viewModels { vmFactory }
 
+    @Inject lateinit var mCommentAdapter : CommentAdapter
+    @Inject @field:Named("avatar") lateinit var avatarOptions: RequestOptions
+    @Inject @field:Named("banner") lateinit var bannerOptions: RequestOptions
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.new_feed_screen, container, false)
     }
@@ -113,12 +116,8 @@ class NewFeedScreen : DaggerNavigationFragment() {
             }
             avatar?.run {
                 Glide.with(this@NewFeedScreen)
-                        .applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder)
-                                .error(R.drawable.img_avatar_holder))
                         .load(avatar.toImage())
-                        .apply {RequestOptions.circleCropTransform()
-                                .placeholder(R.drawable.img_avatar_holder)
-                                .error(R.drawable.img_avatar_holder) }
+                        .apply {avatarOptions}
                         .into(imgAvatar)
             }
             mUserId = it.data?.mUserId ?: return@Observer
@@ -151,7 +150,6 @@ class NewFeedScreen : DaggerNavigationFragment() {
     }
 
     private fun initCommentRecyclerView() {
-        mCommentAdapter = CommentAdapter(navigation)
         mCommentAdapter.setLoadMoreView(CustomLoadMoreView())
         mCommentAdapter.setOnLoadMoreListener({
             loadMore()
@@ -174,12 +172,8 @@ class NewFeedScreen : DaggerNavigationFragment() {
     private fun bindingBanner(data: Banner?) {
         if (data == null) return
         Glide.with(this)
-                .applyDefaultRequestOptions(
-                        RequestOptions()
-                                .centerCrop()
-                                .placeholder(R.drawable.img_holder_banner)
-                                .error(R.drawable.img_holder_banner)
-                ).load(Config.IMG_URL + data.url)
+                .load(Config.IMG_URL + data.url)
+                .apply(bannerOptions)
                 .into(imgBanner)
     }
 

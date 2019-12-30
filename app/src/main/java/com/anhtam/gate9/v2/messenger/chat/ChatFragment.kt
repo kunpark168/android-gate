@@ -61,7 +61,9 @@ class ChatFragment : DaggerNavigationFragment() {
                 sendMessage()
                 true
             }
-            false
+            else {
+                false
+            }
         }
     }
 
@@ -94,6 +96,6 @@ class ChatFragment : DaggerNavigationFragment() {
                     initRv(user.avatar_path)
                 }
             }
-        }) // TODO observer fragment exts
+        })
     }
 }

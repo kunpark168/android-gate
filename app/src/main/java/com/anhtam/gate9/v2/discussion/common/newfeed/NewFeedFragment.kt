@@ -6,15 +6,15 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.CommentAdapter
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
-import com.anhtam.gate9.utils.autoCleared
 import com.google.android.material.tabs.TabLayout
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
 import of.bum.network.helper.Resource
+import javax.inject.Inject
 
 class NewFeedFragment(private val _userId: Int) : CommonDiscussionFragment() {
 
-    private var mAdapter by autoCleared<CommentAdapter>()
+    @Inject lateinit var mAdapter: CommentAdapter
     private var mCurrentCategory: PostCategory = PostCategory.BOTH
     override val colorTextTab = R.color.colorTabDiscussion
     private val viewModel: NewFeedViewModel by viewModels { vmFactory }
@@ -25,7 +25,6 @@ class NewFeedFragment(private val _userId: Int) : CommonDiscussionFragment() {
 
     override fun initView() {
         super.initView()
-        mAdapter = CommentAdapter(navigation)
         mAdapter.setLoadMoreView(CustomLoadMoreView())
         rvShareDiscussion?.adapter = mAdapter
         mAdapter.setOnLoadMoreListener ({

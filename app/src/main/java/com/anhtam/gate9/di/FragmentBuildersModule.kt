@@ -26,6 +26,7 @@ import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionModule
 import com.anhtam.gate9.v2.mxh_game.MXHGameScreen
 import com.anhtam.gate9.v2.main.home.HomeFragment
+import com.anhtam.gate9.v2.main.home.HomeModule
 import com.anhtam.gate9.v2.messenger.ChannelFragment
 import com.anhtam.gate9.v2.messenger.chat.ChatFragment
 import com.anhtam.gate9.v2.messenger.inbox.InboxFragment
@@ -68,13 +69,10 @@ abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract fun contributeRegisterScreen(): RegisterScreen
 
-    @ContributesAndroidInjector
-    abstract fun contributeHomeFragment(): HomeFragment
-
     @ContributesAndroidInjector(
-            modules = [NewFeedModule::class]
+            modules = [HomeModule::class]
     )
-    abstract fun contributeNewFeedFragment(): NewFeedScreen
+    abstract fun contributeHomeFragment(): HomeFragment
 
     @ContributesAndroidInjector(
             modules = [NotificationModule::class]
