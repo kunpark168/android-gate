@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -12,13 +13,13 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.PagerAdapter
 import com.anhtam.domain.Banner
 import com.anhtam.domain.Game
 import com.anhtam.domain.v2.PostEntity
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.GroupBannerAdapter
 import com.anhtam.gate9.adapter.v2.CommentAdapter
-import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.v2.search.SearchScreen
@@ -30,17 +31,10 @@ import com.anhtam.gate9.v2.main.ContainerFragment
 import com.anhtam.gate9.v2.mxh_game.MXHGameScreen
 import com.anhtam.gate9.v2.notification.NotificationFragment
 import com.anhtam.gate9.v2.main.member.MemberHomeFragment
-import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.messenger.ChannelFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.new_feed_screen.*
-import kotlinx.android.synthetic.main.new_feed_screen.imgBanner
-import kotlinx.android.synthetic.main.new_feed_screen.tvEvent
-import kotlinx.android.synthetic.main.new_feed_screen.tvGame
-import kotlinx.android.synthetic.main.new_feed_screen.tvSpecial
-import kotlinx.android.synthetic.main.new_feed_screen.tvTheme
-import kotlinx.android.synthetic.main.new_feed_screen.tvVideo
 import kotlinx.android.synthetic.main.toolbar_new_feed.*
 import of.bum.network.helper.Resource
 import timber.log.Timber
@@ -63,10 +57,12 @@ class NewFeedScreen : ContainerFragment() {
     private var mUserId: Int = 0
     private val mViewModel: NewFeedViewModel by viewModels ({requireNotNull(activity)}, {vmFactory })
     private val mPostViewModel: com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedViewModel by viewModels { vmFactory }
+    private var mAdapter by autoCleared<SliderAdapter>()
 
     @Inject lateinit var mCommentAdapter : CommentAdapter
     @Inject @field:Named("avatar") lateinit var avatarOptions: RequestOptions
     @Inject @field:Named("banner") lateinit var bannerOptions: RequestOptions
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.new_feed_screen, container, false)
     }
@@ -80,6 +76,10 @@ class NewFeedScreen : ContainerFragment() {
         loadData()
         initCommentRecyclerView()
         initGamesRecyclerView()
+
+        mAdapter = SliderAdapter()
+        slider.adapter = mAdapter
+
         initEventListener()
         observer()
     }
@@ -136,7 +136,7 @@ class NewFeedScreen : ContainerFragment() {
             when(it) {
                 is Resource.Success -> {
                     hideProgress()
-                    bindingBanner(it.data?.mBanner?.firstOrNull())
+                    bindingBanner(it.data?.mBanner)
                     bindingGroupGames(it.data?.mGames)
                     bindingComment(it.data?.mListing)
                 }
@@ -170,12 +170,8 @@ class NewFeedScreen : ContainerFragment() {
         rv4Banners?.adapter= mGroup4Adapter
     }
 
-    private fun bindingBanner(data: Banner?) {
-        if (data == null) return
-        Glide.with(this)
-                .load(Config.IMG_URL + data.url)
-                .apply(bannerOptions)
-                .into(imgBanner)
+    private fun bindingBanner(data: List<Banner>?) {
+        mAdapter.setData(data?.map { it.url ?: "" } ?: mutableListOf())
     }
 
     private fun bindingComment(data: List<PostEntity>?) {
@@ -232,6 +228,38 @@ class NewFeedScreen : ContainerFragment() {
         imgAvatar?.setOnClickListener {
 
         }
+    }
+
+
+    inner class SliderAdapter : PagerAdapter(){
+
+        private var mImages = mutableListOf<String>()
+
+        fun setData(data: List<String>){
+            mImages.clear()
+            mImages.addAll(data)
+            notifyDataSetChanged()
+        }
+
+        override fun instantiateItem(container: ViewGroup, position: Int): Any {
+            val view = LayoutInflater.from(context).inflate(R.layout.slider_item_layout, container, false)
+            val imageView = view.findViewById<ImageView>(R.id.image)
+            Glide.with(this@NewFeedScreen)
+                    .apply { bannerOptions }
+                    .load(mImages[position].toImage())
+                    .fitCenter()
+                    .into(imageView)
+            container.addView(view)
+            return view
+        }
+
+        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
+            container.removeView(`object` as View)
+        }
+
+        override fun isViewFromObject(view: View, `object`: Any) = view === `object`
+
+        override fun getCount() = mImages.size
 
     }
 }

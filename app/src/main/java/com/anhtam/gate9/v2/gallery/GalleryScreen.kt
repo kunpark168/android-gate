@@ -81,6 +81,7 @@ class GalleryScreen private constructor(
 
     }
 }
+
 private const val MIN_SCALE = 0.75f
 
 class DepthPageTransformer : ViewPager.PageTransformer {
