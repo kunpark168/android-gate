@@ -24,6 +24,7 @@ import com.anhtam.gate9.v2.reaction.ReactionScreen
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.auth.login.LoginScreen
+import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.gallery.GalleryScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.vo.model.Category
@@ -62,12 +63,12 @@ open class DetailPostScreen : DaggerNavigationFragment(){
     private var mAdapter: Adapter by autoCleared()
     private var mPhotoAdapter: PhotoAdapter by autoCleared()
     private var mType = Detail.POST
-    @Inject lateinit var mMediaService: MediaService
     private var more = 0
     private var _react: Int = 0
 
     @field:Named("avatar") @Inject lateinit var avatarOptions: RequestOptions
     @field:Named("banner") @Inject lateinit var bannerOptions: RequestOptions
+    @Inject lateinit var mMediaService: MediaService
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
@@ -349,6 +350,31 @@ open class DetailPostScreen : DaggerNavigationFragment(){
 
             updateUIAfterPost()
         }
+
+        // navigation
+        imgAvatar?.setOnClickListener {
+            val id = mPostEntity?.user?.mId ?: return@setOnClickListener
+            navigation?.addFragment(UserDiscussionScreen.newInstance(id, Category.Member))
+        }
+        tvUserName?.setOnClickListener {
+            val id = mPostEntity?.user?.mId ?: return@setOnClickListener
+            navigation?.addFragment(UserDiscussionScreen.newInstance(id, Category.Member))
+        }
+        imgGame?.setOnClickListener {
+            val id = mPostEntity?.game?.gameId ?: return@setOnClickListener
+            val link = ""
+            navigation?.addFragment(GameDiscussionScreen.newInstance(link, id))
+        }
+        imgNewGame?.setOnClickListener {
+            val id = mPostEntity?.game?.gameId ?: return@setOnClickListener
+            val link = ""
+            navigation?.addFragment(GameDiscussionScreen.newInstance(link, id))
+        }
+        tvTitle?.setOnClickListener {
+            val id = mPostEntity?.game?.gameId ?: return@setOnClickListener
+            val link = ""
+            navigation?.addFragment(GameDiscussionScreen.newInstance(link, id))
+        }
     }
 
     private fun postRequest(parentId: Long, content: String? = null, imageUrl: String? = "") {
@@ -451,7 +477,7 @@ open class DetailPostScreen : DaggerNavigationFragment(){
             val user = unwrapPost.user ?: return
             view.userNameTextView.text = user.mName
             Glide.with(mContext)
-                    .load(user.mAvatar)
+                    .load(user.mAvatar?.toImage())
                     .apply(avatarOptions)
                     .into(view.avatarImageView)
             view.contentTextView?.setOnClickListener {
