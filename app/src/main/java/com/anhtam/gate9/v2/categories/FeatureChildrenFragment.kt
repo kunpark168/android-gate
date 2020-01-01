@@ -18,11 +18,12 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_category.*
 import of.bum.network.helper.Resource
+import javax.inject.Inject
 
 class FeatureChildrenFragment : DaggerNavigationFragment() {
 
     private var categoryViewmodel: CategoryViewmodel?= null
-    private lateinit var mAdapter: GroupBannerAdapter
+    @Inject lateinit var mAdapter: GroupBannerAdapter
     private lateinit var mAdapterPostQuick: PostQuickAdapter
     private var tab = 0
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -55,7 +56,6 @@ class FeatureChildrenFragment : DaggerNavigationFragment() {
     }
 
     private fun initNewGame(){
-        mAdapter = GroupBannerAdapter(navigation,Glide.with(this))
         rvNewGame.adapter = mAdapter
         rvNewGame.layoutManager = GridLayoutManager(context, 2)
     }

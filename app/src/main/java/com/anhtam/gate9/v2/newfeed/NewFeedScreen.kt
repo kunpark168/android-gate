@@ -56,13 +56,13 @@ class NewFeedScreen : ContainerFragment() {
         fun newInstance() = NewFeedScreen()
     }
 
-    private var mGroup4Adapter by autoCleared<GroupBannerAdapter>()
     private var mUserId: Int = 0
     private val mViewModel: NewFeedViewModel by viewModels ({requireNotNull(activity)}, {vmFactory })
     private val mPostViewModel: com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedViewModel by viewModels { vmFactory }
     private var mAdapter by autoCleared<SliderAdapter>()
 
     @Inject lateinit var mCommentAdapter : CommentAdapter
+    @Inject lateinit var mGroup4Adapter: GroupBannerAdapter
     @Inject @field:Named("avatar") lateinit var avatarOptions: RequestOptions
     @Inject @field:Named("banner") lateinit var bannerOptions: RequestOptions
 
@@ -169,7 +169,6 @@ class NewFeedScreen : ContainerFragment() {
     }
 
     private fun initGamesRecyclerView() {
-        mGroup4Adapter = GroupBannerAdapter(navigation, Glide.with(this))
         rv4Banners?.layoutManager = GridLayoutManager(context, 2)
         rv4Banners?.adapter= mGroup4Adapter
     }

@@ -15,7 +15,7 @@ data class Game(
     val background: String?,
         @Json(name = "type")
     val types: List<Type>?,
-        @Json(name = "game_type")
+        @Json(name = "gameTypes")
         val gameType: List<Type>?,
         @Json(name = "publisher")
     val publisher: Publisher?,

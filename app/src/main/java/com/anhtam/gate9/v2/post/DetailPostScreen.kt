@@ -192,7 +192,7 @@ open class DetailPostScreen : DaggerNavigationFragment(){
 
         tvFollowNumber.text = follow
         // Set post
-        tvContent?.text = Html.fromHtml(unwrapPost.content)
+        tvContent?.text = Html.fromHtml(unwrapPost.content ?: "")
         tvTime?.text = unwrapPost.createdDate
 
         // Set photo
