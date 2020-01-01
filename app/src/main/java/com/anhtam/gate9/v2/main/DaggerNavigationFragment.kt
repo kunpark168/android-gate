@@ -3,23 +3,22 @@ package com.anhtam.gate9.v2.main
 import android.content.Context
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.annotation.ColorRes
+import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.ViewModelStoreOwner
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.NavigationFragment
 import com.anhtam.gate9.utils.DialogProgressUtils
-import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.v2.MainViewModel
 import com.anhtam.gate9.viewmodel.ViewModelProviderFactory
+import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 abstract class DaggerNavigationFragment : NavigationFragment(){
@@ -27,11 +26,32 @@ abstract class DaggerNavigationFragment : NavigationFragment(){
     @Inject lateinit var vmFactory: ViewModelProviderFactory
 
     private var mProgressDialog: DialogProgressUtils? = null
-    protected val mMainViewModel by viewModels<MainViewModel>({activity!!}, {vmFactory})
+    protected val mMainViewModel by viewModels<MainViewModel>({requireActivity()}, {vmFactory})
+
+    @MenuRes
+    open fun menuRes():  Int?  = null
+    @ColorRes
+    open fun statusColor(): Int = R.color.color_main_blue
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initStatus()
+        initToolbar(view)
         mMainViewModel.getUserDetail()
+    }
+
+    private fun initStatus(){
+        requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), statusColor())
+    }
+
+    private fun initToolbar(view: View){
+        menuRes()?.run {
+            setHasOptionsMenu(true)
+            val toolbar = view.findViewById<Toolbar>(R.id.toolbar) ?: throw IllegalArgumentException("Please make your toolbar id is toolbar")
+            setSupportActionBar(toolbar)
+            val backFrameLayout = view.findViewById<FrameLayout>(R.id.backFrameLayout)
+            backFrameLayout?.setOnClickListener { navigation?.back() }
+        }
     }
 
     fun showProgress() {
@@ -54,13 +74,21 @@ abstract class DaggerNavigationFragment : NavigationFragment(){
         }.start()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+        menuRes()?.run {
+            inflater.inflate(this, menu)
+        }
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
     fun hideProgress() {
         if (mProgressDialog != null && mProgressDialog?.isShowing == true) {
             mProgressDialog?.cancel()
         }
     }
 
-    fun setSupportActionBar(toolbar: Toolbar) {
+    private fun setSupportActionBar(toolbar: Toolbar) {
         (activity as? AppCompatActivity)?.setSupportActionBar(toolbar)
         (activity as? AppCompatActivity)?.supportActionBar?.title = ""
     }
@@ -72,5 +100,4 @@ abstract class DaggerNavigationFragment : NavigationFragment(){
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
-
 }

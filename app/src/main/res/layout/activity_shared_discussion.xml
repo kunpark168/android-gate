@@ -21,7 +21,6 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:theme="@style/TransparentToolbar"
             app:layout_constraintTop_toTopOf="parent">
             <TextView
                 android:id="@+id/backTextView"
@@ -36,7 +35,7 @@
         </androidx.appcompat.widget.Toolbar>
     </FrameLayout>
 
-    <com.anhtam.gate9.ui.discussion.NavControllerView
+    <com.anhtam.gate9.v2.discussion.NavControllerView
         android:id="@+id/navControllerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -58,7 +57,7 @@
 
 
 
-    <com.anhtam.gate9.ui.discussion.FooterDiscussionView
+    <com.anhtam.gate9.v2.discussion.FooterDiscussionView
         android:id="@+id/footerFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

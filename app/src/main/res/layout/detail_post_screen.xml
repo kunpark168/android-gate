@@ -451,7 +451,7 @@
                             android:textSize="@dimen/sp_10"
                             android:textColor="@color/black"
                             android:fontFamily="@font/roboto_light"
-                            android:text="@string/dislike_feelling"
+                            android:text="@string/reply"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/dp25" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -466,6 +466,12 @@
                 android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp75">
+                <View
+                    android:id="@+id/vLineGameTop"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="#eeeeee"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp5"/>
                 <com.anhtam.gate9.share.view.RoundRectCornerImageView
                     android:id="@+id/imgNewGame"
                     android:layout_marginStart="@dimen/dp20"
@@ -520,14 +526,15 @@
                     android:gravity="center"
                     android:textSize="12sp"
                     android:layout_height="25dp" />
-
-                <View
-                    android:id="@+id/vLineGame"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:background="#eeeeee"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp5"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/vLineGame"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="#eeeeee"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp5"/>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:background="@color/colorWhite"

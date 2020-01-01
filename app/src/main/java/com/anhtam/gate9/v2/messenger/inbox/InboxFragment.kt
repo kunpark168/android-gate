@@ -1,12 +1,10 @@
 package com.anhtam.gate9.v2.messenger.inbox
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.inbox_fragment.*
@@ -23,10 +21,6 @@ class InboxFragment : DaggerNavigationFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val unwrappedContext = context ?: return
-            activity?.window?.statusBarColor = ContextCompat.getColor(unwrappedContext, R.color.colorIndicator)
-        }
         tvCancel?.setOnClickListener {
             navigation?.back()
         }

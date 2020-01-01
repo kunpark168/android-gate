@@ -8,6 +8,7 @@
     android:background="#dddddd">
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ichome"
         android:layout_width="@dimen/material_icon_size_16dp"
         android:layout_height="@dimen/material_icon_size_16dp"
         android:src="@drawable/ic_home_grey"

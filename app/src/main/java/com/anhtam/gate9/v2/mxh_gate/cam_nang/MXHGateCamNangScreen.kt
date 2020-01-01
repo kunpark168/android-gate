@@ -3,9 +3,10 @@ package com.anhtam.gate9.v2.mxh_gate.cam_nang
 import android.os.Bundle
 import android.view.*
 import com.anhtam.gate9.R
+import com.anhtam.gate9.navigation.NavigationFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 
-class MXHGateCamNangScreen : DaggerNavigationFragment() {
+class MXHGateCamNangScreen : NavigationFragment() {
 
     companion object{
         fun newInstance() = MXHGateCamNangScreen()

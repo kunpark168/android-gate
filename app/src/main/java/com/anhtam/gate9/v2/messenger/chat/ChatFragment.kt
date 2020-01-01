@@ -1,18 +1,14 @@
 package com.anhtam.gate9.v2.messenger.chat
 
-import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.EditorInfo
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.anhtam.domain.WrappedUser
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.chat.Message
 import com.anhtam.gate9.adapter.chat.MessengerAdapter
-import com.anhtam.gate9.navigation.NavigationFragment
-import com.anhtam.gate9.ui.search.DataSource
+import com.anhtam.gate9.v2.search.DataSource
 import com.anhtam.gate9.v2.lib.loadImage
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.chat_fragment.*
@@ -42,11 +38,9 @@ class ChatFragment : DaggerNavigationFragment() {
         observer()
         viewModel.userId.value = userId
         events()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val unwrappedContext = context ?: return
-            activity?.window?.statusBarColor = ContextCompat.getColor(unwrappedContext, R.color.colorIndicator)
-        }
     }
+
+    override fun statusColor() = R.color.color_main_blue
 
     private fun events() {
         iconBack?.setOnClickListener {
@@ -67,7 +61,9 @@ class ChatFragment : DaggerNavigationFragment() {
                 sendMessage()
                 true
             }
-            false
+            else {
+                false
+            }
         }
     }
 
@@ -100,6 +96,6 @@ class ChatFragment : DaggerNavigationFragment() {
                     initRv(user.avatar_path)
                 }
             }
-        }) // TODO observer fragment exts
+        })
     }
 }

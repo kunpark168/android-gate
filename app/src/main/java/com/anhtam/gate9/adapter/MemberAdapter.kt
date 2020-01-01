@@ -5,10 +5,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.anhtam.domain.User
 import com.anhtam.gate9.R
-import com.anhtam.gate9.ui.discussion.user.UserDiscussionActivity
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.utils.ifNotNull
-import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.RequestManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -26,9 +24,9 @@ class MemberAdapter(private val requestManager: RequestManager,private val type:
                     .into(imgAvatar)
             mContext?.let {
                 holder.itemView.debounceClick {
-//                    if(type == "member") UserDiscussionActivity.start(mContext, user.user_id?.toInt() ?: 0, Category.Member)
+//                    if(type == "member") UserDiscussionScreen.start(mContext, user.user_id?.toInt() ?: 0, Category.Member)
 //                    else {
-//                        UserDiscussionActivity.start(mContext, user.user_id?.toInt() ?: 0, Category.Publisher)
+//                        UserDiscussionScreen.start(mContext, user.user_id?.toInt() ?: 0, Category.Publisher)
 //                    }
                 }
             }

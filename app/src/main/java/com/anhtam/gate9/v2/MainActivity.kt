@@ -9,18 +9,22 @@ import com.anhtam.gate9.navigation.HideKeyboardNavigation
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.navigation.NavigationDispatcher
 import com.anhtam.gate9.navigation.NavigationProvider
+import com.anhtam.gate9.v2.auth.login.LoginScreen
+import com.anhtam.gate9.v2.auth.register.RegisterScreen
+import com.anhtam.gate9.v2.createimage.CreateImageScreen
+import com.anhtam.gate9.v2.createpost.CreatePostScreen
+import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
+import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
+import com.anhtam.gate9.v2.main.home.HomeFragment
+import com.anhtam.gate9.v2.notification.NotificationFragment
+import com.anhtam.gate9.v2.post.DetailPostScreen
 import com.anhtam.gate9.v2.splash.SplashScreen
 import dagger.android.support.DaggerAppCompatActivity
 
-/*
- *  - Status bar
- *  - Toolbar bar
- */
 
 class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
 
     companion object {
-        var mColor = ColorStatus.BLUE
         fun start(context: Context?) {
             val intent = Intent(context, MainActivity::class.java)
             context?.startActivity(intent)
@@ -46,20 +50,24 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
         val visibleFragment = supportFragmentManager.fragments.lastOrNull() as? OnFragmentListener
         visibleFragment?.onBack()
         super.onBackPressed()
-        val behindFragment = supportFragmentManager.fragments.lastOrNull() as? OnFragmentListener
-        behindFragment?.onFragmentResult()
-        when(mColor) {
-            ColorStatus.BLUE -> {
-                window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_blue)
-            }
-            ColorStatus.ORANGE -> {
-                window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_orange)
-            }
+        val fragment = if(supportFragmentManager.fragments.size == 2) {
+            supportFragmentManager.fragments.firstOrNull()
+        } else {
+            supportFragmentManager.fragments.lastOrNull()
         }
-    }
-
-
-    enum class ColorStatus{
-        BLUE, ORANGE
+        val behindFragment = fragment as? OnFragmentListener
+        behindFragment?.onFragmentResult()
+        when(behindFragment) {
+            is UserDiscussionScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_blue)
+            is GameDiscussionScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_blue)
+            is CreatePostScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_blue)
+            is CreateImageScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_blue)
+            is SplashScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_blue)
+            is HomeFragment -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_blue)
+            is NotificationFragment -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_blue)
+            is DetailPostScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_blue)
+            is LoginScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_orange)
+            is RegisterScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_orange)
+        }
     }
 }

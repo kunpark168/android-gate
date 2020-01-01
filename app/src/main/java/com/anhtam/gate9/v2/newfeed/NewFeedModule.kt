@@ -10,11 +10,6 @@ import dagger.multibindings.IntoMap
 interface NewFeedModule {
     @Binds
     @IntoMap
-    @ViewModelKey(NewFeedViewModel::class)
-    fun bindViewModel(newFeedViewModel: NewFeedViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(com.anhtam.gate9.ui.discussion.common.newfeed.NewFeedViewModel::class)
-    fun bindMoreViewModel(newFeedViewModel: com.anhtam.gate9.ui.discussion.common.newfeed.NewFeedViewModel): ViewModel
+    @ViewModelKey(com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedViewModel::class)
+    fun bindMoreViewModel(newFeedViewModel: com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedViewModel): ViewModel
 }

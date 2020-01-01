@@ -28,8 +28,6 @@ import kotlinx.android.synthetic.main.rating_view_header01.*
 class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
 
     override fun onFragmentResult(args: Bundle) {
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_blue)
-        MainActivity.mColor = MainActivity.ColorStatus.BLUE
         mNewFeedScreen?.update()
     }
 
@@ -43,7 +41,6 @@ class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
     private var mNewFeedScreen: NewFeedScreen? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_blue)
         return inflater.inflate(R.layout.main_fragment, container, false)
     }
 
@@ -111,12 +108,10 @@ class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
         mNewFeedScreen = NewFeedScreen.newInstance()
         fragments.add(mNewFeedScreen!!)
         fragments.add(BlankFragment.newInstance("2"))
-        fragments.add(BlankFragment.newInstance("3"))
-        fragments.add(BlankFragment.newInstance("4"))
         childFragmentManager.run {
             val adapter = SharePageAdapter(this, fragments)
             viewPager?.adapter = adapter
-            viewPager?.offscreenPageLimit = 4
+            viewPager?.offscreenPageLimit = 2
         }
         bottomView?.syncWithViewPager(viewPager)
         bottomView?.openPersonal {

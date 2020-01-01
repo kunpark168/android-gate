@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.anhtam.gate9.R
-import com.anhtam.gate9.ui.discussion.TabInfo
+import com.anhtam.gate9.v2.discussion.TabInfo
 import kotlinx.android.synthetic.main.custom_tab_item.view.*
 
 class CustomTabItem @JvmOverloads constructor(

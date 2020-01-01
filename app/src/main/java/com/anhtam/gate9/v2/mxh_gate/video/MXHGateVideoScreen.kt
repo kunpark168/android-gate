@@ -3,6 +3,7 @@ package com.anhtam.gate9.v2.mxh_gate.video
 import android.os.Bundle
 import android.view.*
 import com.anhtam.gate9.R
+import com.anhtam.gate9.navigation.NavigationFragment
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.mxh_gate.MXHGateScreen
@@ -11,7 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.mxh_gate_video_screen.*
 
-class MXHGateVideoScreen : DaggerNavigationFragment() {
+class MXHGateVideoScreen : NavigationFragment() {
 
     companion object{
         fun newInstance() = MXHGateVideoScreen()

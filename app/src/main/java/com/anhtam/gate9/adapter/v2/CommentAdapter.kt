@@ -9,15 +9,16 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.anhtam.gate9.adapter.navigator.IPostNavigator
 import com.anhtam.domain.v2.PostEntity
+import com.anhtam.domain.v2.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.storage.StorageManager
-import com.anhtam.gate9.ui.base.BaseActivity
-import com.anhtam.gate9.ui.discussion.user.UserDiscussionActivity
-import com.anhtam.gate9.ui.report.post.ReportPostActivity
+import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
+import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
+import com.anhtam.gate9.v2.gallery.GalleryScreen
 import com.anhtam.gate9.v2.post.DetailPostScreen
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -29,9 +30,13 @@ import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.photo_n_item_layout.view.*
 import kotlinx.android.synthetic.main.shared_post_item_layout.view.*
+import javax.inject.Inject
+import javax.inject.Named
 
-
-class CommentAdapter(private val navigation: Navigation?)
+class CommentAdapter @Inject constructor(
+        val navigation: Navigation?,
+        @Named("avatar") val avatarOptions: RequestOptions,
+        @Named("banner") val bannerOptions: RequestOptions)
     : BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.shared_post_item_layout, ArrayList()), IPostNavigator {
 
     private var more = 0
@@ -56,12 +61,8 @@ class CommentAdapter(private val navigation: Navigation?)
                 } else {
             Config.IMG_URL + user.mAvatar
         }
-        Glide.with(mContext)
-                .applyDefaultRequestOptions(
-                        RequestOptions()
-                                .placeholder(R.drawable.img_avatar_holder)
-                                .error(R.drawable.img_avatar_holder)
-                ).load(avatar)
+        Glide.with(mContext).load(avatar)
+                .apply(avatarOptions)
                 .into(view.avatarImageView)
 
         // Set game
@@ -71,11 +72,8 @@ class CommentAdapter(private val navigation: Navigation?)
         } else {
             view.gameConstraintLayout.visibility = View.VISIBLE
             Glide.with(mContext)
-                    .applyDefaultRequestOptions(
-                            RequestOptions()
-                                    .placeholder(R.drawable.img_holder_banner)
-                                    .error(R.drawable.img_holder_banner)
-                    ).load(Config.IMG_URL + game.avatar)
+                    .load(Config.IMG_URL + game.avatar)
+                    .apply(bannerOptions)
                     .into(view.gameImageView)
             view.titleGameTextView.text = game.name
             val followDescription = mContext.getString(R.string.follower_amount_and_post_amount)
@@ -103,6 +101,7 @@ class CommentAdapter(private val navigation: Navigation?)
                 else -> PhotoEntity.GRID_N
             }, it)}
             val adapter = PhotoAdapter()
+            adapter.setUser(user)
             adapter.setSpanSizeLookup { _, position ->
                 adapter.data[position].getSpanSize()
             }
@@ -141,12 +140,16 @@ class CommentAdapter(private val navigation: Navigation?)
         view.moreImageView.setOnClickListener {
             val mMoreDialog = MoreDialog(mContext, object : MoreDialog.IMore {
                 override fun onreport() {
-                    ReportPostActivity.start(mContext as BaseActivity)
+//                    ReportPostActivity.start(mContext as BaseActivity)
                 }
             })
             mMoreDialog.idPost = unwrapPost.commentId?.toString()
             mMoreDialog.show()
         }
+
+        // game
+        view.gameImageView?.setOnClickListener { navigation?.addFragment(GameDiscussionScreen.newInstance("", "0")) }
+        view.titleGameTextView?.setOnClickListener { navigation?.addFragment(GameDiscussionScreen.newInstance("", "0")) }
         view.commentIcon.setOnClickListener {
             if(checkLogin()){
                 // change icon color and send request
@@ -176,7 +179,7 @@ class CommentAdapter(private val navigation: Navigation?)
     }
 
     override fun navigateToMemberDiscussion(userId: Int) {
-        navigation?.addFragment(UserDiscussionActivity.newInstance(userId, Category.Member))
+        navigation?.addFragment(UserDiscussionScreen.newInstance(userId, Category.Member))
     }
 
     override fun navigateToPostDetail(context: Context?, postEntity: PostEntity) {
@@ -197,23 +200,29 @@ class CommentAdapter(private val navigation: Navigation?)
     }
 
     inner class PhotoAdapter : BaseMultiItemQuickAdapter<PhotoEntity, BaseViewHolder>(mutableListOf()){
+
+        private lateinit var mUser: User
+
         init {
             addItemType(PhotoEntity.GRID_1, R.layout.photo_1_item_layout)
             addItemType(PhotoEntity.GRID_4, R.layout.photo_4_item_layout)
             addItemType(PhotoEntity.GRID_N, R.layout.photo_n_item_layout)
         }
 
+        fun setUser(user: User){
+            mUser = user
+        }
+
         override fun convert(helper: BaseViewHolder?, item: PhotoEntity?) {
             val photo = item?.photo ?: return
             val view = helper?.itemView ?: return
             val imgPhoto = view.findViewById<ImageView>(R.id.imgPhoto)
+            imgPhoto.setOnClickListener {
+                navigation?.addFragment(GalleryScreen.newInstance(data.map { it.photo}, mUser))
+            }
             Glide.with(mContext)
-                    .applyDefaultRequestOptions(
-                            RequestOptions()
-                                    .placeholder(R.drawable.img_holder_banner)
-                                    .error(R.drawable.img_holder_banner)
-                                    .centerCrop()
-                    ).load(Config.IMG_URL + photo)
+                    .load(Config.IMG_URL + photo)
+                    .apply(bannerOptions)
                     .into(imgPhoto)
             if (item.type == PhotoEntity.GRID_N) {
                 view.tvMore.text = "+".plus(more.toString())

@@ -1,5 +1,6 @@
 package com.anhtam.gate9.v2.post
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Editable
 import android.text.Html
@@ -15,13 +16,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.anhtam.domain.v2.PostEntity
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.CommentAdapter
+import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.share.view.donate.DonateDialog
 import com.anhtam.gate9.storage.StorageManager
-import com.anhtam.gate9.ui.discussion.user.UserDiscussionActivity
-import com.anhtam.gate9.ui.reaction.ReactionActivity
+import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
+import com.anhtam.gate9.v2.reaction.ReactionScreen
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.auth.login.LoginScreen
+import com.anhtam.gate9.v2.gallery.GalleryScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -38,6 +41,7 @@ import of.bum.network.helper.Resource
 import of.bum.network.v2.MediaService
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Named
 
 open class DetailPostScreen : DaggerNavigationFragment(){
 
@@ -45,6 +49,7 @@ open class DetailPostScreen : DaggerNavigationFragment(){
         fun newInstance(postEntity: PostEntity, type: Detail): DetailPostScreen {
             val fragment = DetailPostScreen()
             fragment.mPostEntity = postEntity
+            fragment._react = postEntity.like?.toInt() ?: 0
             fragment.mType = type
             Timber.d(StorageManager.getAccessToken())
             Timber.d("DataNDN $postEntity , ${postEntity.commentId}")
@@ -59,24 +64,22 @@ open class DetailPostScreen : DaggerNavigationFragment(){
     private var mType = Detail.POST
     @Inject lateinit var mMediaService: MediaService
     private var more = 0
+    private var _react: Int = 0
+
+    @field:Named("avatar") @Inject lateinit var avatarOptions: RequestOptions
+    @field:Named("banner") @Inject lateinit var bannerOptions: RequestOptions
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.detail_post_screen, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setSupportActionBar(toolbar)
         init()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_chat_search_more, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+    override fun menuRes() = R.menu.menu_chat_search_more
 
     private fun init() {
         if(!(mPostEntity?.totalReply.isNullOrEmpty() || mPostEntity?.totalReply?.toInt() == 0)){
@@ -103,93 +106,59 @@ open class DetailPostScreen : DaggerNavigationFragment(){
         rvComment?.adapter = mAdapter
         rvComment?.isNestedScrollingEnabled = false
     }
-//
-//    view.likeLayout.setOnClickListener {
-//        if(checkLogin()){
-//            // change icon color and send request
-//            reaction(view, 1, unwrapPost)
-//        } else {
-//            navigation?.addFragment(LoginScreen.newInstance())
-//        }
-//    }
-//    view.loveLayout.setOnClickListener {
-//        if(checkLogin()){
-//            // change icon color and send request
-//            reaction(view, 3, unwrapPost)
-//        } else {
-//            navigation?.addFragment(LoginScreen.newInstance())
-//        }
-//    }
-//    view.dislikeLayout.setOnClickListener {
-//        if(checkLogin()){
-//            // change icon color and send request
-//            reaction(view, 2, unwrapPost)
-//        } else {
-//            navigation?.addFragment(LoginScreen.newInstance())
-//        }
-//    }
-//    private fun reactionRequest(view: View, type: Int, data: PostEntity) {
-//        data.mReactionId = type
-//        when(type) {
-//            1 -> {
-//                val like = view.likeTextView.text.toString().toInt()  + 1
-//                view.likeTextView.text = like.toString()
-//            }
-//            2 -> {
-//                val dislike = view.dislikeTextView.text.toString().toInt()  + 1
-//                view.dislikeTextView.text = dislike.toString()
-//            }
-//            3 -> {
-//                val love = view.loveTextView.text.toString().toInt()  + 1
-//                view.loveTextView.text = love.toString()
-//            }
-//        }
-//        // request api
-//        listener(data, type)
-//
-//    }
-//
-//
-//    private fun reaction(view: View, type: Int, data: PostEntity) {
-//        when (data.mReactionId) {
-//            0 -> {//change icon color and increase number}
-//            }
-//            1 -> {
-//                // change icon like
-//                val like = view.likeTextView.text.toString().toInt()  - 1
-//                view.likeTextView.text = like.toString()
-//
-//            }
-//            2 -> {
-//                // change icon dislike
-//                val dislike = view.dislikeTextView.text.toString().toInt()  - 1
-//                view.dislikeTextView.text = dislike.toString()
-//            }
-//            3 -> {
-//                // change icon love
-//                val love = view.loveTextView.text.toString().toInt()  - 1
-//                view.loveTextView.text = love.toString()
-//            }
-//        }
-//    }
-//{ data, type ->
-//    val id = data.commentId?.toInt() ?: 0
-//    val params = hashMapOf<String, Int>()
-//    params["commentId"] = id
-//    params["type"] = type
-//    params["userId"] = mUserId
-//            mViewModel.react(params).enqueue(object: Callback<Base>{
-//                override fun onFailure(call: Call<Base>, t: Throwable) {
-//                    Timber.d("Failure")
-//                }
-//
-//                override fun onResponse(call: Call<Base>, response: Response<Base>) {
-//                    Timber.d(StorageManager.getAccessToken())
-//                    Timber.d("Success")
-//                }
-//
-//            })
-//}
+        // Change icon display
+    private fun reaction(type: Int) {
+            if (_react == type) {
+                when (type) {
+                    1 -> {
+                        // change icon like
+                        Glide.with(this@DetailPostScreen)
+                                .load(R.drawable.ic_like_post)
+                                .into(imgLike)
+                    }
+                    2 -> {
+                        // change icon dislike
+                        Glide.with(this@DetailPostScreen)
+                                .load(R.drawable.ic_dislike_post)
+                                .into(imgDislike)
+
+                    }
+                    3 -> {
+                        // change icon love
+                        Glide.with(this@DetailPostScreen)
+                                .load(R.drawable.ic_reaction_love)
+                                .into(imgFavorite)
+                    }
+                }
+                _react = 0
+            } else {
+                when (type) {
+                    1 -> {
+                        // change icon like
+                        imgLike?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+
+                    }
+                    2 -> {
+                        // change icon dislike
+                        imgDislike?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+
+                    }
+                    3 -> {
+                        // change icon love
+                        imgFavorite?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                    }
+                }
+                _react = type
+            }
+            val id = mPostEntity?.commentId?.toInt() ?: 0
+            val params = hashMapOf<String, Int>()
+            params["commentId"] = id
+            params["type"] = _react
+            params["userId"] = 5
+            viewModel.react(params).observe(viewLifecycleOwner, Observer {
+
+            })
+        }
 
     private fun fetchComment() {
         val commentId = mPostEntity?.commentId
@@ -213,11 +182,7 @@ open class DetailPostScreen : DaggerNavigationFragment(){
         val user = unwrapPost.user
         Glide.with(this)
                 .load(user?.mAvatar?.toImage())
-                .apply {
-                    RequestOptions.circleCropTransform()
-                            .placeholder(R.drawable.img_avatar_holder)
-                            .error(R.drawable.img_avatar_holder)
-                }
+                .apply(avatarOptions)
                 .into(imgAvatar)
         tvUserName?.text = user?.mName
         val follow = Phrase.from(getString(R.string.following_amount_and_follower_amount))
@@ -273,20 +238,12 @@ open class DetailPostScreen : DaggerNavigationFragment(){
         tvNameGame.visibility = View.VISIBLE
         imgDropDown.visibility = View.VISIBLE
         Glide.with(this)
-                .applyDefaultRequestOptions(
-                        RequestOptions()
-                                .placeholder(R.drawable.img_holder_banner)
-                                .error(R.drawable.img_holder_banner)
-                )
                 .load(game.avatar?.toImage())
+                .apply(bannerOptions)
                 .into(imgGame)
         Glide.with(this)
-                .applyDefaultRequestOptions(
-                        RequestOptions()
-                                .placeholder(R.drawable.img_holder_banner)
-                                .error(R.drawable.img_holder_banner)
-                )
                 .load(game.avatar?.toImage())
+                .apply(bannerOptions)
                 .into(imgNewGame)
         tvNameGame.text = game.name
 
@@ -319,6 +276,33 @@ open class DetailPostScreen : DaggerNavigationFragment(){
     }
 
     private fun initEvents() {
+        // Reaction
+
+
+        imgLike.setOnClickListener {
+            if(checkLogin()){
+                // change icon color and send request
+                reaction(1)
+            } else {
+                navigation?.addFragment(LoginScreen.newInstance())
+            }
+        }
+        imgFavorite.setOnClickListener {
+            if(checkLogin()){
+                // change icon color and send request
+                reaction(3)
+            } else {
+                navigation?.addFragment(LoginScreen.newInstance())
+            }
+        }
+        imgDislike.setOnClickListener {
+            if(checkLogin()){
+                // change icon color and send request
+                reaction(2)
+            } else {
+                navigation?.addFragment(LoginScreen.newInstance())
+            }
+        }
         tvFollowGame?.setOnClickListener {
             if(tvFollowGame?.text == getString(R.string.follow)) {
                 setFollowing()
@@ -329,17 +313,14 @@ open class DetailPostScreen : DaggerNavigationFragment(){
         csShare?.setOnClickListener{
             checkLogin()
         }
-        csLove?.setOnClickListener{
-            checkLogin()
-        }
-        backFrameLayout?.setOnClickListener{ navigation?.back() }
         btnDonate?.setOnClickListener {
             val unwrapContext = context ?: return@setOnClickListener
             DonateDialog(unwrapContext).show()
         }
         tvAction?.setOnClickListener {
-            ReactionActivity.start(context)
+            navigation?.addFragment(ReactionScreen.newInstance())
         }
+        ichome?.setOnClickListener { navigation?.back() }
         csDisLike?.setOnClickListener { checkLogin() }
         csLike?.setOnClickListener { checkLogin() }
         csComment?.setOnClickListener { checkLogin() }
@@ -393,12 +374,7 @@ open class DetailPostScreen : DaggerNavigationFragment(){
 
     private fun checkLogin() : Boolean {
         val accessToken = StorageManager.getAccessToken()
-        return if (accessToken.isEmpty()) {
-            navigation?.addFragment(LoginScreen.newInstance())
-            false
-        } else {
-            true
-        }
+        return accessToken.isNotEmpty()
     }
 
     inner class Adapter : BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.comment_item_layout, arrayListOf()){
@@ -414,12 +390,8 @@ open class DetailPostScreen : DaggerNavigationFragment(){
             val user = unwrapPost.user ?: return
             view.userNameTextView.text = user.mName
             Glide.with(mContext)
-                    .applyDefaultRequestOptions(
-                            RequestOptions.circleCropTransform()
-                                    .placeholder(R.drawable.img_avatar_holder)
-                                    .error(R.drawable.img_avatar_holder)
-                    ).load(user.mAvatar?.toImage())
-                    .apply(RequestOptions.circleCropTransform())
+                    .load(user.mAvatar?.toImage())
+                    .apply(avatarOptions)
                     .into(view.avatarImageView)
             view.contentTextView?.setOnClickListener {
                 navigation?.addFragment(newInstance(unwrapPost, Detail.COMMENT))
@@ -427,8 +399,8 @@ open class DetailPostScreen : DaggerNavigationFragment(){
             view.commentImageView?.setOnClickListener {
                 navigation?.addFragment(newInstance(unwrapPost, Detail.COMMENT))
             }
-            view.userNameTextView?.setOnClickListener { navigation?.addFragment(UserDiscussionActivity.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
-            view.avatarImageView?.setOnClickListener { navigation?.addFragment(UserDiscussionActivity.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
+            view.userNameTextView?.setOnClickListener { navigation?.addFragment(UserDiscussionScreen.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
+            view.avatarImageView?.setOnClickListener { navigation?.addFragment(UserDiscussionScreen.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
 
             if(TextUtils.isEmpty(unwrapPost.totalReply)){
                 return
@@ -479,12 +451,8 @@ open class DetailPostScreen : DaggerNavigationFragment(){
             val user = unwrapPost.user ?: return
             view.userNameTextView.text = user.mName
             Glide.with(mContext)
-                    .applyDefaultRequestOptions(
-                            RequestOptions()
-                                    .placeholder(R.drawable.img_avatar_holder)
-                                    .error(R.drawable.img_avatar_holder)
-                    ).load(user.mAvatar)
-                    .apply(RequestOptions.circleCropTransform())
+                    .load(user.mAvatar)
+                    .apply(avatarOptions)
                     .into(view.avatarImageView)
             view.contentTextView?.setOnClickListener {
                 navigation?.addFragment(newInstance(unwrapPost, Detail.COMMENT))
@@ -492,8 +460,17 @@ open class DetailPostScreen : DaggerNavigationFragment(){
             view.commentImageView?.setOnClickListener {
                 navigation?.addFragment(newInstance(unwrapPost, Detail.COMMENT))
             }
-            view.userNameTextView?.setOnClickListener { navigation?.addFragment(UserDiscussionActivity.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
-            view.avatarImageView?.setOnClickListener { navigation?.addFragment(UserDiscussionActivity.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
+            view.userNameTextView?.setOnClickListener { navigation?.addFragment(UserDiscussionScreen.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
+            view.avatarImageView?.setOnClickListener { navigation?.addFragment(UserDiscussionScreen.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
+            view.moreImageView?.setOnClickListener {
+                val mMoreDialog = MoreDialog(context!!, object : MoreDialog.IMore {
+                    override fun onreport() {
+//                        ReportPostActivity.start(mContext as BaseActivity)
+                    }
+                })
+                mMoreDialog.idPost = unwrapPost.commentId?.toString()
+                mMoreDialog.show()
+            }
         }
 
     }
@@ -509,13 +486,12 @@ open class DetailPostScreen : DaggerNavigationFragment(){
             val photo = item?.photo ?: return
             val view = helper?.itemView ?: return
             val imgPhoto = view.findViewById<ImageView>(R.id.imgPhoto)
+            imgPhoto.setOnClickListener {
+                navigation?.addFragment(GalleryScreen.newInstance(data.map { it.photo}, mPostEntity?.user!!))
+            }
             Glide.with(mContext)
-                    .applyDefaultRequestOptions(
-                            RequestOptions()
-                                    .placeholder(R.drawable.img_holder_banner)
-                                    .error(R.drawable.img_holder_banner)
-                                    .centerCrop()
-                    ).load(photo.toImage())
+                    .load(photo.toImage())
+                    .apply(bannerOptions)
                     .into(imgPhoto)
             if (item.type == CommentAdapter.PhotoEntity.GRID_N) {
                 view.tvMore.text = "+".plus(more.toString())

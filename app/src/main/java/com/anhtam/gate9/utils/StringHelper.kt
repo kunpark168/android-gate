@@ -2,4 +2,4 @@ package com.anhtam.gate9.utils
 
 import com.anhtam.gate9.config.Config
 
-fun String.toImage() = Config.IMG_URL + this
+fun String.toImage() = if(this.startsWith("http")) this else Config.IMG_URL + this
