@@ -27,17 +27,20 @@ import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.categories.CategoryTab
 import com.anhtam.gate9.v2.categories.FeatureScreen
+import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.main.ContainerFragment
 import com.anhtam.gate9.v2.mxh_game.MXHGameScreen
 import com.anhtam.gate9.v2.notification.NotificationFragment
 import com.anhtam.gate9.v2.main.member.MemberHomeFragment
 import com.anhtam.gate9.v2.messenger.ChannelFragment
+import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.new_feed_screen.*
 import kotlinx.android.synthetic.main.toolbar_new_feed.*
 import of.bum.network.helper.Resource
 import timber.log.Timber
+import java.lang.NumberFormatException
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -122,6 +125,7 @@ class NewFeedScreen : ContainerFragment() {
                         .into(imgAvatar)
             }
             mUserId = it.data?.mUserId ?: return@Observer
+            StorageManager.setUserId(mUserId.toString())
         })
     }
 
@@ -226,7 +230,12 @@ class NewFeedScreen : ContainerFragment() {
             navigation?.addFragment(MXHGameScreen.newInstance())
         }
         imgAvatar?.setOnClickListener {
-
+            val idUser: Int = try{
+                StorageManager.getUserId().toInt()
+            } catch (e: NumberFormatException){
+                return@setOnClickListener
+            }
+            navigation?.addFragment(UserDiscussionScreen.newInstance(idUser, Category.Member))
         }
     }
 
