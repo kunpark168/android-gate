@@ -47,13 +47,13 @@ class GalleryScreen private constructor(
     private fun init(){
         mAdapter = GalleryAdapter()
         viewPager.adapter = mAdapter
-        viewPager.setPageTransformer(true, DepthPageTransformer())
+        viewPager?.setPageTransformer(true, DepthPageTransformer())
         Glide.with(this@GalleryScreen)
                 .apply { avatarOptions }
                 .load(mUser.mAvatar?.toImage())
                 .fitCenter()
                 .into(imgAvatar)
-
+        tabLayout?.setupWithViewPager(viewPager)
         tvName.text = mUser.mName
     }
 
@@ -78,7 +78,6 @@ class GalleryScreen private constructor(
         override fun isViewFromObject(view: View, `object`: Any) = view === `object`
 
         override fun getCount() = mImages.size
-
     }
 }
 

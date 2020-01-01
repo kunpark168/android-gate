@@ -69,6 +69,7 @@
     <color name="orange">#fa5a36</color>
     <color name="color_solid_grey">#f4f2f0</color>
     <color name="color_main_blue">#55b3f9</color>
+    <color name="color_main_blue_alpha">#8855b3f9</color>
     <color name="color_main_orange">#fa5a36</color>
     <color name="default_color_text">#777777</color>
     <color name="text_color_blue">#55b3f9</color>

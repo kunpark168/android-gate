@@ -1,5 +1,6 @@
 package com.anhtam.gate9.v2.post
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Editable
 import android.text.Html
@@ -23,6 +24,7 @@ import com.anhtam.gate9.v2.reaction.ReactionScreen
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.auth.login.LoginScreen
+import com.anhtam.gate9.v2.gallery.GalleryScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -106,29 +108,53 @@ open class DetailPostScreen : DaggerNavigationFragment(){
     }
         // Change icon display
     private fun reaction(type: Int) {
-            when (_react) {
-                0 -> {//change icon color and increase number}
-                }
-                1 -> {
-                    // change icon like
+            if (_react == type) {
+                when (type) {
+                    1 -> {
+                        // change icon like
+                        Glide.with(this@DetailPostScreen)
+                                .load(R.drawable.ic_like_post)
+                                .into(imgLike)
+                    }
+                    2 -> {
+                        // change icon dislike
+                        Glide.with(this@DetailPostScreen)
+                                .load(R.drawable.ic_dislike_post)
+                                .into(imgDislike)
 
-
+                    }
+                    3 -> {
+                        // change icon love
+                        Glide.with(this@DetailPostScreen)
+                                .load(R.drawable.ic_reaction_love)
+                                .into(imgFavorite)
+                    }
                 }
-                2 -> {
-                    // change icon dislike
+                _react = 0
+            } else {
+                when (type) {
+                    1 -> {
+                        // change icon like
+                        imgLike?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
 
-                }
-                3 -> {
-                    // change icon love
+                    }
+                    2 -> {
+                        // change icon dislike
+                        imgDislike?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
 
+                    }
+                    3 -> {
+                        // change icon love
+                        imgFavorite?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                    }
                 }
+                _react = type
             }
-
             val id = mPostEntity?.commentId?.toInt() ?: 0
             val params = hashMapOf<String, Int>()
             params["commentId"] = id
-            params["type"] = type
-            params["userId"] = StorageManager.getUserId().toInt()
+            params["type"] = _react
+            params["userId"] = 5
             viewModel.react(params).observe(viewLifecycleOwner, Observer {
 
             })
@@ -253,7 +279,7 @@ open class DetailPostScreen : DaggerNavigationFragment(){
         // Reaction
 
 
-        csLike.setOnClickListener {
+        imgLike.setOnClickListener {
             if(checkLogin()){
                 // change icon color and send request
                 reaction(1)
@@ -261,7 +287,7 @@ open class DetailPostScreen : DaggerNavigationFragment(){
                 navigation?.addFragment(LoginScreen.newInstance())
             }
         }
-        csLove.setOnClickListener {
+        imgFavorite.setOnClickListener {
             if(checkLogin()){
                 // change icon color and send request
                 reaction(3)
@@ -269,7 +295,7 @@ open class DetailPostScreen : DaggerNavigationFragment(){
                 navigation?.addFragment(LoginScreen.newInstance())
             }
         }
-        csDisLike.setOnClickListener {
+        imgDislike.setOnClickListener {
             if(checkLogin()){
                 // change icon color and send request
                 reaction(2)
@@ -348,12 +374,7 @@ open class DetailPostScreen : DaggerNavigationFragment(){
 
     private fun checkLogin() : Boolean {
         val accessToken = StorageManager.getAccessToken()
-        return if (accessToken.isEmpty()) {
-            navigation?.addFragment(LoginScreen.newInstance())
-            false
-        } else {
-            true
-        }
+        return accessToken.isNotEmpty()
     }
 
     inner class Adapter : BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.comment_item_layout, arrayListOf()){
@@ -465,6 +486,9 @@ open class DetailPostScreen : DaggerNavigationFragment(){
             val photo = item?.photo ?: return
             val view = helper?.itemView ?: return
             val imgPhoto = view.findViewById<ImageView>(R.id.imgPhoto)
+            imgPhoto.setOnClickListener {
+                navigation?.addFragment(GalleryScreen.newInstance(data.map { it.photo}, mPostEntity?.user!!))
+            }
             Glide.with(mContext)
                     .load(photo.toImage())
                     .apply(bannerOptions)
