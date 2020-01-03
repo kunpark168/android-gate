@@ -19,7 +19,7 @@ import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.gallery.GalleryScreen
-import com.anhtam.gate9.v2.post.DetailPostScreen
+import com.anhtam.gate9.v2.detail_post.DetailPostScreen
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions

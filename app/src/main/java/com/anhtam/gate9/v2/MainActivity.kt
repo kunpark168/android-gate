@@ -17,7 +17,7 @@ import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.main.home.HomeFragment
 import com.anhtam.gate9.v2.notification.NotificationFragment
-import com.anhtam.gate9.v2.post.DetailPostScreen
+import com.anhtam.gate9.v2.detail_post.DetailPostScreen
 import com.anhtam.gate9.v2.splash.SplashScreen
 import dagger.android.support.DaggerAppCompatActivity
 
