@@ -23,7 +23,8 @@ class DetailPostViewModel @Inject constructor(
         private val repository: SocialRepository) : ViewModel() {
 
     private val _react = MutableLiveData<Reaction>()
-    private var _userId: Int by Delegates.notNull()
+    var _userId: Int by Delegates.notNull()
+    var _gameId: Int by Delegates.notNull()
     private var _commentId: Int by Delegates.notNull()
     private lateinit var navigation: WeakReference<INavigator>
 
@@ -36,6 +37,11 @@ class DetailPostViewModel @Inject constructor(
         navigation = WeakReference(navigator)
         _react.value = Reaction.react(value)
         _userId = post.user?.mId ?: throw IllegalReturn()
+        _gameId = try {
+            post.game?.gameId?.toInt() ?: 0
+        } catch (e: NumberFormatException){
+            throw IllegalReturn()
+        }
         _commentId = post.commentId?.toInt() ?: throw IllegalReturn()
     }
 
@@ -47,8 +53,8 @@ class DetailPostViewModel @Inject constructor(
         override fun createCall() = socialService.getDetailPosts(id)
     }.asLiveData()
 
-    fun postComment(parent: Long, content: String? = null, imageUrl: String? = "") = object: FetchBoundResource<Base>(){
-        override fun createCall() = socialService.postComment(parent, content, imageUrl)
+    fun postComment(content: String? = null, imageUrl: String? = "") = object: FetchBoundResource<Base>(){
+        override fun createCall() = socialService.postComment(_commentId.toLong(), content, imageUrl)
     }.asLiveData()
 
     fun react(params: Map<String, Int>) = repository.react(params)

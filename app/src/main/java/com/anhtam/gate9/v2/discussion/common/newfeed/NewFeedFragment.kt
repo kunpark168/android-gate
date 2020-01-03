@@ -3,7 +3,7 @@ package com.anhtam.gate9.v2.discussion.common.newfeed
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
-import com.anhtam.gate9.adapter.v2.CommentAdapter
+import com.anhtam.gate9.adapter.v2.PostAdapter
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
 import com.google.android.material.tabs.TabLayout
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class NewFeedFragment(private val _userId: Int) : CommonDiscussionFragment() {
 
-    @Inject lateinit var mAdapter: CommentAdapter
+    @Inject lateinit var mAdapter: PostAdapter
     private var mCurrentCategory: PostCategory = PostCategory.BOTH
     override val colorTextTab = R.color.colorTabDiscussion
     private val viewModel: NewFeedViewModel by viewModels { vmFactory }

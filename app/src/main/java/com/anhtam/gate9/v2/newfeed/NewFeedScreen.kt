@@ -19,7 +19,7 @@ import com.anhtam.domain.Game
 import com.anhtam.domain.v2.PostEntity
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.GroupBannerAdapter
-import com.anhtam.gate9.adapter.v2.CommentAdapter
+import com.anhtam.gate9.adapter.v2.PostAdapter
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.v2.search.SearchScreen
@@ -61,7 +61,7 @@ class NewFeedScreen : ContainerFragment() {
     private val mPostViewModel: com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedViewModel by viewModels { vmFactory }
     private var mAdapter by autoCleared<SliderAdapter>()
 
-    @Inject lateinit var mCommentAdapter : CommentAdapter
+    @Inject lateinit var mCommentAdapter : PostAdapter
     @Inject lateinit var mGroup4Adapter: GroupBannerAdapter
     @Inject @field:Named("avatar") lateinit var avatarOptions: RequestOptions
     @Inject @field:Named("banner") lateinit var bannerOptions: RequestOptions

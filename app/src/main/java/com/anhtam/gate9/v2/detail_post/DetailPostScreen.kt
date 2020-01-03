@@ -1,13 +1,10 @@
 package com.anhtam.gate9.v2.detail_post
 
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Editable
 import android.text.Html
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.*
-import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -16,31 +13,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.anhtam.domain.v2.PostEntity
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.CommentAdapter
-import com.anhtam.gate9.share.view.MoreDialog
+import com.anhtam.gate9.adapter.v2.PhotoAdapter
+import com.anhtam.gate9.adapter.v2.PhotoEntity
 import com.anhtam.gate9.share.view.donate.DonateDialog
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.reaction.ReactionScreen
-import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
-import com.anhtam.gate9.v2.gallery.GalleryScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseViewHolder
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.bottom_bar_type_layout.*
-import kotlinx.android.synthetic.main.comment_item_layout.view.*
 import kotlinx.android.synthetic.main.detail_post_screen.*
-import kotlinx.android.synthetic.main.photo_n_item_layout.view.*
 import of.bum.network.helper.Resource
-import of.bum.network.v2.MediaService
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -53,23 +43,30 @@ open class DetailPostScreen private constructor(
         navigation?.addFragment(LoginScreen.newInstance())
     }
 
+    override fun toUserDiscussion() {
+        navigation?.addFragment(UserDiscussionScreen.newInstance(viewModel._userId, Category.Member))
+    }
+
+    override fun toGameDiscussion() {
+        navigation?.addFragment(GameDiscussionScreen.newInstance("", viewModel._gameId.toString()))
+    }
+
+    override fun toReact() {
+        navigation?.addFragment(ReactionScreen.newInstance())
+    }
+
     companion object{
-        fun newInstance(postEntity: PostEntity, type: Detail): DetailPostScreen {
-            val fragment = DetailPostScreen(postEntity, type)
-            return fragment
-        }
+        fun newInstance(postEntity: PostEntity, type: Detail) = DetailPostScreen(postEntity, type)
     }
 
     private val viewModel: DetailPostViewModel by viewModels { vmFactory }
-    private var mAdapter: Adapter by autoCleared()
-    private var mPhotoAdapter: PhotoAdapter by autoCleared()
     private var more = 0
-
-    private var _react: Reaction = Reaction.None
 
     @field:Named("avatar") @Inject lateinit var avatarOptions: RequestOptions
     @field:Named("banner") @Inject lateinit var bannerOptions: RequestOptions
-    @Inject lateinit var mMediaService: MediaService
+
+    @Inject lateinit var mPhotoAdapter: PhotoAdapter
+    @Inject lateinit var mAdapter: CommentAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
@@ -85,83 +82,96 @@ open class DetailPostScreen private constructor(
 
     private fun init() {
         viewModel.initialize(_post, this)
+        loadComment()
+        initView()
+        initEvents()
+        observer()
+    }
+
+    private fun loadComment(){
         if(!(_post.totalReply.isEmpty() || _post.totalReply.toInt() == 0)){
             showProgress()
             fetchComment()
         }
+    }
+
+    private fun initView(){
         csOriPost?.visibility = if (_type ==  Detail.COMMENT) View.VISIBLE else View.GONE
         initRvPhoto()
         initRvComment()
         bindingViewPost()
-        initEvents()
     }
 
     private fun initRvPhoto() {
-        mPhotoAdapter = PhotoAdapter()
         rvPhotos?.layoutManager = LinearLayoutManager(context)
         rvPhotos?.adapter = mPhotoAdapter
         rvPhotos?.isNestedScrollingEnabled = false
+        mPhotoAdapter.user = _post.user ?: return
     }
 
     private fun initRvComment() {
-        mAdapter = Adapter()
         rvComment?.layoutManager = LinearLayoutManager(context)
         rvComment?.adapter = mAdapter
         rvComment?.isNestedScrollingEnabled = false
     }
-        // Change icon display
-    private fun reaction(type: Int) {
-            if (true) {
-                when (type) {
-                    1 -> {
-                        // change icon like
-                        Glide.with(this@DetailPostScreen)
-                                .load(R.drawable.ic_like_post)
-                                .into(imgLike)
-                    }
-                    2 -> {
-                        // change icon dislike
-                        Glide.with(this@DetailPostScreen)
-                                .load(R.drawable.ic_dislike_post)
-                                .into(imgDislike)
+//        // Change icon display
+//    private fun reaction(type: Int) {
+//            if (true) {
+//                when (type) {
+//                    1 -> {
+//                        // change icon like
+//                        Glide.with(this@DetailPostScreen)
+//                                .load(R.drawable.ic_like_post)
+//                                .into(imgLike)
+//                    }
+//                    2 -> {
+//                        // change icon dislike
+//                        Glide.with(this@DetailPostScreen)
+//                                .load(R.drawable.ic_dislike_post)
+//                                .into(imgDislike)
+//
+//                    }
+//                    3 -> {
+//                        // change icon love
+//                        Glide.with(this@DetailPostScreen)
+//                                .load(R.drawable.ic_reaction_love)
+//                                .into(imgFavorite)
+//                    }
+//                }
+////                _react = 0
+//            } else {
+//                when (type) {
+//                    1 -> {
+//                        // change icon like
+//                        imgLike?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+//
+//                    }
+//                    2 -> {
+//                        // change icon dislike
+//                        imgDislike?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+//
+//                    }
+//                    3 -> {
+//                        // change icon love
+//                        imgFavorite?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+//                    }
+//                }
+////                _react = type
+//            }
+//            val id = _post.commentId?.toInt() ?: 0
+//            val params = hashMapOf<String, Int>()
+//            params["commentId"] = id
+////            params["type"] = _react
+//            params["userId"] = 5
+//            viewModel.react(params).observe(viewLifecycleOwner, Observer {
+//
+//            })
+//        }
 
-                    }
-                    3 -> {
-                        // change icon love
-                        Glide.with(this@DetailPostScreen)
-                                .load(R.drawable.ic_reaction_love)
-                                .into(imgFavorite)
-                    }
-                }
-//                _react = 0
-            } else {
-                when (type) {
-                    1 -> {
-                        // change icon like
-                        imgLike?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
 
-                    }
-                    2 -> {
-                        // change icon dislike
-                        imgDislike?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+    private fun observer(){
 
-                    }
-                    3 -> {
-                        // change icon love
-                        imgFavorite?.setColorFilter(ContextCompat.getColor(requireContext(), R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
-                    }
-                }
-//                _react = type
-            }
-            val id = _post.commentId?.toInt() ?: 0
-            val params = hashMapOf<String, Int>()
-            params["commentId"] = id
-//            params["type"] = _react
-            params["userId"] = 5
-            viewModel.react(params).observe(viewLifecycleOwner, Observer {
-
-            })
-        }
+    }
 
     private fun fetchComment() {
         val commentId = _post.commentId
@@ -204,10 +214,10 @@ open class DetailPostScreen private constructor(
         if (!photos.isNullOrEmpty()) {
             val listPhotos = photos.split(",").toMutableList().map { it.trim() }
             val photoEntity = listPhotos.map {
-                CommentAdapter.PhotoEntity(when (listPhotos.size) {
-                    1 -> CommentAdapter.PhotoEntity.GRID_1
-                    in 2..4 -> CommentAdapter.PhotoEntity.GRID_4
-                    else -> CommentAdapter.PhotoEntity.GRID_N
+                PhotoEntity(when (listPhotos.size) {
+                    1 -> PhotoEntity.GRID_1
+                    in 2..4 -> PhotoEntity.GRID_4
+                    else -> PhotoEntity.GRID_N
                 }, it)
             }
             mPhotoAdapter.setSpanSizeLookup { _, position ->
@@ -215,12 +225,12 @@ open class DetailPostScreen private constructor(
             }
             if (photoEntity.size > 4) {
                 more = photoEntity.size - 4
-                val morePhotoList = arrayListOf<CommentAdapter.PhotoEntity>()
+                val morePhotoList = arrayListOf<PhotoEntity>()
                 for (index in 0..3) {
                     if (index == 3) {
-                        morePhotoList.add(CommentAdapter.PhotoEntity(CommentAdapter.PhotoEntity.GRID_N, photoEntity[index].photo))
+                        morePhotoList.add(PhotoEntity(PhotoEntity.GRID_N, photoEntity[index].photo))
                     } else {
-                        morePhotoList.add(CommentAdapter.PhotoEntity(CommentAdapter.PhotoEntity.GRID_4, photoEntity[index].photo))
+                        morePhotoList.add(PhotoEntity(PhotoEntity.GRID_4, photoEntity[index].photo))
                     }
                 }
                 mPhotoAdapter.setNewData(morePhotoList)
@@ -283,7 +293,7 @@ open class DetailPostScreen private constructor(
         imgLike.setOnClickListener { viewModel.react(Reaction.Like) }
         imgFavorite.setOnClickListener { viewModel.react(Reaction.Love) }
         imgDislike.setOnClickListener { viewModel.react(Reaction.Dislike) }
-
+        
         tvFollowGame?.setOnClickListener {
             if(tvFollowGame?.text == getString(R.string.follow)) {
                 setFollowing()
@@ -298,13 +308,8 @@ open class DetailPostScreen private constructor(
             val unwrapContext = context ?: return@setOnClickListener
             DonateDialog(unwrapContext).show()
         }
-        tvAction?.setOnClickListener {
-            navigation?.addFragment(ReactionScreen.newInstance())
-        }
-        ichome?.setOnClickListener { navigation?.back() }
-        csComment?.setOnClickListener { checkLogin() }
-        tvPrePost?.setOnClickListener { navigation?.back() }
         tvOriPost?.setOnClickListener { /**/ }
+        csComment?.setOnClickListener { etPost?.requestFocus() }
         etPost.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 
@@ -320,187 +325,31 @@ open class DetailPostScreen private constructor(
             }
 
         })
+        /*
+         * 1) Post comment
+         *   -> Success -> Fetch comment + Update UI
+         */
         imgSend?.setOnClickListener {
             hideKeyboard()
             val content = etPost?.text?.toString()
-            val parentId = _post.commentId ?: return@setOnClickListener
-            postRequest(parentId, content, "")
-
-            updateUIAfterPost()
+            viewModel.postComment(content, "")
         }
 
         // navigation
-        imgAvatar?.setOnClickListener {
-            val id = _post.user?.mId ?: return@setOnClickListener
-            navigation?.addFragment(UserDiscussionScreen.newInstance(id, Category.Member))
-        }
-        tvUserName?.setOnClickListener {
-            val id = _post.user?.mId ?: return@setOnClickListener
-            navigation?.addFragment(UserDiscussionScreen.newInstance(id, Category.Member))
-        }
-        imgGame?.setOnClickListener {
-            val id = _post.game?.gameId ?: return@setOnClickListener
-            val link = ""
-            navigation?.addFragment(GameDiscussionScreen.newInstance(link, id))
-        }
-        imgNewGame?.setOnClickListener {
-            val id = _post.game?.gameId ?: return@setOnClickListener
-            val link = ""
-            navigation?.addFragment(GameDiscussionScreen.newInstance(link, id))
-        }
-        tvTitle?.setOnClickListener {
-            val id = _post.game?.gameId ?: return@setOnClickListener
-            val link = ""
-            navigation?.addFragment(GameDiscussionScreen.newInstance(link, id))
-        }
-    }
+        imgAvatar?.setOnClickListener { toUserDiscussion() }
+        tvUserName?.setOnClickListener { toUserDiscussion() }
+        imgGame?.setOnClickListener { toGameDiscussion() }
+        imgNewGame?.setOnClickListener { toGameDiscussion() }
+        tvTitle?.setOnClickListener { toGameDiscussion() }
 
-    private fun postRequest(parentId: Long, content: String? = null, imageUrl: String? = "") {
-        showProgress()
-        viewModel.postComment(parentId, content, imageUrl).observe(viewLifecycleOwner, Observer {
-            when(it) {
-                is Resource.Success -> {
-                    fetchComment()
-                }
-                is Resource.Error -> {
-                    hideProgress()
-                }
-                else -> {
-
-                }
-            }
-        })
-    }
-
-    private fun updateUIAfterPost() {
-        etPost?.setText("")
+        tvAction?.setOnClickListener {toReact() }
+        ichome?.setOnClickListener { navigation?.back() }
+        tvPrePost?.setOnClickListener { navigation?.back() }
     }
 
     private fun checkLogin() : Boolean {
         val accessToken = StorageManager.getAccessToken()
         return accessToken.isNotEmpty()
-    }
-
-    inner class Adapter : BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.comment_item_layout, arrayListOf()){
-        override fun convert(helper: BaseViewHolder?, item: PostEntity?) {
-
-            val unwrapPost = item ?: return
-            val view = helper?.itemView ?: return
-            // Set content of Post
-            view.contentTextView.text = unwrapPost.content?.let { Html.fromHtml(it) }
-            view.dateTextView.text = unwrapPost.createdDate
-
-            // Set user
-            val user = unwrapPost.user ?: return
-            view.userNameTextView.text = user.mName
-            Glide.with(mContext)
-                    .load(user.mAvatar?.toImage())
-                    .apply(avatarOptions)
-                    .into(view.avatarImageView)
-            view.contentTextView?.setOnClickListener {
-                navigation?.addFragment(newInstance(unwrapPost, Detail.COMMENT))
-            }
-            view.commentImageView?.setOnClickListener {
-                navigation?.addFragment(newInstance(unwrapPost, Detail.COMMENT))
-            }
-            view.userNameTextView?.setOnClickListener { navigation?.addFragment(UserDiscussionScreen.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
-            view.avatarImageView?.setOnClickListener { navigation?.addFragment(UserDiscussionScreen.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
-
-            if(TextUtils.isEmpty(unwrapPost.totalReply)){
-                return
-            }
-            val totalChild = unwrapPost.totalReply.toInt()
-            when(totalChild) {
-                0 -> {
-                    view.rvChildComment?.visibility = View.GONE
-                }
-                else -> {
-                    if(unwrapPost.child.isNullOrEmpty()) {
-                        view.rvChildComment?.visibility = View.GONE
-                        return
-                    }
-                    view.rvChildComment?.visibility = View.VISIBLE
-                    val childs = unwrapPost.child
-                    val childAdapter = ChildAdapter()
-                    childAdapter.setNewData(childs)
-                    if(totalChild > 2) {
-                        val footer = ShowMoreFooterView(context)
-                        childAdapter.addFooterView(footer)
-                        val remain = totalChild - 2
-                        val showMoreText = Phrase.from(getString(R.string.xem_them_amount_comment))
-                                .put("number", remain)
-                                .put("s", if(remain > 1) "s" else "")
-                                .format()
-                                .toString()
-                        footer.setText(showMoreText) {
-                            // set show more here
-                        }
-                    }
-                    view.rvChildComment?.adapter = childAdapter
-                    view.rvChildComment?.layoutManager = LinearLayoutManager(context)
-                }
-            }
-        }
-    }
-
-    inner class ChildAdapter : BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.child_comment_item_layout, arrayListOf()){
-        override fun convert(helper: BaseViewHolder?, item: PostEntity?) {
-            val unwrapPost = item ?: return
-            val view = helper?.itemView ?: return
-            // Set content of Post
-            view.contentTextView.text = unwrapPost.content?.let { Html.fromHtml(it) }
-            view.dateTextView.text = unwrapPost.createdDate
-
-            // Set user
-            val user = unwrapPost.user ?: return
-            view.userNameTextView.text = user.mName
-            Glide.with(mContext)
-                    .load(user.mAvatar?.toImage())
-                    .apply(avatarOptions)
-                    .into(view.avatarImageView)
-            view.contentTextView?.setOnClickListener {
-                navigation?.addFragment(newInstance(unwrapPost, Detail.COMMENT))
-            }
-            view.commentImageView?.setOnClickListener {
-                navigation?.addFragment(newInstance(unwrapPost, Detail.COMMENT))
-            }
-            view.userNameTextView?.setOnClickListener { navigation?.addFragment(UserDiscussionScreen.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
-            view.avatarImageView?.setOnClickListener { navigation?.addFragment(UserDiscussionScreen.newInstance(unwrapPost.user?.mId ?: 0, Category.Member)) }
-            view.moreImageView?.setOnClickListener {
-                val mMoreDialog = MoreDialog(context!!, object : MoreDialog.IMore {
-                    override fun onreport() {
-//                        ReportPostActivity.start(mContext as BaseActivity)
-                    }
-                })
-                mMoreDialog.idPost = unwrapPost.commentId?.toString()
-                mMoreDialog.show()
-            }
-        }
-
-    }
-
-    inner class PhotoAdapter : BaseMultiItemQuickAdapter<CommentAdapter.PhotoEntity, BaseViewHolder>(mutableListOf()){
-        init {
-            addItemType(CommentAdapter.PhotoEntity.GRID_1, R.layout.photo_1_item_layout)
-            addItemType(CommentAdapter.PhotoEntity.GRID_4, R.layout.photo_4_item_layout)
-            addItemType(CommentAdapter.PhotoEntity.GRID_N, R.layout.photo_n_item_layout)
-        }
-
-        override fun convert(helper: BaseViewHolder?, item: CommentAdapter.PhotoEntity?) {
-            val photo = item?.photo ?: return
-            val view = helper?.itemView ?: return
-            val imgPhoto = view.findViewById<ImageView>(R.id.imgPhoto)
-            imgPhoto.setOnClickListener {
-                navigation?.addFragment(GalleryScreen.newInstance(data.map { it.photo}, _post.user!!))
-            }
-            Glide.with(mContext)
-                    .load(photo.toImage())
-                    .apply(bannerOptions)
-                    .into(imgPhoto)
-            if (item.type == CommentAdapter.PhotoEntity.GRID_N) {
-                view.tvMore.text = "+".plus(more.toString())
-            }
-        }
     }
 
     enum class Detail {
