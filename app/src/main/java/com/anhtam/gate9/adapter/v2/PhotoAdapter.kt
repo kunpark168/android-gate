@@ -18,6 +18,10 @@ class PhotoAdapter @Inject constructor(
         val navigation: Navigation,
         @Named("banner") val  bannerOptions: RequestOptions
 ) : BaseMultiItemQuickAdapter<PhotoEntity, BaseViewHolder>(mutableListOf()){
+
+    companion object{
+        private const val DEFAULT_MORE = 4
+    }
     
     lateinit var user: User
     
@@ -25,6 +29,37 @@ class PhotoAdapter @Inject constructor(
         addItemType(PhotoEntity.GRID_1, R.layout.photo_1_item_layout)
         addItemType(PhotoEntity.GRID_4, R.layout.photo_4_item_layout)
         addItemType(PhotoEntity.GRID_N, R.layout.photo_n_item_layout)
+    }
+
+    /*
+     * Return span size
+     */
+    fun setPhoto(photo: String): Int {
+        val photos = photo.split(',').map { it.trim() }
+        val entities = photos.map {
+            PhotoEntity(
+                    when(photos.size) {
+                        1 -> PhotoEntity.GRID_1
+                        in 2..4 -> PhotoEntity.GRID_4
+                        else -> PhotoEntity.GRID_N
+                    }, it
+            )
+        }
+        setSpanSizeLookup{_, pos -> data[pos].getSpanSize()}
+        if (entities.size > DEFAULT_MORE) {
+            val morePhotoList = arrayListOf<PhotoEntity>()
+            for (index in 0..DEFAULT_MORE) {
+                if (index == DEFAULT_MORE) {
+                    morePhotoList.add(PhotoEntity(PhotoEntity.GRID_N, entities[index].photo))
+                } else {
+                    morePhotoList.add(PhotoEntity(PhotoEntity.GRID_4, entities[index].photo))
+                }
+            }
+            setNewData(morePhotoList)
+        } else {
+            setNewData(entities)
+        }
+        return 1
     }
 
     override fun convert(helper: BaseViewHolder?, item: PhotoEntity?) {
@@ -35,7 +70,7 @@ class PhotoAdapter @Inject constructor(
                 .apply(bannerOptions)
                 .into(view.imgPhoto)
         if (item.type == PhotoEntity.GRID_N) {
-            val more = data.size - 4
+            val more = data.size - DEFAULT_MORE
             view.tvMore.text = "+".plus(more.toString())
         }
         view.imgPhoto?.setOnClickListener { openGalleryScreen() }

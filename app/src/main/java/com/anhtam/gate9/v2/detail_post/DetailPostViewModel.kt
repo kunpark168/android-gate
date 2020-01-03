@@ -18,9 +18,8 @@ import javax.inject.Inject
 import kotlin.properties.Delegates
 
 class DetailPostViewModel @Inject constructor(
-        private val postService: PostService,
-        val socialService: SocialService,
-        private val repository: SocialRepository) : ViewModel() {
+        val socialService: SocialService
+) : ViewModel() {
 
     private val _react = MutableLiveData<Reaction>()
     var _userId: Int by Delegates.notNull()
@@ -44,20 +43,13 @@ class DetailPostViewModel @Inject constructor(
         }
         _commentId = post.commentId?.toInt() ?: throw IllegalReturn()
     }
-
-    fun commentByPost(id: String) = object: FetchBoundResource<Post>(){
-        override fun createCall() = postService.getDetailPost(id)
-    }.asLiveData()
-
-    fun getDetailPost(id: String) = object: FetchBoundResource<WrapComments>(){
-        override fun createCall() = socialService.getDetailPosts(id)
-    }.asLiveData()
+    fun getChildComment(){
+        socialService.getDetailPosts(_commentId.toLong())
+    }
 
     fun postComment(content: String? = null, imageUrl: String? = "") = object: FetchBoundResource<Base>(){
         override fun createCall() = socialService.postComment(_commentId.toLong(), content, imageUrl)
     }.asLiveData()
-
-    fun react(params: Map<String, Int>) = repository.react(params)
 
     /*
      * 1) Check is authenticate(Session Manager)
@@ -78,6 +70,10 @@ class DetailPostViewModel @Inject constructor(
                 postReact()
             }
         }
+    }
+
+    fun sharePost(){
+
     }
 
     private fun postReact(){

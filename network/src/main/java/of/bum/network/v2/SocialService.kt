@@ -26,7 +26,7 @@ interface SocialService {
     ): LiveData<ApiResponse<RestResponse<WrappedHome>>>
 
     @GET("social/get-post-detail")
-    fun getDetailPosts(@Query("postId") postId: String,
+    fun getDetailPosts(@Query("postId") postId: Long,
                        @Query("page") page: Int = 0,
                        @Query("limit") limit: Int = 15
     ) : LiveData<ApiResponse<RestResponse<WrapComments>>>
