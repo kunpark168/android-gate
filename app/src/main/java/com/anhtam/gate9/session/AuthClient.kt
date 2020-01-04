@@ -2,14 +2,18 @@ package com.anhtam.gate9.session
 
 import android.text.TextUtils
 import com.anhtam.gate9.App
+import com.anhtam.gate9.di.scope.AuthScope
+import com.anhtam.gate9.di.scope.MainScope
 import com.anhtam.gate9.storage.StorageManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
+@MainScope
 class AuthClient
-@Inject constructor(private val mAuthService: AuthService) {
+@Inject constructor(private val mAuthService: AuthService,
+                    val mSessionManager: SessionManager) {
 
     fun loginWithPassword(email: String, password: String, callback: AuthCallBack) {
         val params = hashMapOf<String, String>()

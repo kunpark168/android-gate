@@ -359,85 +359,18 @@
                             android:layout_height="@dimen/dp25" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <!--Love-->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/csLove"
-                        app:layout_constraintWidth_percent="0.2"
-                        app:layout_constraintStart_toEndOf="@+id/csShare"
+                    <com.anhtam.gate9.v2.views.ReactionView
+                        android:id="@+id/reactionView"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/imgFavorite"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:src="@drawable/ic_reaction_love"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp40" />
-                        <TextView
-                            app:layout_constraintTop_toBottomOf="@+id/imgFavorite"
-                            android:gravity="center"
-                            android:textSize="@dimen/sp_10"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/roboto_light"
-                            android:text="@string/favourite_feelling"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp25" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <!--Like-->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/csLike"
-                        app:layout_constraintWidth_percent="0.2"
-                        app:layout_constraintStart_toEndOf="@+id/csLove"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/imgLike"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:src="@drawable/ic_like_post"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp40" />
-                        <TextView
-                            app:layout_constraintTop_toBottomOf="@+id/imgLike"
-                            android:gravity="center"
-                            android:textSize="@dimen/sp_10"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/roboto_light"
-                            android:text="@string/like_feelling"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp25" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                    <!--DisLike-->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/csDisLike"
-                        app:layout_constraintWidth_percent="0.2"
-                        app:layout_constraintStart_toEndOf="@+id/csLike"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/imgDislike"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:src="@drawable/ic_dislike_post"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp40" />
-                        <TextView
-                            app:layout_constraintTop_toBottomOf="@+id/imgDislike"
-                            android:gravity="center"
-                            android:textSize="@dimen/sp_10"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/roboto_light"
-                            android:text="@string/dislike_feelling"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp25" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
+                        app:layout_constraintStart_toEndOf="@id/csShare"
+                        app:layout_constraintWidth_percent="0.6"
+                        android:layout_height="match_parent"/>
 
                     <!--PostEntity-->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/csComment"
                         app:layout_constraintWidth_percent="0.2"
-                        app:layout_constraintStart_toEndOf="@+id/csDisLike"
+                        app:layout_constraintStart_toEndOf="@+id/reactionView"
                         android:layout_width="0dp"
                         android:layout_height="match_parent">
                         <ImageView

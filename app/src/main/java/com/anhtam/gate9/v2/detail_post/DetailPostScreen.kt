@@ -7,12 +7,14 @@ import android.text.TextWatcher
 import android.view.*
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anhtam.domain.v2.PostEntity
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.CommentAdapter
 import com.anhtam.gate9.adapter.v2.PhotoAdapter
+import com.anhtam.gate9.session.SessionManager
 import com.anhtam.gate9.share.view.donate.DonateDialog
 import com.anhtam.gate9.utils.convertInt
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
@@ -22,7 +24,6 @@ import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.vo.IllegalReturn
-import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -58,13 +59,13 @@ open class DetailPostScreen private constructor(
     }
 
     private val viewModel: DetailPostViewModel by viewModels { vmFactory }
-    private var more = 0
 
     @field:Named("avatar") @Inject lateinit var avatarOptions: RequestOptions
     @field:Named("banner") @Inject lateinit var bannerOptions: RequestOptions
 
     @Inject lateinit var mPhotoAdapter: PhotoAdapter
     @Inject lateinit var mAdapter: CommentAdapter
+    @Inject lateinit var mSessionManager: SessionManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
@@ -114,7 +115,10 @@ open class DetailPostScreen private constructor(
     }
 
     private fun observer(){
-
+        viewModel.react.observe(viewLifecycleOwner, Observer {
+            // clear action
+            // set reaction
+        })
     }
 
     /*
@@ -201,10 +205,10 @@ open class DetailPostScreen private constructor(
 
     private fun initEvents() {
         // Reaction
-        imgLike.setOnClickListener { viewModel.react(Reaction.Like) }
-        imgFavorite.setOnClickListener { viewModel.react(Reaction.Love) }
-        imgDislike.setOnClickListener { viewModel.react(Reaction.Dislike) }
-        
+        reactionView?.onReactionChange(mSessionManager){
+            viewModel.react(it)
+        }
+
         tvFollowGame?.setOnClickListener {
             if(tvFollowGame?.text == getString(R.string.follow)) {
                 setFollowing()

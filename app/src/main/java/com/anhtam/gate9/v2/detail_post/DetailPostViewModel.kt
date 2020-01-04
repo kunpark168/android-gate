@@ -1,27 +1,29 @@
 package com.anhtam.gate9.v2.detail_post
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.anhtam.domain.Base
-import com.anhtam.domain.Post
 import com.anhtam.domain.v2.PostEntity
-import com.anhtam.domain.v2.WrapComments
 import com.anhtam.gate9.repository.SocialRepository
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.vo.IllegalReturn
 import com.anhtam.gate9.vo.Reaction
 import of.bum.network.FetchBoundResource
-import of.bum.network.service.PostService
 import of.bum.network.v2.SocialService
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import kotlin.properties.Delegates
 
 class DetailPostViewModel @Inject constructor(
-        val socialService: SocialService
+        val socialService: SocialService,
+        val repository: SocialRepository
 ) : ViewModel() {
 
-    private val _react = MutableLiveData<Reaction>()
+    private val _react = MediatorLiveData<Reaction>()
+    val react: LiveData<Reaction>
+        get() = _react
+
     var _userId: Int by Delegates.notNull()
     var _gameId: Int by Delegates.notNull()
     private var _commentId: Int by Delegates.notNull()
@@ -82,6 +84,6 @@ class DetailPostViewModel @Inject constructor(
         params["commentId"] = _commentId
         params["type"] = Reaction.value(react)
         params["userId"] = _userId
-        socialService.react(params)
+        repository.react(params)
     }
 }

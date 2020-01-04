@@ -1,5 +1,6 @@
 package com.anhtam.gate9.di
 
+import com.anhtam.gate9.di.scope.MainScope
 import com.anhtam.gate9.v2.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -8,6 +9,7 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBuildersModule {
 
+    @MainScope
     @ContributesAndroidInjector(
             modules = [
                 FragmentBuildersModule::class,

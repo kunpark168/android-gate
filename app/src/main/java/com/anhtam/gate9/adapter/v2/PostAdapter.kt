@@ -3,10 +3,10 @@ package com.anhtam.gate9.adapter.v2
 import android.content.Context
 import android.text.Html
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.gate9.adapter.navigator.IPostNavigator
 import com.anhtam.domain.v2.PostEntity
 import com.anhtam.domain.v2.User
@@ -18,29 +18,23 @@ import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
-import com.anhtam.gate9.v2.gallery.GalleryScreen
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
+import com.anhtam.gate9.vo.IllegalReturn
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.squareup.phrase.Phrase
-import kotlinx.android.synthetic.main.photo_n_item_layout.view.*
 import kotlinx.android.synthetic.main.shared_post_item_layout.view.*
 import javax.inject.Inject
 import javax.inject.Named
 
 class PostAdapter @Inject constructor(
-        val navigation: Navigation?,
+        val navigation: Navigation,
         @Named("avatar") val avatarOptions: RequestOptions,
-        @Named("banner") val bannerOptions: RequestOptions,
-        private val photoAdapter: PhotoAdapter)
+        @Named("banner") val bannerOptions: RequestOptions)
     : BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.shared_post_item_layout, ArrayList()), IPostNavigator {
-
-    private var more = 0
 
     override fun convert(helper: BaseViewHolder?, item: PostEntity?) {
         val unwrapPost = item ?: return
@@ -92,40 +86,8 @@ class PostAdapter @Inject constructor(
         }
 
         // photos
-        val photos = unwrapPost.photo?.subSequence(1,unwrapPost.photo!!.length - 1)
-        if (!photos.isNullOrEmpty()) {
-            view.rvPhotos.visibility = View.VISIBLE
-            val listPhotos = photos.split(",").toMutableList().map { it.trim() }
-            val photoEntity = listPhotos.map { PhotoEntity(when(listPhotos.size) {
-                1 -> PhotoEntity.GRID_1
-                in 2..4 -> PhotoEntity.GRID_4
-                else -> PhotoEntity.GRID_N
-            }, it)}
-            photoAdapter.user = user
-            photoAdapter.setSpanSizeLookup { _, position ->
-                photoAdapter.data[position].getSpanSize()
-            }
-            if (photoEntity.size > 4){
-                more = photoEntity.size - 4
-                val morePhotoList = arrayListOf<PhotoEntity>()
-                for (index in 0..3) {
-                    if (index == 3) {
-                        morePhotoList.add(PhotoEntity(PhotoEntity.GRID_N, photoEntity[index].photo))
-                    } else {
-                        morePhotoList.add(PhotoEntity(PhotoEntity.GRID_4, photoEntity[index].photo))
-                    }
-                }
-                photoAdapter.setNewData(morePhotoList)
-            } else {
-                photoAdapter.setNewData(photoEntity)
-            }
-            if (photoEntity.size == 1){
-                view.rvPhotos.layoutManager = GridLayoutManager(mContext, 1)
-            } else {
-                view.rvPhotos.layoutManager = GridLayoutManager(mContext, 2)
-            }
-            view.rvPhotos.adapter = photoAdapter
-        }
+        val photos = unwrapPost.photo
+        initPhoto(photos, view.rvPhotos, user)
 
         // initEvent
         // user discussion
@@ -148,14 +110,14 @@ class PostAdapter @Inject constructor(
         }
 
         // game
-        view.gameImageView?.setOnClickListener { navigation?.addFragment(GameDiscussionScreen.newInstance("", "0")) }
-        view.titleGameTextView?.setOnClickListener { navigation?.addFragment(GameDiscussionScreen.newInstance("", "0")) }
+        view.gameImageView?.setOnClickListener { navigation.addFragment(GameDiscussionScreen.newInstance("", "0")) }
+        view.titleGameTextView?.setOnClickListener { navigation.addFragment(GameDiscussionScreen.newInstance("", "0")) }
         view.commentIcon.setOnClickListener {
             if(checkLogin()){
                 // change icon color and send request
                 navigateToPostDetail(mContext, unwrapPost)
             } else {
-                navigation?.addFragment(LoginScreen.newInstance())
+                navigation.addFragment(LoginScreen.newInstance())
             }
         }
         view.followGameTextView.setOnClickListener {
@@ -168,7 +130,7 @@ class PostAdapter @Inject constructor(
                     //sending request
                 }
             } else {
-                navigation?.addFragment(LoginScreen.newInstance())
+                navigation.addFragment(LoginScreen.newInstance())
             }
         }
     }
@@ -179,12 +141,12 @@ class PostAdapter @Inject constructor(
     }
 
     override fun navigateToMemberDiscussion(userId: Int) {
-        navigation?.addFragment(UserDiscussionScreen.newInstance(userId, Category.Member))
+        navigation.addFragment(UserDiscussionScreen.newInstance(userId, Category.Member))
     }
 
     override fun navigateToPostDetail(context: Context?, postEntity: PostEntity) {
         context?:return
-        navigation?.addFragment(DetailPostScreen.newInstance(postEntity, DetailPostScreen.Detail.POST))
+        navigation.addFragment(DetailPostScreen.newInstance(postEntity, DetailPostScreen.Detail.POST))
     }
 
     private fun setFollow(tvFollowGame: TextView) {
@@ -197,5 +159,23 @@ class PostAdapter @Inject constructor(
         tvFollowGame.text = mContext.getString(R.string.following)
         tvFollowGame.setBackgroundResource(R.drawable.bg_following)
         tvFollowGame.setTextColor(ContextCompat.getColor(mContext, R.color.text_color_blue))
+    }
+
+    private fun initPhoto(photo: String?, rv: RecyclerView, user: User){
+        if(photo.isNullOrEmpty() || photo.length == 2){//[]
+            rv.visibility = View.GONE
+            return
+        }
+        rv.visibility = View.VISIBLE
+//        val isFormat = "[[.+]]".toRegex().matches(photos) TODO Regex
+        val isFormat = (photo.startsWith('[') && photo.endsWith(']'))
+        if (!isFormat) {
+            throw IllegalReturn("Photo format return wrong!!!")
+        }
+        val adapter = PhotoAdapter(navigation, bannerOptions)
+        adapter.user = user
+        val spanCount = adapter.setPhoto(photo.substring(1, photo.length - 1))
+        rv.layoutManager = GridLayoutManager(mContext, spanCount)
+        rv.adapter = adapter
     }
 }
