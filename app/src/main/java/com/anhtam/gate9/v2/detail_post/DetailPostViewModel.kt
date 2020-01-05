@@ -75,20 +75,27 @@ class DetailPostViewModel @Inject constructor(
      *  a. Not -> Goto Login
      *  b.
      */
-    fun react(value: Reaction){
-        when(StorageManager.getAccessToken()){
-            "" -> navigation.get()?.toLogin()// navigate to Login
-            else -> { // auth
-                when{
-                    _react.value == value -> _react.value = Reaction.None
-                    _react.value == Reaction.None -> _react.value = value
-                    else ->{
-                        _react.value = value
-                    }
-                }
-                postReact()
-            }
-        }
+    fun react(value: Reaction): LiveData<Resource<Base>>{
+//        when(StorageManager.getAccessToken()){
+//            "" -> navigation.get()?.toLogin()// navigate to Login
+//            else -> { // auth
+//                when{
+//                    _react.value == value -> _react.value = Reaction.None
+//                    _react.value == Reaction.None -> _react.value = value
+//                    else ->{
+//                        _react.value = value
+//                    }
+//                }
+//                postReact()
+//            }
+//        }
+
+        val react = _react.value ?: Reaction.None
+        val params = hashMapOf<String, Int>()
+        params["commentId"] = _commentId
+        params["type"] = Reaction.value(value)
+        params["userId"] = 5
+        return repository.react(params)
     }
 
     fun sharePost(){
@@ -98,7 +105,7 @@ class DetailPostViewModel @Inject constructor(
     private fun postReact(){
         val react = _react.value ?: return
         val params = hashMapOf<String, Int>()
-        params["mCommentId"] = _commentId
+        params["commentId"] = _commentId
         params["type"] = Reaction.value(react)
         params["userId"] = _userId
         repository.react(params)

@@ -36,6 +36,7 @@ class PhotoAdapter @Inject constructor(
      */
     fun setPhoto(photo: String): Int {
         val photos = photo.split(',').map { it.trim() }
+        if (photos[0].isEmpty()) return 1
         val entities = photos.map {
             PhotoEntity(
                     when(photos.size) {

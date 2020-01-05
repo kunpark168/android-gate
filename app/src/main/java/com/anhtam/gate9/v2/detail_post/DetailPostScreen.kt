@@ -24,6 +24,7 @@ import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.vo.IllegalReturn
+import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -31,6 +32,7 @@ import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.bottom_bar_type_layout.*
 import kotlinx.android.synthetic.main.detail_post_screen.*
 import of.bum.network.helper.Resource
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -177,6 +179,8 @@ open class DetailPostScreen private constructor(
         // Set post
         tvContent?.text = Html.fromHtml(unwrapPost.content ?: "")
         tvTime?.text = unwrapPost.createdDate
+        val react = unwrapPost.like?.convertInt() ?: 0
+        reactionView?.initReact(Reaction.react(react))
 
         // Set photo
         // photos
@@ -239,7 +243,7 @@ open class DetailPostScreen private constructor(
     private fun initEvents() {
         // Reaction
         reactionView?.onReactionChange(mSessionManager){
-            viewModel.react(it)
+
         }
 
         tvFollowGame?.setOnClickListener {

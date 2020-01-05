@@ -1,7 +1,9 @@
 package com.anhtam.gate9.v2.reaction
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.anhtam.gate9.adapter.SharePageAdapter
@@ -39,6 +41,8 @@ class ReactionScreen private constructor(
     override fun menuRes() = R.menu.menu_chat_search_more
 
     private fun initViewPager(){
+        val context = context ?: return
+        imgShare?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
         val fragments = ArrayList<Fragment>()
         fragments.add(ReactionFragment.newInstance(mCommentId, CODE_VIEW))
         fragments.add(ReactionFragment.newInstance(mCommentId, CODE_LOVE))
@@ -73,6 +77,31 @@ class ReactionScreen private constructor(
     }
 
     private fun onTabSelected(tab: Int){
-
+        val context = context ?: return
+        imgShare?.setColorFilter(if (tab == 0){
+            ContextCompat.getColor(context, R.color.color_main_blue)
+        }else{
+            ContextCompat.getColor(context, R.color.color_react_grey)
+        }, PorterDuff.Mode.MULTIPLY)
+        imgLike?.setColorFilter(if (tab == 2){
+            ContextCompat.getColor(context, R.color.color_main_blue)
+        }else{
+            ContextCompat.getColor(context, R.color.color_react_grey)
+        }, PorterDuff.Mode.MULTIPLY)
+        imgFavorite?.setColorFilter(if (tab == 1){
+            ContextCompat.getColor(context, R.color.color_main_blue)
+        }else{
+            ContextCompat.getColor(context, R.color.color_react_grey)
+        }, PorterDuff.Mode.MULTIPLY)
+        imgDislike?.setColorFilter(if (tab == 3){
+            ContextCompat.getColor(context, R.color.color_main_blue)
+        }else{
+            ContextCompat.getColor(context, R.color.color_react_grey)
+        }, PorterDuff.Mode.MULTIPLY)
+        imgComment?.setColorFilter(if (tab == 4){
+            ContextCompat.getColor(context, R.color.color_main_blue)
+        }else{
+            ContextCompat.getColor(context, R.color.color_react_grey)
+        }, PorterDuff.Mode.MULTIPLY)
     }
 }

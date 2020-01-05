@@ -15,11 +15,13 @@ import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.storage.StorageManager
+import com.anhtam.gate9.utils.convertInt
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
 import com.anhtam.gate9.vo.IllegalReturn
+import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -46,6 +48,23 @@ class PostAdapter @Inject constructor(
         view.commentTextView.text = unwrapPost.totalReply
         view.loveTextView.text = unwrapPost.totalLove
         view.dateTextView.text = unwrapPost.createdDate
+        val react = Reaction.react(unwrapPost.like?.convertInt()?:0)
+        when(react){
+            Reaction.Like -> {
+                view.likeIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_main_blue))
+            }
+            Reaction.Love -> {
+                view.loveIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_main_blue))
+            }
+            Reaction.Love ->{
+                view.dislikeIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_main_blue))
+            }
+            Reaction.None -> {
+                view.likeIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_react_grey_dark))
+                view.dislikeIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_react_grey_dark))
+                view.loveIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_react_grey_dark))
+            }
+        }
 
         // Set user
         val user = unwrapPost.user ?: return
@@ -167,6 +186,7 @@ class PostAdapter @Inject constructor(
             return
         }
         rv.visibility = View.VISIBLE
+        rv.isNestedScrollingEnabled = false
 //        val isFormat = "[[.+]]".toRegex().matches(photos) TODO Regex
         val isFormat = (photo.startsWith('[') && photo.endsWith(']'))
         if (!isFormat) {

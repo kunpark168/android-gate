@@ -114,8 +114,6 @@
             <!--Information post-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/csInformation"
-                android:paddingLeft="@dimen/dp20"
-                android:paddingRight="@dimen/dp20"
                 android:paddingBottom="@dimen/dp15"
                 android:background="@color/colorWhite"
                 android:layout_width="match_parent"
@@ -125,6 +123,7 @@
                     android:layout_marginTop="@dimen/dp20"
                     android:textSize="@dimen/dp12"
                     tools:text="12:30 12/09/2019"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
                     android:fontFamily="@font/roboto_regular"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -152,6 +151,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:tint="@color/colorError"
+                    android:layout_marginEnd="@dimen/layout_margin_16dp"
                     android:src="@drawable/ic_dropdown"
                     android:layout_width="@dimen/dp13"
                     android:layout_height="@dimen/dp13" />
@@ -163,6 +163,8 @@
                     android:layout_marginTop="@dimen/dp50"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_width="match_parent"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
+                    android:layout_marginEnd="@dimen/layout_margin_16dp"
                     android:layout_height="wrap_content" />
 
                 <androidx.recyclerview.widget.RecyclerView
