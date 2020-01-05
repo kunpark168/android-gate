@@ -44,6 +44,7 @@ class ReactionView @JvmOverloads constructor(context: Context?,
     }
 
     private fun react(value: Reaction){
+        if(mSessionManager?.checkLogin() == false) return
         when(previousState){
             Reaction.None ->{
                 // set new reaction

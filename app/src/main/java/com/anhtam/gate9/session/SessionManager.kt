@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.anhtam.domain.v2.User
 import com.anhtam.gate9.di.scope.MainScope
 import com.anhtam.gate9.navigation.Navigation
+import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import javax.inject.Inject
 
@@ -31,6 +32,13 @@ class SessionManager @Inject constructor(
         cachedUser.value = AuthResource.logout()
     }
 
+    fun checkLogin(): Boolean{
+        return if (StorageManager.getAccessToken().isEmpty()){
+            navigation.addFragment(LoginScreen.newInstance())
+            return false
+        } else true
+    }
+
     fun checkAuthentication(){
 
     }
@@ -39,26 +47,25 @@ class SessionManager @Inject constructor(
         cachedUser.value = AuthResource.logout()
     }
 
-
-
-    fun checkLogin(directToLogin: Boolean = true): Boolean{
-        return when(cachedUser.value?.status){
-            AuthResource.AuthStatus.AUTHENTICATED -> {
-                true
-            }
-            AuthResource.AuthStatus.ERROR -> {
-                false
-            }
-            AuthResource.AuthStatus.LOADING -> {
-                false
-            }
-            AuthResource.AuthStatus.NOT_AUTHENTICATED -> {
-                if (directToLogin) navigation.addFragment(LoginScreen.newInstance())
-                false
-            }
-            null -> {
-                false
-            }
-        }
-    }
+//
+//    fun checkLogin(directToLogin: Boolean = true): Boolean{
+//        return when(cachedUser.value?.status){
+//            AuthResource.AuthStatus.AUTHENTICATED -> {
+//                true
+//            }
+//            AuthResource.AuthStatus.ERROR -> {
+//                false
+//            }
+//            AuthResource.AuthStatus.LOADING -> {
+//                false
+//            }
+//            AuthResource.AuthStatus.NOT_AUTHENTICATED -> {
+//                if (directToLogin) navigation.addFragment(LoginScreen.newInstance())
+//                false
+//            }
+//            null -> {
+//                false
+//            }
+//        }
+//    }
 }
