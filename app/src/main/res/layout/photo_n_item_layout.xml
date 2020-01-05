@@ -13,6 +13,10 @@
         android:scaleType="centerCrop"
         android:layout_marginEnd="@dimen/layout_margin_4dp"
         android:layout_marginBottom="@dimen/layout_margin_4dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#33000000"/>
     <TextView
         android:id="@+id/tvMore"
         android:layout_width="wrap_content"
@@ -20,7 +24,7 @@
         tools:text="+4"
         android:layout_gravity="center"
         android:gravity="center"
-        android:textColor="#666"
+        android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"/>
 

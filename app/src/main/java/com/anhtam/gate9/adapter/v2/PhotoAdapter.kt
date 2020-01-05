@@ -50,7 +50,7 @@ class PhotoAdapter @Inject constructor(
         if (entities.size > DEFAULT_MORE) {
             val morePhotoList = arrayListOf<PhotoEntity>()
             for (index in 0..DEFAULT_MORE) {
-                if (index == DEFAULT_MORE) {
+                if (index == DEFAULT_MORE - 1) {
                     morePhotoList.add(PhotoEntity(PhotoEntity.GRID_N, entities[index].photo))
                 } else {
                     morePhotoList.add(PhotoEntity(PhotoEntity.GRID_4, entities[index].photo))

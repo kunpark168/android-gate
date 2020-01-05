@@ -38,7 +38,8 @@ import javax.inject.Named
 
 open class DetailPostScreen private constructor(
         private val _post: PostEntity,
-        private val _type: Detail
+        private val _type: Detail,
+        private val mListener: ((Reaction)-> Unit)?
 ): DaggerNavigationFragment(), INavigator{
 
     override fun toLogin() {
@@ -59,7 +60,7 @@ open class DetailPostScreen private constructor(
     }
 
     companion object{
-        fun newInstance(postEntity: PostEntity, type: Detail) = DetailPostScreen(postEntity, type)
+        fun newInstance(postEntity: PostEntity, type: Detail, listener: ((Reaction)->Unit)? = null) = DetailPostScreen(postEntity, type, listener)
     }
 
     private val viewModel: DetailPostViewModel by viewModels { vmFactory }
@@ -125,10 +126,6 @@ open class DetailPostScreen private constructor(
     }
 
     private fun observer(){
-        viewModel.react.observe(viewLifecycleOwner, Observer {
-            // clear action
-            // set reaction
-        })
         viewModel.comments.observe(viewLifecycleOwner, Observer { resource ->
             when(resource) {
                 is Resource.Success -> {
@@ -243,7 +240,10 @@ open class DetailPostScreen private constructor(
     private fun initEvents() {
         // Reaction
         reactionView?.onReactionChange(mSessionManager){
-            _post.like = Reaction.value(it).toString()
+            mListener?.invoke(it)
+            viewModel.react(it).observe(viewLifecycleOwner, Observer {
+                Timber.d("Test") // TODO Bug
+            })
         }
 
         tvFollowGame?.setOnClickListener {

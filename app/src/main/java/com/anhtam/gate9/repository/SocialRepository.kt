@@ -45,7 +45,7 @@ class SocialRepository @Inject constructor(
         override fun createCall() = socialService.GetMXHGame(tab, pageNumber)
     }.asLiveData()
 
-    fun react(params: Map<String, Int>) = object : Lv1FetchResource<Base>(){
+    fun react(params: Map<String, Int>) = object : Lv2FetchResource<Base>(){
         override fun createCall() = socialService.react(params)
 
     }.asLiveData()

@@ -22,10 +22,6 @@ class DetailPostViewModel @Inject constructor(
         val repository: SocialRepository
 ) : ViewModel() {
 
-    private val _react = MediatorLiveData<Reaction>()
-    val react: LiveData<Reaction>
-        get() = _react
-
     var _userId: Int by Delegates.notNull()
     var _gameId: Int by Delegates.notNull()
     private var _commentId: Int by Delegates.notNull()
@@ -43,7 +39,6 @@ class DetailPostViewModel @Inject constructor(
             throw IllegalReturn()
         }
         navigation = WeakReference(navigator)
-        _react.value = Reaction.react(value)
         _userId = post.user?.mId ?: throw IllegalReturn()
         _gameId = try {
             post.game?.gameId?.toInt() ?: 0
@@ -76,21 +71,6 @@ class DetailPostViewModel @Inject constructor(
      *  b.
      */
     fun react(value: Reaction): LiveData<Resource<Base>>{
-//        when(StorageManager.getAccessToken()){
-//            "" -> navigation.get()?.toLogin()// navigate to Login
-//            else -> { // auth
-//                when{
-//                    _react.value == value -> _react.value = Reaction.None
-//                    _react.value == Reaction.None -> _react.value = value
-//                    else ->{
-//                        _react.value = value
-//                    }
-//                }
-//                postReact()
-//            }
-//        }
-
-        val react = _react.value ?: Reaction.None
         val params = hashMapOf<String, Int>()
         params["commentId"] = _commentId
         params["type"] = Reaction.value(value)
@@ -100,14 +80,5 @@ class DetailPostViewModel @Inject constructor(
 
     fun sharePost(){
 
-    }
-
-    private fun postReact(){
-        val react = _react.value ?: return
-        val params = hashMapOf<String, Int>()
-        params["commentId"] = _commentId
-        params["type"] = Reaction.value(react)
-        params["userId"] = _userId
-        repository.react(params)
     }
 }

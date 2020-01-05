@@ -108,6 +108,7 @@ class ReactionView @JvmOverloads constructor(context: Context?,
 
     fun initReact(reaction: Reaction){
         // set new reaction
+        previousState = reaction
         when(reaction){
             Reaction.Like -> {
                 imgLike?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)

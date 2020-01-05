@@ -219,6 +219,7 @@
                 android:src="@drawable/ic_heart"
                 android:layout_width="15dp"
                 android:layout_marginEnd="@dimen/layout_margin_4dp"
+                android:tint="@color/grey"
                 android:layout_height="match_parent" />
             <TextView
                 android:id="@+id/loveTextView"

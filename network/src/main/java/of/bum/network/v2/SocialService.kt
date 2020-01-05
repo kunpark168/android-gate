@@ -71,7 +71,7 @@ interface SocialService {
                    @Query("limit") limit: Int = 15) : LiveData<ApiResponse<RestResponse<com.anhtam.domain.v2.WrapGame>>>
 
     @POST("social/post-like")
-    fun react(@Body params: Map<String, Int>): LiveData<ApiResponse<Base>>
+    fun react(@Body params: Map<String, Int>): LiveData<ApiResponse<RestResponse<Base>>>
 
     @GET("social/get-love-like-dislike")
     fun getListSocialContact(@Query("commentId") commentId: Int,

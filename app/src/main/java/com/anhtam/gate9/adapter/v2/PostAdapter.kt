@@ -1,6 +1,5 @@
 package com.anhtam.gate9.adapter.v2
 
-import android.content.Context
 import android.text.Html
 import android.view.View
 import android.widget.TextView
@@ -37,7 +36,47 @@ class PostAdapter @Inject constructor(
         @Named("banner") val bannerOptions: RequestOptions)
     : BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.shared_post_item_layout, ArrayList()) {
 
-    
+    init {
+        setOnItemChildClickListener { _, view, position ->
+            when(view.id){
+                R.id.readMoreTextView, R.id.contentTextView, R.id.commentImageView -> {
+                    val post = data[position]
+                    navigateToPostDetail(post){
+                        changeReaction(it, position)
+                    }
+                }
+                R.id.userNameTextView, R.id.avatarImageView -> {
+                    val userId = data[position].user?.mId ?: return@setOnItemChildClickListener
+                    navigateToMemberDiscussion(userId)
+                }
+                R.id.gameImageView, R.id.titleGameTextView -> {
+                    navigateToGameDiscussion()
+                }
+                R.id.moreImageView -> {
+                    val mMoreDialog = MoreDialog(mContext, object : MoreDialog.IMore {
+                        override fun onreport() {
+//                    ReportPostActivity.start(mContext as BaseActivity)
+                        }
+                    })
+                    mMoreDialog.idPost = data[position].commentId?.toString()
+                    mMoreDialog.show()
+                }
+                R.id.followGameTextView -> {
+                    if (checkLogin()) {
+                        if(view.followGameTextView?.text == mContext.getString(R.string.follow)) {
+                            setFollowing(view.followGameTextView)
+                            //sending request
+                        } else {
+                            setFollow(view.followGameTextView)
+                            //sending request
+                        }
+                    } else {
+                        navigation.addFragment(LoginScreen.newInstance())
+                    }
+                }
+            }
+        }
+    }
 
     override fun convert(helper: BaseViewHolder?, item: PostEntity?) {
         val unwrapPost = item ?: return
@@ -53,12 +92,18 @@ class PostAdapter @Inject constructor(
         when(react){
             Reaction.Like -> {
                 view.likeIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_main_blue))
+                view.dislikeIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_react_grey_dark))
+                view.loveIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_react_grey_dark))
             }
             Reaction.Love -> {
                 view.loveIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_main_blue))
+                view.likeIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_react_grey_dark))
+                view.dislikeIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_react_grey_dark))
             }
-            Reaction.Love ->{
+            Reaction.Dislike ->{
                 view.dislikeIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_main_blue))
+                view.likeIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_react_grey_dark))
+                view.loveIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_react_grey_dark))
             }
             Reaction.None -> {
                 view.likeIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_react_grey_dark))
@@ -110,49 +155,15 @@ class PostAdapter @Inject constructor(
         initPhoto(photos, view.rvPhotos, user)
 
         // initEvent
-        // user discussion
-        user.mId?.let {id ->
-            view.userNameTextView.setOnClickListener { navigateToMemberDiscussion(id) }
-            view.avatarImageView.setOnClickListener { navigateToMemberDiscussion(id) }
-        }
-        // post detail
-        view.readMoreTextView.setOnClickListener { navigateToPostDetail(mContext, unwrapPost) }
-        view.contentTextView.setOnClickListener { navigateToPostDetail(mContext, unwrapPost) }
-        view.commentImageView.setOnClickListener { navigateToPostDetail(mContext, unwrapPost) }
-        view.moreImageView.setOnClickListener {
-            val mMoreDialog = MoreDialog(mContext, object : MoreDialog.IMore {
-                override fun onreport() {
-//                    ReportPostActivity.start(mContext as BaseActivity)
-                }
-            })
-            mMoreDialog.idPost = unwrapPost.commentId?.toString()
-            mMoreDialog.show()
-        }
-
-        // game
-        view.gameImageView?.setOnClickListener { navigation.addFragment(GameDiscussionScreen.newInstance("", "0")) }
-        view.titleGameTextView?.setOnClickListener { navigation.addFragment(GameDiscussionScreen.newInstance("", "0")) }
-        view.commentIcon.setOnClickListener {
-            if(checkLogin()){
-                // change icon color and send request
-                navigateToPostDetail(mContext, unwrapPost)
-            } else {
-                navigation.addFragment(LoginScreen.newInstance())
-            }
-        }
-        view.followGameTextView.setOnClickListener {
-            if (checkLogin()) {
-                if(view.followGameTextView?.text == mContext.getString(R.string.follow)) {
-                    setFollowing(view.followGameTextView)
-                    //sending request
-                } else {
-                    setFollow(view.followGameTextView)
-                    //sending request
-                }
-            } else {
-                navigation.addFragment(LoginScreen.newInstance())
-            }
-        }
+        helper.addOnClickListener(R.id.readMoreTextView)
+                .addOnClickListener(R.id.contentTextView)
+                .addOnClickListener(R.id.commentImageView)
+                .addOnClickListener(R.id.moreImageView)
+                .addOnClickListener(R.id.userNameTextView)
+                .addOnClickListener(R.id.avatarImageView)
+                .addOnClickListener(R.id.gameImageView)
+                .addOnClickListener(R.id.titleGameTextView)
+                .addOnClickListener(R.id.followGameTextView)
     }
 
     private fun checkLogin() : Boolean {
@@ -164,10 +175,14 @@ class PostAdapter @Inject constructor(
         navigation.addFragment(UserDiscussionScreen.newInstance(userId, Category.Member))
     }
 
-    private fun navigateToPostDetail(context: Context?, postEntity: PostEntity) {
-        context?:return
-        navigation.addFragment(DetailPostScreen.newInstance(postEntity, DetailPostScreen.Detail.POST))
+    private fun navigateToPostDetail(postEntity: PostEntity, listener: (Reaction)->Unit) {
+        navigation.addFragment(DetailPostScreen.newInstance(postEntity, DetailPostScreen.Detail.POST, listener))
     }
+
+    private fun navigateToGameDiscussion(){
+        navigation.addFragment(GameDiscussionScreen.newInstance("", "1"))
+    }
+
 
     private fun setFollow(tvFollowGame: TextView) {
         tvFollowGame.text = mContext.getString(R.string.follow)
@@ -179,6 +194,36 @@ class PostAdapter @Inject constructor(
         tvFollowGame.text = mContext.getString(R.string.following)
         tvFollowGame.setBackgroundResource(R.drawable.bg_following)
         tvFollowGame.setTextColor(ContextCompat.getColor(mContext, R.color.text_color_blue))
+    }
+
+    private fun changeReaction(react: Reaction, position: Int){
+        val post = data[position]
+        val preReact = Reaction.react(data[position].like?.convertInt() ?: 0)
+        post.like = Reaction.value(react).toString()
+        // count
+        when(preReact){
+            Reaction.Love -> {
+                post.totalLove = (post.totalLove.toInt() - 1).toString()
+            }
+            Reaction.Like -> {
+                post.totalLike = (post.totalLike.toInt() - 1).toString()
+            }
+            Reaction.Dislike -> {
+                post.totalDislike = (post.totalDislike.toInt() - 1).toString()
+            }
+        }
+        when(react){
+            Reaction.Love -> {
+                post.totalLove = (post.totalLove.toInt() + 1).toString()
+            }
+            Reaction.Like -> {
+                post.totalLike = (post.totalLike.toInt() + 1).toString()
+            }
+            Reaction.Dislike -> {
+                post.totalDislike = (post.totalDislike.toInt() + 1).toString()
+            }
+        }
+        notifyItemChanged(position)
     }
 
     private fun initPhoto(photo: String?, rv: RecyclerView, user: User){
