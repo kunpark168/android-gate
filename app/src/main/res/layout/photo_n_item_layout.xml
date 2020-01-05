@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools">
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgPhoto"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#33000000"/>
+        android:background="#44000000"/>
     <TextView
         android:id="@+id/tvMore"
         android:layout_width="wrap_content"
@@ -25,7 +25,6 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"/>
+        android:textSize="24sp"/>
 
 </FrameLayout>

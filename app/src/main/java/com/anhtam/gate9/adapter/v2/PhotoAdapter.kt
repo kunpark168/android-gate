@@ -66,6 +66,8 @@ class PhotoAdapter @Inject constructor(
         }
     }
 
+    override fun getItemCount() = if(data.size > DEFAULT_MORE) DEFAULT_MORE else data.size
+
     override fun convert(helper: BaseViewHolder?, item: PhotoEntity?) {
         val photo = item?.photo ?: return
         val view = helper?.itemView ?: return
