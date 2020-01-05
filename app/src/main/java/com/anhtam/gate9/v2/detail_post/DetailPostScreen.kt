@@ -43,7 +43,7 @@ open class DetailPostScreen private constructor(
 ): DaggerNavigationFragment(), INavigator{
 
     override fun toLogin() {
-        navigation?.addFragment(LoginScreen.newInstance())
+        navigation?.addFragment(LoginScreen.newInstance(false))
     }
 
     override fun toUserDiscussion() {

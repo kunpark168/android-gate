@@ -21,10 +21,10 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.main.home.HomeFragment
 import kotlinx.android.synthetic.main.login_screen.*
 
-class LoginScreen : DaggerNavigationFragment() {
+class LoginScreen(private val isDirect: Boolean) : DaggerNavigationFragment() {
 
     companion object {
-        fun newInstance() = LoginScreen()
+        fun newInstance(isDirect: Boolean) = LoginScreen(isDirect)
     }
 
     private val loginViewModel: LoginViewModel by viewModels { vmFactory }
@@ -47,12 +47,16 @@ class LoginScreen : DaggerNavigationFragment() {
             showProgress()
             loginViewModel.loginWithEmailAndPassword(etEmail.text.toString(), etPassword.text.toString()
                     , {
-                displayError(it)
                 hideProgress()
+                displayError(it)
             }
             ){
-                navigation?.newRootFragment(HomeFragment.newInstance())
                 hideProgress()
+                if (isDirect){
+                    navigation?.newRootFragment(HomeFragment.newInstance())
+                } else {
+                    navigation?.back()
+                }
             }
         }
 

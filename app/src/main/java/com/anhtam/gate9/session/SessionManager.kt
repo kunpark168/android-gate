@@ -34,7 +34,7 @@ class SessionManager @Inject constructor(
 
     fun checkLogin(): Boolean{
         return if (StorageManager.getAccessToken().isEmpty()){
-            navigation.addFragment(LoginScreen.newInstance())
+            navigation.addFragment(LoginScreen.newInstance(false))
             return false
         } else true
     }

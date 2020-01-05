@@ -52,7 +52,7 @@ class MXHGameScreen : DaggerNavigationFragment(){
                     if(checkLogin()){
                         //continue
                     } else {
-                        navigation?.addFragment(LoginScreen.newInstance())
+                        navigation?.addFragment(LoginScreen.newInstance(false))
                         return@setOnClickListener
                     }
                 }
@@ -73,7 +73,7 @@ class MXHGameScreen : DaggerNavigationFragment(){
         fragments.add(MXHGameTabFragment.newInstance(MXHGameTab.FOLLOWING))
         mAdapter = SharePageAdapter(childFragmentManager,fragments)
         vpGame?.adapter = mAdapter
-        vpGame?.offscreenPageLimit = 0
+        vpGame?.offscreenPageLimit = 4
         vpGame?.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
             override fun onPageScrollStateChanged(state: Int) {
 

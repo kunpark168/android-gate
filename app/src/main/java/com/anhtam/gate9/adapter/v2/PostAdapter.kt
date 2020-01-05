@@ -71,7 +71,7 @@ class PostAdapter @Inject constructor(
                             //sending request
                         }
                     } else {
-                        navigation.addFragment(LoginScreen.newInstance())
+                        navigation.addFragment(LoginScreen.newInstance(false))
                     }
                 }
             }
