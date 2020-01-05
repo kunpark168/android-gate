@@ -41,6 +41,7 @@ import com.anhtam.gate9.v2.mxh_gate.video.MXHGateVideoScreen
 import com.anhtam.gate9.v2.newfeed.NewFeedViewModel
 import com.anhtam.gate9.v2.detail_post.DetailPostModule
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
+import com.anhtam.gate9.v2.reaction.ReactionModule
 import com.anhtam.gate9.v2.splash.SplashScreen
 import dagger.Binds
 import dagger.Module
@@ -146,7 +147,9 @@ abstract class FragmentBuildersModule {
     )
     abstract fun contributeSearchScreen(): SearchScreen
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(
+            modules = [ReactionModule::class]
+    )
     abstract fun contributeReactionScreen(): ReactionScreen
 
     @ContributesAndroidInjector(

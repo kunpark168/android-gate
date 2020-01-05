@@ -59,7 +59,10 @@ class PhotoAdapter @Inject constructor(
         } else {
             setNewData(entities)
         }
-        return 1
+        return when(entities.size){
+            1 -> 1
+            else -> 2
+        }
     }
 
     override fun convert(helper: BaseViewHolder?, item: PhotoEntity?) {

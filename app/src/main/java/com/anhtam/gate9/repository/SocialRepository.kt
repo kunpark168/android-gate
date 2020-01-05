@@ -2,7 +2,9 @@ package com.anhtam.gate9.repository
 
 import androidx.lifecycle.LiveData
 import com.anhtam.domain.Base
+import com.anhtam.domain.v2.PostEntity
 import com.anhtam.domain.v2.User
+import com.anhtam.domain.v2.WrapComments
 import com.anhtam.domain.v2.WrappedHome
 import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.domain.v2.wrap.WrapGames
@@ -50,5 +52,13 @@ class SocialRepository @Inject constructor(
 
     fun getListingPost() = object : FetchBoundResource<WrappedHome>(){
         override fun createCall() = socialService.getListPosts()
+    }.asLiveData()
+
+    fun getSocialContact(commentId: Int, tab: Int, page: Int) = object : FetchBoundResource<List<User>>(){
+        override fun createCall() = socialService.getListSocialContact(commentId, tab, page)
+    }.asLiveData()
+
+    fun getChildComment(postId: Int, page: Int) = object : FetchBoundResource<WrapComments>(){
+        override fun createCall() = socialService.getDetailPosts(postId.toLong(), page)
     }.asLiveData()
 }

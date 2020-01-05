@@ -3,6 +3,7 @@ package com.anhtam.gate9.adapter.v2
 import android.text.Html
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anhtam.domain.v2.Game
 import com.anhtam.domain.v2.PostEntity
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
@@ -33,10 +34,16 @@ class CommentAdapter @Inject constructor(
         private const val DEFAULT_DISPLAY_CHILD_NUM = 2
     }
 
+    private var mGame: Game? = null
+
     init {
         setOnItemChildClickListener { _, view, position ->
             when(view.id){
-                R.id.contentTextView, R.id.commentImageView -> toDetailComment(data[position])
+                R.id.contentTextView, R.id.commentImageView -> {
+                    val comment = data[position]
+                    comment.game = mGame
+                    toDetailComment(data[position])
+                }
                 R.id.userNameTextView, R.id.avatarImageView -> {
                     val userId = data[position].user?.mId ?: 0
                     toUserDiscussion(userId)
@@ -46,6 +53,10 @@ class CommentAdapter @Inject constructor(
                 }
             }
         }
+    }
+
+    fun initialize(game: Game?){
+        mGame = game
     }
     override fun convert(helper: BaseViewHolder?, item: PostEntity?) {
 
@@ -77,10 +88,13 @@ class CommentAdapter @Inject constructor(
             val childAdapter = ChildCommentAdapter(navigation, avatarOptions)
             childAdapter.setNewData(if(childComment.size <= DEFAULT_DISPLAY_CHILD_NUM) childComment else childComment.subList(0, DEFAULT_DISPLAY_CHILD_NUM))
             // Add footer
-            if(childComment.size > DEFAULT_DISPLAY_CHILD_NUM) {
+            if(totalReply > DEFAULT_DISPLAY_CHILD_NUM) {
                 val footer = ShowMoreFooterView(mContext)
+                footer.setOnClickListener {
+                    toUserDiscussion(user.mId ?: 0)
+                }
                 childAdapter.addFooterView(footer)
-                val remain = childComment.size - DEFAULT_DISPLAY_CHILD_NUM
+                val remain = totalReply - DEFAULT_DISPLAY_CHILD_NUM
                 val showMoreText = Phrase.from(mContext.getString(R.string.xem_them_amount_comment))
                         .put("number", remain)
                         .put("s", if(remain > 1) "s" else "")

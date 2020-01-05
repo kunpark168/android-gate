@@ -11,10 +11,17 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.reaction_screen.*
 import java.util.*
 
-class ReactionScreen : DaggerNavigationFragment() {
+class ReactionScreen private constructor(
+        private val mCommentId: Int
+): DaggerNavigationFragment() {
 
     companion object {
-        fun newInstance() = ReactionScreen()
+        private const val CODE_LIKE = 1
+        private const val CODE_DISLIKE = 2
+        private const val CODE_LOVE = 3
+        private const val CODE_COMMENT = 4
+        private const val CODE_VIEW = 5
+        fun newInstance(commentId: Int) = ReactionScreen(commentId)
     }
 
     private lateinit var mAdapter: SharePageAdapter
@@ -33,6 +40,11 @@ class ReactionScreen : DaggerNavigationFragment() {
 
     private fun initViewPager(){
         val fragments = ArrayList<Fragment>()
+        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_VIEW))
+        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_LOVE))
+        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_LIKE))
+        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_DISLIKE))
+        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_COMMENT))
         mAdapter = SharePageAdapter(childFragmentManager, fragments)
         vpReaction.adapter = mAdapter
         vpReaction.offscreenPageLimit = 5

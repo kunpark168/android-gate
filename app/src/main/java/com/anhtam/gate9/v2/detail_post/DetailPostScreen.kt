@@ -30,6 +30,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.bottom_bar_type_layout.*
 import kotlinx.android.synthetic.main.detail_post_screen.*
+import of.bum.network.helper.Resource
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -51,7 +52,8 @@ open class DetailPostScreen private constructor(
     }
 
     override fun toReact() {
-        navigation?.addFragment(ReactionScreen.newInstance())
+        val commentId = _post.commentId?.toInt() ?: return
+        navigation?.addFragment(ReactionScreen.newInstance(commentId))
     }
 
     companion object{
@@ -82,9 +84,15 @@ open class DetailPostScreen private constructor(
     private fun init() {
         viewModel.initialize(_post, this)
         loadComment()
+        postViewForum()
         initView()
         initEvents()
         observer()
+    }
+
+    private fun postViewForum(){
+        // check auth
+        viewModel.postViewForum()
     }
 
     private fun loadComment(){
@@ -119,6 +127,30 @@ open class DetailPostScreen private constructor(
             // clear action
             // set reaction
         })
+        viewModel.comments.observe(viewLifecycleOwner, Observer { resource ->
+            when(resource) {
+                is Resource.Success -> {
+                    hideProgress()
+                    val data = resource.data?.mComments
+                    if (data.isNullOrEmpty()) {
+                        mAdapter.loadMoreEnd()
+                    } else {
+                        if (viewModel.mPage == 0) {
+                            mAdapter.setNewData(data)
+                        } else {
+                            mAdapter.addData(data)
+                        }
+                        mAdapter.loadMoreComplete()
+                    }
+                }
+                is Resource.Loading -> {
+                    hideProgress()
+                }
+                else -> {
+                    mAdapter.loadMoreFail()
+                }
+            }
+        })
     }
 
     /*
@@ -150,6 +182,7 @@ open class DetailPostScreen private constructor(
         // photos
         // Set Game
         val game = unwrapPost.game ?: return
+        mAdapter.initialize(game)
         csGame.visibility = View.VISIBLE
         imgGame.visibility = View.VISIBLE
         tvNameGame.visibility = View.VISIBLE
@@ -247,7 +280,20 @@ open class DetailPostScreen private constructor(
         imgSend?.setOnClickListener {
             hideKeyboard()
             val content = etPost?.text?.toString()
-            viewModel.postComment(content, "")
+            showProgress()
+            viewModel.postComment(content, "").observe(viewLifecycleOwner, Observer {
+                when(it){
+                    is Resource.Success ->{
+                        hideProgress()
+                        viewModel.getChildComment()
+                    }
+                    is Resource.Error ->{
+                        hideProgress()
+                    }
+                    else ->{}
+                }
+            })
+            etPost?.setText("")
         }
 
         // navigation

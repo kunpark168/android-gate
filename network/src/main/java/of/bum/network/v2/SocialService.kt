@@ -38,16 +38,6 @@ interface SocialService {
             @Query("imageUrl") imageUrl: String? = ""
     ): LiveData<ApiResponse<RestResponse<Base>>>
 
-//    @POST("social/game-follow")
-//    fun follow(createdUserId: Int, gameId: Int,link: String, linkCrc: String, userId: Int): LiveData<ApiResponse<RestResponse<Base>>>
-
-    @POST("social/all-game")
-    fun allGame(
-            @Query("page") page: Int = 0,
-            @Query("limit") limit: Int = 15,
-            @Query("type") type: Int = 1
-    ): LiveData<ApiResponse<RestResponse<GameEntity>>>
-
     @GET("social/get-all-post-by-user")
     fun getPostAndCommentByUser(
             @Query("userId") userId: Int,
@@ -76,10 +66,19 @@ interface SocialService {
     fun getOtherUserInfoById(@Query("userId") userId: Int): LiveData<ApiResponse<RestResponse<User>>>
 
     @GET("social/all-game")
-    fun GetMXHGame(@Query("type") type: Int,
+    fun GetMXHGame(@Query("tab") type: Int,
                    @Query("page") page:Int = 0,
                    @Query("limit") limit: Int = 15) : LiveData<ApiResponse<RestResponse<com.anhtam.domain.v2.WrapGame>>>
 
     @POST("social/post-like")
     fun react(@Body params: Map<String, Int>): LiveData<ApiResponse<Base>>
+
+    @GET("social/get-love-like-dislike")
+    fun getListSocialContact(@Query("commentId") commentId: Int,
+                             @Query("tab") tab: Int,
+                             @Query("page") page: Int,
+                             @Query("limit") limit: Int = 15): LiveData<ApiResponse<RestResponse<List<User>>>>
+
+    @POST("social/post-view-forum")
+    fun postViewForum(@Query("commentId") commentId: Int): LiveData<ApiResponse<Base>>
 }
