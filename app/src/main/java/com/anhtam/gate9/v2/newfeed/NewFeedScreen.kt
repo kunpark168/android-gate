@@ -76,7 +76,6 @@ class NewFeedScreen : ContainerFragment() {
     }
 
     private fun init() {
-        loadData()
         initCommentRecyclerView()
         initGamesRecyclerView()
 
@@ -88,6 +87,22 @@ class NewFeedScreen : ContainerFragment() {
     }
 
     private fun observer(){
+        mViewModel.data.observe(viewLifecycleOwner, Observer {
+            when(it) {
+                is Resource.Success -> {
+                    hideProgress()
+                    bindingBanner(it.data?.mBanner)
+                    bindingGroupGames(it.data?.mGames)
+                    bindingComment(it.data?.mListing)
+                }
+                is Resource.Error ->{
+                    hideProgress()
+                }
+                else -> {
+
+                }
+            }
+        })
         mPostViewModel._post.observe(viewLifecycleOwner, Observer {resource ->
             when(resource) {
                 is Resource.Success -> {
@@ -134,24 +149,7 @@ class NewFeedScreen : ContainerFragment() {
     }
 
     private fun loadData() {
-        Timber.d(StorageManager.getAccessToken())
-        mViewModel.data.observe(viewLifecycleOwner, Observer {
-            Timber.d("Status $it")
-            when(it) {
-                is Resource.Success -> {
-                    hideProgress()
-                    bindingBanner(it.data?.mBanner)
-                    bindingGroupGames(it.data?.mGames)
-                    bindingComment(it.data?.mListing)
-                }
-                is Resource.Error ->{
-                    hideProgress()
-                }
-                else -> {
-
-                }
-            }
-        })
+        mViewModel.loadNewFeed()
     }
 
     private fun initCommentRecyclerView() {
@@ -196,8 +194,8 @@ class NewFeedScreen : ContainerFragment() {
     private fun initEventListener() {
         swipeRefreshLayout?.setOnRefreshListener {
             swipeRefreshLayout?.isRefreshing = false
-//            showProgress()
-//            loadData()
+            showProgress()
+            loadData()
         }
 
         icNotification?.setOnClickListener {

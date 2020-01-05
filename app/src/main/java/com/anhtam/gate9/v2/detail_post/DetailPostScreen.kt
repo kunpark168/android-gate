@@ -243,7 +243,7 @@ open class DetailPostScreen private constructor(
     private fun initEvents() {
         // Reaction
         reactionView?.onReactionChange(mSessionManager){
-
+            _post.like = Reaction.value(it).toString()
         }
 
         tvFollowGame?.setOnClickListener {

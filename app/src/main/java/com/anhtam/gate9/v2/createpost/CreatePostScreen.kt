@@ -129,36 +129,6 @@ class CreatePostScreen : DaggerNavigationFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//
-//        if (requestCode == Config.REQUEST_CODE_CHOOSE_IMAGE_FROM_CREATE_POST
-//                && resultCode == RESULT_OK
-//                && null != data) {
-//            val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-//            val imageEncodedList = ArrayList<String>()
-//            if (data.data != null) {
-//                val imageUri = data.data ?: return
-//                val cursor = activity?.contentResolver?.query(imageUri, filePathColumn, null, null, null) ?: return
-//                cursor.moveToFirst()
-//                val columnIndex = cursor.getColumnIndex(filePathColumn[0])
-//                imageEncodedList.add(cursor.getString(columnIndex))
-//                cursor.close()
-//            } else if(data.clipData != null) {
-//                val clipData = data.clipData!!
-//                val uriArray = ArrayList<Uri>()
-//                for (index in 0..clipData.itemCount) {
-//                    val item = clipData.getItemAt(index)
-//                    val uri = item.uri
-//                    uriArray.add(uri)
-//                    val cursor = activity?.contentResolver?.query(uri, filePathColumn, null, null, null) ?: return
-//                    cursor.moveToFirst()
-//                    val columnIndex = cursor.getColumnIndex(filePathColumn[0])
-//                    imageEncodedList.add(cursor.getString(columnIndex))
-//                    cursor.close()
-//                }
-//            }
-//        } else {
-//            Toast.makeText(context, "You haven't picked Image", Toast.LENGTH_SHORT).show()
-//        }
         if (requestCode == Config.REQUEST_CODE_CHOOSE_IMAGE_FROM_CREATE_POST
                 && resultCode == RESULT_OK
                 && null != data) {

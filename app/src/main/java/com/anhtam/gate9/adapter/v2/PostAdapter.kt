@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.anhtam.gate9.adapter.navigator.IPostNavigator
 import com.anhtam.domain.v2.PostEntity
 import com.anhtam.domain.v2.User
 import com.anhtam.gate9.R
@@ -36,7 +35,9 @@ class PostAdapter @Inject constructor(
         val navigation: Navigation,
         @Named("avatar") val avatarOptions: RequestOptions,
         @Named("banner") val bannerOptions: RequestOptions)
-    : BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.shared_post_item_layout, ArrayList()), IPostNavigator {
+    : BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.shared_post_item_layout, ArrayList()) {
+
+    
 
     override fun convert(helper: BaseViewHolder?, item: PostEntity?) {
         val unwrapPost = item ?: return
@@ -159,11 +160,11 @@ class PostAdapter @Inject constructor(
         return accessToken.isNotEmpty()
     }
 
-    override fun navigateToMemberDiscussion(userId: Int) {
+    private fun navigateToMemberDiscussion(userId: Int) {
         navigation.addFragment(UserDiscussionScreen.newInstance(userId, Category.Member))
     }
 
-    override fun navigateToPostDetail(context: Context?, postEntity: PostEntity) {
+    private fun navigateToPostDetail(context: Context?, postEntity: PostEntity) {
         context?:return
         navigation.addFragment(DetailPostScreen.newInstance(postEntity, DetailPostScreen.Detail.POST))
     }
