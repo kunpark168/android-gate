@@ -88,7 +88,7 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
             when(resource) {
                 is Resource.Success -> {
                     hideProgress()
-                    val data = resource.data?.mGames
+                    val data = resource.data
                     if (data.isNullOrEmpty()) {
                         mAdapter.loadMoreEnd()
                     } else {

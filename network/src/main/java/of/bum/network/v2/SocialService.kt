@@ -68,7 +68,7 @@ interface SocialService {
     @GET("social/all-game")
     fun GetMXHGame(@Query("tab") type: Int,
                    @Query("page") page:Int = 0,
-                   @Query("limit") limit: Int = 15) : LiveData<ApiResponse<RestResponse<com.anhtam.domain.v2.WrapGame>>>
+                   @Query("limit") limit: Int = 15) : LiveData<ApiResponse<RestResponse<List<GameEntity>>>>
 
     @POST("social/post-like")
     fun react(@Body params: Map<String, Int>): LiveData<ApiResponse<RestResponse<Base>>>

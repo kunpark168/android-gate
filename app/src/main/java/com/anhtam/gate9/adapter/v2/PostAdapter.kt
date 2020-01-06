@@ -235,12 +235,14 @@ class PostAdapter @Inject constructor(
         rv.isNestedScrollingEnabled = false
 //        val isFormat = "[[.+]]".toRegex().matches(photos) TODO Regex
         val isFormat = (photo.startsWith('[') && photo.endsWith(']'))
-        if (!isFormat) {
-            throw IllegalReturn("Photo format return wrong!!!")
+        val stringConcat = if (!isFormat) {
+            photo
+        } else {
+            photo.substring(1, photo.length - 1)
         }
         val adapter = PhotoAdapter(navigation, bannerOptions)
         adapter.user = user
-        val spanCount = adapter.setPhoto(photo.substring(1, photo.length - 1))
+        val spanCount = adapter.setPhoto(stringConcat)
         rv.layoutManager = GridLayoutManager(mContext, spanCount)
         rv.adapter = adapter
     }
