@@ -116,7 +116,7 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
             val data = item ?: return
             view.tvTitle.text = item.name
             Glide.with(mContext)
-                    .load(data.avatar?.toImage())
+                    .load(data.imgCover?.toImage())
                     .apply(bannerOptions)
                     .into(view.imgBannerGame)
             Glide.with(mContext)
