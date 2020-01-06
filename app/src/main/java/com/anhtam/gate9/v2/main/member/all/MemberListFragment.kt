@@ -11,13 +11,11 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.v2.main.member.MemberDefaultViewModel
 import com.anhtam.gate9.adapter.AlphabetAdapter
-import com.anhtam.gate9.adapter.MemberAdapter
-import com.anhtam.gate9.utils.customOnClickHolder
+import com.anhtam.gate9.adapter.v2.MemberAdapter
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
-import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.member_list_fragment.*
-import kotlinx.android.synthetic.main.shared_toolbar_with_back_layout.*
 import of.bum.network.helper.Resource
+import javax.inject.Inject
 
 class MemberListFragment
     : DaggerNavigationFragment() , AlphabetAdapter.IChangeAlphabetIndex {
@@ -40,7 +38,7 @@ class MemberListFragment
     private val viewModel: MemberDefaultViewModel by viewModels { vmFactory }
     private lateinit var mType: String
 
-    private lateinit var mAdapter: MemberAdapter
+    @Inject lateinit var mAdapter: MemberAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.member_list_fragment, container, false)
@@ -65,7 +63,7 @@ class MemberListFragment
         alphabetRecyclerView.adapter = AlphabetAdapter(context, this)
         alphabetRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        mAdapter = MemberAdapter(Glide.with(this), mType)
+//        mAdapter = MemberAdapter(Glide.with(this), mType)
         mAdapter.setLoadMoreView(CustomLoadMoreView())
         rvAllMembers.adapter = mAdapter
         rvAllMembers.layoutManager = LinearLayoutManager(context)
@@ -87,9 +85,9 @@ class MemberListFragment
                         mAdapter.loadMoreEnd()
                     } else {
                         if (viewModel.page == 1) {
-                            mAdapter.setNewData(data)
+//                            mAdapter.setNewData(data)
                         } else {
-                            mAdapter.addData(data)
+//                            mAdapter.addData(data)
                         }
                         mAdapter.loadMoreComplete()
                         mAdapter.removeAllHeaderView()

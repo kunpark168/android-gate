@@ -4,10 +4,10 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/transparent"
     android:layout_marginEnd="@dimen/layout_margin_8dp">
 
-    <ImageView
+    <com.anhtam.gate9.share.view.RoundRectCornerImageView
         android:id="@+id/imgPhoto"
         android:layout_width="0dp"
         android:layout_height="0dp"

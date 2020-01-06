@@ -78,7 +78,7 @@ class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
     private fun checkLogin() : Boolean {
         val accessToken = StorageManager.getAccessToken()
         return if (accessToken.isEmpty()) {
-            navigation?.addFragment(LoginScreen.newInstance())
+            navigation?.addFragment(LoginScreen.newInstance(false))
             false
         } else {
             true

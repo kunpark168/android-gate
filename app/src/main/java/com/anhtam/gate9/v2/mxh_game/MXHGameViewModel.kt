@@ -14,7 +14,7 @@ import of.bum.network.v2.SocialService
 import javax.inject.Inject
 
 class MXHGameViewModel @Inject constructor(private val repository: SocialRepository) : ViewModel() {
-    val _game = MediatorLiveData<Resource<WrapGame>>()
+    val _game = MediatorLiveData<Resource<List<GameEntity>>>()
     private var mPage = 0
     val page: Int
         get() = mPage

@@ -15,6 +15,7 @@ import com.anhtam.domain.v2.GameEntity
 import com.anhtam.gate9.R
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.utils.autoCleared
+import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -87,7 +88,7 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
             when(resource) {
                 is Resource.Success -> {
                     hideProgress()
-                    val data = resource.data?.mGames
+                    val data = resource.data
                     if (data.isNullOrEmpty()) {
                         mAdapter.loadMoreEnd()
                     } else {
@@ -115,9 +116,13 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
             val data = item ?: return
             view.tvTitle.text = item.name
             Glide.with(mContext)
-                    .load(data.avatar)
+                    .load(data.avatar?.toImage())
                     .apply(bannerOptions)
                     .into(view.imgBannerGame)
+            Glide.with(mContext)
+                    .load(data.avatar?.toImage())
+                    .apply(bannerOptions)
+                    .into(view.imgAvatarGame)
             val followDescription = mContext.getString(R.string.follower_amount_and_post_amount)
             val followGame = Phrase.from(followDescription)
                     .put("follower", data.follower ?: "0")

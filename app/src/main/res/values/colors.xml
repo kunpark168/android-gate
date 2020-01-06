@@ -63,6 +63,9 @@
     <color name="white">#ffffff</color>
     <color name="text_color_black">#000000</color>
 
+    <color name="color_react_grey">#f5f4f8</color>
+    <color name="color_react_grey_dark">#828687</color>
+
     <color name="color_loading_gray">#eeeeee</color>
     <color name="color_loading_gray_darker">#dddddd</color>
     <color name="bg_color_message_receiver">#55b3f9</color>

@@ -82,7 +82,7 @@ class CaNhanScreen : DaggerNavigationFragment() {
 
     private fun eventClick() {
         tvLogin?.setOnClickListener {
-            navigation?.addFragment(LoginScreen.newInstance())
+            navigation?.addFragment(LoginScreen.newInstance(true))
         }
         tvRegister?.setOnClickListener {
             navigation?.addFragment(RegisterScreen.newInstance())

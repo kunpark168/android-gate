@@ -9,19 +9,19 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anhtam.gate9.R
 import com.anhtam.gate9.share.view.CustomLoadMoreView
-import com.anhtam.gate9.adapter.MemberAdapter
+import com.anhtam.gate9.adapter.v2.MemberAdapter
 import com.anhtam.gate9.utils.customOnClickHolder
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
-import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.gamer_activity.*
 import of.bum.network.helper.Resource
+import javax.inject.Inject
 
 class MemberFragment : DaggerNavigationFragment() {
 
     private val viewModel: MemberDefaultViewModel by viewModels { vmFactory }
     private lateinit var mType: String
 
-    private lateinit var mAdapter: MemberAdapter
+    @Inject lateinit var mAdapter: MemberAdapter
 
     private var mINavigator: INavigator? = null
 
@@ -53,12 +53,11 @@ class MemberFragment : DaggerNavigationFragment() {
 
 
     private fun setUpRecyclerView() {
-        mAdapter = MemberAdapter(Glide.with(this), mType)
         mAdapter.setLoadMoreView(CustomLoadMoreView())
         mAdapter.setOnItemClickListener{ _, view, position ->
             view.customOnClickHolder {
                 val user = mAdapter.getItem(position)
-                user?.let { mINavigator?.navigateToMemberDetail(it.user_id, mType) }
+                user?.let { mINavigator?.navigateToMemberDetail(it.mId?.toString(), mType) }
             }
         }
         rvUsers.adapter = mAdapter
@@ -80,9 +79,9 @@ class MemberFragment : DaggerNavigationFragment() {
                         mAdapter.loadMoreEnd()
                     } else {
                         if (viewModel.page == 1) {
-                            mAdapter.setNewData(data)
+//                            mAdapter.setNewData(data)
                         } else {
-                            mAdapter.addData(data)
+//                            mAdapter.addData(data)
                         }
                         mAdapter.loadMoreComplete()
                         mAdapter.removeAllHeaderView()

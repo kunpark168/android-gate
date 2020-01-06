@@ -29,7 +29,7 @@ class PostQuickAdapter(private val requestManager: RequestManager) :
 //    }
 //
 //    override fun navigateToPostDetail(context: Context?, postEntity: PostEntity) {
-////        val unwrappedId = post?.commentId?: return
+////        val unwrappedId = post?.mCommentId?: return
 //        context?: return
 //    }
 

@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.anhtam.domain.v2.User
 import com.anhtam.gate9.R
+import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.discussion.DiscussionViewModel
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.vo.model.Category
@@ -69,12 +70,12 @@ class UserHeaderFragment : DaggerNavigationFragment() {
 
     private fun bindMember(user: User) {
         Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder))
-                .load(user.mAvatarPath)
+                .load(user.mAvatarPath?.toImage())
                 .into(imgAvatar)
 
         tvUserName?.text = user.mName
-        tvFollow?.text = user.mFlowing
-        tvFollower?.text = user.mFlower
+        tvFollow?.text = user.mFlowing ?: "0"
+        tvFollower?.text = user.mFlower ?: "0"
         tvCounting?.text = Phrase.from(resources.getString(R.string.number_point))
                 .put("point", user.mPoint)
                 .put("medal", /*user.medal TODO */ "").format()
@@ -90,7 +91,7 @@ class UserHeaderFragment : DaggerNavigationFragment() {
 
     private fun bindPublisher(user: User) {
         Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder))
-                .load(user.mAvatarPath)
+                .load(user.mAvatarPath?.toImage())
                 .into(imgAvatar)
         tvUserName?.text = user.mName
         csRating?.setColor(true)

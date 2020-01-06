@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.anhtam.gate9.v2.reaction.ReactionScreen
 import com.anhtam.gate9.v2.search.SearchModule
 import com.anhtam.gate9.v2.search.SearchScreen
-import com.anhtam.gate9.v2.newfeed.NewFeedModule
 import com.anhtam.gate9.v2.categories.CategoryModule
 import com.anhtam.gate9.v2.categories.FeatureScreen
 import com.anhtam.gate9.v2.charts.ChartScreen
@@ -31,7 +30,6 @@ import com.anhtam.gate9.v2.main.home.HomeModule
 import com.anhtam.gate9.v2.messenger.ChannelFragment
 import com.anhtam.gate9.v2.messenger.chat.ChatFragment
 import com.anhtam.gate9.v2.messenger.inbox.InboxFragment
-import com.anhtam.gate9.v2.newfeed.NewFeedScreen
 import com.anhtam.gate9.v2.messenger.ChannelModule
 import com.anhtam.gate9.v2.messenger.chat.ChatModule
 import com.anhtam.gate9.v2.mxh_game.MXHGameModule
@@ -41,8 +39,9 @@ import com.anhtam.gate9.v2.mxh_gate.cam_nang.MXHGateCamNangScreen
 import com.anhtam.gate9.v2.mxh_gate.tin_game.MXHGateTinGameScreen
 import com.anhtam.gate9.v2.mxh_gate.video.MXHGateVideoScreen
 import com.anhtam.gate9.v2.newfeed.NewFeedViewModel
-import com.anhtam.gate9.v2.post.DetailPostModule
-import com.anhtam.gate9.v2.post.DetailPostScreen
+import com.anhtam.gate9.v2.detail_post.DetailPostModule
+import com.anhtam.gate9.v2.detail_post.DetailPostScreen
+import com.anhtam.gate9.v2.reaction.ReactionModule
 import com.anhtam.gate9.v2.splash.SplashScreen
 import dagger.Binds
 import dagger.Module
@@ -148,7 +147,9 @@ abstract class FragmentBuildersModule {
     )
     abstract fun contributeSearchScreen(): SearchScreen
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(
+            modules = [ReactionModule::class]
+    )
     abstract fun contributeReactionScreen(): ReactionScreen
 
     @ContributesAndroidInjector(

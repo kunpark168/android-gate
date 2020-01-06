@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.post
+package com.anhtam.gate9.v2.detail_post
 
 import android.content.Context
 import android.util.AttributeSet

@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import com.anhtam.gate9.R
+import com.anhtam.gate9.adapter.v2.ChooseGalleryAdapter
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.utils.FileUtils
 import com.anhtam.gate9.utils.PermissionUtils
@@ -43,7 +44,7 @@ class CreatePostScreen : DaggerNavigationFragment() {
     @Inject lateinit var mediaService: MediaService
     @Inject lateinit var socialService: SocialService
     private var mPhotos = arrayListOf<String>()
-    private var mAdapter: PhotoAdapter? = null
+    @Inject lateinit var mAdapter: ChooseGalleryAdapter
     private var mMedia = arrayListOf<MultipartBody.Part>()
 
     @field:Named("banner") @Inject lateinit var bannerOptions: RequestOptions
@@ -66,7 +67,6 @@ class CreatePostScreen : DaggerNavigationFragment() {
     }
 
     private fun initView() {
-        mAdapter = PhotoAdapter()
         mAdapter?.setOnItemChildClickListener { _, _, position ->
             mAdapter?.remove(position)
             mMedia.removeAt(position)
@@ -129,36 +129,6 @@ class CreatePostScreen : DaggerNavigationFragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//
-//        if (requestCode == Config.REQUEST_CODE_CHOOSE_IMAGE_FROM_CREATE_POST
-//                && resultCode == RESULT_OK
-//                && null != data) {
-//            val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-//            val imageEncodedList = ArrayList<String>()
-//            if (data.data != null) {
-//                val imageUri = data.data ?: return
-//                val cursor = activity?.contentResolver?.query(imageUri, filePathColumn, null, null, null) ?: return
-//                cursor.moveToFirst()
-//                val columnIndex = cursor.getColumnIndex(filePathColumn[0])
-//                imageEncodedList.add(cursor.getString(columnIndex))
-//                cursor.close()
-//            } else if(data.clipData != null) {
-//                val clipData = data.clipData!!
-//                val uriArray = ArrayList<Uri>()
-//                for (index in 0..clipData.itemCount) {
-//                    val item = clipData.getItemAt(index)
-//                    val uri = item.uri
-//                    uriArray.add(uri)
-//                    val cursor = activity?.contentResolver?.query(uri, filePathColumn, null, null, null) ?: return
-//                    cursor.moveToFirst()
-//                    val columnIndex = cursor.getColumnIndex(filePathColumn[0])
-//                    imageEncodedList.add(cursor.getString(columnIndex))
-//                    cursor.close()
-//                }
-//            }
-//        } else {
-//            Toast.makeText(context, "You haven't picked Image", Toast.LENGTH_SHORT).show()
-//        }
         if (requestCode == Config.REQUEST_CODE_CHOOSE_IMAGE_FROM_CREATE_POST
                 && resultCode == RESULT_OK
                 && null != data) {
@@ -218,18 +188,5 @@ class CreatePostScreen : DaggerNavigationFragment() {
         } else {
             startActivityForResult(intent, Config.REQUEST_CODE_CHOOSE_IMAGE_FROM_CREATE_POST)
         }
-    }
-    inner class PhotoAdapter: BaseQuickAdapter<String, BaseViewHolder>(R.layout.select_photo_item_layout, mutableListOf()) {
-        override fun convert(helper: BaseViewHolder?, item: String?) {
-            val path = item ?: return
-            val bitmap = BitmapFactory.decodeFile(path)
-            val view = helper?.itemView ?: return
-            Glide.with(mContext)
-                    .load(bitmap)
-                    .apply(bannerOptions)
-                    .into(view.imgPhoto)
-            helper.addOnClickListener(R.id.tvCancel)
-        }
-
     }
 }

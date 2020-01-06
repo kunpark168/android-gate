@@ -2,8 +2,7 @@ package com.anhtam.gate9.repository
 
 import androidx.lifecycle.LiveData
 import com.anhtam.domain.Base
-import com.anhtam.domain.v2.User
-import com.anhtam.domain.v2.WrappedHome
+import com.anhtam.domain.v2.*
 import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.domain.v2.wrap.WrapGames
 import com.anhtam.domain.v2.wrap.WrapListing
@@ -39,16 +38,24 @@ class SocialRepository @Inject constructor(
         override fun createCall() = socialService.getOtherUserInfoById(userId)
     }.asLiveData()
 
-    fun getGamesByTab(pageNumber: Int, tab: Int) = object: FetchBoundResource<com.anhtam.domain.v2.WrapGame>() {
+    fun getGamesByTab(pageNumber: Int, tab: Int) = object: FetchBoundResource<List<GameEntity>>() {
         override fun createCall() = socialService.GetMXHGame(tab, pageNumber)
     }.asLiveData()
 
-    fun react(params: Map<String, Int>) = object : Lv1FetchResource<Base>(){
+    fun react(params: Map<String, Int>) = object : Lv2FetchResource<Base>(){
         override fun createCall() = socialService.react(params)
 
     }.asLiveData()
 
     fun getListingPost() = object : FetchBoundResource<WrappedHome>(){
         override fun createCall() = socialService.getListPosts()
+    }.asLiveData()
+
+    fun getSocialContact(commentId: Int, tab: Int, page: Int) = object : FetchBoundResource<List<User>>(){
+        override fun createCall() = socialService.getListSocialContact(commentId, tab, page)
+    }.asLiveData()
+
+    fun getChildComment(postId: Int, page: Int) = object : FetchBoundResource<WrapComments>(){
+        override fun createCall() = socialService.getDetailPosts(postId.toLong(), page)
     }.asLiveData()
 }

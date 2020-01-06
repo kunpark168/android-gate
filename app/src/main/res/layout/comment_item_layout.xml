@@ -84,6 +84,13 @@
             tools:text="@tools:sample/lorem/random" />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPhotos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginStart="68dp"
+        android:paddingTop="@dimen/layout_margin_8dp"/>
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChildComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

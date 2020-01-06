@@ -19,7 +19,7 @@ import com.anhtam.domain.Game
 import com.anhtam.domain.v2.PostEntity
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.GroupBannerAdapter
-import com.anhtam.gate9.adapter.v2.CommentAdapter
+import com.anhtam.gate9.adapter.v2.PostAdapter
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.v2.search.SearchScreen
@@ -27,17 +27,20 @@ import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.categories.CategoryTab
 import com.anhtam.gate9.v2.categories.FeatureScreen
+import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.main.ContainerFragment
 import com.anhtam.gate9.v2.mxh_game.MXHGameScreen
 import com.anhtam.gate9.v2.notification.NotificationFragment
 import com.anhtam.gate9.v2.main.member.MemberHomeFragment
 import com.anhtam.gate9.v2.messenger.ChannelFragment
+import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.new_feed_screen.*
 import kotlinx.android.synthetic.main.toolbar_new_feed.*
 import of.bum.network.helper.Resource
 import timber.log.Timber
+import java.lang.NumberFormatException
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -53,13 +56,13 @@ class NewFeedScreen : ContainerFragment() {
         fun newInstance() = NewFeedScreen()
     }
 
-    private var mGroup4Adapter by autoCleared<GroupBannerAdapter>()
     private var mUserId: Int = 0
     private val mViewModel: NewFeedViewModel by viewModels ({requireNotNull(activity)}, {vmFactory })
     private val mPostViewModel: com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedViewModel by viewModels { vmFactory }
     private var mAdapter by autoCleared<SliderAdapter>()
 
-    @Inject lateinit var mCommentAdapter : CommentAdapter
+    @Inject lateinit var mCommentAdapter : PostAdapter
+    @Inject lateinit var mGroup4Adapter: GroupBannerAdapter
     @Inject @field:Named("avatar") lateinit var avatarOptions: RequestOptions
     @Inject @field:Named("banner") lateinit var bannerOptions: RequestOptions
 
@@ -73,7 +76,6 @@ class NewFeedScreen : ContainerFragment() {
     }
 
     private fun init() {
-        loadData()
         initCommentRecyclerView()
         initGamesRecyclerView()
 
@@ -85,6 +87,22 @@ class NewFeedScreen : ContainerFragment() {
     }
 
     private fun observer(){
+        mViewModel.data.observe(viewLifecycleOwner, Observer {
+            when(it) {
+                is Resource.Success -> {
+                    hideProgress()
+                    bindingBanner(it.data?.mBanner)
+                    bindingGroupGames(it.data?.mGames)
+                    bindingComment(it.data?.mListing)
+                }
+                is Resource.Error ->{
+                    hideProgress()
+                }
+                else -> {
+
+                }
+            }
+        })
         mPostViewModel._post.observe(viewLifecycleOwner, Observer {resource ->
             when(resource) {
                 is Resource.Success -> {
@@ -122,6 +140,7 @@ class NewFeedScreen : ContainerFragment() {
                         .into(imgAvatar)
             }
             mUserId = it.data?.mUserId ?: return@Observer
+            StorageManager.setUserId(mUserId.toString())
         })
     }
 
@@ -130,24 +149,7 @@ class NewFeedScreen : ContainerFragment() {
     }
 
     private fun loadData() {
-        Timber.d(StorageManager.getAccessToken())
-        mViewModel.data.observe(viewLifecycleOwner, Observer {
-            Timber.d("Status $it")
-            when(it) {
-                is Resource.Success -> {
-                    hideProgress()
-                    bindingBanner(it.data?.mBanner)
-                    bindingGroupGames(it.data?.mGames)
-                    bindingComment(it.data?.mListing)
-                }
-                is Resource.Error ->{
-                    hideProgress()
-                }
-                else -> {
-
-                }
-            }
-        })
+        mViewModel.loadNewFeed()
     }
 
     private fun initCommentRecyclerView() {
@@ -165,7 +167,6 @@ class NewFeedScreen : ContainerFragment() {
     }
 
     private fun initGamesRecyclerView() {
-        mGroup4Adapter = GroupBannerAdapter(navigation, Glide.with(this))
         rv4Banners?.layoutManager = GridLayoutManager(context, 2)
         rv4Banners?.adapter= mGroup4Adapter
     }
@@ -193,8 +194,8 @@ class NewFeedScreen : ContainerFragment() {
     private fun initEventListener() {
         swipeRefreshLayout?.setOnRefreshListener {
             swipeRefreshLayout?.isRefreshing = false
-//            showProgress()
-//            loadData()
+            showProgress()
+            loadData()
         }
 
         icNotification?.setOnClickListener {
@@ -226,7 +227,12 @@ class NewFeedScreen : ContainerFragment() {
             navigation?.addFragment(MXHGameScreen.newInstance())
         }
         imgAvatar?.setOnClickListener {
-
+            val idUser: Int = try{
+                StorageManager.getUserId().toInt()
+            } catch (e: NumberFormatException){
+                return@setOnClickListener
+            }
+            navigation?.addFragment(UserDiscussionScreen.newInstance(idUser, Category.Member))
         }
     }
 

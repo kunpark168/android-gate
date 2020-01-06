@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent">
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imgBack"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/ic_back"
@@ -51,6 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -113,8 +114,6 @@
             <!--Information post-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/csInformation"
-                android:paddingLeft="@dimen/dp20"
-                android:paddingRight="@dimen/dp20"
                 android:paddingBottom="@dimen/dp15"
                 android:background="@color/colorWhite"
                 android:layout_width="match_parent"
@@ -122,8 +121,9 @@
                 <TextView
                     android:id="@+id/tvTime"
                     android:layout_marginTop="@dimen/dp20"
-                    android:textSize="@dimen/dp12"
+                    android:textSize="@dimen/text_size_12sp"
                     tools:text="12:30 12/09/2019"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
                     android:fontFamily="@font/roboto_regular"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -151,6 +151,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:tint="@color/colorError"
+                    android:layout_marginEnd="@dimen/layout_margin_16dp"
                     android:src="@drawable/ic_dropdown"
                     android:layout_width="@dimen/dp13"
                     android:layout_height="@dimen/dp13" />
@@ -162,6 +163,8 @@
                     android:layout_marginTop="@dimen/dp50"
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_width="match_parent"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
+                    android:layout_marginEnd="@dimen/layout_margin_16dp"
                     android:layout_height="wrap_content" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -176,6 +179,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="@dimen/dp5"
                     android:visibility="gone"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
                     app:layout_constraintTop_toBottomOf="@+id/rvPhotos"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dp20">
@@ -290,8 +294,8 @@
                     android:layout_height="wrap_content">
                     <View
                         android:alpha="0.1"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="20dp"
                         app:layout_constraintTop_toTopOf="@+id/tvAction"
                         app:layout_constraintEnd_toStartOf="@+id/tvAction"
                         app:layout_constraintBottom_toBottomOf="@+id/tvAction"
@@ -312,8 +316,8 @@
 
                     <View
                         android:alpha="0.1"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginStart="10dp"
                         app:layout_constraintTop_toTopOf="@+id/tvAction"
                         app:layout_constraintStart_toEndOf="@+id/tvAction"
                         app:layout_constraintBottom_toBottomOf="@+id/tvAction"
@@ -358,85 +362,18 @@
                             android:layout_height="@dimen/dp25" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <!--Love-->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/csLove"
-                        app:layout_constraintWidth_percent="0.2"
-                        app:layout_constraintStart_toEndOf="@+id/csShare"
+                    <com.anhtam.gate9.v2.views.ReactionView
+                        android:id="@+id/reactionView"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/imgFavorite"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:src="@drawable/ic_reaction_love"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp40" />
-                        <TextView
-                            app:layout_constraintTop_toBottomOf="@+id/imgFavorite"
-                            android:gravity="center"
-                            android:textSize="@dimen/sp_10"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/roboto_light"
-                            android:text="@string/favourite_feelling"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp25" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <!--Like-->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/csLike"
-                        app:layout_constraintWidth_percent="0.2"
-                        app:layout_constraintStart_toEndOf="@+id/csLove"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/imgLike"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:src="@drawable/ic_like_post"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp40" />
-                        <TextView
-                            app:layout_constraintTop_toBottomOf="@+id/imgLike"
-                            android:gravity="center"
-                            android:textSize="@dimen/sp_10"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/roboto_light"
-                            android:text="@string/like_feelling"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp25" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                    <!--DisLike-->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/csDisLike"
-                        app:layout_constraintWidth_percent="0.2"
-                        app:layout_constraintStart_toEndOf="@+id/csLike"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/imgDislike"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:src="@drawable/ic_dislike_post"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp40" />
-                        <TextView
-                            app:layout_constraintTop_toBottomOf="@+id/imgDislike"
-                            android:gravity="center"
-                            android:textSize="@dimen/sp_10"
-                            android:textColor="@color/black"
-                            android:fontFamily="@font/roboto_light"
-                            android:text="@string/dislike_feelling"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp25" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
+                        app:layout_constraintStart_toEndOf="@id/csShare"
+                        app:layout_constraintWidth_percent="0.6"
+                        android:layout_height="match_parent"/>
 
                     <!--PostEntity-->
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/csComment"
                         app:layout_constraintWidth_percent="0.2"
-                        app:layout_constraintStart_toEndOf="@+id/csDisLike"
+                        app:layout_constraintStart_toEndOf="@+id/reactionView"
                         android:layout_width="0dp"
                         android:layout_height="match_parent">
                         <ImageView

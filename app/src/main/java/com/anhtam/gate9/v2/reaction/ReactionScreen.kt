@@ -1,7 +1,9 @@
 package com.anhtam.gate9.v2.reaction
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.anhtam.gate9.adapter.SharePageAdapter
@@ -11,10 +13,17 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.reaction_screen.*
 import java.util.*
 
-class ReactionScreen : DaggerNavigationFragment() {
+class ReactionScreen private constructor(
+        private val mCommentId: Int
+): DaggerNavigationFragment() {
 
     companion object {
-        fun newInstance() = ReactionScreen()
+        private const val CODE_LIKE = 1
+        private const val CODE_DISLIKE = 2
+        private const val CODE_LOVE = 3
+        private const val CODE_COMMENT = 4
+        private const val CODE_VIEW = 5
+        fun newInstance(commentId: Int) = ReactionScreen(commentId)
     }
 
     private lateinit var mAdapter: SharePageAdapter
@@ -32,7 +41,14 @@ class ReactionScreen : DaggerNavigationFragment() {
     override fun menuRes() = R.menu.menu_chat_search_more
 
     private fun initViewPager(){
+        val context = context ?: return
+        imgShare?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
         val fragments = ArrayList<Fragment>()
+        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_VIEW))
+        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_LOVE))
+        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_LIKE))
+        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_DISLIKE))
+        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_COMMENT))
         mAdapter = SharePageAdapter(childFragmentManager, fragments)
         vpReaction.adapter = mAdapter
         vpReaction.offscreenPageLimit = 5
@@ -61,6 +77,31 @@ class ReactionScreen : DaggerNavigationFragment() {
     }
 
     private fun onTabSelected(tab: Int){
-
+        val context = context ?: return
+        imgShare?.setColorFilter(if (tab == 0){
+            ContextCompat.getColor(context, R.color.color_main_blue)
+        }else{
+            ContextCompat.getColor(context, R.color.color_react_grey)
+        }, PorterDuff.Mode.MULTIPLY)
+        imgLike?.setColorFilter(if (tab == 2){
+            ContextCompat.getColor(context, R.color.color_main_blue)
+        }else{
+            ContextCompat.getColor(context, R.color.color_react_grey)
+        }, PorterDuff.Mode.MULTIPLY)
+        imgFavorite?.setColorFilter(if (tab == 1){
+            ContextCompat.getColor(context, R.color.color_main_blue)
+        }else{
+            ContextCompat.getColor(context, R.color.color_react_grey)
+        }, PorterDuff.Mode.MULTIPLY)
+        imgDislike?.setColorFilter(if (tab == 3){
+            ContextCompat.getColor(context, R.color.color_main_blue)
+        }else{
+            ContextCompat.getColor(context, R.color.color_react_grey)
+        }, PorterDuff.Mode.MULTIPLY)
+        imgComment?.setColorFilter(if (tab == 4){
+            ContextCompat.getColor(context, R.color.color_main_blue)
+        }else{
+            ContextCompat.getColor(context, R.color.color_react_grey)
+        }, PorterDuff.Mode.MULTIPLY)
     }
 }

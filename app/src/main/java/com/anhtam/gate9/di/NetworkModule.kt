@@ -1,6 +1,7 @@
 package com.anhtam.gate9.di
 
 import com.anhtam.gate9.config.Config
+import com.anhtam.gate9.session.AuthService
 import com.anhtam.gate9.session.AuthenticationInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -40,6 +41,16 @@ class NetworkModule {
             connectTimeout(Config.DEFAULT_TIME_OUT, TimeUnit.SECONDS)
         }
         return builder.build()
+    }
+
+    @Reusable
+    @Provides
+    fun provideAuthService(): AuthService {
+        return Retrofit.Builder()
+                .baseUrl(Config.LOGIN_URL)
+                .addConverterFactory(MoshiConverterFactory.create())
+                .build()
+                .create(AuthService::class.java)
     }
 
     @Reusable

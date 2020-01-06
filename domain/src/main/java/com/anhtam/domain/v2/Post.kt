@@ -11,7 +11,7 @@ data class PostEntity(
     var user: User? = null,
     @Json(name = "content")
     var content: String? = null,
-    @Json(name = "photo")  // TODO Server
+    @Json(name = "photo")
     var photo: String? = null,
     @Json(name = "like")
     var like: String? = null,

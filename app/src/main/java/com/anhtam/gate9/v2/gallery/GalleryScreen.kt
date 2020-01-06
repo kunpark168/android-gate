@@ -49,7 +49,7 @@ class GalleryScreen private constructor(
         viewPager.adapter = mAdapter
         viewPager?.setPageTransformer(true, DepthPageTransformer())
         Glide.with(this@GalleryScreen)
-                .apply { avatarOptions }
+                .apply { RequestOptions.circleCropTransform().apply { avatarOptions } }
                 .load(mUser.mAvatar?.toImage())
                 .fitCenter()
                 .into(imgAvatar)

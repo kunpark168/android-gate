@@ -1,21 +1,24 @@
 package com.anhtam.gate9.adapter
 
 import android.content.Context
-import android.widget.ImageView
 import com.anhtam.domain.Game
 import com.anhtam.gate9.adapter.navigator.IBannerNavigator
 import com.anhtam.gate9.R
-import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
-import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.utils.ifNotNull
-import com.bumptech.glide.RequestManager
+import com.anhtam.gate9.utils.toImage
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import kotlinx.android.synthetic.main.item_new_game.view.*
+import javax.inject.Inject
+import javax.inject.Named
 
-class GroupBannerAdapter(private val navigation: Navigation?, private val requestManager: RequestManager):
-        BaseQuickAdapter<Game, BaseViewHolder>(R.layout.item_new_game, emptyList()),
+class GroupBannerAdapter @Inject constructor(val navigation: Navigation?,
+                                             @Named("banner")val bannerOptions: RequestOptions
+): BaseQuickAdapter<Game, BaseViewHolder>(R.layout.item_new_game, emptyList()),
         IBannerNavigator {
 
     override fun navigateToSocialDiscussion(context: Context?, link: String, gameId: String) {
@@ -23,14 +26,20 @@ class GroupBannerAdapter(private val navigation: Navigation?, private val reques
     }
 
     override fun convert(helper: BaseViewHolder?, item: Game?) {
+        val game = item ?: return
+        val view = helper?.itemView ?: return
+        val type = game.gameType?.firstOrNull()?.name ?: ""
+        view.tvContent?.text = type
+        view.tvTitle?.text = game.name ?: ""
+        Glide.with(mContext)
+                .load(game.avatarGame?.toImage())
+                .apply(bannerOptions)
+                .into(view.imgNewGame)
+        view.setOnClickListener {
+            navigation?.addFragment(GameDiscussionScreen.newInstance(game.link ?: (game.avatar ?: ""), game.gameId ?: ""))
+        }
         ifNotNull(helper, item) {
-            holder, game ->
-            holder.setText(R.id.tvTitle, game.name)
-            val type = game.types?.get(0)?.name
-            holder.setText(R.id.tvContent, type)
-            val bannerImageView = holder.getView<ImageView>(R.id.imgNewGame)
-            requestManager.load(Config.IMG_URL + game.avatarGame)
-                    .into(bannerImageView)
+            holder, _ ->
             if (holder.adapterPosition < 2) {
                 holder.setVisible(R.id.vHor, true)
             } else {
@@ -40,14 +49,6 @@ class GroupBannerAdapter(private val navigation: Navigation?, private val reques
                 holder.setVisible(R.id.vVer, true)
             } else {
                 holder.setVisible(R.id.vVer, false)
-            }
-
-            val link = game.link ?: (game.avatar ?: "")
-            val gameId = game.gameId ?: ""
-            holder.itemView.apply {
-                debounceClick {
-                    navigateToSocialDiscussion(context, link, gameId)
-                }
             }
         }
     }
