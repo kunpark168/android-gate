@@ -149,24 +149,25 @@ class CreatePostScreen : DaggerNavigationFragment() {
     }
 
     private fun uploadImage() {
-        mediaService.upload(mMedia).enqueue(object: Callback<List<String>> {
-            override fun onFailure(call: Call<List<String>>, t: Throwable) {
-                hideProgress()
-                Timber.d("loi")
-            }
-
-            override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
-                Timber.d("thanh cong ne")
-                if (response.isSuccessful
-                        && response.code() == 200
-                        && response.body() != null) {
-                    mPhotos.addAll(response.body()!!)
-                    postForum()
-                } else {
-                    hideProgress()
-                }
-            }
-        })
+//
+//        mediaService.upload(mMedia).enqueue(object: Callback<List<String>> {
+//            override fun onFailure(call: Call<List<String>>, t: Throwable) {
+//                hideProgress()
+//                Timber.d("loi")
+//            }
+//
+//            override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
+//                Timber.d("thanh cong ne")
+//                if (response.isSuccessful
+//                        && response.code() == 200
+//                        && response.body() != null) {
+//                    mPhotos.addAll(response.body()!!)
+//                    postForum()
+//                } else {
+//                    hideProgress()
+//                }
+//            }
+//        })
     }
 
 

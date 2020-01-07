@@ -10,10 +10,8 @@ import com.anhtam.domain.v2.wrap.WrapListing
 import of.bum.network.helper.ApiResponse
 import of.bum.network.helper.Resource
 import of.bum.network.helper.RestResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import okhttp3.MultipartBody
+import retrofit2.http.*
 
 interface SocialService {
     @GET("login")
@@ -81,4 +79,10 @@ interface SocialService {
 
     @POST("social/post-view-forum")
     fun postViewForum(@Query("commentId") commentId: Int): LiveData<ApiResponse<Base>>
+
+    @Multipart
+    @POST("social/upload/file")
+    fun upload(
+            @Part file: List<MultipartBody.Part>
+    ): LiveData<ApiResponse<List<String>>>
 }

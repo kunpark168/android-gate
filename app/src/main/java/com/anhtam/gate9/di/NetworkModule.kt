@@ -56,14 +56,9 @@ class NetworkModule {
     @Reusable
     @Provides
     fun provideMediaService(
-            moshi: Moshi,
-            client: OkHttpClient): MediaService {
-        return Retrofit.Builder()
-                .baseUrl(Config.BASE_URL)
-                .client(client)
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .build()
-                .create(MediaService::class.java)
+            retrofit: Retrofit
+    ): MediaService {
+        return retrofit.create(MediaService::class.java)
     }
 
     @Singleton

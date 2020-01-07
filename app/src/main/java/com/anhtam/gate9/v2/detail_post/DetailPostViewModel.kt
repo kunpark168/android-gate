@@ -12,7 +12,10 @@ import com.anhtam.gate9.vo.IllegalReturn
 import com.anhtam.gate9.vo.Reaction
 import of.bum.network.FetchBoundResource
 import of.bum.network.helper.Resource
+import of.bum.network.v2.MediaService
 import of.bum.network.v2.SocialService
+import okhttp3.MultipartBody
+import retrofit2.Callback
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import kotlin.properties.Delegates
@@ -80,5 +83,9 @@ class DetailPostViewModel @Inject constructor(
 
     fun sharePost(){
 
+    }
+
+    fun uploadImage(files: List<MultipartBody.Part>): LiveData<Resource<List<String>>>{
+        return repository.uploadImages(files)
     }
 }

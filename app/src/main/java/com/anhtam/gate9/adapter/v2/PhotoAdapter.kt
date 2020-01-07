@@ -74,6 +74,7 @@ class PhotoAdapter @Inject constructor(
         Glide.with(mContext)
                 .load(photo.toImage())
                 .apply(bannerOptions)
+                .fitCenter()
                 .into(view.imgPhoto)
         if (item.type == PhotoEntity.GRID_N) {
             val more = data.size - DEFAULT_MORE
