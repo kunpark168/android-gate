@@ -6,10 +6,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.utils.FileUtils
 import com.anhtam.gate9.utils.PermissionUtils
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import of.bum.network.helper.Resource
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -18,9 +21,9 @@ import java.io.File
 abstract class AbstractGalleryFragment : DaggerNavigationFragment(){
 
     private var mImage: File? = null
-    protected var mMedia = arrayListOf<MultipartBody.Part>()
+    private val viewModel: ShareViewModel by viewModels({requireActivity()}, {vmFactory})
 
-    open fun onSelectedImage(){
+    open fun onSelectedImage(urls: List<String>){
 
     }
     companion object{
@@ -63,16 +66,17 @@ abstract class AbstractGalleryFragment : DaggerNavigationFragment(){
             data.data?.let {
                 val path = FileUtils.getPath(unwrapContext, it) ?: return
                 mImage = File(path)
-                onSelectedImage()
-//                mGalleryAdapter.addData(path)
-//                if (rvImage?.visibility == View.GONE) {
-//                    rvImage?.visibility = View.VISIBLE
-//                }
-//                imgSend.visibility = View.VISIBLE
-//                rightLayout.visibility = View.GONE
                 val reqFile = RequestBody.create(MediaType.parse("image/*"), mImage!!)
                 val body = MultipartBody.Part.createFormData("files", mImage!!.name, reqFile)
+                val mMedia = arrayListOf<MultipartBody.Part>()
                 mMedia.add(body)
+                viewModel.uploadImage(mMedia).observe(viewLifecycleOwner, Observer { source ->
+                    if (source is Resource.Success) {
+                        val urls = source.data  ?: return@Observer
+                        if (urls.isEmpty()) return@Observer
+                        onSelectedImage(urls)
+                    }
+                })
             }
         }
         super.onActivityResult(requestCode, resultCode, data)

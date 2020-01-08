@@ -16,11 +16,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/tvCancel"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:text="X"
+        android:layout_margin="@dimen/layout_margin_4dp"
+        android:src="@drawable/icon_circle_delete_black"
         app:layout_constraintTop_toTopOf="@id/imgPhoto"
         app:layout_constraintEnd_toEndOf="@id/imgPhoto"/>
 

@@ -84,8 +84,4 @@ class DetailPostViewModel @Inject constructor(
     fun sharePost(){
 
     }
-
-    fun uploadImage(files: List<MultipartBody.Part>): LiveData<Resource<List<String>>>{
-        return repository.uploadImages(files)
-    }
 }

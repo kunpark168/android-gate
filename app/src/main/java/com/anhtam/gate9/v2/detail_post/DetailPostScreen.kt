@@ -72,7 +72,6 @@ class DetailPostScreen private constructor(
     @Inject lateinit var mAdapter: CommentAdapter
     @Inject lateinit var mSessionManager: SessionManager
     @Inject lateinit var mGalleryAdapter: ChooseGalleryAdapter
-    private var mPhotos = arrayListOf<String>()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -119,11 +118,9 @@ class DetailPostScreen private constructor(
     private fun initGalleryRv(){
         mGalleryAdapter.setOnItemChildClickListener { _, _, position ->
             mGalleryAdapter.remove(position)
-            mMedia.removeAt(position)
             if (mGalleryAdapter.data.isEmpty()){
                 rvImage?.visibility = View.GONE
-                imgSend?.visibility = View.GONE
-                rightLayout?.visibility = View.VISIBLE
+                noneTypeMode()
             }
         }
         rvImage?.adapter = mGalleryAdapter
@@ -141,6 +138,13 @@ class DetailPostScreen private constructor(
         rvComment?.layoutManager = LinearLayoutManager(context)
         rvComment?.adapter = mAdapter
         rvComment?.isNestedScrollingEnabled = false
+    }
+
+    override fun onSelectedImage(urls: List<String>) {
+        super.onSelectedImage(urls)
+        mGalleryAdapter.setNewData(urls)
+        rvImage?.visibility = View.VISIBLE
+        readySendMode()
     }
 
     private fun observer(){
@@ -295,10 +299,9 @@ class DetailPostScreen private constructor(
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                imgSend.visibility = if(etPost.length() > 0) View.VISIBLE else View.GONE
-                rightLayout.visibility = if(etPost.length() <= 0) View.VISIBLE else View.GONE
+                if (etPost.length() > 0) readySendMode()
+                if (etPost.length() == 0 && mGalleryAdapter.data.isEmpty()) noneTypeMode()
             }
-
         })
         /*
          *  1) Hide keyboard
@@ -313,12 +316,7 @@ class DetailPostScreen private constructor(
         imgSend?.setOnClickListener {
             hideKeyboard()
             showProgress()
-            val content = etPost?.text?.toString()
-            if(mMedia.isEmpty()){
-                postComment()
-            } else {
-                uploadImage()
-            }
+            postComment()
         }
 
         imgChooseImg?.setOnClickListener {
@@ -341,25 +339,19 @@ class DetailPostScreen private constructor(
         COMMENT, POST
     }
 
-    private fun uploadImage() {
-        viewModel.uploadImage(mMedia).observe(viewLifecycleOwner, Observer {
-            when(it) {
-                is Resource.Success ->{
-                    val urls = it.data ?: return@Observer hideProgress()
-                    mPhotos.addAll(urls)
-                    postComment()
-                }
-                is Resource.Error -> {
-                    hideProgress()
-                }
-                else -> {}
-            }
-        })
+    private fun readySendMode(){
+        imgSend?.visibility = View.VISIBLE
+        rightLayout?.visibility = View.GONE
+    }
+
+    private fun noneTypeMode(){
+        imgSend?.visibility = View.GONE
+        rightLayout?.visibility = View.VISIBLE
     }
 
     private fun postComment(){
         val content = etPost?.text?.toString()
-        viewModel.postComment(content, mPhotos.joinToString(",")).observe(viewLifecycleOwner, Observer {
+        viewModel.postComment(content, mGalleryAdapter.data.joinToString(",")).observe(viewLifecycleOwner, Observer {
             when(it){
                 is Resource.Success ->{
                     hideProgress()
@@ -371,7 +363,14 @@ class DetailPostScreen private constructor(
                 else ->{}
             }
         })
+        initializeState()
+    }
+
+    private fun initializeState(){
         etPost?.setText("")
+        mGalleryAdapter.data.clear()
+        noneTypeMode()
+        rvImage?.visibility = View.GONE
     }
 }
 

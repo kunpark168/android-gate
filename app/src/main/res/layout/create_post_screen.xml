@@ -88,12 +88,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/imageRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="64dp"
         app:layout_constraintBottom_toTopOf="@id/csBottom"
         tools:listitem="@layout/select_photo_item_layout"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="horizontal"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/padding_16dp"
+        android:layout_marginTop="@dimen/layout_margin_8dp"
+        android:layout_marginBottom="@dimen/layout_margin_8dp"
+        android:paddingEnd="@dimen/padding_16dp"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/csBottom"
         android:layout_width="match_parent"
