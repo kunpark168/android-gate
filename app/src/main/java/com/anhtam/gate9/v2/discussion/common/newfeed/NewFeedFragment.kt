@@ -37,7 +37,7 @@ class NewFeedFragment(private val _userId: Int) : CommonDiscussionFragment() {
         viewModel._post.observe(this, Observer {resource ->
             when(resource) {
                 is Resource.Success -> {
-                    val data = resource.data?.wrap
+                    val data = resource.data
                     if (data.isNullOrEmpty()) {
                         mAdapter.loadMoreEnd()
                     } else {

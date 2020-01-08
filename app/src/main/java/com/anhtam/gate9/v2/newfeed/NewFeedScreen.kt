@@ -126,29 +126,29 @@ class NewFeedScreen : ContainerFragment() {
                 }
             }
         })
-        mPostViewModel._post.observe(viewLifecycleOwner, Observer {resource ->
-            when(resource) {
-                is Resource.Success -> {
-                    val data = resource.data?.wrap
-                    if (data.isNullOrEmpty()) {
-                        mCommentAdapter.loadMoreEnd()
-                    } else {
-                        if (mPostViewModel.page == 0) {
-                            mCommentAdapter.setNewData(data)
-                        } else {
-                            mCommentAdapter.addData(data)
-                        }
-                        mCommentAdapter.loadMoreComplete()
-                    }
-                }
-                is Resource.Loading -> {
-
-                }
-                else -> {
-                    mCommentAdapter.loadMoreFail()
-                }
-            }
-        })
+//        mPostViewModel._post.observe(viewLifecycleOwner, Observer {resource ->
+//            when(resource) {
+//                is Resource.Success -> {
+//                    val data = resource.data?.wrap
+//                    if (data.isNullOrEmpty()) {
+//                        mCommentAdapter.loadMoreEnd()
+//                    } else {
+//                        if (mPostViewModel.page == 0) {
+//                            mCommentAdapter.setNewData(data)
+//                        } else {
+//                            mCommentAdapter.addData(data)
+//                        }
+//                        mCommentAdapter.loadMoreComplete()
+//                    }
+//                }
+//                is Resource.Loading -> {
+//
+//                }
+//                else -> {
+//                    mCommentAdapter.loadMoreFail()
+//                }
+//            }
+//        })
 
         mMainViewModel._user.observe(viewLifecycleOwner, Observer {
             val avatar = when(it) {

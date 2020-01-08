@@ -19,7 +19,7 @@ import javax.inject.Singleton
 class SocialRepository @Inject constructor(
         val socialService: SocialService
 ) {
-    fun getPostAndCommentByUser(userId: Int, type: Int, page: Int, limit: Int) = object: Lv2FetchResource<WrapListing>(){
+    fun getPostAndCommentByUser(userId: Int, type: Int, page: Int, limit: Int) = object: Lv2FetchResource<List<PostEntity>>(){
         override fun createCall() = socialService.getPostAndCommentByUser(userId, type, page, limit)
     }.asLiveData()
 

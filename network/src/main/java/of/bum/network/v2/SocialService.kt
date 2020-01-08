@@ -50,7 +50,7 @@ interface SocialService {
             @Query("tab") type: Int,
             @Query("page") page: Int,
             @Query("limit") limit: Int
-    ): LiveData<ApiResponse<RestResponse<WrapListing>>>
+    ): LiveData<ApiResponse<RestResponse<List<PostEntity>>>>
 
     @GET("social/get-list-game-by-user")
     fun getGameRelatedToUser(
