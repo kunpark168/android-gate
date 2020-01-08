@@ -1,6 +1,8 @@
 package com.anhtam.gate9.repository
 
+import com.anhtam.domain.Banner
 import com.anhtam.domain.Base
+import com.anhtam.domain.Game
 import com.anhtam.domain.v2.*
 import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.domain.v2.wrap.WrapGames
@@ -46,8 +48,16 @@ class SocialRepository @Inject constructor(
 
     }.asLiveData()
 
-    fun getListingPost() = object : FetchBoundResource<WrappedHome>(){
+    fun getListingPost() = object : FetchBoundResource<List<PostEntity>>(){
         override fun createCall() = socialService.getListPosts()
+    }.asLiveData()
+
+    fun getBanners() = object : FetchBoundResource<List<Banner>>(){
+        override fun createCall() = socialService.getBanners()
+    }.asLiveData()
+
+    fun getGameNominate() = object : FetchBoundResource<List<Game>>(){
+        override fun createCall() = socialService.getGameNominate()
     }.asLiveData()
 
     fun getSocialContact(commentId: Int, tab: Int, page: Int) = object : FetchBoundResource<List<User>>(){

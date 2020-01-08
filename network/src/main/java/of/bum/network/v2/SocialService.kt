@@ -1,7 +1,9 @@
 package of.bum.network.v2
 
 import androidx.lifecycle.LiveData
+import com.anhtam.domain.Banner
 import com.anhtam.domain.Base
+import com.anhtam.domain.Game
 import com.anhtam.domain.v2.*
 import com.anhtam.domain.v2.wrap.WrapBase
 import com.anhtam.domain.v2.wrap.WrapGame
@@ -21,7 +23,13 @@ interface SocialService {
     fun getListPosts(
             @Query("page") page: Int = 0,
             @Query("limit") limit: Int = 60
-    ): LiveData<ApiResponse<RestResponse<WrappedHome>>>
+    ): LiveData<ApiResponse<RestResponse<List<PostEntity>>>>
+
+    @GET("social/get-banner")
+    fun getBanners(): LiveData<ApiResponse<RestResponse<List<Banner>>>>
+
+    @GET("social/get-game-nominate")
+    fun getGameNominate(): LiveData<ApiResponse<RestResponse<List<Game>>>>
 
     @GET("social/get-post-detail")
     fun getDetailPosts(@Query("postId") postId: Long,

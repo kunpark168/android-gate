@@ -17,9 +17,6 @@ import of.bum.network.helper.Resource
 
 class SplashScreen : DaggerNavigationFragment() {
 
-    private val mViewModel by viewModels<NewFeedViewModel> ({ requireNotNull(activity)}, {vmFactory})
-    private var isAnimEnd = false
-    private var isFetchEnd = false
     companion object {
         fun newInstance() = SplashScreen()
     }
@@ -30,17 +27,7 @@ class SplashScreen : DaggerNavigationFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mViewModel.loadNewFeed()
         startAnimation()
-        // pre load data
-        mViewModel.data.observe(viewLifecycleOwner, Observer {
-            if (it is Resource.Success) {
-                isFetchEnd = true
-                if (isAnimEnd){
-                    navigation?.newRootFragment(HomeFragment.newInstance())
-                }
-            }
-        })
     }
 
     override fun statusColor() = R.color.white
@@ -58,10 +45,7 @@ class SplashScreen : DaggerNavigationFragment() {
             }
 
             override fun onAnimationEnd(p0: Animation?) {
-                isAnimEnd = true
-                if (isFetchEnd){
-                    navigation?.newRootFragment(HomeFragment.newInstance())
-                }
+                navigation?.newRootFragment(HomeFragment.newInstance())
             }
         })
     }

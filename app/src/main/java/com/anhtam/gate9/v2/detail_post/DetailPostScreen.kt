@@ -345,24 +345,15 @@ class DetailPostScreen private constructor(
     private fun uploadImage() {
         viewModel.uploadImage(mMedia).observe(viewLifecycleOwner, Observer {
             when(it) {
-                is 
-            }
-        }), object: Callback<List<String>> {
-            override fun onFailure(call: Call<List<String>>, t: Throwable) {
-                hideProgress()
-                Timber.d("loi")
-            }
-
-            override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
-                Timber.d("thanh cong ne")
-                if (response.isSuccessful
-                        && response.code() == 200
-                        && response.body() != null) {
-                    mPhotos.addAll(response.body()!!)
+                is Resource.Success ->{
+                    val urls = it.data ?: return@Observer hideProgress()
+                    mPhotos.addAll(urls)
                     postComment()
-                } else {
+                }
+                is Resource.Error -> {
                     hideProgress()
                 }
+                else -> {}
             }
         })
     }

@@ -71,11 +71,22 @@ class PhotoAdapter @Inject constructor(
     override fun convert(helper: BaseViewHolder?, item: PhotoEntity?) {
         val photo = item?.photo ?: return
         val view = helper?.itemView ?: return
-        Glide.with(mContext)
-                .load(photo.toImage())
-                .apply(bannerOptions)
-                .fitCenter()
-                .into(view.imgPhoto)
+        when(itemCount){
+            1 -> {
+                Glide.with(mContext)
+                        .load(photo.toImage())
+                        .apply(bannerOptions)
+                        .centerCrop()
+                        .into(view.imgPhoto)
+            }
+            else -> {
+                Glide.with(mContext)
+                        .load(photo.toImage())
+                        .apply(bannerOptions)
+                        .fitCenter()
+                        .into(view.imgPhoto)
+            }
+        }
         if (item.type == PhotoEntity.GRID_N) {
             val more = data.size - DEFAULT_MORE
             view.tvMore.text = "+".plus(more.toString())

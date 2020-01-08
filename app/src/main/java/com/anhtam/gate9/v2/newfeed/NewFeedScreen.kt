@@ -76,6 +76,7 @@ class NewFeedScreen : ContainerFragment() {
     }
 
     private fun init() {
+        loadData()
         initCommentRecyclerView()
         initGamesRecyclerView()
 
@@ -91,12 +92,34 @@ class NewFeedScreen : ContainerFragment() {
             when(it) {
                 is Resource.Success -> {
                     hideProgress()
-                    bindingBanner(it.data?.mBanner)
-                    bindingGroupGames(it.data?.mGames)
-                    bindingComment(it.data?.mListing)
+                    bindingComment(it.data)
                 }
                 is Resource.Error ->{
                     hideProgress()
+                }
+                else -> {
+
+                }
+            }
+        })
+        mViewModel.banners.observe(viewLifecycleOwner, Observer {
+            when(it) {
+                is Resource.Success -> {
+                    bindingBanner(it.data)
+                }
+                is Resource.Error ->{
+                }
+                else -> {
+
+                }
+            }
+        })
+        mViewModel.games.observe(viewLifecycleOwner, Observer {
+            when(it) {
+                is Resource.Success -> {
+                    bindingGroupGames(it.data)
+                }
+                is Resource.Error ->{
                 }
                 else -> {
 
@@ -150,6 +173,8 @@ class NewFeedScreen : ContainerFragment() {
 
     private fun loadData() {
         mViewModel.loadNewFeed()
+        mViewModel.getBanner()
+        mViewModel.getGames()
     }
 
     private fun initCommentRecyclerView() {
