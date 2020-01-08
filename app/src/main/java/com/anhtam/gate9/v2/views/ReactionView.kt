@@ -10,7 +10,6 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.session.SessionManager
 import com.anhtam.gate9.vo.Reaction
 import kotlinx.android.synthetic.main.reaction_view.view.*
-import kotlinx.android.synthetic.main.splash_screen.view.*
 
 class ReactionView @JvmOverloads constructor(context: Context?,
                                                  attrs: AttributeSet? = null,
@@ -20,6 +19,9 @@ class ReactionView @JvmOverloads constructor(context: Context?,
     private var previousState: Reaction = Reaction.None
     private var mListener: ((Reaction)->Unit)? = null
     private var mSessionManager: SessionManager? = null
+    private var mLike: Int = 0
+    private var mDislike: Int = 0
+    private var mLove: Int = 0
 
     init {
         View.inflate(context, R.layout.reaction_view, this)
@@ -51,12 +53,15 @@ class ReactionView @JvmOverloads constructor(context: Context?,
                 when(value){
                     Reaction.Like -> {
                         imgLike?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                        mLike++
                     }
                     Reaction.Dislike ->{
                         imgDislike?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                        mDislike++
                     }
                     Reaction.Love -> {
                         imgFavorite?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                        mLove++
                     }
                 }
                 previousState = value
@@ -66,12 +71,15 @@ class ReactionView @JvmOverloads constructor(context: Context?,
                 when(previousState){
                     Reaction.Like -> {
                         imgLike?.setColorFilter(ContextCompat.getColor(context, R.color.color_react_grey), PorterDuff.Mode.MULTIPLY)
+                        mLike--
                     }
                     Reaction.Dislike ->{
                         imgDislike?.setColorFilter(ContextCompat.getColor(context, R.color.color_react_grey), PorterDuff.Mode.MULTIPLY)
+                        mDislike--
                     }
                     Reaction.Love -> {
                         imgFavorite?.setColorFilter(ContextCompat.getColor(context, R.color.color_react_grey), PorterDuff.Mode.MULTIPLY)
+                        mLove--
                     }
                 }
                 previousState = Reaction.None
@@ -81,34 +89,50 @@ class ReactionView @JvmOverloads constructor(context: Context?,
                 when(previousState){
                     Reaction.Like -> {
                         imgLike?.setColorFilter(ContextCompat.getColor(context, R.color.color_react_grey), PorterDuff.Mode.MULTIPLY)
+                        mLike--
                     }
                     Reaction.Dislike ->{
                         imgDislike?.setColorFilter(ContextCompat.getColor(context, R.color.color_react_grey), PorterDuff.Mode.MULTIPLY)
+                        mDislike--
                     }
                     Reaction.Love -> {
                         imgFavorite?.setColorFilter(ContextCompat.getColor(context, R.color.color_react_grey), PorterDuff.Mode.MULTIPLY)
+                        mLove--
                     }
                 }
                 // set new reaction
                 when(value){
                     Reaction.Like -> {
                         imgLike?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                        mLike++
                     }
                     Reaction.Dislike ->{
                         imgDislike?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                        mDislike++
                     }
                     Reaction.Love -> {
                         imgFavorite?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                        mLove++
                     }
                 }
                 previousState = value
             }
         }
+        changeLabel()
         mListener?.invoke(previousState)
     }
 
-    fun initReact(reaction: Reaction){
+    private fun changeLabel(){
+        tvFavorite?.text = if(previousState == Reaction.Love) mLove.toString() else context.getString(R.string.favorite_label)
+        tvLike?.text = if(previousState == Reaction.Like) mLike.toString() else context.getString(R.string.like_label)
+        tvDislike?.text = if(previousState == Reaction.Dislike) mDislike.toString() else context.getString(R.string.dislike_label)
+    }
+
+    fun initialize(like: Int, dislike: Int, love: Int, reaction: Reaction){
         // set new reaction
+        mLike = like
+        mDislike = dislike
+        mLove = love
         previousState = reaction
         when(reaction){
             Reaction.Like -> {
@@ -124,6 +148,7 @@ class ReactionView @JvmOverloads constructor(context: Context?,
 
             }
         }
+        changeLabel()
     }
 
 }

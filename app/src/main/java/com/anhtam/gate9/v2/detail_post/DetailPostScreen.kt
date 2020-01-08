@@ -32,10 +32,6 @@ import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.bottom_bar_type_layout.*
 import kotlinx.android.synthetic.main.detail_post_screen.*
 import of.bum.network.helper.Resource
-import of.bum.network.v2.MediaService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Named
@@ -199,7 +195,10 @@ class DetailPostScreen private constructor(
         tvContent?.text = Html.fromHtml(unwrapPost.content ?: "")
         tvTime?.text = unwrapPost.createdDate
         val react = unwrapPost.like?.convertInt() ?: 0
-        reactionView?.initReact(Reaction.react(react))
+        val like = unwrapPost.totalLike.convertInt()
+        val dislike = unwrapPost.totalDislike.convertInt()
+        val love = unwrapPost.totalLove.convertInt()
+        reactionView?.initialize(like, dislike, love, Reaction.react(react))
 
         // Set photo
         // photos

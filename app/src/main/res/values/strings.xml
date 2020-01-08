@@ -145,8 +145,8 @@
     <string name="input_point_donate">Điền số (Point) từ:</string>
     <string name="share_feelling">Share</string>
     <string name="favourite_feelling">Favourite</string>
-    <string name="like_feelling">Like</string>
-    <string name="dislike_feelling">Dislike</string>
+    <string name="like_label">Like</string>
+    <string name="dislike_label">Dislike</string>
     <string name="comment_feelling">Comment</string>
     <string name="tab_follow">Follow</string>
     <string name="tab_information">Thông Tin</string>
@@ -312,4 +312,5 @@
     <string name="xem_them_amount_comment">Xem thêm {number} comment{s}</string>
     <string name="nhap_noi_dung">Nhập nội dung</string>
     <string name="reply">Reply</string>
+    <string name="favorite_label">Favorite</string>
 </resources>
