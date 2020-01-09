@@ -1,8 +1,9 @@
 package com.anhtam.gate9.session
 
 import android.text.TextUtils
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.anhtam.gate9.App
-import com.anhtam.gate9.di.scope.AuthScope
 import com.anhtam.gate9.di.scope.MainScope
 import com.anhtam.gate9.storage.StorageManager
 import retrofit2.Call
@@ -12,47 +13,59 @@ import javax.inject.Inject
 
 @MainScope
 class AuthClient
-@Inject constructor(private val mAuthService: AuthService,
-                    val mSessionManager: SessionManager) {
+@Inject constructor(private val mAuthService: AuthService) {
 
-    fun loginWithPassword(email: String, password: String, callback: AuthCallBack) {
+
+    fun loginWithPassword(email: String, password: String) {
+        _accessToken.value = AuthResource.loading(null)
+        val param = createParams(email, password)
+        requestAccessToken(param)
+    }
+
+    private fun createParams(email: String, password: String): Map<String, String>{
         val params = hashMapOf<String, String>()
         params["grant_type"] = "password"
         params["username"] = email
         params["password"] = password
-        //grant_type=password&username=2&password=2&client_id=user&client_secret=user
         params["client_id"] = "user"
         params["client_secret"] = "user"
-        requestAccessToken(email, password, callback)
+        return params
     }
 
-    private fun requestAccessToken(email: String, password: String, callback: AuthCallBack) {
-        mAuthService.loginV2(userName = email, password = password).enqueue(object: Callback<Map<String, Any?>> {
+    private fun requestAccessToken(params: Map<String, String>) {
+        mAuthService.loginV2(params).enqueue(object: Callback<Map<String, Any?>> {
             override fun onFailure(call: Call<Map<String, Any?>>, t: Throwable) {
-                t.message?.let { callback.onUnauthorized(it) }
+                _accessToken.value = AuthResource.error(t.message ?: "", null)
             }
 
             override fun onResponse(call: Call<Map<String, Any?>>, response: Response<Map<String, Any?>>) {
                 if (response.isSuccessful && response.code() == 200) {
-                    val data = response.body() ?: return callback.onUnauthorized("Response empty")
-//                    data.token ?: return callback.onUnauthorized(data.message ?: "")
-                    val accessToken = data["access_token"] as? String ?: return callback.onUnauthorized("Access token empty")
-                    data.let {
-                        onAuthSuccess(accessToken)
-                        callback.onAuthorized()
-                        return
+                    val data = response.body()
+                    if (data == null) {
+                        _accessToken.value = AuthResource.error("Response empty", null)
+                    } else {
+                        val accessToken = data["access_token"] as? String
+                        if (accessToken.isNullOrEmpty()) {
+                            _accessToken.value = AuthResource.error("Access token empty", null)
+                        } else {
+                            _accessToken.value = AuthResource.authenticated(accessToken)
+                        }
                     }
                 }
                 if (!App.isInternetAvailable()) {
                     // TODO permission NETWORK == Bottom Dialog
-                    requestAccessToken(email, password, callback)
+                    requestAccessToken(params)
 
                 }
-                response.errorBody()?.string()?.let { callback.onUnauthorized(it) }
+                _accessToken.value = AuthResource.error(response.errorBody()?.string() ?: "", null)
             }
 
         })
     }
+
+    private val _accessToken = MutableLiveData<AuthResource<String>>()
+    val mAccessToken: LiveData<AuthResource<String>>
+        get() = _accessToken
 
     private fun onAuthSuccess(accessToken : String) {
         StorageManager.setAccessToken(accessToken)

@@ -1,9 +1,6 @@
 package com.anhtam.gate9.session
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import com.anhtam.domain.v2.User
 import com.anhtam.gate9.di.scope.MainScope
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.storage.StorageManager
@@ -16,20 +13,24 @@ import javax.inject.Inject
  */
 @MainScope
 class SessionManager @Inject constructor(
-        val navigation: Navigation
+        val navigation: Navigation,
+        private val mAuthClient: AuthClient
 ) {
+    private val mAccessToken = MediatorLiveData<AuthResource<String>>()
 
-    private val cachedUser = MediatorLiveData<AuthResource<User>>()
 
-    private val _accessToken = MutableLiveData<AuthResource<String>>()
-    val mAccessToken: LiveData<AuthResource<String>>
-        get() = _accessToken
+    fun authenticatedWithEmail(email: String, password: String){
+        mAuthClient.loginWithPassword(email, password)
+        val source = mAuthClient.mAccessToken
+        mAccessToken.value = AuthResource.loading(null)
+        mAccessToken.addSource(source) { userAuthResource ->
+            mAccessToken.value = userAuthResource
+            mAccessToken.removeSource(source)
 
-    val user: MutableLiveData<AuthResource<User>>
-        get() = cachedUser
-
-    init {
-        cachedUser.value = AuthResource.logout()
+            if (userAuthResource.status.equals(AuthResource.AuthStatus.ERROR)) {
+                mAccessToken.value = AuthResource.logout()
+            }
+        }
     }
 
     fun checkLogin(): Boolean{
@@ -39,33 +40,7 @@ class SessionManager @Inject constructor(
         } else true
     }
 
-    fun checkAuthentication(){
-
-    }
-
     fun logOut(){
-        cachedUser.value = AuthResource.logout()
+        mAccessToken.value = AuthResource.logout()
     }
-
-//
-//    fun checkLogin(directToLogin: Boolean = true): Boolean{
-//        return when(cachedUser.value?.status){
-//            AuthResource.AuthStatus.AUTHENTICATED -> {
-//                true
-//            }
-//            AuthResource.AuthStatus.ERROR -> {
-//                false
-//            }
-//            AuthResource.AuthStatus.LOADING -> {
-//                false
-//            }
-//            AuthResource.AuthStatus.NOT_AUTHENTICATED -> {
-//                if (directToLogin) navigation.addFragment(LoginScreen.newInstance())
-//                false
-//            }
-//            null -> {
-//                false
-//            }
-//        }
-//    }
 }

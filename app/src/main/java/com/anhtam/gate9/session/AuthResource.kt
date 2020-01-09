@@ -7,7 +7,7 @@ class AuthResource<T>(
 ) {
 
     companion object{
-        fun <T> authenticated(data: T?): AuthResource<T>{
+        fun <T> authenticated(data: T): AuthResource<T>{
             return AuthResource(AuthStatus.AUTHENTICATED, data, null)
         }
         fun <T> error(msg: String, data: T?): AuthResource<T>{
