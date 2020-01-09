@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.discussion.TabInfo
@@ -29,6 +30,7 @@ class CustomTabItem @JvmOverloads constructor(
         attrStyle(attributeSet)
         loadView()
     }
+
     private fun attrStyle(attrs: AttributeSet?) {
         attrs?.run {
             val a = context.obtainStyledAttributes(attrs, R.styleable.CustomTabItem)
@@ -83,5 +85,14 @@ class CustomTabItem @JvmOverloads constructor(
         tvIcon?.setTextColor(color)
         tabIndicator?.setBackgroundColor(color)
         imgIcon?.setImageDrawable(ContextCompat.getDrawable(context, tabInfo.icon))
+    }
+
+    fun changeText(text: String){
+        tvIcon?.text = text
+    }
+
+    fun changeColor(@ColorRes color: Int){
+        tvIcon?.setTextColor(ContextCompat.getColor(context, color))
+        imgIcon?.setColorFilter(ContextCompat.getColor(context, color))
     }
 }
