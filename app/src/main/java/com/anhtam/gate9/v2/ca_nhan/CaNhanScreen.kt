@@ -5,7 +5,6 @@ import android.view.*
 import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
-import com.anhtam.gate9.session.AuthClient
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.auth.register.RegisterScreen
@@ -44,7 +43,7 @@ class CaNhanScreen : DaggerNavigationFragment() {
     }
 
     private fun observer() {
-        mMainViewModel._user.observe(viewLifecycleOwner, Observer {
+        mSessionManager.cachedUser.observe(viewLifecycleOwner, Observer {
             val avatar = when(it) {
                 is Resource.Loading -> null
                 is Resource.Error -> ""
@@ -91,7 +90,7 @@ class CaNhanScreen : DaggerNavigationFragment() {
 //            gotoSetting
         }
         logoutLayout?.setOnClickListener {
-            AuthClient.logout()
+            mSessionManager.logout()
             navigation?.newRootFragment(HomeFragment.newInstance())
         }
     }

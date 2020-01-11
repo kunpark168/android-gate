@@ -6,14 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.main.home.HomeFragment
-import com.anhtam.gate9.v2.newfeed.NewFeedViewModel
 import kotlinx.android.synthetic.main.splash_screen.*
-import of.bum.network.helper.Resource
 
 class SplashScreen : DaggerNavigationFragment() {
 
@@ -27,6 +23,7 @@ class SplashScreen : DaggerNavigationFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mSessionManager.initialize()
         startAnimation()
     }
 

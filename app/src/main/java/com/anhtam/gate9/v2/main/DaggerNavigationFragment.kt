@@ -12,11 +12,10 @@ import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.NavigationFragment
+import com.anhtam.gate9.session.SessionManager
 import com.anhtam.gate9.utils.DialogProgressUtils
-import com.anhtam.gate9.v2.MainViewModel
 import com.anhtam.gate9.viewmodel.ViewModelProviderFactory
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
@@ -24,9 +23,9 @@ import javax.inject.Inject
 abstract class DaggerNavigationFragment : NavigationFragment(){
 
     @Inject lateinit var vmFactory: ViewModelProviderFactory
+    @Inject lateinit var mSessionManager: SessionManager
 
     private var mProgressDialog: DialogProgressUtils? = null
-    protected val mMainViewModel by viewModels<MainViewModel>({requireActivity()}, {vmFactory})
 
     @MenuRes
     open fun menuRes():  Int?  = null
@@ -37,7 +36,6 @@ abstract class DaggerNavigationFragment : NavigationFragment(){
         super.onViewCreated(view, savedInstanceState)
         initStatus()
         initToolbar(view)
-        mMainViewModel.getUserDetail()
     }
 
     private fun initStatus(){

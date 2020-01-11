@@ -70,7 +70,6 @@ class DetailPostScreen private constructor(
 
     @Inject lateinit var mPhotoAdapter: PhotoAdapter
     @Inject lateinit var mAdapter: CommentAdapter
-    @Inject lateinit var mSessionManager: SessionManager
     @Inject lateinit var mGalleryAdapter: ChooseGalleryAdapter
 
 

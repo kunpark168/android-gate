@@ -19,7 +19,7 @@ class AuthClient
     fun loginWithPassword(email: String, password: String) {
         _accessToken.value = AuthResource.loading(null)
         val param = createParams(email, password)
-        requestAccessToken(param)
+        requestAccessToken(email, password, param)
     }
 
     private fun createParams(email: String, password: String): Map<String, String>{
@@ -32,8 +32,8 @@ class AuthClient
         return params
     }
 
-    private fun requestAccessToken(params: Map<String, String>) {
-        mAuthService.loginV2(params).enqueue(object: Callback<Map<String, Any?>> {
+    private fun requestAccessToken(email: String, password: String, params: Map<String, String>) {
+        mAuthService.loginV2(userName = email, password = password).enqueue(object: Callback<Map<String, Any?>> {
             override fun onFailure(call: Call<Map<String, Any?>>, t: Throwable) {
                 _accessToken.value = AuthResource.error(t.message ?: "", null)
             }
@@ -54,7 +54,7 @@ class AuthClient
                 }
                 if (!App.isInternetAvailable()) {
                     // TODO permission NETWORK == Bottom Dialog
-                    requestAccessToken(params)
+                    requestAccessToken(email, password, params)
 
                 }
                 _accessToken.value = AuthResource.error(response.errorBody()?.string() ?: "", null)
@@ -66,35 +66,6 @@ class AuthClient
     private val _accessToken = MutableLiveData<AuthResource<String>>()
     val mAccessToken: LiveData<AuthResource<String>>
         get() = _accessToken
-
-    private fun onAuthSuccess(accessToken : String) {
-        StorageManager.setAccessToken(accessToken)
-//        authResponse.user?.let {
-//            StorageManager.setUserId(it.user_id)
-//            StorageManager.setUserAvatar(it.avatar)
-//        }
-        // Clear all service before
-        // TODO
-    }
-
-
-    fun checkAuth(callback: AuthCallBack) {
-        if (!App.isInternetAvailable()) {
-            //TODO permission
-            checkAuth(callback)
-            return
-        }
-
-        if(!hasAccessToken()){
-            callback.onUnauthorized("Unauthorized")
-            return
-        }
-        callback.onAuthorized()
-    }
-
-    private fun hasAccessToken(): Boolean {
-        return !TextUtils.isEmpty(StorageManager.getAccessToken())
-    }
 
     companion object {
         fun logout() {

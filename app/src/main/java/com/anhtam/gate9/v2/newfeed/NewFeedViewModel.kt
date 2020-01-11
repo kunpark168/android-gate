@@ -4,15 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.anhtam.domain.Banner
-import com.anhtam.domain.v2.Game
-import com.anhtam.domain.v2.GameEntity
 import com.anhtam.domain.v2.PostEntity
-import com.anhtam.domain.v2.WrappedHome
 import com.anhtam.gate9.repository.SocialRepository
-import of.bum.network.FetchBoundResource
-import of.bum.network.helper.LiveDataCallAdapter
 import of.bum.network.helper.Resource
-import of.bum.network.v2.SocialService
 import javax.inject.Inject
 
 /*

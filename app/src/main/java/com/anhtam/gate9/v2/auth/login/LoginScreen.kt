@@ -1,6 +1,5 @@
 package com.anhtam.gate9.v2.auth.login
 
-
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
@@ -9,10 +8,11 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
+import com.anhtam.gate9.session.AuthResource
 import com.anhtam.gate9.v2.auth.register.RegisterScreen
 import com.anhtam.gate9.v2.lib.invisible
 import com.anhtam.gate9.v2.lib.then
@@ -38,25 +38,33 @@ class LoginScreen(private val isDirect: Boolean) : DaggerNavigationFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         events()
+        observers()
     }
 
     override fun statusColor() = R.color.color_main_orange
 
+    private fun observers(){
+        mSessionManager.cachedAccessToken.observe(viewLifecycleOwner, Observer {
+            when(it.status){
+                AuthResource.AuthStatus.AUTHENTICATED -> {
+                    hideProgress()
+                    if (isDirect){
+                        navigation?.newRootFragment(HomeFragment.newInstance())
+                    } else {
+                        navigation?.back()
+                    }
+                }
+                else -> {}
+            }
+        })
+    }
     private fun events() {
         btnConfirm.setOnClickListener {
             showProgress()
             loginViewModel.loginWithEmailAndPassword(etEmail.text.toString(), etPassword.text.toString()
-                    , {
+            ) {
                 hideProgress()
                 displayError(it)
-            }
-            ){
-                hideProgress()
-                if (isDirect){
-                    navigation?.newRootFragment(HomeFragment.newInstance())
-                } else {
-                    navigation?.back()
-                }
             }
         }
 
