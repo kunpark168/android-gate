@@ -54,7 +54,7 @@ class MemberAdapter @Inject constructor(
         view.nameTextView?.text = user.mName ?: ""
         view.userIdTextView?.text = user.mId?.toString() ?: ""
         Glide.with(mContext)
-                .load(user.mAvatar?.toImage())
+                .load(user.mAvatarPath?.toImage())
                 .apply(avatarRequestOptions)
                 .into(view.avatarImageView)
         helper.addOnClickListener(R.id.nameTextView)

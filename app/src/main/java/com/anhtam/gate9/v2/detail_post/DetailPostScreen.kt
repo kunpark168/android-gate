@@ -15,7 +15,6 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.ChooseGalleryAdapter
 import com.anhtam.gate9.adapter.v2.CommentAdapter
 import com.anhtam.gate9.adapter.v2.PhotoAdapter
-import com.anhtam.gate9.session.SessionManager
 import com.anhtam.gate9.share.view.donate.DonateDialog
 import com.anhtam.gate9.utils.convertInt
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
@@ -24,6 +23,7 @@ import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.shared.AbstractGalleryFragment
+import com.anhtam.gate9.v2.shared.MultiChooseImageScreen
 import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -319,7 +319,8 @@ class DetailPostScreen private constructor(
         }
 
         imgChooseImg?.setOnClickListener {
-            chooseImage()
+//            chooseImage()
+            navigation?.addFragment(MultiChooseImageScreen.newInstance())
         }
 
         // navigation

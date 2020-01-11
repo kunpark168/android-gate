@@ -313,4 +313,6 @@
     <string name="nhap_noi_dung">Nhập nội dung</string>
     <string name="reply">Reply</string>
     <string name="favorite_label">Favorite</string>
+    <string name="camera">Camera</string>
+    <string name="next">Next</string>
 </resources>
