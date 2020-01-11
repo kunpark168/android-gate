@@ -41,10 +41,11 @@ import com.anhtam.gate9.v2.mxh_gate.video.MXHGateVideoScreen
 import com.anhtam.gate9.v2.newfeed.NewFeedViewModel
 import com.anhtam.gate9.v2.detail_post.DetailPostModule
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
+import com.anhtam.gate9.v2.follow.FollowModule
 import com.anhtam.gate9.v2.reaction.ReactionModule
 import com.anhtam.gate9.v2.shared.MultiChooseImageScreen
 import com.anhtam.gate9.v2.splash.SplashScreen
-import com.anhtam.gate9.v2.views.FollowScreen
+import com.anhtam.gate9.v2.follow.FollowScreen
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -170,7 +171,9 @@ abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract fun contributeMultiChooseImageScreen(): MultiChooseImageScreen
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(
+            modules = [FollowModule::class]
+    )
     abstract fun contributeFollowScreen(): FollowScreen
 
 //    @ContributesAndroidInjector(

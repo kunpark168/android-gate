@@ -8,9 +8,9 @@
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/icSearch"
-        android:title="@string/search_menu"
-        android:icon="@drawable/icon_search_menu"
+        android:id="@+id/avatar"
+        android:title="@null"
+        app:actionLayout="@layout/layout_avatar_menu"
         app:showAsAction="ifRoom"/>
 
     <item

@@ -93,4 +93,11 @@ interface SocialService {
     fun upload(
             @Part file: List<MultipartBody.Part>
     ): LiveData<ApiResponse<List<String>>>
+
+    // Get data following
+    @GET("social/get-following-info")
+    fun getFollowingInfo(
+            @Query("tab") tab: Int,
+            @Query("page") page: Int,
+            @Query("limit") limit: Int = 40): LiveData<ApiResponse<RestResponse<List<PostEntity>>>>
 }

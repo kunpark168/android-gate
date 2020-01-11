@@ -23,6 +23,9 @@ class NewFeedViewModel @Inject constructor(
     val data: LiveData<Resource<List<PostEntity>>>
         get() = _data
 
+    var mPage = 0
+    private var mTab: Int = 1
+
     private val _banners = MediatorLiveData<Resource<List<Banner>>>()
     val banners: LiveData<Resource<List<Banner>>>
         get() = _banners
@@ -33,6 +36,23 @@ class NewFeedViewModel @Inject constructor(
 
     fun loadNewFeed(){
         val fetchData = repository.getListingPost()
+        _data.addSource(fetchData){
+            _data.value = it
+        }
+    }
+
+    fun loadFirstPage(tab: Int){
+        mPage = 0
+        mTab = tab
+        val fetchData = repository.getFollowingInfo(mTab, mPage)
+        _data.addSource(fetchData){
+            _data.value = it
+        }
+    }
+
+    fun loadMore(){
+        mPage++
+        val fetchData = repository.getFollowingInfo(mTab, mPage)
         _data.addSource(fetchData){
             _data.value = it
         }

@@ -1,5 +1,4 @@
-package com.anhtam.gate9.v2.views
-
+package com.anhtam.gate9.v2.follow
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +17,6 @@ import androidx.viewpager.widget.PagerAdapter
 import com.anhtam.domain.Banner
 import com.anhtam.domain.Game
 import com.anhtam.domain.v2.PostEntity
-
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.GroupBannerAdapter
 import com.anhtam.gate9.adapter.v2.PostAdapter
@@ -30,35 +28,21 @@ import com.anhtam.gate9.v2.categories.FeatureScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.mxh_game.MXHGameScreen
 import com.anhtam.gate9.v2.newfeed.NewFeedViewModel
-import com.anhtam.gate9.v2.search.SearchScreen
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.android.synthetic.main.follow_screen.*
+import kotlinx.android.synthetic.main.tat_ca_following_screen.*
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 import javax.inject.Named
 
-class FollowScreen : DaggerNavigationFragment() {
-
+class TatCaFollowingScreen constructor(val mTab: Int) : DaggerNavigationFragment(){
 
     companion object{
-        fun newInstance() = FollowScreen()
+        fun newInstance(tab: Int) = TatCaFollowingScreen(tab)
     }
 
-    private val mViewModel: NewFeedViewModel by viewModels{vmFactory}
-    private var mAdapter by autoCleared<SliderAdapter>()
-
-    @Inject
-    lateinit var mCommentAdapter : PostAdapter
-    @Inject
-    lateinit var mGroup4Adapter: GroupBannerAdapter
-    @Inject
-    @field:Named("avatar") lateinit var avatarOptions: RequestOptions
-    @Inject
-    @field:Named("banner") lateinit var bannerOptions: RequestOptions
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.new_feed_screen, container, false)
+        return inflater.inflate(R.layout.tat_ca_following_screen, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -66,7 +50,8 @@ class FollowScreen : DaggerNavigationFragment() {
         init()
     }
 
-    private fun init() {
+    private fun init(){
+
         loadData()
         initCommentRecyclerView()
         initGamesRecyclerView()
@@ -77,6 +62,18 @@ class FollowScreen : DaggerNavigationFragment() {
         initEventListener()
         observer()
     }
+
+    private val mViewModel: NewFeedViewModel by viewModels {vmFactory }
+    private var mAdapter by autoCleared<SliderAdapter>()
+
+    @Inject
+    lateinit var mCommentAdapter : PostAdapter
+    @Inject
+    lateinit var mGroup4Adapter: GroupBannerAdapter
+    @Inject
+    @field:Named("avatar") lateinit var avatarOptions: RequestOptions
+    @Inject
+    @field:Named("banner") lateinit var bannerOptions: RequestOptions
 
     private fun observer(){
         mViewModel.data.observe(viewLifecycleOwner, Observer {
@@ -120,7 +117,7 @@ class FollowScreen : DaggerNavigationFragment() {
     }
 
     private fun loadData() {
-        mViewModel.loadNewFeed()
+        mViewModel.loadFirstPage(mTab)
         mViewModel.getBanner()
         mViewModel.getGames()
     }
@@ -128,7 +125,7 @@ class FollowScreen : DaggerNavigationFragment() {
     private fun initCommentRecyclerView() {
         mCommentAdapter.setLoadMoreView(CustomLoadMoreView())
         mCommentAdapter.setOnLoadMoreListener({
-//            loadMore()
+            mViewModel.loadMore()
         }, rvComment)
         rvComment?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         rvComment?.adapter = mCommentAdapter
@@ -165,15 +162,6 @@ class FollowScreen : DaggerNavigationFragment() {
     }
 
     private fun initEventListener() {
-        swipeRefreshLayout?.setOnRefreshListener {
-            swipeRefreshLayout?.isRefreshing = false
-            showProgress()
-            loadData()
-        }
-
-        tvSearch?.setOnClickListener {
-            navigation?.addFragment(SearchScreen.newInstance())
-        }
         tvVideo?.setOnClickListener {
             navigation?.addFragment(FeatureScreen.newInstance(CategoryTab.VIDEO.tab))
         }
@@ -205,7 +193,7 @@ class FollowScreen : DaggerNavigationFragment() {
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val view = LayoutInflater.from(context).inflate(R.layout.slider_item_layout, container, false)
             val imageView = view.findViewById<ImageView>(R.id.image)
-            Glide.with(this@FollowScreen)
+            Glide.with(this@TatCaFollowingScreen)
                     .apply { bannerOptions }
                     .load(mImages[position].toImage())
                     .fitCenter()

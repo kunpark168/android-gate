@@ -12,7 +12,7 @@ import com.anhtam.gate9.v2.createimage.CreateImageScreen
 import com.anhtam.gate9.v2.createpost.CreatePostScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.newfeed.NewFeedScreen
-import com.anhtam.gate9.v2.views.FollowScreen
+import com.anhtam.gate9.v2.follow.FollowScreen
 import kotlinx.android.synthetic.main.main_fragment.*
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.v2.auth.login.LoginScreen
