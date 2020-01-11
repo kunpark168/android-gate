@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/parentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_gravity="top"
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title=""
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            android:layout_height="?attr/actionBarSize"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <!--Search-->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tvSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/search_view_height"
+                        android:background="@drawable/bg_search"
+                        android:gravity="center"
+                        android:textSize="13sp"
+                        android:text="@string/search"
+                        android:layout_margin="@dimen/layout_margin_8dp"/>
+
+                    <ImageView
+                        android:id="@+id/imgSearch"
+                        android:layout_width="46dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/img_seach"
+                        android:contentDescription="@null"
+                        app:layout_constraintEnd_toEndOf="@id/tvSearch"
+                        app:layout_constraintTop_toTopOf="@id/tvSearch"
+                        app:layout_constraintBottom_toBottomOf="@id/tvSearch"
+                        android:layout_gravity="end|center"
+                        android:layout_marginEnd="@dimen/layout_margin_8dp"/>
+
+                </FrameLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white">
+                    <!--Banner-->
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintDimensionRatio="h,3:1.2"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:id="@+id/csTextTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/layout_margin_8dp"
+                    app:layout_constraintTop_toBottomOf="@id/imgBanner">
+
+                    <TextView
+                        android:id="@+id/tvVideo"
+                        android:text="@string/video"
+                        android:drawableTop="@drawable/img_video"
+                        style="@style/FeatureItem"/>
+
+                    <TextView
+                        android:id="@+id/tvTheme"
+                        android:text="@string/theme"
+                        android:drawableTop="@drawable/img_theme"
+                        style="@style/FeatureItem"/>
+
+                    <TextView
+                        android:id="@+id/tvSpecial"
+                        android:text="@string/special"
+                        android:drawableTop="@drawable/ic_fire"
+                        style="@style/FeatureItem"/>
+
+                    <TextView
+                        android:id="@+id/tvEvent"
+                        android:text="@string/even"
+                        android:drawableTop="@drawable/img_even"
+                        style="@style/FeatureItem" />
+
+                    <TextView
+                        android:id="@+id/tvGame"
+                        android:text="@string/game"
+                        android:drawableTop="@drawable/img_game"
+                        style="@style/FeatureItem" />
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv4Banners"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:layout_marginTop="@dimen/layout_margin_8dp"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/csTextTheme">
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/csOrder"
+                    android:background="@color/colorWhite"
+                    android:layout_height="@dimen/dp35"
+                    android:layout_marginTop="@dimen/layout_margin_8dp"
+                    app:layout_constraintTop_toBottomOf="@id/rv4Banners">
+                    <TextView
+                        android:textSize="13sp"
+                        android:gravity="center"
+                        android:text="@string/sort"
+                        android:fontFamily="@font/roboto_medium"
+                        android:layout_marginStart="@dimen/layout_margin_16dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="start"/>
+
+                    <TextView
+                        android:textSize="13sp"
+                        android:layout_gravity="end"
+                        android:gravity="center"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="@string/sort_as"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="@dimen/layout_margin_16dp"
+                        android:drawablePadding="8dp"
+                        android:drawableEnd="@drawable/ic_dropdown"/>
+                </FrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/csOrder"
+                    android:layout_marginTop="1dp"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/shared_post_item_layout"/>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

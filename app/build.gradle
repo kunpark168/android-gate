@@ -60,7 +60,7 @@ dependencies {
     implementation Libs.multidex
     // jet pack
     implementation Libs.androidxCore
-    implementation "com.google.android.material:material:1.1.0-alpha09"
+    implementation "com.google.android.material:material:1.0.0"
     // Livedata ViewModel ReactiveStreams
     implementation Libs.lifecycleExtensions
     implementation Libs.navFragment

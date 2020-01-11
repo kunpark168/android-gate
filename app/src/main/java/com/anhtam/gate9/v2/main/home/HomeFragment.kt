@@ -12,17 +12,12 @@ import com.anhtam.gate9.v2.createimage.CreateImageScreen
 import com.anhtam.gate9.v2.createpost.CreatePostScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.newfeed.NewFeedScreen
-import com.anhtam.gate9.v2.views.BlankFragment
+import com.anhtam.gate9.v2.views.FollowScreen
 import kotlinx.android.synthetic.main.main_fragment.*
-import android.view.animation.OvershootInterpolator
-import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import com.anhtam.gate9.storage.StorageManager
-import com.anhtam.gate9.v2.MainActivity
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
 import com.anhtam.gate9.v2.mxh_gate.MXHGateScreen
-import kotlinx.android.synthetic.main.rating_view_header01.*
 
 
 class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
@@ -107,7 +102,7 @@ class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
         val fragments = arrayListOf<Fragment>()
         mNewFeedScreen = NewFeedScreen.newInstance()
         fragments.add(mNewFeedScreen!!)
-        fragments.add(BlankFragment.newInstance("2"))
+        fragments.add(FollowScreen.newInstance())
         childFragmentManager.run {
             val adapter = SharePageAdapter(this, fragments)
             viewPager?.adapter = adapter
