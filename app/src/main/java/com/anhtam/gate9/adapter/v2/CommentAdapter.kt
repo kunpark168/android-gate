@@ -2,9 +2,12 @@ package com.anhtam.gate9.adapter.v2
 
 import android.text.Html
 import android.view.View
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.domain.v2.Game
 import com.anhtam.domain.v2.PostEntity
+import com.anhtam.domain.v2.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.share.view.MoreDialog
@@ -109,6 +112,9 @@ class CommentAdapter @Inject constructor(
             view.rvChildComment?.layoutManager = LinearLayoutManager(mContext)
         }
 
+        // photos
+        val photos = comment.photo
+        initPhoto(photos, view.rvPhotos, user)
 
         // event click
         helper.addOnClickListener(R.id.contentTextView)
@@ -134,5 +140,26 @@ class CommentAdapter @Inject constructor(
 
     private fun toUserDiscussion(userId: Int){
         navigation.addFragment(UserDiscussionScreen.newInstance(userId, Category.Member))
+    }
+
+    private fun initPhoto(photo: String?, rv: RecyclerView, user: User){
+        if(photo.isNullOrEmpty() || photo.length == 2){//[]
+            rv.visibility = View.GONE
+            return
+        }
+        rv.visibility = View.VISIBLE
+        rv.isNestedScrollingEnabled = false
+//        val isFormat = "[[.+]]".toRegex().matches(photos) TODO Regex
+        val isFormat = (photo.startsWith('[') && photo.endsWith(']'))
+        val stringConcat = if (!isFormat) {
+            photo
+        } else {
+            photo.substring(1, photo.length - 1)
+        }
+        val adapter = PhotoAdapter(navigation, bannerOptions)
+        adapter.user = user
+        val spanCount = adapter.setPhoto(stringConcat)
+        rv.layoutManager = GridLayoutManager(mContext, spanCount)
+        rv.adapter = adapter
     }
 }

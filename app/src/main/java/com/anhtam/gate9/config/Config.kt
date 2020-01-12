@@ -9,4 +9,5 @@ object Config {
     const val BASE_URL = "http://9gate.net:5101/api/v1/"
 
     const val REQUEST_CODE_CHOOSE_IMAGE_FROM_CREATE_POST = 10001
+    const val RESULT_CODE_SELECT_MULTI = "SELECT_MULTI"
 }

@@ -21,9 +21,12 @@ class PhotoAdapter @Inject constructor(
 
     companion object{
         private const val DEFAULT_MORE = 4
+        private const val DEFAULT_MORE_COMMENT = 2
+
     }
     
     lateinit var user: User
+    private var default = DEFAULT_MORE
     
     init {
         addItemType(PhotoEntity.GRID_1, R.layout.photo_1_item_layout)
@@ -34,7 +37,8 @@ class PhotoAdapter @Inject constructor(
     /*
      * Return span size
      */
-    fun setPhoto(photo: String): Int {
+    fun setPhoto(photo: String, isComment: Boolean = false): Int {
+        if (isComment) default = DEFAULT_MORE_COMMENT
         val photos = photo.split(',').map { it.trim() }
         if (photos[0].isEmpty()) return 1
         val entities = photos.map {
@@ -47,10 +51,10 @@ class PhotoAdapter @Inject constructor(
             )
         }
         setSpanSizeLookup{_, pos -> data[pos].getSpanSize()}
-        if (entities.size > DEFAULT_MORE) {
+        if (entities.size > default) {
             val morePhotoList = arrayListOf<PhotoEntity>()
-            for (index in 0..DEFAULT_MORE) {
-                if (index == DEFAULT_MORE - 1) {
+            for (index in 0..default) {
+                if (index == default - 1) {
                     morePhotoList.add(PhotoEntity(PhotoEntity.GRID_N, entities[index].photo))
                 } else {
                     morePhotoList.add(PhotoEntity(PhotoEntity.GRID_4, entities[index].photo))
@@ -66,7 +70,7 @@ class PhotoAdapter @Inject constructor(
         }
     }
 
-    override fun getItemCount() = if(data.size > DEFAULT_MORE) DEFAULT_MORE else data.size
+    override fun getItemCount() = if(data.size > default) default else data.size
 
     override fun convert(helper: BaseViewHolder?, item: PhotoEntity?) {
         val photo = item?.photo ?: return
@@ -88,7 +92,7 @@ class PhotoAdapter @Inject constructor(
             }
         }
         if (item.type == PhotoEntity.GRID_N) {
-            val more = data.size - DEFAULT_MORE
+            val more = data.size - default
             view.tvMore.text = "+".plus(more.toString())
         }
         view.imgPhoto?.setOnClickListener { openGalleryScreen() }

@@ -12,11 +12,8 @@ import kotlinx.android.synthetic.main.gallery_item_view.view.*
 
 class GalleryItemView @JvmOverloads constructor(context: Context?, attrs: AttributeSet? = null, defStyle: Int = 0) : ConstraintLayout(context, attrs, defStyle){
 
-    var mIsSelected: Boolean = false
-
     init {
         View.inflate(context, R.layout.gallery_item_view, this)
-        initEvents()
     }
 
     fun setImage(path: String){
@@ -28,10 +25,7 @@ class GalleryItemView @JvmOverloads constructor(context: Context?, attrs: Attrib
                 .into(imgPhoto)
     }
 
-    private fun initEvents(){
-        rootView?.setOnClickListener {
-            mIsSelected = !mIsSelected
-            selectedFrameLayout?.visibility = if(mIsSelected) View.VISIBLE else View.GONE
-        }
+    fun onSelected(isSelect: Boolean){
+        selectedFrameLayout?.visibility = if(isSelect) View.VISIBLE else View.GONE
     }
 }

@@ -23,7 +23,6 @@ import javax.inject.Named
 class CreatePostScreen : AbstractGalleryFragment() {
 
     @Inject lateinit var mediaService: MediaService
-    @Inject lateinit var socialService: SocialService
     @Inject lateinit var mAdapter: ChooseGalleryAdapter
 
     @field:Named("banner") @Inject lateinit var bannerOptions: RequestOptions

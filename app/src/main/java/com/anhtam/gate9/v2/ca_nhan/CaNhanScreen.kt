@@ -44,6 +44,7 @@ class CaNhanScreen : DaggerNavigationFragment() {
 
     private fun observer() {
         mSessionManager.cachedUser.observe(viewLifecycleOwner, Observer {
+            if (it == null) return@Observer
             val avatar = when(it) {
                 is Resource.Loading -> null
                 is Resource.Error -> ""

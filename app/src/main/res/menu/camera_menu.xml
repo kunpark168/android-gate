@@ -2,12 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/camera"
+    <item android:id="@+id/menu_camera"
         android:icon="@drawable/wrap_ic_camera"
         app:showAsAction="always"
         android:title="@string/camera"/>
 
-    <item android:id="@+id/next"
+    <item android:id="@+id/menu_next"
         app:showAsAction="withText|always"
         android:visible="false"
         android:title="@string/next"/>

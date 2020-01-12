@@ -5,10 +5,12 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.anhtam.gate9.config.Config
+import com.anhtam.gate9.navigation.FragmentResultListener
 import com.anhtam.gate9.utils.FileUtils
 import com.anhtam.gate9.utils.PermissionUtils
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
@@ -18,14 +20,38 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 
-abstract class AbstractGalleryFragment : DaggerNavigationFragment(){
+abstract class AbstractGalleryFragment : DaggerNavigationFragment(), FragmentResultListener{
 
     private var mImage: File? = null
     private val viewModel: ShareViewModel by viewModels({requireActivity()}, {vmFactory})
 
+    private val mMultiImages = arrayListOf<String>()
     open fun onSelectedImage(urls: List<String>){
 
     }
+
+    override fun onFragmentResult(args: Bundle) {
+        if (args.containsKey(Config.RESULT_CODE_SELECT_MULTI)) {
+            val data = args.getStringArrayList(Config.RESULT_CODE_SELECT_MULTI)
+            mMultiImages.clear()
+            data?.let { mMultiImages.addAll(data) }
+        }
+        val media = createMedia(mMultiImages)
+        if (media.isEmpty()) return
+        showProgress()
+        viewModel.uploadImage(media).observe(viewLifecycleOwner, Observer { source ->
+            if (source is Resource.Success) {
+                hideProgress()
+                val urls = source.data  ?: return@Observer
+                if (urls.isEmpty()) return@Observer
+                onSelectedImage(urls)
+            }
+            if (source is Resource.Error) {
+                hideProgress()
+            }
+        })
+    }
+
     companion object{
         const val REQUEST_CODE_READ_EXTERNAL_STORAGE = 4
     }
@@ -37,6 +63,10 @@ abstract class AbstractGalleryFragment : DaggerNavigationFragment(){
         } else {
             openSelectedImageGallery()
         }
+    }
+
+    protected fun selectedMultiImages(){
+        navigation?.addFragment(MultiChooseImageScreen.newInstance())
     }
 
     private fun openSelectedImageGallery() {
@@ -80,5 +110,16 @@ abstract class AbstractGalleryFragment : DaggerNavigationFragment(){
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun createMedia(paths: List<String>): ArrayList<MultipartBody.Part> {
+        val mMedia = arrayListOf<MultipartBody.Part>()
+        paths.forEach {
+            mImage = File(it)
+            val reqFile = RequestBody.create(MediaType.parse("image/*"), mImage!!)
+            val body = MultipartBody.Part.createFormData("files", mImage!!.name, reqFile)
+            mMedia.add(body)
+        }
+        return mMedia
     }
 }

@@ -6,12 +6,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.anhtam.gate9.R
+import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -24,6 +25,11 @@ class MultiChooseImageScreen: DaggerNavigationFragment(){
     companion object{
         fun newInstance() = MultiChooseImageScreen()
     }
+
+    private val mSelectedGallery = arrayListOf<String>()
+    private val mViewModel: GalleryViewModel by viewModels { vmFactory }
+
+    private var mDisplayCamera: Boolean = true
 
     private val mAdapter: ChooseGalleryAdapter = ChooseGalleryAdapter()
 
@@ -39,47 +45,103 @@ class MultiChooseImageScreen: DaggerNavigationFragment(){
     override fun menuRes() =  R.menu.camera_menu
 
     private fun init(){
+        loadData()
         initRecyclerView()
+        observer()
+    }
+
+    private fun observer(){
+        mViewModel.getImages().observe(viewLifecycleOwner, Observer {
+            if (!it.isNullOrEmpty()){
+                mAdapter.setNewData(it)
+            }
+        })
+    }
+
+    private fun loadData(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mAdapter.setNewData(loadImagesFromSDCard())
+            mViewModel.getAllImages()
         }
     }
 
     private fun initRecyclerView(){
+        mAdapter.setSelectedListener(object : ChooseGalleryAdapter.SelectedListener{
+            override fun onSelectedChange(data: List<String>) {
+                mSelectedGallery.clear()
+                mSelectedGallery.addAll(data)
+                mDisplayCamera = mSelectedGallery.isEmpty()
+                activity?.invalidateOptionsMenu()
+            }
+        })
         rvImages?.adapter = mAdapter
         rvImages?.layoutManager = GridLayoutManager(context, 3)
     }
 
-
-    @SuppressLint("InlinedApi", "Recycle")
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun loadImagesFromSDCard(): ArrayList<String> {
-        val uri: Uri = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        val cursor: Cursor?
-        val column_index_data: Int
-        val column_index_folder_name: Int
-        val listOfAllImages = ArrayList<String>()
-        var absolutePathOfImage: String?
-
-        val projection = arrayOf(MediaStore.MediaColumns.DATA, MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
-
-        cursor = activity?.contentResolver?.query(uri, projection, null, null)
-
-        column_index_data = cursor!!.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA)
-        column_index_folder_name = cursor
-                .getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME)
-        while (cursor.moveToNext()) {
-            absolutePathOfImage = cursor.getString(column_index_data)
-            listOfAllImages.add(absolutePathOfImage)
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        val itemCamera = menu.findItem(R.id.menu_camera)
+        val itemNext = menu.findItem(R.id.menu_next)
+        if (mDisplayCamera){
+            itemCamera?.isVisible = true
+            itemNext?.isVisible = false
+        } else {
+            itemCamera?.isVisible = false
+            itemNext?.isVisible = true
         }
-        return listOfAllImages
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.menu_camera -> {
+
+            }
+            R.id.menu_next -> {
+                val arg = Bundle()
+                arg.putStringArrayList(Config.RESULT_CODE_SELECT_MULTI, mSelectedGallery)
+                navigation?.returnResult(arg)
+            }
+
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     class ChooseGalleryAdapter @Inject constructor(): BaseQuickAdapter<String, BaseViewHolder>(R.layout.multi_select_gallery_item_layout, mutableListOf()) {
+
+        private val mSelectedItem = mutableListOf<String>()
+        private var mListener: SelectedListener? = null
+
+        interface SelectedListener{
+            fun onSelectedChange(data: List<String>)
+        }
+
+        fun setSelectedListener(listener: SelectedListener){
+            mListener = listener
+        }
+
+        init {
+            setOnItemChildClickListener { _, view, position ->
+                when(view.id){
+                    R.id.itemView -> {
+                        val item = data[position] ?: return@setOnItemChildClickListener
+                        if (mSelectedItem.contains(item)){
+                            mSelectedItem.remove(item)
+                        } else {
+                            mSelectedItem.add(item)
+                        }
+                        mListener?.onSelectedChange(mSelectedItem)
+                    }
+                    else -> {}
+                }
+                notifyItemChanged(position)
+            }
+        }
+
         override fun convert(helper: BaseViewHolder?, item: String?) {
             val path = item ?: return
             val view = helper?.itemView ?: return
             view.itemView?.setImage(path)
+            view.itemView?.onSelected(mSelectedItem.contains(path))
+            helper.addOnClickListener(R.id.itemView)
         }
     }
 }

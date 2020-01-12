@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.domain.v2.PostEntity
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.ChooseGalleryAdapter
@@ -319,8 +320,7 @@ class DetailPostScreen private constructor(
         }
 
         imgChooseImg?.setOnClickListener {
-//            chooseImage()
-            navigation?.addFragment(MultiChooseImageScreen.newInstance())
+            selectedMultiImages()
         }
 
         // navigation
