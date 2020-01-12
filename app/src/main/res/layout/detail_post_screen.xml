@@ -1,542 +1,547 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    android:id="@+id/swipeRefreshLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:clickable="true"
-    android:focusable="true"
-    android:background="@color/white">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_gravity="top"
+    android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
-        app:title=""
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
-        android:layout_height="?attr/actionBarSize">
-
-        <FrameLayout
-            android:id="@+id/backFrameLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent">
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgBack"
-                android:layout_marginStart="20dp"
-                android:src="@drawable/ic_back"
-                android:layout_width="7dp"
-                android:layout_height="match_parent" />
-            <TextView
-                android:id="@+id/tvBack"
-                android:textSize="15sp"
-                android:textAllCaps="true"
-                android:fontFamily="@font/roboto_medium"
-                android:textColor="@color/colorWhite"
-                android:gravity="center"
-                android:text="@string/back"
-                android:layout_marginStart="33dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-        </FrameLayout>
-    </androidx.appcompat.widget.Toolbar>
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:clickable="true"
+        android:focusable="true"
+        android:background="@color/white">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_gravity="top"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@color/colorPrimary"
+            app:title=""
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            android:layout_height="?attr/actionBarSize">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <FrameLayout
+                android:id="@+id/backFrameLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgBack"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_back"
+                    android:layout_width="7dp"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/tvBack"
+                    android:textSize="15sp"
+                    android:textAllCaps="true"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/colorWhite"
+                    android:gravity="center"
+                    android:text="@string/back"
+                    android:layout_marginStart="33dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
+        </androidx.appcompat.widget.Toolbar>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorWhite">
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imgAvatar"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/img_avatar_holder"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                android:orientation="vertical">
 
-                    android:layout_marginTop="@dimen/layout_margin_16dp"
-                    android:layout_marginBottom="@dimen/layout_margin_16dp"
-                    android:layout_marginStart="@dimen/layout_margin_16dp"/>
-                <TextView
-                    android:id="@+id/tvUserName"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/roboto_bold"
-                    android:textSize="@dimen/sp_14"
-                    tools:text="Anderson"
-                    android:textColor="@color/black"
-                    android:layout_marginTop="@dimen/dp5"
-                    android:layout_marginStart="@dimen/dp20"
-                    app:layout_constraintTop_toTopOf="@+id/imgAvatar"
-                    app:layout_constraintStart_toEndOf="@+id/imgAvatar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/tvFollowNumber"
-                    android:layout_marginTop="5dp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textSize="@dimen/sp_12"
-                    tools:text="@string/following_amount_and_follower_amount"
-                    app:layout_constraintTop_toBottomOf="@id/tvUserName"
-                    android:layout_marginStart="@dimen/dp20"
-                    app:layout_constraintStart_toEndOf="@+id/imgAvatar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <com.anhtam.gate9.share.view.RoundRectCornerImageView
-                    android:id="@+id/imgGame"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:scaleType="centerCrop"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="@id/imgAvatar"
-                    app:layout_constraintDimensionRatio="h,1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/imgAvatar"
-                    tools:src="@drawable/img_holder_banner"
-                    android:layout_marginEnd="@dimen/layout_margin_16dp"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <View
-                android:id="@+id/vPost"
-                android:background="#eeeeee"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"/>
-            <!--Information post-->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csInformation"
-                android:paddingBottom="@dimen/dp15"
-                android:background="@color/colorWhite"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/tvTime"
-                    android:layout_marginTop="@dimen/dp20"
-                    android:textSize="@dimen/text_size_12sp"
-                    tools:text="12:30 12/09/2019"
-                    android:layout_marginStart="@dimen/layout_margin_16dp"
-                    android:fontFamily="@font/roboto_regular"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/tvNameGame"
-                    android:textSize="@dimen/sp_12"
-                    tools:text="Thien ha vo lam"
-                    android:gravity="center"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/colorError"
-                    android:visibility="gone"
-                    android:layout_marginTop="@dimen/dp17"
-                    android:layout_marginEnd="@dimen/dp20"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <ImageView
-                    android:id="@+id/imgDropDownGame"
-                    android:rotation="-90"
-                    android:layout_marginTop="@dimen/dp20"
-                    android:visibility="gone"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:tint="@color/colorError"
-                    android:layout_marginEnd="@dimen/layout_margin_16dp"
-                    android:src="@drawable/ic_dropdown"
-                    android:layout_width="@dimen/dp13"
-                    android:layout_height="@dimen/dp13" />
-
-                <TextView
-                    android:id="@+id/tvContent"
-                    android:textSize="14sp"
-                    android:fontFamily="@font/roboto_regular"
-                    android:layout_marginTop="@dimen/dp50"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:layout_width="match_parent"
-                    android:layout_marginStart="@dimen/layout_margin_16dp"
-                    android:layout_marginEnd="@dimen/layout_margin_16dp"
-                    android:layout_height="wrap_content" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvPhotos"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/layout_margin_8dp"
-                    app:layout_constraintTop_toBottomOf="@id/tvContent" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/csOriPost"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_marginTop="@dimen/dp5"
-                    android:visibility="gone"
-                    android:layout_marginStart="@dimen/layout_margin_16dp"
-                    app:layout_constraintTop_toBottomOf="@+id/rvPhotos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dp20">
-                    <TextView
-                        android:id="@+id/tvPrePost"
+                    android:background="@color/colorWhite">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imgAvatar"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/img_avatar_holder"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:gravity="center"
-                        android:text="@string/pre_post"
-                        android:textSize="@dimen/sp_13"
-                        android:fontFamily="@font/roboto_regular"
-                        android:textColor="@color/colorHome"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-                    <ImageView
-                        android:id="@+id/imgPreOr"
-                        app:layout_constraintTop_toTopOf="@+id/tvPrePost"
-                        app:layout_constraintStart_toEndOf="@+id/tvPrePost"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvPrePost"
-                        android:padding="@dimen/dp5"
-                        android:tint="@color/colorHome"
-                        android:src="@drawable/ic_drop_hor"
-                        android:layout_width="@dimen/dp20"
-                        android:layout_height="match_parent" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+
+                        android:layout_marginTop="@dimen/layout_margin_16dp"
+                        android:layout_marginBottom="@dimen/layout_margin_16dp"
+                        android:layout_marginStart="@dimen/layout_margin_16dp"/>
                     <TextView
-                        android:id="@+id/tvOriPost"
-                        app:layout_constraintStart_toEndOf="@+id/imgPreOr"
+                        android:id="@+id/tvUserName"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/roboto_bold"
+                        android:textSize="@dimen/sp_14"
+                        tools:text="Anderson"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="@dimen/dp5"
+                        android:layout_marginStart="@dimen/dp20"
+                        app:layout_constraintTop_toTopOf="@+id/imgAvatar"
+                        app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/tvFollowNumber"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textSize="@dimen/sp_12"
+                        tools:text="@string/following_amount_and_follower_amount"
+                        app:layout_constraintTop_toBottomOf="@id/tvUserName"
+                        android:layout_marginStart="@dimen/dp20"
+                        app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <com.anhtam.gate9.share.view.RoundRectCornerImageView
+                        android:id="@+id/imgGame"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@id/imgAvatar"
+                        app:layout_constraintDimensionRatio="h,1:1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/imgAvatar"
+                        tools:src="@drawable/img_holder_banner"
+                        android:layout_marginEnd="@dimen/layout_margin_16dp"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+                <View
+                    android:id="@+id/vPost"
+                    android:background="#eeeeee"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"/>
+                <!--Information post-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/csInformation"
+                    android:paddingBottom="@dimen/dp15"
+                    android:background="@color/colorWhite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tvTime"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:textSize="@dimen/text_size_12sp"
+                        tools:text="12:30 12/09/2019"
+                        android:layout_marginStart="@dimen/layout_margin_16dp"
+                        android:fontFamily="@font/roboto_regular"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/tvNameGame"
+                        android:textSize="@dimen/sp_12"
+                        tools:text="Thien ha vo lam"
                         android:gravity="center"
-                        android:text="@string/ori_post"
-                        android:textSize="@dimen/sp_13"
                         android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/colorError"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-                <!--Benefit-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/csBenefit"
-                    app:layout_constraintTop_toBottomOf="@+id/csOriPost"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <View
-                        android:alpha="0.1"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="20dp"
-                        app:layout_constraintTop_toTopOf="@+id/tvBenefit"
-                        app:layout_constraintEnd_toStartOf="@+id/tvBenefit"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvBenefit"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:background="@color/colorGray"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"/>
-                    <TextView
-                        android:id="@+id/tvBenefit"
-                        android:text="Hữu ích"
-                        android:fontFamily="@font/roboto_medium"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:textColor="@color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                    <View
-                        android:alpha="0.1"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/dp17"
                         android:layout_marginEnd="@dimen/dp20"
-                        android:layout_marginStart="@dimen/dp_10"
-                        app:layout_constraintTop_toTopOf="@+id/tvBenefit"
-                        app:layout_constraintStart_toEndOf="@+id/tvBenefit"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvBenefit"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:background="@color/colorGray"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <TextView
-                    android:id="@+id/btnDonate"
-                    android:textAllCaps="true"
-                    android:layout_marginTop="@dimen/dp_10"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/csBenefit"
-                    android:paddingTop="@dimen/dp4"
-                    android:paddingBottom="@dimen/dp4"
-                    android:paddingRight="@dimen/dp25"
-                    android:paddingLeft="@dimen/dp25"
-                    android:fontFamily="@font/roboto_regular"
-                    android:textColor="@color/colorWhite"
-                    android:background="@drawable/bg_button_reward"
-                    android:text="Tặng"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/tvCountRefun"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btnDonate"
-                    android:text="0 người tặng"
-                    android:fontFamily="@font/roboto_regular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <!--Action-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/csAction"
-                    app:layout_constraintTop_toBottomOf="@+id/tvCountRefun"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <View
-                        android:alpha="0.1"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="20dp"
-                        app:layout_constraintTop_toTopOf="@+id/tvAction"
-                        app:layout_constraintEnd_toStartOf="@+id/tvAction"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvAction"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:background="@color/colorGray"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"/>
-                    <TextView
-                        android:id="@+id/tvAction"
-                        android:fontFamily="@font/roboto_medium"
-                        android:text="Bạn muốn"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:textColor="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-
-                    <View
-                        android:alpha="0.1"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginStart="10dp"
-                        app:layout_constraintTop_toTopOf="@+id/tvAction"
-                        app:layout_constraintStart_toEndOf="@+id/tvAction"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvAction"
+                    <ImageView
+                        android:id="@+id/imgDropDownGame"
+                        android:rotation="-90"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:background="@color/colorGray"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:tint="@color/colorError"
+                        android:layout_marginEnd="@dimen/layout_margin_16dp"
+                        android:src="@drawable/ic_dropdown"
+                        android:layout_width="@dimen/dp13"
+                        android:layout_height="@dimen/dp13" />
 
-                <!--Action Button-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_marginTop="15dp"
-                    android:id="@+id/csActionImage"
-                    app:layout_constraintTop_toBottomOf="@id/csAction"
-                    android:layout_width="match_parent"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:layout_height="@dimen/dp65">
+                    <TextView
+                        android:id="@+id/tvContent"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_marginTop="@dimen/dp50"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="@dimen/layout_margin_16dp"
+                        android:layout_marginEnd="@dimen/layout_margin_16dp"
+                        android:layout_height="wrap_content" />
 
-                    <!--Share-->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvPhotos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/layout_margin_8dp"
+                        app:layout_constraintTop_toBottomOf="@id/tvContent" />
+
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/csShare"
-                        app:layout_constraintWidth_percent="0.2"
+                        android:id="@+id/csOriPost"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
+                        android:layout_marginTop="@dimen/dp5"
+                        android:visibility="gone"
+                        android:layout_marginStart="@dimen/layout_margin_16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/rvPhotos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dp20">
+                        <TextView
+                            android:id="@+id/tvPrePost"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:gravity="center"
+                            android:text="@string/pre_post"
+                            android:textSize="@dimen/sp_13"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/colorHome"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
                         <ImageView
-                            android:id="@+id/imgShare"
+                            android:id="@+id/imgPreOr"
+                            app:layout_constraintTop_toTopOf="@+id/tvPrePost"
+                            app:layout_constraintStart_toEndOf="@+id/tvPrePost"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvPrePost"
+                            android:padding="@dimen/dp5"
+                            android:tint="@color/colorHome"
+                            android:src="@drawable/ic_drop_hor"
+                            android:layout_width="@dimen/dp20"
+                            android:layout_height="match_parent" />
+                        <TextView
+                            android:id="@+id/tvOriPost"
+                            app:layout_constraintStart_toEndOf="@+id/imgPreOr"
+                            android:gravity="center"
+                            android:text="@string/ori_post"
+                            android:textSize="@dimen/sp_13"
+                            android:fontFamily="@font/roboto_regular"
+                            android:textColor="@color/colorError"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--Benefit-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/csBenefit"
+                        app:layout_constraintTop_toBottomOf="@+id/csOriPost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <View
+                            android:alpha="0.1"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="20dp"
+                            app:layout_constraintTop_toTopOf="@+id/tvBenefit"
+                            app:layout_constraintEnd_toStartOf="@+id/tvBenefit"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvBenefit"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:background="@color/colorGray"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"/>
+                        <TextView
+                            android:id="@+id/tvBenefit"
+                            android:text="Hữu ích"
+                            android:fontFamily="@font/roboto_medium"
                             app:layout_constraintTop_toTopOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            android:src="@drawable/ic_share_post"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp40" />
-                        <TextView
-                            app:layout_constraintTop_toBottomOf="@+id/imgShare"
-                            android:gravity="center"
-                            android:textSize="@dimen/sp_10"
+                            app:layout_constraintEnd_toEndOf="parent"
                             android:textColor="@color/black"
-                            android:fontFamily="@font/roboto_light"
-                            android:text="@string/share_feelling"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp25" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <View
+                            android:alpha="0.1"
+                            android:layout_marginEnd="@dimen/dp20"
+                            android:layout_marginStart="@dimen/dp_10"
+                            app:layout_constraintTop_toTopOf="@+id/tvBenefit"
+                            app:layout_constraintStart_toEndOf="@+id/tvBenefit"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvBenefit"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@color/colorGray"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <com.anhtam.gate9.v2.views.ReactionView
-                        android:id="@+id/reactionView"
-                        android:layout_width="0dp"
-                        app:layout_constraintStart_toEndOf="@id/csShare"
-                        app:layout_constraintWidth_percent="0.6"
-                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/btnDonate"
+                        android:textAllCaps="true"
+                        android:layout_marginTop="@dimen/dp_10"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/csBenefit"
+                        android:paddingTop="@dimen/dp4"
+                        android:paddingBottom="@dimen/dp4"
+                        android:paddingRight="@dimen/dp25"
+                        android:paddingLeft="@dimen/dp25"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/colorWhite"
+                        android:background="@drawable/bg_button_reward"
+                        android:text="Tặng"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
-                    <!--PostEntity-->
+                    <TextView
+                        android:id="@+id/tvCountRefun"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btnDonate"
+                        android:text="0 người tặng"
+                        android:fontFamily="@font/roboto_regular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <!--Action-->
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/csComment"
-                        app:layout_constraintWidth_percent="0.2"
-                        app:layout_constraintStart_toEndOf="@+id/reactionView"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent">
-                        <ImageView
-                            android:id="@+id/imgComment"
-                            app:layout_constraintTop_toTopOf="parent"
-                            android:src="@drawable/ic_chat_gray"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp40" />
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/csAction"
+                        app:layout_constraintTop_toBottomOf="@+id/tvCountRefun"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <View
+                            android:alpha="0.1"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="20dp"
+                            app:layout_constraintTop_toTopOf="@+id/tvAction"
+                            app:layout_constraintEnd_toStartOf="@+id/tvAction"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvAction"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:background="@color/colorGray"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"/>
                         <TextView
-                            app:layout_constraintTop_toBottomOf="@+id/imgComment"
-                            android:gravity="center"
-                            android:textSize="@dimen/sp_10"
+                            android:id="@+id/tvAction"
+                            android:fontFamily="@font/roboto_medium"
+                            android:text="Bạn muốn"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
                             android:textColor="@color/black"
-                            android:fontFamily="@font/roboto_light"
-                            android:text="@string/reply"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/dp25" />
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <View
+                            android:alpha="0.1"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginStart="10dp"
+                            app:layout_constraintTop_toTopOf="@+id/tvAction"
+                            app:layout_constraintStart_toEndOf="@+id/tvAction"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvAction"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@color/colorGray"
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <!--Action Button-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_marginTop="15dp"
+                        android:id="@+id/csActionImage"
+                        app:layout_constraintTop_toBottomOf="@id/csAction"
+                        android:layout_width="match_parent"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:layout_height="@dimen/dp65">
 
-            <!--Game-->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csGame"
-                android:background="@color/colorWhite"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp75">
+                        <!--Share-->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/csShare"
+                            app:layout_constraintWidth_percent="0.2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent">
+                            <ImageView
+                                android:id="@+id/imgShare"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:src="@drawable/ic_share_post"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/dp40" />
+                            <TextView
+                                app:layout_constraintTop_toBottomOf="@+id/imgShare"
+                                android:gravity="center"
+                                android:textSize="@dimen/sp_10"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_light"
+                                android:text="@string/share_feelling"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/dp25" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <com.anhtam.gate9.v2.views.ReactionView
+                            android:id="@+id/reactionView"
+                            android:layout_width="0dp"
+                            app:layout_constraintStart_toEndOf="@id/csShare"
+                            app:layout_constraintWidth_percent="0.6"
+                            android:layout_height="match_parent"/>
+
+                        <!--PostEntity-->
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/csComment"
+                            app:layout_constraintWidth_percent="0.2"
+                            app:layout_constraintStart_toEndOf="@+id/reactionView"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent">
+                            <ImageView
+                                android:id="@+id/imgComment"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:src="@drawable/ic_chat_gray"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/dp40" />
+                            <TextView
+                                app:layout_constraintTop_toBottomOf="@+id/imgComment"
+                                android:gravity="center"
+                                android:textSize="@dimen/sp_10"
+                                android:textColor="@color/black"
+                                android:fontFamily="@font/roboto_light"
+                                android:text="@string/reply"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/dp25" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!--Game-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/csGame"
+                    android:background="@color/colorWhite"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp75">
+                    <View
+                        android:id="@+id/vLineGameTop"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:background="#eeeeee"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp5"/>
+                    <com.anhtam.gate9.share.view.RoundRectCornerImageView
+                        android:id="@+id/imgNewGame"
+                        android:layout_marginStart="@dimen/dp20"
+                        android:scaleType="centerCrop"
+                        tools:src="@drawable/img_holder_banner"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp" />
+
+                    <LinearLayout
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:orientation="vertical"
+                        android:layout_marginStart="@dimen/dp20"
+                        app:layout_constraintStart_toEndOf="@+id/imgNewGame"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp">
+                        <TextView
+                            android:id="@+id/tvTitle"
+                            android:textStyle="bold"
+                            android:textSize="13sp"
+                            android:fontFamily="@font/roboto_bold"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/black"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp" />
+
+                        <TextView
+                            android:id="@+id/tvContentGame"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/roboto_regular"
+                            android:gravity="center_vertical"
+                            android:textColor="@color/colorText"
+                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvFollowGame"
+                        android:layout_marginEnd="@dimen/dp20"
+                        android:textColor="@color/colorError"
+                        android:fontFamily="@font/roboto_light"
+                        android:background="@drawable/bg_follow"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="80dp"
+                        android:gravity="center"
+                        android:textSize="12sp"
+                        android:layout_height="25dp" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <View
-                    android:id="@+id/vLineGameTop"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/vLineGame"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:background="#eeeeee"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp5"/>
-                <com.anhtam.gate9.share.view.RoundRectCornerImageView
-                    android:id="@+id/imgNewGame"
-                    android:layout_marginStart="@dimen/dp20"
-                    android:scaleType="centerCrop"
-                    tools:src="@drawable/img_holder_banner"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp" />
 
-                <LinearLayout
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:orientation="vertical"
-                    android:layout_marginStart="@dimen/dp20"
-                    app:layout_constraintStart_toEndOf="@+id/imgNewGame"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp">
-                    <TextView
-                        android:id="@+id/tvTitle"
-                        android:textStyle="bold"
-                        android:textSize="13sp"
-                        android:fontFamily="@font/roboto_bold"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/black"
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp" />
-
-                    <TextView
-                        android:id="@+id/tvContentGame"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/colorText"
-                        android:layout_weight="1"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp" />
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tvFollowGame"
-                    android:layout_marginEnd="@dimen/dp20"
-                    android:textColor="@color/colorError"
-                    android:fontFamily="@font/roboto_light"
-                    android:background="@drawable/bg_follow"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_width="80dp"
-                    android:gravity="center"
-                    android:textSize="12sp"
-                    android:layout_height="25dp" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <View
-                android:id="@+id/vLineGame"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:background="#eeeeee"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dp5"/>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:background="@color/colorWhite"
-                android:layout_height="match_parent">
-
-                <!--Order-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:id="@+id/csOrder"
-                    app:layout_constraintTop_toTopOf="parent"
                     android:background="@color/colorWhite"
-                    android:layout_height="@dimen/dp35">
-                    <TextView
-                        android:textSize="13sp"
-                        android:textColor="@color/colorHome"
-                        android:gravity="center"
-                        android:text="@string/sort"
-                        android:fontFamily="@font/roboto_medium"
-                        android:layout_marginStart="20dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
+                    android:layout_height="match_parent">
 
-                    <TextView
-                        android:textSize="13sp"
-                        app:layout_constraintEnd_toStartOf="@+id/imgDropDown"
-                        android:gravity="center"
-                        android:fontFamily="@font/roboto_regular"
-                        android:text="@string/sort_as"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
+                    <!--Order-->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/csOrder"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:background="@color/colorWhite"
+                        android:layout_height="@dimen/dp35">
+                        <TextView
+                            android:textSize="13sp"
+                            android:textColor="@color/colorHome"
+                            android:gravity="center"
+                            android:text="@string/sort"
+                            android:fontFamily="@font/roboto_medium"
+                            android:layout_marginStart="20dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
 
-                    <ImageView
-                        android:id="@+id/imgDropDown"
-                        android:padding="9dp"
-                        android:tint="@color/colorText"
-                        android:layout_marginEnd="10dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:src="@drawable/ic_dropdown"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent" />
+                        <TextView
+                            android:textSize="13sp"
+                            app:layout_constraintEnd_toStartOf="@+id/imgDropDown"
+                            android:gravity="center"
+                            android:fontFamily="@font/roboto_regular"
+                            android:text="@string/sort_as"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent" />
+
+                        <ImageView
+                            android:id="@+id/imgDropDown"
+                            android:padding="9dp"
+                            android:tint="@color/colorText"
+                            android:layout_marginEnd="10dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:src="@drawable/ic_dropdown"
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:id="@+id/vList"
+                        android:background="#eeeeee"
+                        app:layout_constraintTop_toBottomOf="@+id/csOrder"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"/>
+                    <!--List Post-->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvComment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"
+                        android:background="@color/colorWhite"
+                        app:layout_constraintTop_toBottomOf="@+id/vList">
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <View
+                        app:layout_constraintTop_toBottomOf="@+id/rvComment"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp50"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <View
-                    android:id="@+id/vList"
-                    android:background="#eeeeee"
-                    app:layout_constraintTop_toBottomOf="@+id/csOrder"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"/>
-                <!--List Post-->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvComment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
-                    android:background="@color/colorWhite"
-                    app:layout_constraintTop_toBottomOf="@+id/vList">
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <View
-                    app:layout_constraintTop_toBottomOf="@+id/rvComment"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dp50"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-    <include layout="@layout/bottom_bar_type_layout" />
-</LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+        <include layout="@layout/bottom_bar_type_layout" />
+    </LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

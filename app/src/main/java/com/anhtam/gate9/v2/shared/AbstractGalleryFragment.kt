@@ -22,9 +22,8 @@ import java.io.File
 
 abstract class AbstractGalleryFragment : DaggerNavigationFragment(), FragmentResultListener{
 
-    private var mImage: File? = null
     private val viewModel: ShareViewModel by viewModels({requireActivity()}, {vmFactory})
-
+    private var mIsMulti = false
     private val mMultiImages = arrayListOf<String>()
     open fun onSelectedImage(urls: List<String>){
 
@@ -57,6 +56,7 @@ abstract class AbstractGalleryFragment : DaggerNavigationFragment(), FragmentRes
     }
 
     protected fun chooseImage(){
+        mIsMulti = false
         val unwrapContext = context ?: return
         if (ContextCompat.checkSelfPermission(unwrapContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             PermissionUtils.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE_READ_EXTERNAL_STORAGE)
@@ -66,7 +66,13 @@ abstract class AbstractGalleryFragment : DaggerNavigationFragment(), FragmentRes
     }
 
     protected fun selectedMultiImages(){
-        navigation?.addFragment(MultiChooseImageScreen.newInstance())
+        mIsMulti = true
+        val unwrapContext = context ?: return
+        if (ContextCompat.checkSelfPermission(unwrapContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            PermissionUtils.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE_READ_EXTERNAL_STORAGE)
+        } else {
+            navigation?.addFragment(MultiChooseImageScreen.newInstance())
+        }
     }
 
     private fun openSelectedImageGallery() {
@@ -84,7 +90,13 @@ abstract class AbstractGalleryFragment : DaggerNavigationFragment(), FragmentRes
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults.firstOrNull() != PackageManager.PERMISSION_GRANTED) return
         when (requestCode) {
-            REQUEST_CODE_READ_EXTERNAL_STORAGE -> openSelectedImageGallery()
+            REQUEST_CODE_READ_EXTERNAL_STORAGE -> {
+                if (mIsMulti){
+                    navigation?.addFragment(MultiChooseImageScreen.newInstance())
+                } else {
+                    openSelectedImageGallery()
+                }
+            }
         }
     }
 
@@ -95,9 +107,9 @@ abstract class AbstractGalleryFragment : DaggerNavigationFragment(), FragmentRes
             val unwrapContext = context ?: return
             data.data?.let {
                 val path = FileUtils.getPath(unwrapContext, it) ?: return
-                mImage = File(path)
-                val reqFile = RequestBody.create(MediaType.parse("image/*"), mImage!!)
-                val body = MultipartBody.Part.createFormData("files", mImage!!.name, reqFile)
+                val mImage = File(path)
+                val reqFile = RequestBody.create(MediaType.parse("image/*"), mImage)
+                val body = MultipartBody.Part.createFormData("files", mImage.name, reqFile)
                 val mMedia = arrayListOf<MultipartBody.Part>()
                 mMedia.add(body)
                 viewModel.uploadImage(mMedia).observe(viewLifecycleOwner, Observer { source ->
@@ -115,9 +127,9 @@ abstract class AbstractGalleryFragment : DaggerNavigationFragment(), FragmentRes
     private fun createMedia(paths: List<String>): ArrayList<MultipartBody.Part> {
         val mMedia = arrayListOf<MultipartBody.Part>()
         paths.forEach {
-            mImage = File(it)
-            val reqFile = RequestBody.create(MediaType.parse("image/*"), mImage!!)
-            val body = MultipartBody.Part.createFormData("files", mImage!!.name, reqFile)
+            val mImage = File(it)
+            val reqFile = RequestBody.create(MediaType.parse("image/*"), mImage)
+            val body = MultipartBody.Part.createFormData("files", mImage.name, reqFile)
             mMedia.add(body)
         }
         return mMedia

@@ -293,6 +293,9 @@ class DetailPostScreen private constructor(
         csShare?.setOnClickListener{
             viewModel.sharePost()
         }
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+        }
         btnDonate?.setOnClickListener {
             val unwrapContext = context ?: return@setOnClickListener
             DonateDialog(unwrapContext).show()

@@ -39,6 +39,8 @@ abstract class DiscussionActivity : DaggerNavigationFragment() {
         observer()
     }
 
+    override fun statusColor() = android.R.color.transparent
+    
     override fun menuRes() = R.menu.menu_chat_search_more
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -123,7 +125,9 @@ abstract class DiscussionActivity : DaggerNavigationFragment() {
             childFragmentManager.beginTransaction().show(fragmentInfo).commit()
             container?.visibility = View.VISIBLE
         }
-
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+        }
         tabNewFeed?.debounceClick {
             navigation?.newRootFragment(HomeFragment.newInstance())
         }

@@ -65,7 +65,15 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
         mViewModel.type = mType
         mViewModel.request(mType)
         initRecyclerView()
+        initEvents()
         observer()
+    }
+
+    private fun initEvents(){
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+            mViewModel.request(mType)
+        }
     }
 
     private fun initRecyclerView() {

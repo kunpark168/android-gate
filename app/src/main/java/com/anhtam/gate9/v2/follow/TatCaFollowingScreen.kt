@@ -162,6 +162,10 @@ class TatCaFollowingScreen constructor(val mTab: Int) : DaggerNavigationFragment
     }
 
     private fun initEventListener() {
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+            mViewModel.loadFirstPage(mTab)
+        }
         tvVideo?.setOnClickListener {
             navigation?.addFragment(FeatureScreen.newInstance(CategoryTab.VIDEO.tab))
         }
