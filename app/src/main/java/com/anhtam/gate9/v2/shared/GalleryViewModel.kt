@@ -45,7 +45,6 @@ class GalleryViewModel @Inject constructor(private val application: Application)
             absolutePathOfImage = cursor.getString(column_index_data)
             listOfAllImages.add(absolutePathOfImage)
         }
-        cursor.close()
         return listOfAllImages
     }
 

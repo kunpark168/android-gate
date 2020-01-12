@@ -19,19 +19,37 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            android:layout_gravity="top"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_constraintTop_toTopOf="parent">
-            <TextView
-                android:id="@+id/backTextView"
-                app:layout_constraintStart_toStartOf="parent"
-                android:text="@string/toolbarBack"
-                android:textColor="@color/colorWhite"
-                android:gravity="center"
-                android:drawableStart="@drawable/ic_back"
-                android:drawablePadding="@dimen/padding_8dp"
+            android:background="@color/transparent"
+            app:title=""
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            android:layout_height="?attr/actionBarSize">
+
+            <FrameLayout
+                android:id="@+id/backFrameLayout"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgBack"
+                    android:layout_marginStart="20dp"
+                    android:src="@drawable/ic_back"
+                    android:layout_width="7dp"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/tvBack"
+                    android:textSize="15sp"
+                    android:textAllCaps="true"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/colorWhite"
+                    android:gravity="center"
+                    android:text="@string/back"
+                    android:layout_marginStart="33dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </FrameLayout>
         </androidx.appcompat.widget.Toolbar>
     </FrameLayout>
 

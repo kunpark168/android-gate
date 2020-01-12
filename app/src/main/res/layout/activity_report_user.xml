@@ -1,91 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true">
 
-    <!--Header-->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/csHeader"
-        android:fitsSystemWindows="true"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/colorHome"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp50">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/csBack"
-            android:layout_marginStart="@dimen/dp20"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imgBack"
-                android:src="@drawable/ic_back"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_width="7dp"
-                android:layout_height="match_parent" />
-            <TextView
-                android:id="@+id/tvBack"
-                android:textSize="15sp"
-                android:textAllCaps="true"
-                android:fontFamily="@font/roboto_medium"
-                android:textColor="@color/colorWhite"
-                android:gravity="center"
-                android:text="@string/back"
-                android:layout_marginStart="@dimen/dp5"
-                app:layout_constraintStart_toEndOf="@+id/imgBack"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <TextView
-            android:textSize="16sp"
-            android:gravity="center"
-            android:text="@string/report_game"
-            android:fontFamily="@font/roboto_regular"
-            android:textAllCaps="true"
-            android:textColor="@color/colorWhite"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <ImageView
-            app:layout_constraintEnd_toStartOf="@+id/imgAvatar"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:src="@drawable/ic_message"
-            android:layout_width="@dimen/dp25"
-            android:layout_height="match_parent" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgAvatar"
-            app:layout_constraintEnd_toStartOf="@+id/imgMore"
-            android:src="@drawable/img_avatar_holder"
-            android:layout_width="@dimen/dp25"
-            android:layout_marginEnd="@dimen/dp5"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:id="@+id/imgMore"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:padding="5dp"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/ic_more"
-            android:layout_width="30dp"
-            android:layout_height="match_parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <include
+        layout="@layout/shared_toolbar_with_back_layout"/>
 
     <ScrollView
         android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@+id/csHeader"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <!--Game Information-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/csGameInformation"
@@ -391,4 +328,4 @@
         android:background="@drawable/bg_button_color_home"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp45" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

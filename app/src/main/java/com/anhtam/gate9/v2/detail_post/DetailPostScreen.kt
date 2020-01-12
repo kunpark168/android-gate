@@ -23,6 +23,7 @@ import com.anhtam.gate9.v2.reaction.ReactionScreen
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
+import com.anhtam.gate9.v2.report.post.ReportPostActivity
 import com.anhtam.gate9.v2.shared.AbstractGalleryFragment
 import com.anhtam.gate9.v2.shared.MultiChooseImageScreen
 import com.anhtam.gate9.vo.Reaction
@@ -85,6 +86,15 @@ class DetailPostScreen private constructor(
     }
 
     override fun menuRes() = R.menu.menu_chat_search_more
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.icReport -> {
+                navigation?.addFragment(ReportPostActivity.newInstance())
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun init() {
         viewModel.initialize(_post, this)

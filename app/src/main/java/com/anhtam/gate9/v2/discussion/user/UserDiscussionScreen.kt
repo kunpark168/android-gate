@@ -11,6 +11,7 @@ import com.anhtam.gate9.v2.discussion.common.info.NPHInfoFragment
 import com.anhtam.gate9.v2.discussion.common.info.UserInfoFragment
 import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
+import com.anhtam.gate9.v2.report.user.ReportUserActivity
 import com.anhtam.gate9.vo.model.Category
 import of.bum.network.helper.Resource
 
@@ -23,7 +24,9 @@ class UserDiscussionScreen : DiscussionActivity() {
             if (mType == Category.Member)  UserInfoFragment.newInstance()
             else  NPHInfoFragment.newInstance()
 
-
+    override fun navigateToReport() {
+        navigation?.addFragment(ReportUserActivity.newInstance())
+    }
     override val headerFragment: Fragment
         get() = UserHeaderFragment.newInstance(mType)
 

@@ -46,6 +46,12 @@ import com.anhtam.gate9.v2.reaction.ReactionModule
 import com.anhtam.gate9.v2.shared.MultiChooseImageScreen
 import com.anhtam.gate9.v2.splash.SplashScreen
 import com.anhtam.gate9.v2.follow.FollowScreen
+import com.anhtam.gate9.v2.report.game.ReportGameActivity
+import com.anhtam.gate9.v2.report.game.ReportGameModule
+import com.anhtam.gate9.v2.report.post.ReportPostActivity
+import com.anhtam.gate9.v2.report.post.ReportPostModule
+import com.anhtam.gate9.v2.report.user.ReportUserActivity
+import com.anhtam.gate9.v2.report.user.ReportUserModule
 import com.anhtam.gate9.v2.shared.GalleryViewModel
 import dagger.Binds
 import dagger.Module
@@ -182,20 +188,20 @@ abstract class FragmentBuildersModule {
 //    )
 //    abstract fun contributeChannelActivity(): ChannelActivity
 //
-//    @ContributesAndroidInjector(
-//            modules = [ReportGameModule::class]
-//    )
-//    abstract fun contributeReportGameActivity(): ReportGameActivity
-//
-//    @ContributesAndroidInjector(
-//            modules = [ReportUserModule::class]
-//    )
-//    abstract fun contributeReportUserActivity(): ReportUserActivity
-//
-//    @ContributesAndroidInjector(
-//            modules = [ReportPostModule::class]
-//    )
-//    abstract fun contributeReportPostActivity(): ReportPostActivity
+    @ContributesAndroidInjector(
+            modules = [ReportGameModule::class]
+    )
+    abstract fun contributeReportGameActivity(): ReportGameActivity
+
+    @ContributesAndroidInjector(
+            modules = [ReportUserModule::class]
+    )
+    abstract fun contributeReportUserActivity(): ReportUserActivity
+
+    @ContributesAndroidInjector(
+            modules = [ReportPostModule::class]
+    )
+    abstract fun contributeReportPostActivity(): ReportPostActivity
 
     @Binds
     @IntoMap

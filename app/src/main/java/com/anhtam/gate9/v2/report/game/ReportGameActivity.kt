@@ -27,6 +27,8 @@ class ReportGameActivity : DaggerNavigationFragment() {
         initControls()
     }
 
+    override fun menuRes() = R.menu.chat_avatar_report_menu
+
     private fun initControls(){
         csGooglePlay.debounceClick { chooesTypeReport(ReportGameType.GOOGLE_PLAY.type)}
         csAPK.debounceClick { chooesTypeReport(ReportGameType.APK.type) }

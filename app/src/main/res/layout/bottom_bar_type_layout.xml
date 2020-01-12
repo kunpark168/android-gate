@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:visibility="gone"
-        android:orientation="horizontal"
         android:clipToPadding="false"
         android:paddingStart="@dimen/padding_16dp"
         android:layout_marginTop="@dimen/layout_margin_8dp"

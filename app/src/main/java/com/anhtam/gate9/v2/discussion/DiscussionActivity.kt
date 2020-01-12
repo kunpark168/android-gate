@@ -21,6 +21,7 @@ abstract class DiscussionActivity : DaggerNavigationFragment() {
     abstract fun fragments(): List<Fragment>
     abstract fun tabInfoHeader(): List<TabInfo>
     abstract fun tabInfoBottom(): List<TabInfo>
+    abstract fun navigateToReport()
     private var mAdapter: SharePageAdapter? = null
     private val navViewModel: NavViewModel by viewModels()
     abstract val fragmentInfo: Fragment
@@ -40,8 +41,17 @@ abstract class DiscussionActivity : DaggerNavigationFragment() {
 
     override fun menuRes() = R.menu.menu_chat_search_more
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.icReport -> {
+                navigateToReport()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     protected open fun initView() {
-        toolbar?.title = ""
         setUpContainer()
         childFragmentManager.beginTransaction()
                 .replace(R.id.headerFrameLayout, headerFragment)
@@ -116,9 +126,6 @@ abstract class DiscussionActivity : DaggerNavigationFragment() {
 
         tabNewFeed?.debounceClick {
             navigation?.newRootFragment(HomeFragment.newInstance())
-        }
-        backTextView?.setOnClickListener {
-            navigation?.back()
         }
     }
 
