@@ -1,5 +1,7 @@
 package com.anhtam.gate9.di
 
+import android.app.Application
+import android.content.ContentResolver
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.HideKeyboardNavigation
 import com.anhtam.gate9.navigation.NavigationDispatcher

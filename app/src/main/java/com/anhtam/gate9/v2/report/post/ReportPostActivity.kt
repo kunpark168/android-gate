@@ -2,6 +2,7 @@ package com.anhtam.gate9.v2.report.post
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.anhtam.gate9.R
@@ -32,9 +33,9 @@ class ReportPostActivity : DaggerNavigationFragment() {
         csAppStore.debounceClick { chooesTypeReport(ReportGameType.APP_STORE.type) }
         csIPA.debounceClick { chooesTypeReport(ReportGameType.IPA.type) }
         csOtherReason.debounceClick { chooesTypeReport(ReportGameType.UNKNOW.type) }
-
-        csBack.debounceClick { navigation?.back() }
     }
+
+    override fun menuRes() = R.menu.chat_avatar_report_menu
 
     private fun chooesTypeReport(type: Int){
         imgGooglePlay.setImageDrawable(if(type == ReportGameType.GOOGLE_PLAY.type) resources.getDrawable(R.drawable.ic_checked_radio) else

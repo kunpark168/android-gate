@@ -7,7 +7,7 @@ import com.anhtam.domain.Base
 import com.anhtam.domain.v2.PostEntity
 import com.anhtam.domain.v2.WrapComments
 import com.anhtam.gate9.repository.SocialRepository
-import com.anhtam.gate9.storage.StorageManager
+import com.anhtam.gate9.session.SessionManager
 import com.anhtam.gate9.vo.IllegalReturn
 import com.anhtam.gate9.vo.Reaction
 import of.bum.network.FetchBoundResource
@@ -19,7 +19,8 @@ import kotlin.properties.Delegates
 
 class DetailPostViewModel @Inject constructor(
         val socialService: SocialService,
-        val repository: SocialRepository
+        val repository: SocialRepository,
+        val mSessionManager: SessionManager
 ) : ViewModel() {
 
     var _userId: Int by Delegates.notNull()
@@ -74,7 +75,7 @@ class DetailPostViewModel @Inject constructor(
         val params = hashMapOf<String, Int>()
         params["commentId"] = _commentId
         params["type"] = Reaction.value(value)
-        params["userId"] = 5
+        params["userId"] = mSessionManager.cachedUser.value?.data?.mUserId ?: 0
         return repository.react(params)
     }
 

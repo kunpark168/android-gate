@@ -41,8 +41,18 @@ import com.anhtam.gate9.v2.mxh_gate.video.MXHGateVideoScreen
 import com.anhtam.gate9.v2.newfeed.NewFeedViewModel
 import com.anhtam.gate9.v2.detail_post.DetailPostModule
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
+import com.anhtam.gate9.v2.follow.FollowModule
 import com.anhtam.gate9.v2.reaction.ReactionModule
+import com.anhtam.gate9.v2.shared.MultiChooseImageScreen
 import com.anhtam.gate9.v2.splash.SplashScreen
+import com.anhtam.gate9.v2.follow.FollowScreen
+import com.anhtam.gate9.v2.report.game.ReportGameActivity
+import com.anhtam.gate9.v2.report.game.ReportGameModule
+import com.anhtam.gate9.v2.report.post.ReportPostActivity
+import com.anhtam.gate9.v2.report.post.ReportPostModule
+import com.anhtam.gate9.v2.report.user.ReportUserActivity
+import com.anhtam.gate9.v2.report.user.ReportUserModule
+import com.anhtam.gate9.v2.shared.GalleryViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -165,29 +175,42 @@ abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract fun contributeGalleryScreen(): GalleryScreen
 
+    @ContributesAndroidInjector
+    abstract fun contributeMultiChooseImageScreen(): MultiChooseImageScreen
+
+    @ContributesAndroidInjector(
+            modules = [FollowModule::class]
+    )
+    abstract fun contributeFollowScreen(): FollowScreen
+
 //    @ContributesAndroidInjector(
 //            modules = [ChannelModule::class, FragmentBuildersModule::class]
 //    )
 //    abstract fun contributeChannelActivity(): ChannelActivity
 //
-//    @ContributesAndroidInjector(
-//            modules = [ReportGameModule::class]
-//    )
-//    abstract fun contributeReportGameActivity(): ReportGameActivity
-//
-//    @ContributesAndroidInjector(
-//            modules = [ReportUserModule::class]
-//    )
-//    abstract fun contributeReportUserActivity(): ReportUserActivity
-//
-//    @ContributesAndroidInjector(
-//            modules = [ReportPostModule::class]
-//    )
-//    abstract fun contributeReportPostActivity(): ReportPostActivity
+    @ContributesAndroidInjector(
+            modules = [ReportGameModule::class]
+    )
+    abstract fun contributeReportGameActivity(): ReportGameActivity
+
+    @ContributesAndroidInjector(
+            modules = [ReportUserModule::class]
+    )
+    abstract fun contributeReportUserActivity(): ReportUserActivity
+
+    @ContributesAndroidInjector(
+            modules = [ReportPostModule::class]
+    )
+    abstract fun contributeReportPostActivity(): ReportPostActivity
 
     @Binds
     @IntoMap
     @ViewModelKey(NewFeedViewModel::class)
     abstract fun bindViewModel(newFeedViewModel: NewFeedViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(GalleryViewModel::class)
+    abstract fun bindGalleryViewModel(galleryViewModel: GalleryViewModel): ViewModel
 
 }

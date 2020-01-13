@@ -43,5 +43,7 @@ data class GameEntity(
     @Json(name = "following")
     var follow: String? = null,
     @Json(name = "post")
-    var post: String? = null
+    var post: String? = null,
+    @Json(name = "imgCover")
+    var imgCover: String? = null
 ) : Base()

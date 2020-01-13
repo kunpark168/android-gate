@@ -3,11 +3,15 @@ package com.anhtam.gate9.session
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.anhtam.domain.v2.User
 import com.anhtam.gate9.di.scope.MainScope
 import com.anhtam.gate9.navigation.Navigation
+import com.anhtam.gate9.repository.SocialRepository
 import com.anhtam.gate9.storage.StorageManager
+import com.anhtam.gate9.utils.AbsentLiveData
 import com.anhtam.gate9.v2.auth.login.LoginScreen
+import of.bum.network.helper.Resource
 import javax.inject.Inject
 
 /*
@@ -16,56 +20,63 @@ import javax.inject.Inject
  */
 @MainScope
 class SessionManager @Inject constructor(
-        val navigation: Navigation
+        val navigation: Navigation,
+        private val mAuthClient: AuthClient,
+        private val repository: SocialRepository
 ) {
 
-    private val cachedUser = MediatorLiveData<AuthResource<User>>()
+    private val mAccessToken = MediatorLiveData<AuthResource<String>>()
+    val cachedAccessToken: MutableLiveData<AuthResource<String>>
+        get() = mAccessToken
 
-    private val _accessToken = MutableLiveData<AuthResource<String>>()
-    val mAccessToken: LiveData<AuthResource<String>>
-        get() = _accessToken
+    fun initialize(){
+        mAccessToken.value = AuthResource.loading(null)
+        val cachedAccessToken = StorageManager.getAccessToken()
+        if (cachedAccessToken.isEmpty()){
+            mAccessToken.value = AuthResource.logout()
+        } else {
+            mAccessToken.value = AuthResource.authenticated(cachedAccessToken)
+        }
+    }
 
-    val user: MutableLiveData<AuthResource<User>>
-        get() = cachedUser
+    fun logout(){
+        mAccessToken.value = AuthResource.logout()
+        StorageManager.deleteAll()
+    }
 
-    init {
-        cachedUser.value = AuthResource.logout()
+    val cachedUser: LiveData<Resource<User>> = Transformations.switchMap(cachedAccessToken){
+        if (it == null || it.status != AuthResource.AuthStatus.AUTHENTICATED) AbsentLiveData.create()
+        else repository.getUserDetail()
+    }
+
+    fun authenticatedWithEmail(email: String, password: String){
+        mAuthClient.loginWithPassword(email, password)
+        val source = mAuthClient.mAccessToken
+        mAccessToken.value = AuthResource.loading(null)
+        mAccessToken.addSource(source) { userAuthResource ->
+            when(userAuthResource.status){
+                AuthResource.AuthStatus.AUTHENTICATED -> {
+                    StorageManager.setAccessToken(userAuthResource.data!!)
+                    mAccessToken.value = userAuthResource
+                    mAccessToken.removeSource(source)
+                }
+                AuthResource.AuthStatus.NOT_AUTHENTICATED -> {
+                    mAccessToken.value = userAuthResource
+                    mAccessToken.removeSource(source)
+                }
+                AuthResource.AuthStatus.ERROR -> {
+                    mAccessToken.value = AuthResource.logout()
+                    mAccessToken.removeSource(source)
+                }
+                AuthResource.AuthStatus.LOADING -> {}
+            }
+        }
     }
 
     fun checkLogin(): Boolean{
-        return if (StorageManager.getAccessToken().isEmpty()){
+        return if (cachedAccessToken.value?.status != AuthResource.AuthStatus.AUTHENTICATED){
             navigation.addFragment(LoginScreen.newInstance(false))
             return false
         } else true
     }
-
-    fun checkAuthentication(){
-
-    }
-
-    fun logOut(){
-        cachedUser.value = AuthResource.logout()
-    }
-
-//
-//    fun checkLogin(directToLogin: Boolean = true): Boolean{
-//        return when(cachedUser.value?.status){
-//            AuthResource.AuthStatus.AUTHENTICATED -> {
-//                true
-//            }
-//            AuthResource.AuthStatus.ERROR -> {
-//                false
-//            }
-//            AuthResource.AuthStatus.LOADING -> {
-//                false
-//            }
-//            AuthResource.AuthStatus.NOT_AUTHENTICATED -> {
-//                if (directToLogin) navigation.addFragment(LoginScreen.newInstance())
-//                false
-//            }
-//            null -> {
-//                false
-//            }
-//        }
-//    }
 }

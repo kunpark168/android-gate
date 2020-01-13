@@ -34,9 +34,9 @@ class ReportUserActivity : DaggerNavigationFragment() {
         csIPA.debounceClick { chooesTypeReport(ReportGameType.IPA.type) }
         csPC.debounceClick { chooesTypeReport(ReportGameType.PC.type) }
         csOtherReason.debounceClick { chooesTypeReport(ReportGameType.UNKNOW.type) }
-
-        csBack.debounceClick { navigation?.back() }
     }
+
+    override fun menuRes() = R.menu.chat_avatar_report_menu
 
     private fun chooesTypeReport(type: Int){
         imgGooglePlay.setImageDrawable(if(type == ReportGameType.GOOGLE_PLAY.type) resources.getDrawable(R.drawable.ic_checked_radio) else

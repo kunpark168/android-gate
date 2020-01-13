@@ -3,6 +3,7 @@ package com.anhtam.gate9.adapter
 import android.view.View
 import com.anhtam.domain.v2.GameEntity
 import com.anhtam.gate9.R
+import com.anhtam.gate9.utils.toImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -21,17 +22,17 @@ class GameQuickAdapter() :
             Glide.with(mContext)
                     .applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_holder_banner)
                     .error(R.drawable.img_holder_banner))
-                    .load(unwrappedGame.avatar)
+                    .load(unwrappedGame.avatar?.toImage())
                     .centerCrop()
                     .into(imgAvatarGame)
-            val theme = unwrappedGame.photos // Xu ly
+            val theme = unwrappedGame.imgCover // Xu ly
             if (theme == null) {
                 imgBannerGame.visibility = View.GONE
             } else {
                 Glide.with(mContext)
                         .applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_holder_banner)
                         .error(R.drawable.img_holder_banner))
-                        .load(theme)
+                        .load(theme.toImage())
                         .into(imgBannerGame)
             }
             tvCategoryGame?.text = Phrase.from(context?.getString(R.string.game_type_and_download))

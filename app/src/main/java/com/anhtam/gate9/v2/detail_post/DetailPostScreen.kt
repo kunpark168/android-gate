@@ -1,10 +1,5 @@
 package com.anhtam.gate9.v2.detail_post
 
-import android.Manifest
-import android.app.Activity
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.Html
@@ -15,25 +10,22 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.domain.v2.PostEntity
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.ChooseGalleryAdapter
 import com.anhtam.gate9.adapter.v2.CommentAdapter
 import com.anhtam.gate9.adapter.v2.PhotoAdapter
-import com.anhtam.gate9.config.Config
-import com.anhtam.gate9.session.SessionManager
 import com.anhtam.gate9.share.view.donate.DonateDialog
-import com.anhtam.gate9.utils.FileUtils
-import com.anhtam.gate9.utils.PermissionUtils
 import com.anhtam.gate9.utils.convertInt
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.reaction.ReactionScreen
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.auth.login.LoginScreen
-import com.anhtam.gate9.v2.createpost.CreatePostScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
-import com.anhtam.gate9.v2.main.DaggerNavigationFragment
-import com.anhtam.gate9.vo.IllegalReturn
+import com.anhtam.gate9.v2.report.post.ReportPostActivity
+import com.anhtam.gate9.v2.shared.AbstractGalleryFragment
+import com.anhtam.gate9.v2.shared.MultiChooseImageScreen
 import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -42,24 +34,15 @@ import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.bottom_bar_type_layout.*
 import kotlinx.android.synthetic.main.detail_post_screen.*
 import of.bum.network.helper.Resource
-import of.bum.network.v2.MediaService
-import okhttp3.MediaType
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import timber.log.Timber
-import java.io.File
 import javax.inject.Inject
 import javax.inject.Named
 
-open class DetailPostScreen private constructor(
+class DetailPostScreen private constructor(
         private val _post: PostEntity,
         private val _type: Detail,
         private val mListener: ((Reaction)-> Unit)?
-): DaggerNavigationFragment(), INavigator{
+): AbstractGalleryFragment(), INavigator{
 
     override fun toLogin() {
         navigation?.addFragment(LoginScreen.newInstance(false))
@@ -79,7 +62,6 @@ open class DetailPostScreen private constructor(
     }
 
     companion object{
-        const val REQUEST_CODE_READ_EXTERNAL_STORAGE = 4
         fun newInstance(postEntity: PostEntity, type: Detail, listener: ((Reaction)->Unit)? = null) = DetailPostScreen(postEntity, type, listener)
     }
 
@@ -90,12 +72,7 @@ open class DetailPostScreen private constructor(
 
     @Inject lateinit var mPhotoAdapter: PhotoAdapter
     @Inject lateinit var mAdapter: CommentAdapter
-    @Inject lateinit var mSessionManager: SessionManager
     @Inject lateinit var mGalleryAdapter: ChooseGalleryAdapter
-    private var mMedia = arrayListOf<MultipartBody.Part>()
-    private var mImage: File? = null
-    @Inject lateinit var mediaService: MediaService
-    private var mPhotos = arrayListOf<String>()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -109,6 +86,15 @@ open class DetailPostScreen private constructor(
     }
 
     override fun menuRes() = R.menu.menu_chat_search_more
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.icReport -> {
+                navigation?.addFragment(ReportPostActivity.newInstance())
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
     private fun init() {
         viewModel.initialize(_post, this)
@@ -142,11 +128,9 @@ open class DetailPostScreen private constructor(
     private fun initGalleryRv(){
         mGalleryAdapter.setOnItemChildClickListener { _, _, position ->
             mGalleryAdapter.remove(position)
-            mMedia.removeAt(position)
             if (mGalleryAdapter.data.isEmpty()){
                 rvImage?.visibility = View.GONE
-                imgSend?.visibility = View.GONE
-                rightLayout?.visibility = View.VISIBLE
+                noneTypeMode()
             }
         }
         rvImage?.adapter = mGalleryAdapter
@@ -164,6 +148,13 @@ open class DetailPostScreen private constructor(
         rvComment?.layoutManager = LinearLayoutManager(context)
         rvComment?.adapter = mAdapter
         rvComment?.isNestedScrollingEnabled = false
+    }
+
+    override fun onSelectedImage(urls: List<String>) {
+        super.onSelectedImage(urls)
+        mGalleryAdapter.setNewData(urls)
+        rvImage?.visibility = View.VISIBLE
+        readySendMode()
     }
 
     private fun observer(){
@@ -218,7 +209,10 @@ open class DetailPostScreen private constructor(
         tvContent?.text = Html.fromHtml(unwrapPost.content ?: "")
         tvTime?.text = unwrapPost.createdDate
         val react = unwrapPost.like?.convertInt() ?: 0
-        reactionView?.initReact(Reaction.react(react))
+        val like = unwrapPost.totalLike.convertInt()
+        val dislike = unwrapPost.totalDislike.convertInt()
+        val love = unwrapPost.totalLove.convertInt()
+        reactionView?.initialize(like, dislike, love, Reaction.react(react))
 
         // Set photo
         // photos
@@ -299,6 +293,9 @@ open class DetailPostScreen private constructor(
         csShare?.setOnClickListener{
             viewModel.sharePost()
         }
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+        }
         btnDonate?.setOnClickListener {
             val unwrapContext = context ?: return@setOnClickListener
             DonateDialog(unwrapContext).show()
@@ -315,28 +312,28 @@ open class DetailPostScreen private constructor(
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                imgSend.visibility = if(etPost.length() > 0) View.VISIBLE else View.GONE
-                rightLayout.visibility = if(etPost.length() <= 0) View.VISIBLE else View.GONE
+                if (etPost.length() > 0) readySendMode()
+                if (etPost.length() == 0 && mGalleryAdapter.data.isEmpty()) noneTypeMode()
             }
-
         })
         /*
-         * 1) Post comment
+         *  1) Hide keyboard
+         *  2) Show progress
+         *  3) Cached data
+         *  4) Clear UI
+         *  5) post comment
+         *
+         *
          *   -> Success -> Fetch comment + Update UI
          */
         imgSend?.setOnClickListener {
             hideKeyboard()
             showProgress()
-            uploadImage()
+            postComment()
         }
 
         imgChooseImg?.setOnClickListener {
-            val unwrapContext = context ?: return@setOnClickListener
-            if (ContextCompat.checkSelfPermission(unwrapContext, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                PermissionUtils.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE_READ_EXTERNAL_STORAGE)
-            } else {
-                openSelectedImageGallery()
-            }
+            selectedMultiImages()
         }
 
         // navigation
@@ -355,54 +352,19 @@ open class DetailPostScreen private constructor(
         COMMENT, POST
     }
 
-
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == Config.REQUEST_CODE_CHOOSE_IMAGE_FROM_CREATE_POST
-                && resultCode == Activity.RESULT_OK
-                && null != data) {
-            val unwrapContext = context ?: return
-            data.data?.let {
-                val path = FileUtils.getPath(unwrapContext, it) ?: return
-                mImage = File(path)
-                mGalleryAdapter.addData(path)
-                if (rvImage?.visibility == View.GONE) {
-                    rvImage?.visibility = View.VISIBLE
-                }
-                imgSend.visibility = View.VISIBLE
-                rightLayout.visibility = View.GONE
-                val reqFile = RequestBody.create(MediaType.parse("image/*"), mImage)
-                val body = MultipartBody.Part.createFormData("files", mImage!!.name, reqFile)
-                mMedia.add(body)
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data)
+    private fun readySendMode(){
+        imgSend?.visibility = View.VISIBLE
+        rightLayout?.visibility = View.GONE
     }
 
-    private fun uploadImage() {
-        mediaService.upload(mMedia).enqueue(object: Callback<List<String>> {
-            override fun onFailure(call: Call<List<String>>, t: Throwable) {
-                hideProgress()
-                Timber.d("loi")
-            }
-
-            override fun onResponse(call: Call<List<String>>, response: Response<List<String>>) {
-                Timber.d("thanh cong ne")
-                if (response.isSuccessful
-                        && response.code() == 200
-                        && response.body() != null) {
-                    mPhotos.addAll(response.body()!!)
-                    postComment()
-                } else {
-                    hideProgress()
-                }
-            }
-        })
+    private fun noneTypeMode(){
+        imgSend?.visibility = View.GONE
+        rightLayout?.visibility = View.VISIBLE
     }
 
     private fun postComment(){
         val content = etPost?.text?.toString()
-        viewModel.postComment(content, mPhotos.joinToString(",")).observe(viewLifecycleOwner, Observer {
+        viewModel.postComment(content, mGalleryAdapter.data.joinToString(",")).observe(viewLifecycleOwner, Observer {
             when(it){
                 is Resource.Success ->{
                     hideProgress()
@@ -414,28 +376,14 @@ open class DetailPostScreen private constructor(
                 else ->{}
             }
         })
+        initializeState()
+    }
+
+    private fun initializeState(){
         etPost?.setText("")
-    }
-
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (grantResults.firstOrNull() != PackageManager.PERMISSION_GRANTED) return
-        when (requestCode) {
-            CreatePostScreen.REQUEST_CODE_READ_EXTERNAL_STORAGE -> openSelectedImageGallery()
-        }
-    }
-
-    private fun openSelectedImageGallery() {
-        val intent = Intent()
-        intent.type = "image/*"
-//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        intent.action = Intent.ACTION_GET_CONTENT
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            startActivityForResult(Intent.createChooser(intent,"Select picture"), Config.REQUEST_CODE_CHOOSE_IMAGE_FROM_CREATE_POST)
-        } else {
-            startActivityForResult(intent, Config.REQUEST_CODE_CHOOSE_IMAGE_FROM_CREATE_POST)
-        }
+        mGalleryAdapter.data.clear()
+        noneTypeMode()
+        rvImage?.visibility = View.GONE
     }
 }
 

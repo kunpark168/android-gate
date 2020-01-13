@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp40" />
         <TextView
+            android:id="@+id/tvFavorite"
             app:layout_constraintTop_toBottomOf="@+id/imgFavorite"
             android:gravity="center"
             android:textSize="@dimen/sp_10"
@@ -41,12 +42,13 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp40" />
         <TextView
+            android:id="@+id/tvLike"
             app:layout_constraintTop_toBottomOf="@+id/imgLike"
             android:gravity="center"
             android:textSize="@dimen/sp_10"
             android:textColor="@color/black"
             android:fontFamily="@font/roboto_light"
-            android:text="@string/like_feelling"
+            android:text="@string/like_label"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp25" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -65,12 +67,13 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp40" />
         <TextView
+            android:id="@+id/tvDislike"
             app:layout_constraintTop_toBottomOf="@+id/imgDislike"
             android:gravity="center"
             android:textSize="@dimen/sp_10"
             android:textColor="@color/black"
             android:fontFamily="@font/roboto_light"
-            android:text="@string/dislike_feelling"
+            android:text="@string/dislike_label"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp25" />
     </androidx.constraintlayout.widget.ConstraintLayout>

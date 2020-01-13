@@ -27,6 +27,8 @@ data class PostEntity(
     var totalReply: String = "0",
     @Json(name = "total_love")
     var totalLove: String = "0",
+    @Json(name = "point")
+    var point: String = "0",
     @Json(name = "game")
     var game: Game? = null,
     @Json(name = "child")

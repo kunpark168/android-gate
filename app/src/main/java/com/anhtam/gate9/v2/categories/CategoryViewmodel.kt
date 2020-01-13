@@ -7,7 +7,6 @@ import com.anhtam.domain.Banner
 import com.anhtam.domain.Game
 import com.anhtam.gate9.repository.GameRepository
 import com.anhtam.gate9.repository.PostRepository
-import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.utils.setValueDiff
 import of.bum.network.helper.Resource
 import javax.inject.Inject
@@ -36,8 +35,8 @@ class CategoryViewmodel @Inject constructor(private val gameRepository: GameRepo
         get() = mUserId
 
     fun requestData(){
-        mUserAvatar = StorageManager.getUserAvatar()
-        mUserId = StorageManager.getUserId()
+//        mUserAvatar = mSessionManager.cachedUser.value?.data?.mAvatar
+//        mUserId = mSessionManager.cachedUser.value?.data?.mUserId ?: 0
 
         val newDataBanner = gameRepository.getMainBanner()
         mBanner.addSource(newDataBanner) {

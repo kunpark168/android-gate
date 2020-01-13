@@ -11,25 +11,14 @@ import javax.inject.Inject
 
 
 class LoginViewModel @Inject constructor(
-        private val mAuthClient: AuthClient,
-        val mSessionManager: SessionManager) : ViewModel() {
+        private val mSessionManager: SessionManager) : ViewModel() {
 
-    fun loginWithEmailAndPassword(email: String, password: String, errorLogin: (String)->Unit, success: () -> Unit) {
+    fun loginWithEmailAndPassword(email: String, password: String, errorLogin: (String)->Unit) {
         /* Local validate */
         if(!validate(email, password, errorLogin)) return
 
         /* Send request */
-        mAuthClient.loginWithPassword(email, password, object: AuthCallBack{
-            override fun onAuthorized() {
-                success()
-            }
-
-            override fun onUnauthorized(message: String) {
-                errorLogin(message)
-            }
-
-        })
-
+        mSessionManager.authenticatedWithEmail(email, password)
     }
 
     private fun validate(email: String, password: String, errorLogin: (String) -> Unit): Boolean {

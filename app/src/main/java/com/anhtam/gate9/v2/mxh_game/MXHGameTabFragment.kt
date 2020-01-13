@@ -65,7 +65,15 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
         mViewModel.type = mType
         mViewModel.request(mType)
         initRecyclerView()
+        initEvents()
         observer()
+    }
+
+    private fun initEvents(){
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+            mViewModel.request(mType)
+        }
     }
 
     private fun initRecyclerView() {
@@ -116,7 +124,7 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
             val data = item ?: return
             view.tvTitle.text = item.name
             Glide.with(mContext)
-                    .load(data.avatar?.toImage())
+                    .load(data.imgCover?.toImage())
                     .apply(bannerOptions)
                     .into(view.imgBannerGame)
             Glide.with(mContext)

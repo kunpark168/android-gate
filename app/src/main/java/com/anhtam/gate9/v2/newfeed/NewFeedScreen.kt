@@ -28,7 +28,7 @@ import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.categories.CategoryTab
 import com.anhtam.gate9.v2.categories.FeatureScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
-import com.anhtam.gate9.v2.main.ContainerFragment
+import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.mxh_game.MXHGameScreen
 import com.anhtam.gate9.v2.notification.NotificationFragment
 import com.anhtam.gate9.v2.main.member.MemberHomeFragment
@@ -40,11 +40,10 @@ import kotlinx.android.synthetic.main.new_feed_screen.*
 import kotlinx.android.synthetic.main.toolbar_new_feed.*
 import of.bum.network.helper.Resource
 import timber.log.Timber
-import java.lang.NumberFormatException
 import javax.inject.Inject
 import javax.inject.Named
 
-class NewFeedScreen : ContainerFragment() {
+class NewFeedScreen : DaggerNavigationFragment() {
 
     fun update() {
         Timber.d("War")
@@ -76,6 +75,7 @@ class NewFeedScreen : ContainerFragment() {
     }
 
     private fun init() {
+        loadData()
         initCommentRecyclerView()
         initGamesRecyclerView()
 
@@ -91,9 +91,7 @@ class NewFeedScreen : ContainerFragment() {
             when(it) {
                 is Resource.Success -> {
                     hideProgress()
-                    bindingBanner(it.data?.mBanner)
-                    bindingGroupGames(it.data?.mGames)
-                    bindingComment(it.data?.mListing)
+                    bindingComment(it.data)
                 }
                 is Resource.Error ->{
                     hideProgress()
@@ -103,34 +101,35 @@ class NewFeedScreen : ContainerFragment() {
                 }
             }
         })
-        mPostViewModel._post.observe(viewLifecycleOwner, Observer {resource ->
-            when(resource) {
+        mViewModel.banners.observe(viewLifecycleOwner, Observer {
+            when(it) {
                 is Resource.Success -> {
-                    val data = resource.data?.wrap
-                    if (data.isNullOrEmpty()) {
-                        mCommentAdapter.loadMoreEnd()
-                    } else {
-                        if (mPostViewModel.page == 0) {
-                            mCommentAdapter.setNewData(data)
-                        } else {
-                            mCommentAdapter.addData(data)
-                        }
-                        mCommentAdapter.loadMoreComplete()
-                    }
+                    bindingBanner(it.data)
                 }
-                is Resource.Loading -> {
-
+                is Resource.Error ->{
                 }
                 else -> {
-                    mCommentAdapter.loadMoreFail()
+
+                }
+            }
+        })
+        mViewModel.games.observe(viewLifecycleOwner, Observer {
+            when(it) {
+                is Resource.Success -> {
+                    bindingGroupGames(it.data)
+                }
+                is Resource.Error ->{
+                }
+                else -> {
+
                 }
             }
         })
 
-        mMainViewModel._user.observe(viewLifecycleOwner, Observer {
+        mSessionManager.cachedUser.observe(viewLifecycleOwner, Observer {
+            if (it == null) return@Observer
             val avatar = when(it) {
-                is Resource.Loading -> ""
-                is Resource.Error -> ""
+                is Resource.Loading, is Resource.Error -> ""
                 is Resource.Success -> it.data?.mAvatarPath
             }
             avatar?.run {
@@ -140,7 +139,6 @@ class NewFeedScreen : ContainerFragment() {
                         .into(imgAvatar)
             }
             mUserId = it.data?.mUserId ?: return@Observer
-            StorageManager.setUserId(mUserId.toString())
         })
     }
 
@@ -150,6 +148,8 @@ class NewFeedScreen : ContainerFragment() {
 
     private fun loadData() {
         mViewModel.loadNewFeed()
+        mViewModel.getBanner()
+        mViewModel.getGames()
     }
 
     private fun initCommentRecyclerView() {
@@ -227,11 +227,7 @@ class NewFeedScreen : ContainerFragment() {
             navigation?.addFragment(MXHGameScreen.newInstance())
         }
         imgAvatar?.setOnClickListener {
-            val idUser: Int = try{
-                StorageManager.getUserId().toInt()
-            } catch (e: NumberFormatException){
-                return@setOnClickListener
-            }
+            val idUser: Int = mUserId
             navigation?.addFragment(UserDiscussionScreen.newInstance(idUser, Category.Member))
         }
     }

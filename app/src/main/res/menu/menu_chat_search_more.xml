@@ -11,7 +11,7 @@
         android:id="@+id/icSearch"
         android:title="@string/search_menu"
         android:icon="@drawable/icon_search_menu"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/icReport"

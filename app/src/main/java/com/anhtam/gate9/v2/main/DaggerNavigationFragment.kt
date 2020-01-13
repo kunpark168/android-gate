@@ -12,21 +12,25 @@ import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.NavigationFragment
+import com.anhtam.gate9.session.SessionManager
 import com.anhtam.gate9.utils.DialogProgressUtils
-import com.anhtam.gate9.v2.MainViewModel
+import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.viewmodel.ViewModelProviderFactory
+import com.bumptech.glide.Glide
+import kotlinx.android.synthetic.main.layout_avatar_menu.view.*
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 abstract class DaggerNavigationFragment : NavigationFragment(){
 
     @Inject lateinit var vmFactory: ViewModelProviderFactory
+    @Inject lateinit var mSessionManager: SessionManager
 
     private var mProgressDialog: DialogProgressUtils? = null
-    protected val mMainViewModel by viewModels<MainViewModel>({requireActivity()}, {vmFactory})
+    private var mAvatar: String? = null
 
     @MenuRes
     open fun menuRes():  Int?  = null
@@ -37,7 +41,17 @@ abstract class DaggerNavigationFragment : NavigationFragment(){
         super.onViewCreated(view, savedInstanceState)
         initStatus()
         initToolbar(view)
-        mMainViewModel.getUserDetail()
+        observer()
+    }
+
+    private fun observer(){
+        mSessionManager.cachedUser.observe(viewLifecycleOwner, Observer {
+            if (it == null) return@Observer
+            mAvatar = it.data?.mAvatar ?: it.data?.mAvatarPath
+            mAvatar?.let {
+                activity?.invalidateOptionsMenu()
+            }
+        })
     }
 
     private fun initStatus(){
@@ -78,6 +92,12 @@ abstract class DaggerNavigationFragment : NavigationFragment(){
         menu.clear()
         menuRes()?.run {
             inflater.inflate(this, menu)
+        }
+        val avatarItem = menu.findItem(R.id.avatar)?.actionView?.viewAvatarImageView
+        avatarItem?.run {
+            Glide.with(this)
+                    .load(mAvatar?.toImage())
+                    .into(this)
         }
         super.onCreateOptionsMenu(menu, inflater)
     }

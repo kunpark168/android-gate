@@ -198,7 +198,7 @@
                 android:layout_width="15dp"
                 android:layout_height="match_parent" />
             <TextView
-                android:id="@+id/tvCountFire"
+                android:id="@+id/pointTextView"
                 tools:text="0"
                 android:textSize="12sp"
                 android:gravity="center"

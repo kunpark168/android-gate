@@ -70,7 +70,7 @@
 
     </FrameLayout>
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgAvatar"
         style="@style/MaterialIconSize"
         android:src="@drawable/img_avatar_holder"

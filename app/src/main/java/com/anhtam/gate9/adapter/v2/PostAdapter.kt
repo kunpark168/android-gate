@@ -86,6 +86,7 @@ class PostAdapter @Inject constructor(
         view.likeTextView.text = unwrapPost.totalLike
         view.dislikeTextView.text = unwrapPost.totalDislike
         view.commentTextView.text = unwrapPost.totalReply
+        view.pointTextView.text = unwrapPost.point
         view.loveTextView.text = unwrapPost.totalLove
         view.dateTextView.text = unwrapPost.createdDate
         val react = Reaction.react(unwrapPost.like?.convertInt()?:0)

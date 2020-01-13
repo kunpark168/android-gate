@@ -12,6 +12,7 @@ import com.anhtam.gate9.v2.discussion.common.discussion.DiscussionGameFragment
 import com.anhtam.gate9.v2.discussion.common.document.GameDocumentFragment
 import com.anhtam.gate9.v2.discussion.common.info.GameInfoFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
+import com.anhtam.gate9.v2.report.game.ReportGameActivity
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_shared_discussion.*
@@ -24,6 +25,10 @@ class GameDiscussionScreen: DiscussionActivity() {
     private lateinit var mGameId: String
     override val fragmentInfo: Fragment
         get() = GameInfoFragment.newInstance()
+
+    override fun navigateToReport() {
+        navigation?.addFragment(ReportGameActivity.newInstance())
+    }
 
     override val headerFragment: Fragment
         get() = GameHeaderFragment.newInstance()

@@ -1,7 +1,9 @@
 package of.bum.network.v2
 
 import androidx.lifecycle.LiveData
+import com.anhtam.domain.Banner
 import com.anhtam.domain.Base
+import com.anhtam.domain.Game
 import com.anhtam.domain.v2.*
 import com.anhtam.domain.v2.wrap.WrapBase
 import com.anhtam.domain.v2.wrap.WrapGame
@@ -10,10 +12,8 @@ import com.anhtam.domain.v2.wrap.WrapListing
 import of.bum.network.helper.ApiResponse
 import of.bum.network.helper.Resource
 import of.bum.network.helper.RestResponse
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import okhttp3.MultipartBody
+import retrofit2.http.*
 
 interface SocialService {
     @GET("login")
@@ -23,7 +23,13 @@ interface SocialService {
     fun getListPosts(
             @Query("page") page: Int = 0,
             @Query("limit") limit: Int = 60
-    ): LiveData<ApiResponse<RestResponse<WrappedHome>>>
+    ): LiveData<ApiResponse<RestResponse<List<PostEntity>>>>
+
+    @GET("social/get-banner")
+    fun getBanners(): LiveData<ApiResponse<RestResponse<List<Banner>>>>
+
+    @GET("social/get-game-nominate")
+    fun getGameNominate(): LiveData<ApiResponse<RestResponse<List<Game>>>>
 
     @GET("social/get-post-detail")
     fun getDetailPosts(@Query("postId") postId: Long,
@@ -44,7 +50,7 @@ interface SocialService {
             @Query("tab") type: Int,
             @Query("page") page: Int,
             @Query("limit") limit: Int
-    ): LiveData<ApiResponse<RestResponse<WrapListing>>>
+    ): LiveData<ApiResponse<RestResponse<List<PostEntity>>>>
 
     @GET("social/get-list-game-by-user")
     fun getGameRelatedToUser(
@@ -81,4 +87,17 @@ interface SocialService {
 
     @POST("social/post-view-forum")
     fun postViewForum(@Query("commentId") commentId: Int): LiveData<ApiResponse<Base>>
+
+    @Multipart
+    @POST("social/upload/file")
+    fun upload(
+            @Part file: List<MultipartBody.Part>
+    ): LiveData<ApiResponse<List<String>>>
+
+    // Get data following
+    @GET("social/get-following-info")
+    fun getFollowingInfo(
+            @Query("tab") tab: Int,
+            @Query("page") page: Int,
+            @Query("limit") limit: Int = 40): LiveData<ApiResponse<RestResponse<List<PostEntity>>>>
 }
