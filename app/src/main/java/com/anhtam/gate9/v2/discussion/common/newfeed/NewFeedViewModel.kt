@@ -2,15 +2,14 @@ package com.anhtam.gate9.v2.discussion.common.newfeed
 
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import com.anhtam.domain.v2.PostEntity
-import com.anhtam.domain.v2.wrap.WrapListing
+import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.repository.SocialRepository
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 
 class NewFeedViewModel @Inject constructor(private val socialRepository: SocialRepository) : ViewModel() {
 
-    val _post = MediatorLiveData<Resource<List<PostEntity>>>()
+    val _post = MediatorLiveData<Resource<List<Post>>>()
     private var mPage = 0
     val page: Int
         get() = mPage

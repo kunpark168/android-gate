@@ -1,7 +1,7 @@
 package com.anhtam.gate9.adapter.v2
 
 import android.text.Html
-import com.anhtam.domain.v2.PostEntity
+import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.share.view.MoreDialog
@@ -20,7 +20,7 @@ import javax.inject.Named
 class ChildCommentAdapter @Inject constructor(
         val navigation: Navigation,
         @Named("avatar") val avatarOptions: RequestOptions
-): BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.child_comment_item_layout, arrayListOf()){
+): BaseQuickAdapter<Post, BaseViewHolder>(R.layout.child_comment_item_layout, arrayListOf()){
 
     init {
         setOnItemChildClickListener { _, view, position ->
@@ -37,7 +37,7 @@ class ChildCommentAdapter @Inject constructor(
         }
     }
 
-    override fun convert(helper: BaseViewHolder?, item: PostEntity?) {
+    override fun convert(helper: BaseViewHolder?, item: Post?) {
         val comment = item ?: return
         val view = helper?.itemView ?: return
         // Set content of Post
@@ -59,7 +59,7 @@ class ChildCommentAdapter @Inject constructor(
                 .addOnClickListener(R.id.moreImageView)
     }
 
-    private fun showMoreDialog(comment: PostEntity){
+    private fun showMoreDialog(comment: Post){
         val mMoreDialog = MoreDialog(mContext, object : MoreDialog.IMore {
             override fun onreport() {
 //                        ReportPostActivity.start(mContext as BaseActivity)
@@ -69,7 +69,7 @@ class ChildCommentAdapter @Inject constructor(
         mMoreDialog.show()
     }
 
-    private fun toDetailComment(comment: PostEntity){
+    private fun toDetailComment(comment: Post){
         navigation.addFragment(DetailPostScreen.newInstance(comment, DetailPostScreen.Detail.COMMENT))
     }
 

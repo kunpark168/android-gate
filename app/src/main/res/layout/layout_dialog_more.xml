@@ -282,7 +282,7 @@
                     android:layout_height="match_parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!--Block PostEntity-->
+            <!--Block Post-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/csBlockComment"
                 android:paddingStart="@dimen/dp15"

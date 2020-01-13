@@ -1,9 +1,8 @@
 package com.anhtam.gate9.adapter.v2
 
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.anhtam.domain.v2.User
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.utils.toImage
@@ -54,7 +53,7 @@ class MemberAdapter @Inject constructor(
         view.nameTextView?.text = user.mName ?: ""
         view.userIdTextView?.text = user.mId?.toString() ?: ""
         Glide.with(mContext)
-                .load(user.mAvatarPath?.toImage())
+                .load(user.mAvatar?.toImage())
                 .apply(avatarRequestOptions)
                 .into(view.avatarImageView)
         helper.addOnClickListener(R.id.nameTextView)

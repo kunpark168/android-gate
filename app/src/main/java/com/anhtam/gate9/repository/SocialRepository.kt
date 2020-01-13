@@ -4,9 +4,9 @@ import com.anhtam.domain.Banner
 import com.anhtam.domain.Base
 import com.anhtam.domain.Game
 import com.anhtam.domain.v2.*
+import com.anhtam.domain.v2.wrap.WrapComments
 import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.domain.v2.wrap.WrapGames
-import com.anhtam.domain.v2.wrap.WrapListing
 import of.bum.network.FetchBoundResource
 import of.bum.network.helper.Lv1FetchResource
 import of.bum.network.helper.Lv2FetchResource
@@ -19,11 +19,11 @@ import javax.inject.Singleton
 class SocialRepository @Inject constructor(
         val socialService: SocialService
 ) {
-    fun getPostAndCommentByUser(userId: Int, type: Int, page: Int, limit: Int) = object: Lv2FetchResource<List<PostEntity>>(){
+    fun getPostAndCommentByUser(userId: Int, type: Int, page: Int, limit: Int) = object: Lv2FetchResource<List<Post>>(){
         override fun createCall() = socialService.getPostAndCommentByUser(userId, type, page, limit)
     }.asLiveData()
 
-    fun getUserDetail() = object: Lv2FetchResource<User>(){
+    fun getUserDetail() = object: Lv2FetchResource<Userv1>(){
         override fun createCall() = socialService.getInfo()
     }.asLiveData()
 
@@ -35,12 +35,12 @@ class SocialRepository @Inject constructor(
         override fun createCall() = socialService.getDataRelatedToUser(userId, type, page, limit)
     }.asLiveData()
 
-    fun getOtherUserInfoById(userId: Int) = object: Lv2FetchResource<User>(){
+    fun getOtherUserInfoById(userId: Int) = object: Lv2FetchResource<Userv1>(){
         override fun createCall() = socialService.getOtherUserInfoById(userId)
     }.asLiveData()
 
-    fun getGamesByTab(pageNumber: Int, tab: Int) = object: FetchBoundResource<List<GameEntity>>() {
-        override fun createCall() = socialService.GetMXHGame(tab, pageNumber)
+    fun getGamesByTab(pageNumber: Int, tab: Int) = object: FetchBoundResource<List<Gamev1>>() {
+        override fun createCall() = socialService.getMXHGame(tab, pageNumber)
     }.asLiveData()
 
     fun react(params: Map<String, Int>) = object : Lv2FetchResource<Base>(){
@@ -48,11 +48,11 @@ class SocialRepository @Inject constructor(
 
     }.asLiveData()
 
-    fun getListingPost() = object : FetchBoundResource<List<PostEntity>>(){
+    fun getListingPost() = object : FetchBoundResource<List<Post>>(){
         override fun createCall() = socialService.getListPosts()
     }.asLiveData()
 
-    fun getFollowingInfo(tab: Int, page: Int) = object : FetchBoundResource<List<PostEntity>>(){
+    fun getFollowingInfo(tab: Int, page: Int) = object : FetchBoundResource<List<Post>>(){
         override fun createCall() = socialService.getFollowingInfo(tab, page)
     }.asLiveData()
 
@@ -60,11 +60,11 @@ class SocialRepository @Inject constructor(
         override fun createCall() = socialService.getBanners()
     }.asLiveData()
 
-    fun getGameNominate() = object : FetchBoundResource<List<Game>>(){
+    fun getGameNominate() = object : FetchBoundResource<List<Gamev2>>(){
         override fun createCall() = socialService.getGameNominate()
     }.asLiveData()
 
-    fun getSocialContact(commentId: Int, tab: Int, page: Int) = object : FetchBoundResource<List<User>>(){
+    fun getSocialContact(commentId: Int, tab: Int, page: Int) = object : FetchBoundResource<List<Userv1>>(){
         override fun createCall() = socialService.getListSocialContact(commentId, tab, page)
     }.asLiveData()
 

@@ -373,7 +373,7 @@
                             app:layout_constraintWidth_percent="0.6"
                             android:layout_height="match_parent"/>
 
-                        <!--PostEntity-->
+                        <!--Post-->
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/csComment"
                             app:layout_constraintWidth_percent="0.2"

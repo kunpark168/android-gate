@@ -461,7 +461,7 @@
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                        <!--PostEntity-->
+                        <!--Post-->
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/csComment"
                             app:layout_constraintWidth_percent="0.2"

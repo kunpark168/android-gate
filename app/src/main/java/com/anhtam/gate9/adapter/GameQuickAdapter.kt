@@ -1,7 +1,7 @@
 package com.anhtam.gate9.adapter
 
 import android.view.View
-import com.anhtam.domain.v2.GameEntity
+import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.gate9.R
 import com.anhtam.gate9.utils.toImage
 import com.bumptech.glide.Glide
@@ -12,9 +12,9 @@ import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.shared_item_game_layout.view.*
 import kotlinx.android.synthetic.main.shared_play_banner_game_layout.view.*
 
-class GameQuickAdapter() :
-        BaseQuickAdapter<GameEntity, BaseViewHolder>(R.layout.shared_item_game_layout) {
-    override fun convert(helper: BaseViewHolder?, item: GameEntity?) {
+class GameQuickAdapter :
+        BaseQuickAdapter<Game, BaseViewHolder>(R.layout.shared_item_game_layout) {
+    override fun convert(helper: BaseViewHolder?, item: Game?) {
         val unwrappedHolder = helper ?: return
         val unwrappedGame = item ?: return
         unwrappedHolder.itemView.apply {
@@ -36,7 +36,7 @@ class GameQuickAdapter() :
                         .into(imgBannerGame)
             }
             tvCategoryGame?.text = Phrase.from(context?.getString(R.string.game_type_and_download))
-                    .put("type", unwrappedGame.gameTypes ?: "")
+                    .put("type", unwrappedGame.gameTypeStr ?: "")
                     .put("size", unwrappedGame.capacity ?: "0MB").format()
             csRating?.init(unwrappedGame.point ?: "0", "-" ?: "0")
 //

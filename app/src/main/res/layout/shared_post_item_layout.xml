@@ -277,7 +277,7 @@
                 android:layout_height="match_parent" />
         </LinearLayout>
 
-        <!--postEntity-->
+        <!--post-->
         <ImageView
             android:id="@+id/commentIcon"
             android:tint="@color/colorGray"

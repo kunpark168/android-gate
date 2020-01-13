@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.anhtam.domain.v2.GameEntity
+import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.gate9.R
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.utils.autoCleared
@@ -118,8 +118,8 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
         })
     }
 
-    inner class Adapter : BaseQuickAdapter<GameEntity, BaseViewHolder>(R.layout.mxh_game_item_layout, arrayListOf()){
-        override fun convert(helper: BaseViewHolder?, item: GameEntity?) {
+    inner class Adapter : BaseQuickAdapter<Game, BaseViewHolder>(R.layout.mxh_game_item_layout, arrayListOf()){
+        override fun convert(helper: BaseViewHolder?, item: Game?) {
             val view = helper?.itemView ?: return
             val data = item ?: return
             view.tvTitle.text = item.name

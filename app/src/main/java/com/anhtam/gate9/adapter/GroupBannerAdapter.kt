@@ -1,7 +1,7 @@
 package com.anhtam.gate9.adapter
 
 import android.content.Context
-import com.anhtam.domain.Game
+import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.gate9.adapter.navigator.IBannerNavigator
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
@@ -28,15 +28,15 @@ class GroupBannerAdapter @Inject constructor(val navigation: Navigation?,
     override fun convert(helper: BaseViewHolder?, item: Game?) {
         val game = item ?: return
         val view = helper?.itemView ?: return
-        val type = game.gameType?.firstOrNull()?.name ?: ""
+        val type = game.gameTypes?.firstOrNull()?.name ?: ""
         view.tvContent?.text = type
         view.tvTitle?.text = game.name ?: ""
         Glide.with(mContext)
-                .load(game.avatarGame?.toImage())
+                .load(game.avatar?.toImage())
                 .apply(bannerOptions)
                 .into(view.imgNewGame)
         view.setOnClickListener {
-            navigation?.addFragment(GameDiscussionScreen.newInstance(game.link ?: (game.avatar ?: ""), game.gameId ?: ""))
+            navigation?.addFragment(GameDiscussionScreen.newInstance("", game.gameId?.toString() ?: ""))
         }
         ifNotNull(helper, item) {
             holder, _ ->

@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.anhtam.domain.Banner
-import com.anhtam.domain.v2.PostEntity
+import com.anhtam.domain.v2.Gamev1
+import com.anhtam.domain.v2.Gamev2
+import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.repository.SocialRepository
 import of.bum.network.helper.Resource
 import javax.inject.Inject
@@ -19,8 +21,8 @@ import javax.inject.Inject
 class NewFeedViewModel @Inject constructor(
         val repository: SocialRepository) : ViewModel() {
 
-    private val _data = MediatorLiveData<Resource<List<PostEntity>>>()
-    val data: LiveData<Resource<List<PostEntity>>>
+    private val _data = MediatorLiveData<Resource<List<Post>>>()
+    val data: LiveData<Resource<List<Post>>>
         get() = _data
 
     var mPage = 0
@@ -30,8 +32,8 @@ class NewFeedViewModel @Inject constructor(
     val banners: LiveData<Resource<List<Banner>>>
         get() = _banners
 
-    private val _games = MediatorLiveData<Resource<List<com.anhtam.domain.Game>>>()
-    val games: LiveData<Resource<List<com.anhtam.domain.Game>>>
+    private val _games = MediatorLiveData<Resource<List<Gamev2>>>()
+    val games: LiveData<Resource<List<Gamev2>>>
         get() = _games
 
     fun loadNewFeed(){

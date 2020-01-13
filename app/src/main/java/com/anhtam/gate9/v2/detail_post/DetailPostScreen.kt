@@ -10,8 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.anhtam.domain.v2.PostEntity
+import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.ChooseGalleryAdapter
 import com.anhtam.gate9.adapter.v2.CommentAdapter
@@ -25,7 +24,6 @@ import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.report.post.ReportPostActivity
 import com.anhtam.gate9.v2.shared.AbstractGalleryFragment
-import com.anhtam.gate9.v2.shared.MultiChooseImageScreen
 import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -39,7 +37,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class DetailPostScreen private constructor(
-        private val _post: PostEntity,
+        private val _post: Post,
         private val _type: Detail,
         private val mListener: ((Reaction)-> Unit)?
 ): AbstractGalleryFragment(), INavigator{
@@ -62,7 +60,7 @@ class DetailPostScreen private constructor(
     }
 
     companion object{
-        fun newInstance(postEntity: PostEntity, type: Detail, listener: ((Reaction)->Unit)? = null) = DetailPostScreen(postEntity, type, listener)
+        fun newInstance(post: Post, type: Detail, listener: ((Reaction)->Unit)? = null) = DetailPostScreen(post, type, listener)
     }
 
     private val viewModel: DetailPostViewModel by viewModels { vmFactory }

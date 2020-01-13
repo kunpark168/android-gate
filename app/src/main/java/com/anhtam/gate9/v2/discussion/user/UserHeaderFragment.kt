@@ -6,8 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.anhtam.domain.v2.User
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
+import com.anhtam.gate9.utils.convertInt
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.discussion.DiscussionViewModel
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
@@ -70,7 +71,7 @@ class UserHeaderFragment : DaggerNavigationFragment() {
 
     private fun bindMember(user: User) {
         Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder))
-                .load(user.mAvatarPath?.toImage())
+                .load(user.mAvatar?.toImage())
                 .into(imgAvatar)
 
         tvUserName?.text = user.mName
@@ -80,18 +81,18 @@ class UserHeaderFragment : DaggerNavigationFragment() {
                 .put("point", user.mPoint)
                 .put("medal", /*user.medal TODO */ "").format()
         tvSlogan?.text = user.mNote
-        val gioitinh = when(user.mGender) {
+        val icon = when(user.mGender?.convertInt()) {
             1 -> R.drawable.ic_female
             2 -> R.drawable.ic_male_circle
             else -> R.drawable.ic_gender
         }
-        Glide.with(this).load(gioitinh)
+        Glide.with(this).load(icon)
                 .into(imgGender)
     }
 
     private fun bindPublisher(user: User) {
         Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder))
-                .load(user.mAvatarPath?.toImage())
+                .load(user.mAvatar?.toImage())
                 .into(imgAvatar)
         tvUserName?.text = user.mName
         csRating?.setColor(true)
@@ -105,12 +106,12 @@ class UserHeaderFragment : DaggerNavigationFragment() {
         tvGameCount?.text = followString
 
         tvSlogan?.text = user.mNote
-        val gioitinh = when(user.mGender) {
+        val icon = when(user.mGender?.convertInt()) {
             1 -> R.drawable.ic_male
             2 -> R.drawable.ic_femail
             else -> R.drawable.ic_gender
         }
-        Glide.with(this).load(gioitinh)
+        Glide.with(this).load(icon)
                 .into(imgGender)
     }
 

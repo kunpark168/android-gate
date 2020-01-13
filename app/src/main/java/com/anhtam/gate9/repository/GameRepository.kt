@@ -3,7 +3,7 @@ package com.anhtam.gate9.repository
 import androidx.lifecycle.LiveData
 import com.anhtam.domain.Banner
 import com.anhtam.domain.Game
-import com.anhtam.domain.GameDTO
+import com.anhtam.domain.v2.Gamev1
 import of.bum.network.FetchBoundResource
 import of.bum.network.helper.ApiResponse
 import of.bum.network.helper.Resource
@@ -41,20 +41,11 @@ class GameRepository @Inject constructor(
         }.asLiveData()
     }
 
-    fun getGroupBannerGames(): LiveData<Resource<List<Game>>> {
-        return object: FetchBoundResource<List<Game>>() {
-            override fun createCall(): LiveData<ApiResponse<RestResponse<List<Game>>>> {
+    fun getGroupBannerGames(): LiveData<Resource<List<Gamev1>>> {
+        return object: FetchBoundResource<List<Gamev1>>() {
+            override fun createCall(): LiveData<ApiResponse<RestResponse<List<Gamev1>>>> {
                 return gameService.getBannerGames()
             }
-        }.asLiveData()
-    }
-
-    fun getGameOfUser(userId: String, page: String?, type: String?): LiveData<Resource<List<GameDTO>>> {
-        return object: FetchBoundResource<List<GameDTO>>() {
-            override fun createCall(): LiveData<ApiResponse<RestResponse<List<GameDTO>>>> {
-                return gameService.getGameOfUser(userId, page, type)
-            }
-
         }.asLiveData()
     }
 }

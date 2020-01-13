@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.anhtam.domain.v2.User
+import com.anhtam.domain.v2.Userv1
 import com.anhtam.gate9.di.scope.MainScope
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.repository.SocialRepository
@@ -44,7 +44,7 @@ class SessionManager @Inject constructor(
         StorageManager.deleteAll()
     }
 
-    val cachedUser: LiveData<Resource<User>> = Transformations.switchMap(cachedAccessToken){
+    val cachedUser: LiveData<Resource<Userv1>> = Transformations.switchMap(cachedAccessToken){
         if (it == null || it.status != AuthResource.AuthStatus.AUTHENTICATED) AbsentLiveData.create()
         else repository.getUserDetail()
     }

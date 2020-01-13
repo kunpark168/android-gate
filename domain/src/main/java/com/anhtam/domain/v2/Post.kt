@@ -1,14 +1,13 @@
 package com.anhtam.domain.v2
 import com.anhtam.domain.Base
 import com.squareup.moshi.Json
-import java.util.*
 
 
-data class PostEntity(
+data class Post(
     @Json(name = "comment_id")
     var commentId: Long? = null,
     @Json(name = "user")
-    var user: User? = null,
+    var user: Userv2? = null,
     @Json(name = "content")
     var content: String? = null,
     @Json(name = "photo")
@@ -30,24 +29,7 @@ data class PostEntity(
     @Json(name = "point")
     var point: String = "0",
     @Json(name = "game")
-    var game: Game? = null,
+    var game: Gamev1? = null,
     @Json(name = "child")
-    var child: List<PostEntity>? = null
-) : Base()
-
-data class Game(
-    @Json(name = "game_id")
-    var gameId: String? = null,
-    @Json(name = "name")
-    var name: String? = null,
-    @Json(name = "avatar")
-    var avatar: String? = null,
-    @Json(name = "background")
-    var background: String? = null,
-    @Json(name = "follower")
-    var follower: String? = "0",
-    @Json(name = "follow")
-    var follow: String? = null,
-    @Json(name = "post")
-    var post: Int = 0
+    var child: List<Post>? = null
 ) : Base()

@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.anhtam.domain.Base
-import com.anhtam.domain.v2.PostEntity
-import com.anhtam.domain.v2.WrapComments
+import com.anhtam.domain.v2.Post
+import com.anhtam.domain.v2.wrap.WrapComments
 import com.anhtam.gate9.repository.SocialRepository
 import com.anhtam.gate9.session.SessionManager
 import com.anhtam.gate9.vo.IllegalReturn
@@ -33,7 +33,7 @@ class DetailPostViewModel @Inject constructor(
     val comments: LiveData<Resource<WrapComments>>
         get() = mComments
 
-    fun initialize(post: PostEntity, navigator: INavigator){
+    fun initialize(post: Post, navigator: INavigator){
         val value = try {
             post.like?.toInt() ?: 0
         } catch (e: NumberFormatException){
@@ -75,7 +75,7 @@ class DetailPostViewModel @Inject constructor(
         val params = hashMapOf<String, Int>()
         params["commentId"] = _commentId
         params["type"] = Reaction.value(value)
-        params["userId"] = mSessionManager.cachedUser.value?.data?.mUserId ?: 0
+        params["userId"] = mSessionManager.cachedUser.value?.data?.mId ?: 0
         return repository.react(params)
     }
 

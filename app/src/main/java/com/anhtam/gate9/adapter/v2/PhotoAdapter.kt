@@ -1,6 +1,6 @@
 package com.anhtam.gate9.adapter.v2
 
-import com.anhtam.domain.v2.User
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.utils.toImage

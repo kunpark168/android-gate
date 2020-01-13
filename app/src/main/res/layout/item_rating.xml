@@ -253,7 +253,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent" />
 
-        <!--postEntity-->
+        <!--post-->
         <ImageView
             android:id="@+id/commentIcon"
             android:tint="@color/colorGray"
