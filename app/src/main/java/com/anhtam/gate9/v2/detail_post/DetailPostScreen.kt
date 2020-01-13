@@ -24,6 +24,7 @@ import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.report.post.ReportPostActivity
 import com.anhtam.gate9.v2.shared.AbstractGalleryFragment
+import com.anhtam.gate9.v2.shared.gallery.CustomGalleryFragment
 import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -330,7 +331,7 @@ class DetailPostScreen private constructor(
             postComment()
         }
 
-        imgChooseImg?.setOnClickListener {
+        imgFrameLayout?.setOnClickListener {
             selectedMultiImages()
         }
 

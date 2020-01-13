@@ -54,9 +54,7 @@ class MultiChooseImageScreen: DaggerNavigationFragment(){
     }
 
     private fun loadData(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mViewModel.getAllImages()
-        }
+        mViewModel.getAllImages()
     }
 
     private fun initRecyclerView(){
