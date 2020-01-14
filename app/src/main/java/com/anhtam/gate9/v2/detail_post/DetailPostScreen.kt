@@ -300,6 +300,7 @@ class DetailPostScreen private constructor(
         }
         swipeRefreshLayout?.setOnRefreshListener {
             swipeRefreshLayout?.isRefreshing = false
+            viewModel.getChildComment()
         }
         btnDonate?.setOnClickListener {
             val unwrapContext = context ?: return@setOnClickListener

@@ -65,7 +65,7 @@
             <ImageView
                 android:id="@+id/imgShare"
                 app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/img_share_choose"
+                android:src="@drawable/ic_share_post"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp40" />
             <TextView
@@ -73,9 +73,8 @@
                 android:gravity="center"
                 android:textSize="@dimen/sp11"
                 android:textStyle="bold"
-                android:textColor="@color/colorHome"
                 android:fontFamily="@font/roboto_bold"
-                android:text="@string/share_feelling"
+                android:text="@string/view_label"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp25" />
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -173,7 +172,7 @@
                 android:textSize="@dimen/sp_10"
                 android:textColor="@color/black"
                 android:fontFamily="@font/roboto_regular"
-                android:text="@string/dislike_label"
+                android:text="@string/reply"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp25" />
         </androidx.constraintlayout.widget.ConstraintLayout>
