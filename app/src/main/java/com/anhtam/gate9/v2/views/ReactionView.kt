@@ -123,9 +123,10 @@ class ReactionView @JvmOverloads constructor(context: Context?,
     }
 
     private fun changeLabel(){
-        tvFavorite?.text = if(previousState == Reaction.Love) mLove.toString() else context.getString(R.string.favorite_label)
-        tvLike?.text = if(previousState == Reaction.Like) mLike.toString() else context.getString(R.string.like_label)
-        tvDislike?.text = if(previousState == Reaction.Dislike) mDislike.toString() else context.getString(R.string.dislike_label)
+        val show: Boolean = previousState != Reaction.None
+        tvFavorite?.text = if (show) mLove.toString() else context.getString(R.string.favorite_label)
+        tvLike?.text = if (show) mLike.toString() else context.getString(R.string.like_label)
+        tvDislike?.text = if (show) mDislike.toString() else context.getString(R.string.dislike_label)
     }
 
     fun initialize(like: Int, dislike: Int, love: Int, reaction: Reaction){

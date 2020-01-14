@@ -24,7 +24,6 @@ import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.report.post.ReportPostActivity
 import com.anhtam.gate9.v2.shared.AbstractGalleryFragment
-import com.anhtam.gate9.v2.shared.gallery.CustomGalleryFragment
 import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -273,9 +272,16 @@ class DetailPostScreen private constructor(
         tvFollowGame?.setTextColor(ContextCompat.getColor(unwrapContext, R.color.text_color_blue))
     }
 
+    private fun changeLabel(reaction: Reaction){
+        val show: Boolean = reaction != Reaction.None
+        tvView?.text = if (show) "0" else getString(R.string.view_label)
+        tvComment?.text = if (show) _post.totalReply else getString(R.string.reply)
+    }
+
     private fun initEvents() {
         // Reaction
         reactionView?.onReactionChange(mSessionManager){
+            changeLabel(it)
             mListener?.invoke(it)
             viewModel.react(it).observe(viewLifecycleOwner, Observer {
                 Timber.d("Test") // TODO Bug

@@ -1,11 +1,11 @@
 package com.anhtam.gate9.v2.shared
 
-import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.anhtam.domain.v2.Folder
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
@@ -59,9 +59,9 @@ class MultiChooseImageScreen: DaggerNavigationFragment(){
 
     private fun initRecyclerView(){
         mAdapter.setSelectedListener(object : ChooseGalleryAdapter.SelectedListener{
-            override fun onSelectedChange(data: List<String>) {
+            override fun onSelectedChange(data: List<Folder>) {
                 mSelectedGallery.clear()
-                mSelectedGallery.addAll(data)
+                mSelectedGallery.addAll(data.map { it.representFile })
                 mDisplayCamera = mSelectedGallery.isEmpty()
                 activity?.invalidateOptionsMenu()
             }
@@ -98,13 +98,13 @@ class MultiChooseImageScreen: DaggerNavigationFragment(){
         return super.onOptionsItemSelected(item)
     }
 
-    class ChooseGalleryAdapter @Inject constructor(): BaseQuickAdapter<String, BaseViewHolder>(R.layout.multi_select_gallery_item_layout, mutableListOf()) {
+    class ChooseGalleryAdapter @Inject constructor(): BaseQuickAdapter<Folder, BaseViewHolder>(R.layout.multi_select_gallery_item_layout, mutableListOf()) {
 
-        private val mSelectedItem = mutableListOf<String>()
+        private val mSelectedItem = mutableListOf<Folder>()
         private var mListener: SelectedListener? = null
 
         interface SelectedListener{
-            fun onSelectedChange(data: List<String>)
+            fun onSelectedChange(data: List<Folder>)
         }
 
         fun setSelectedListener(listener: SelectedListener){
@@ -129,11 +129,11 @@ class MultiChooseImageScreen: DaggerNavigationFragment(){
             }
         }
 
-        override fun convert(helper: BaseViewHolder?, item: String?) {
-            val path = item ?: return
+        override fun convert(helper: BaseViewHolder?, item: Folder?) {
+            val path = item?.representFile ?: return
             val view = helper?.itemView ?: return
             view.itemView?.setImage(path)
-            view.itemView?.onSelected(mSelectedItem.contains(path))
+            view.itemView?.onSelected(mSelectedItem.contains(item))
             helper.addOnClickListener(R.id.itemView)
         }
     }
