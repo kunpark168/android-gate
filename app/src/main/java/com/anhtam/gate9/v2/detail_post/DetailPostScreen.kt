@@ -28,9 +28,11 @@ import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.bottom_bar_type_layout.*
 import kotlinx.android.synthetic.main.detail_post_screen.*
+import kotlinx.android.synthetic.main.detail_post_screen.bottomSheetBehavior
 import of.bum.network.helper.Resource
 import timber.log.Timber
 import javax.inject.Inject
@@ -125,6 +127,7 @@ class DetailPostScreen private constructor(
         initRvPhoto()
         initRvComment()
         initGalleryRv()
+        BottomSheetBehavior.from(bottomSheetBehavior)
         initUI()
     }
 

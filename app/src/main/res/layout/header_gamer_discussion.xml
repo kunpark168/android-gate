@@ -146,6 +146,7 @@
             android:fontFamily="@font/roboto_regular"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/sp11"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="@+id/tvCounting"
             app:layout_constraintStart_toStartOf="@+id/tvCounting"
             app:layout_constraintTop_toBottomOf="@+id/tvCounting" />
