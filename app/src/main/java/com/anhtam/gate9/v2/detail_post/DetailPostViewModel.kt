@@ -57,9 +57,7 @@ class DetailPostViewModel @Inject constructor(
         }
     }
 
-    fun postViewForum(){
-        socialService.postViewForum(_commentId)
-    }
+    fun postViewForum() = repository.postViewForum(_commentId)
 
 
     fun postComment(content: String? = null, imageUrl: String? = "") = object: FetchBoundResource<Base>(){

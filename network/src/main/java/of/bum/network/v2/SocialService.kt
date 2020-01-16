@@ -56,6 +56,12 @@ interface SocialService {
             @Query("limit") limit: Int
     ): LiveData<ApiResponse<RestResponse<List<WrapGame>>>>
 
+    @GET("social/get-new-game")
+    fun getNewGame(
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
+    ): LiveData<ApiResponse<RestResponse<List<Gamev1>>>>
+
     @POST("social/get-data-info")
     fun getDataRelatedToUser(
             @Query("userId") userId: Int,
@@ -82,7 +88,7 @@ interface SocialService {
                              @Query("limit") limit: Int = 15): LiveData<ApiResponse<RestResponse<List<Userv1>>>>
 
     @POST("social/post-view-forum")
-    fun postViewForum(@Query("commentId") commentId: Int): LiveData<ApiResponse<Base>>
+    fun postViewForum(@Query("commentId") commentId: Int): LiveData<ApiResponse<RestResponse<Base>>>
 
     @Multipart
     @POST("social/upload/file")

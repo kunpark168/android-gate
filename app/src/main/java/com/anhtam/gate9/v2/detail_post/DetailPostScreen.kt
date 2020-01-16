@@ -105,7 +105,9 @@ class DetailPostScreen private constructor(
 
     private fun postViewForum(){
         // check auth
-        viewModel.postViewForum()
+        viewModel.postViewForum().observe(viewLifecycleOwner, Observer {
+            Timber.d("test")
+        })
     }
 
     private fun loadComment(){
