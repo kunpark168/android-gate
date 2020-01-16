@@ -33,18 +33,27 @@ class MemberAdapter @Inject constructor(
                     val tvFollow = view as? TextView
                     if (tvFollow?.text == mContext.getString(R.string.following)){
                         // un follow
-                        tvFollow.background = ContextCompat.getDrawable(mContext, R.drawable.bg_follow)
-                        tvFollow.text = mContext.resources.getString(R.string.follow_plus)
-                        tvFollow.setTextColor(ContextCompat.getColor(mContext, R.color.color_follow))
+                        unFollowing(tvFollow)
                     } else {
                         // follow
-                        tvFollow?.background = ContextCompat.getDrawable(mContext, R.drawable.bg_following)
-                        tvFollow?.text = mContext.resources.getString(R.string.following)
-                        tvFollow?.setTextColor(ContextCompat.getColor(mContext, R.color.color_following))
+                        following(tvFollow)
                     }
                 }
             }
         }
+    }
+
+    private fun unFollowing(tv: TextView){
+        // un follow
+        tv.background = ContextCompat.getDrawable(mContext, R.drawable.bg_follow)
+        tv.text = mContext.resources.getString(R.string.follow_plus)
+        tv.setTextColor(ContextCompat.getColor(mContext, R.color.color_follow))
+    }
+
+    private fun following(tv: TextView?){
+        tv?.background = ContextCompat.getDrawable(mContext, R.drawable.bg_following)
+        tv?.text = mContext.resources.getString(R.string.following)
+        tv?.setTextColor(ContextCompat.getColor(mContext, R.color.color_following))
     }
 
     override fun convert(helper: BaseViewHolder?, item: User?) {
@@ -59,5 +68,9 @@ class MemberAdapter @Inject constructor(
         helper.addOnClickListener(R.id.nameTextView)
                 .addOnClickListener(R.id.avatarImageView)
                 .addOnClickListener(R.id.followButton)
+        when(user.mIsFollowing){
+            "true" -> following(view.followButton)
+            else -> unFollowing(view.followButton)
+        }
     }
 }
