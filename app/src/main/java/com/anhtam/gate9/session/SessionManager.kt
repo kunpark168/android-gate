@@ -73,9 +73,11 @@ class SessionManager @Inject constructor(
         }
     }
 
-    fun checkLogin(): Boolean{
+    fun checkLogin(isDirect: Boolean = false): Boolean{
         return if (cachedAccessToken.value?.status != AuthResource.AuthStatus.AUTHENTICATED){
-            navigation.addFragment(LoginScreen.newInstance(false))
+            if (isDirect) {
+                navigation.addFragment(LoginScreen.newInstance(false))
+            }
             return false
         } else true
     }
