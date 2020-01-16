@@ -25,4 +25,5 @@ interface User{
     var mAccessToken: String?
     var mNumLike: String?
     var mTotalPost: String?
+    var mIsFollowing: String?
 }

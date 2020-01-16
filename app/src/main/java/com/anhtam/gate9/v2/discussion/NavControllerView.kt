@@ -36,6 +36,14 @@ class NavControllerView @JvmOverloads constructor(
         }
     }
 
+    fun initialize(isFollowing: Boolean){
+        mIsFollow = isFollowing
+        when(mIsFollow){
+            true -> follow()
+            false -> unFollow()
+        }
+    }
+
     private fun follow(){
         tabFollow?.changeText(context.getString(R.string.following))
         tabFollow?.changeColor(R.color.color_main_blue)

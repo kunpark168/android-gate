@@ -13,6 +13,7 @@ import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
 import com.anhtam.gate9.v2.report.user.ReportUserActivity
 import com.anhtam.gate9.vo.model.Category
+import kotlinx.android.synthetic.main.activity_shared_discussion.*
 import of.bum.network.helper.Resource
 
 class UserDiscussionScreen : DiscussionActivity() {
@@ -64,7 +65,21 @@ class UserDiscussionScreen : DiscussionActivity() {
     override fun observer() {
         super.observer()
         viewModel.mUser.observe(viewLifecycleOwner, Observer {
-            if(it is Resource.Success || it is Resource.Error) hideProgress()
+            when(it) {
+                is Resource.Success -> {
+                    hideProgress()
+                    // following here
+                    val following = it.data?.mIsFollowing ?: ""
+                    isFollowing = when(following){
+                        "true" -> true
+                        else -> false
+                    }
+                    navControllerView?.initialize(isFollowing)
+                }
+                is Resource.Error -> {
+                    hideProgress()
+                }
+            }
         })
     }
 
