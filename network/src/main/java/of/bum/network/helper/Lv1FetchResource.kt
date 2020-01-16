@@ -39,7 +39,7 @@ abstract class Lv1FetchResource<RequestType> {
                 is ApiSuccessResponse -> {
                     Timber.d("ApiSuccessResponse")
                     val unwrapped: RequestType? = response.body
-                    result.value = Resource.Success(unwrapped)
+                    result.value = Resource.Success(unwrapped, response)
                 }
                 is ApiEmptyResponse -> {
                     Timber.d("ApiEmptyResponse")

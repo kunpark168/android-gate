@@ -47,7 +47,7 @@ abstract class Lv3FetchResource<RequestType> {
                         favorite?.let { return@run favorite}
                         download?.let { return@run download }
                     }?.wrap
-                    result.value = Resource.Success(unwrapped)
+                    result.value = Resource.Success(unwrapped, response)
                 }
                 is ApiEmptyResponse -> {
                     Timber.d("ApiEmptyResponse")
