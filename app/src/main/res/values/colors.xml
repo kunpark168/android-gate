@@ -79,4 +79,5 @@
     <color name="text_color_red_light">#fa5a36</color>
     <color name="text_color_dark">#333333</color>
     <color name="background_color_dark">#DDDDDD</color>
+    <color name="color_default_icon">#898989</color>
 </resources>

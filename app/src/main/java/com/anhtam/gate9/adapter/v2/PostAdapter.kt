@@ -18,6 +18,7 @@ import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
+import com.anhtam.gate9.v2.shared.keyboard.AbstractBottomKeyboardFragment
 import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -40,9 +41,10 @@ class PostAdapter @Inject constructor(
             when(view.id){
                 R.id.readMoreTextView, R.id.contentTextView, R.id.commentImageView -> {
                     val post = data[position]
-                    navigateToPostDetail(post){
-                        changeReaction(it, position)
-                    }
+                    navigation?.addFragment(AbstractBottomKeyboardFragment())
+//                    navigateToPostDetail(post){
+//                        changeReaction(it, position)
+//                    }
                 }
                 R.id.userNameTextView, R.id.avatarImageView -> {
                     val userId = data[position].user?.mId ?: return@setOnItemChildClickListener
