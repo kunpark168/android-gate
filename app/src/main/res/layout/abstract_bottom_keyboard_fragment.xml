@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:clickable="true"
     android:focusable="true"
-    android:background="@color/white"
-    >
+    android:background="@color/white">
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -116,7 +115,7 @@
                 android:layout_marginEnd="@dimen/layout_margin_16dp"/>
         </LinearLayout>
     </LinearLayout>
-    <include
-        layout="@layout/bottom_select_gallery"
-        android:visibility="gone"/>
+<!--    <include-->
+<!--        layout="@layout/bottom_select_gallery"-->
+<!--        android:visibility="gone"/>-->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

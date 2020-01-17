@@ -49,7 +49,7 @@ class AbstractBottomKeyboardFragment : Fragment(){
         val unwrapContext = context ?: return
         when(mViewModel.mState.value ?: State.None){
             State.SelectImage -> {
-                expandFrameLayout?.clearFocus()
+                messageEditText?.clearFocus()
                 selectImageView?.setColorFilter(ContextCompat.getColor(unwrapContext, R.color.color_main_blue))
                 featureLayout?.visibility = View.VISIBLE
                 expandFrameLayout?.visibility = View.GONE
