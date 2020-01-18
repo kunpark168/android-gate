@@ -167,7 +167,7 @@ class CommentAdapter @Inject constructor(
         }
         val adapter = PhotoAdapter(navigation, bannerOptions)
         adapter.user = user
-        val spanCount = adapter.setPhoto(stringConcat)
+        val spanCount = adapter.setPhoto(stringConcat, isComment = true)
         rv.layoutManager = GridLayoutManager(mContext, spanCount)
         rv.adapter = adapter
     }
