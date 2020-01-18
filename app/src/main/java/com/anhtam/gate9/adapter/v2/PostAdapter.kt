@@ -18,6 +18,7 @@ import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
+import com.anhtam.gate9.v2.report.post.ReportPostActivity
 import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -53,8 +54,16 @@ class PostAdapter @Inject constructor(
                 }
                 R.id.moreImageView -> {
                     val mMoreDialog = MoreDialog(mContext, object : MoreDialog.IMore {
-                        override fun onreport() {
-//                    ReportPostActivity.start(mContext as BaseActivity)
+                        override fun delete() {
+
+                        }
+
+                        override fun update() {
+
+                        }
+
+                        override fun onReport() {
+                            navigation.addFragment(ReportPostActivity.newInstance())
                         }
                     })
                     mMoreDialog.idPost = data[position].commentId?.toString()

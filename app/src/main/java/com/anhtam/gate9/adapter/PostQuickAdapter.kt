@@ -100,15 +100,15 @@ class PostQuickAdapter(private val requestManager: RequestManager) :
 //                    navigateToMemberDiscussion(context, post.user_id)
                 }
 
-                moreImageView?.debounceClick {
-                    val mMoreDialog = MoreDialog(context, object : MoreDialog.IMore {
-                        override fun onreport() {
-//                            ReportPostActivity.start(context as BaseActivity)
-                        }
-                    })
-                    mMoreDialog.idPost = post.commentId
-                    mMoreDialog.show()
-                }
+//                moreImageView?.debounceClick {
+//                    val mMoreDialog = MoreDialog(context, object : MoreDialog.IMore {
+//                        override fun onReport() {
+////                            ReportPostActivity.start(context as BaseActivity)
+//                        }
+//                    })
+//                    mMoreDialog.idPost = post.commentId
+//                    mMoreDialog.show()
+//                }
 
                 /*
                  * Navigate PostDetailActivity

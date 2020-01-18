@@ -5,16 +5,15 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.LinearLayout
 import com.anhtam.gate9.R
-import com.anhtam.gate9.utils.debounceClick
 import kotlinx.android.synthetic.main.layout_dialog_more.*
 
 
 class MoreDialog constructor(context: Context, mListener: IMore) : Dialog(context, R.style.Theme_Dialog){
     var idPost: String?= null
-    var listenter: IMore?= null
+    private var listener: IMore?= null
 
     init {
-        this.listenter = mListener
+        this.listener = mListener
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,20 +21,25 @@ class MoreDialog constructor(context: Context, mListener: IMore) : Dialog(contex
         val window = window
         window?.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
         setCancelable(false)
-        addControl()
+        initEvents()
     }
 
-    fun addControl(){
-        tvCancel.debounceClick { hide() }
-        tvReport.debounceClick {
-            listenter?.let {
-                listenter?.onreport()
-                dismiss()
-            }
+
+    private fun initEvents(){
+        tvCancel.setOnClickListener { hide() }
+        tvReport.setOnClickListener {
+            listener?.onReport()
+            dismiss()
         }
+        deleteLayout?.setOnClickListener { listener?.delete() }
+        editLayout?.setOnClickListener { listener?.update() }
     }
 
     interface IMore{
-        fun onreport()
+        fun onReport()
+        fun delete()
+        fun update()
     }
+
+
 }

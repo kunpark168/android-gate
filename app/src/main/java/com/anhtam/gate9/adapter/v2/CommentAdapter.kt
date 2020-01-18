@@ -15,6 +15,7 @@ import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
 import com.anhtam.gate9.v2.detail_post.ShowMoreFooterView
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
+import com.anhtam.gate9.v2.report.post.ReportPostActivity
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -126,8 +127,16 @@ class CommentAdapter @Inject constructor(
 
     private fun showMoreDialog(comment: Post){
         val mMoreDialog = MoreDialog(mContext, object : MoreDialog.IMore {
-            override fun onreport() {
-//                        ReportPostActivity.start(mContext as BaseActivity)
+            override fun delete() {
+
+            }
+
+            override fun update() {
+
+            }
+
+            override fun onReport() {
+                        navigation.addFragment(ReportPostActivity.newInstance())
             }
         })
         mMoreDialog.idPost = comment.commentId?.toString()

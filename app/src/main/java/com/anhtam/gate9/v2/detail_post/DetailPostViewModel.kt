@@ -69,10 +69,14 @@ class DetailPostViewModel @Inject constructor(
      *  a. Not -> Goto Login
      *  b.
      */
-    fun react(value: Reaction): LiveData<Resource<Base>>{
+    fun react(value: Reaction, previous: Reaction): LiveData<Resource<Base>>{
         val params = hashMapOf<String, Int>()
         params["commentId"] = _commentId
-        params["type"] = Reaction.value(value)
+        if (value == Reaction.None){
+            params["type"] = Reaction.value(previous)
+        } else {
+            params["type"] = Reaction.value(value)
+        }
         params["userId"] = mSessionManager.cachedUser.value?.data?.mId ?: 0
         return repository.react(params)
     }

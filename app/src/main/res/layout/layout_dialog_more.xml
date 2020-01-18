@@ -232,7 +232,7 @@
 
             <!--Edit Post-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csEditPost"
+                android:id="@+id/editLayout"
                 android:paddingStart="@dimen/dp15"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -258,7 +258,7 @@
 
             <!--Delete Post-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csDeletePost"
+                android:id="@+id/deleteLayout"
                 android:paddingStart="@dimen/dp15"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"

@@ -17,7 +17,7 @@ class ReactionView @JvmOverloads constructor(context: Context?,
 ): LinearLayout(context, attrs, defStyle){
 
     private var previousState: Reaction = Reaction.None
-    private var mListener: ((Reaction)->Unit)? = null
+    private var mListener: ((Reaction, Reaction)->Unit)? = null
     private var mSessionManager: SessionManager? = null
     private var mLike: Int = 0
     private var mDislike: Int = 0
@@ -40,12 +40,13 @@ class ReactionView @JvmOverloads constructor(context: Context?,
         }
     }
 
-    fun onReactionChange(sessionManager: SessionManager, listener: (Reaction)->Unit){
+    fun onReactionChange(sessionManager: SessionManager, listener: (Reaction, Reaction)->Unit){
         mListener = listener
         mSessionManager = sessionManager
     }
 
     private fun react(value: Reaction){
+        val previous = previousState
         if(mSessionManager?.checkLogin(true) == false) return
         when(previousState){
             Reaction.None ->{
@@ -119,7 +120,7 @@ class ReactionView @JvmOverloads constructor(context: Context?,
             }
         }
         changeLabel()
-        mListener?.invoke(previousState)
+        mListener?.invoke(previousState, previous)
     }
 
     private fun changeLabel(){

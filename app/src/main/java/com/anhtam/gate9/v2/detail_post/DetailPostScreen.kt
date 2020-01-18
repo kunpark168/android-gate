@@ -285,10 +285,10 @@ class DetailPostScreen private constructor(
 
     private fun initEvents() {
         // Reaction
-        reactionView?.onReactionChange(mSessionManager){
-            changeLabel(it)
-            mListener?.invoke(it)
-            viewModel.react(it).observe(viewLifecycleOwner, Observer {
+        reactionView?.onReactionChange(mSessionManager){current, previous ->
+            changeLabel(current)
+            mListener?.invoke(current)
+            viewModel.react(current, previous).observe(viewLifecycleOwner, Observer {
                 Timber.d("Test") // TODO Bug
             })
         }
