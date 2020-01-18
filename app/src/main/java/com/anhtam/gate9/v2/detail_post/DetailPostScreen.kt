@@ -365,12 +365,12 @@ class DetailPostScreen private constructor(
 
     private fun readySendMode(){
         imgSend?.visibility = View.VISIBLE
-        rightLayout?.visibility = View.GONE
+        iconFrameLayout?.visibility = View.GONE
     }
 
     private fun noneTypeMode(){
         imgSend?.visibility = View.GONE
-        rightLayout?.visibility = View.VISIBLE
+        iconFrameLayout?.visibility = View.VISIBLE
     }
 
     private fun postComment(){

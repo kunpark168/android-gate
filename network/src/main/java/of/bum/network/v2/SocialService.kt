@@ -102,4 +102,17 @@ interface SocialService {
             @Query("tab") tab: Int,
             @Query("page") page: Int,
             @Query("limit") limit: Int = 40): LiveData<ApiResponse<RestResponse<List<Post>>>>
+
+    /*
+     *  POST
+     *  - create
+     *  - update
+     *  - delete
+     */
+
+    @DELETE("social/delete-post-forum")
+    fun delete(@Query("commentId") id: Int): LiveData<ApiResponse<RestResponse<Base>>>
+
+    @POST("social/update-post-forum")
+    fun update()
 }

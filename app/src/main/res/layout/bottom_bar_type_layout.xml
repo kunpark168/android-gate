@@ -88,7 +88,7 @@
         </LinearLayout>
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgSend"
-            android:visibility="gone"
+            android:visibility="visible"
             android:src="@drawable/ic_send"
             android:layout_width="@dimen/material_icon_size_24dp"
             android:layout_height="@dimen/material_icon_size_24dp"
