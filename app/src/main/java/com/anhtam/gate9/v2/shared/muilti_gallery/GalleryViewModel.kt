@@ -83,7 +83,7 @@ class GalleryViewModel @Inject constructor(private val application: Application)
     }
 
     fun getAllImages(){
-        launch(Dispatchers.Main){
+        launch(coroutineContext){
             imagesLiveData.value = with(Dispatchers.IO){
                 loadImagesFromSdCard()
             }
@@ -91,7 +91,7 @@ class GalleryViewModel @Inject constructor(private val application: Application)
     }
 
     fun getImageByFolder(folder: Folder){
-        launch {
+        launch(coroutineContext) {
             mImage.value = with(Dispatchers.IO){
                 getPicturesBucket(folder.bucketDisplayName)
             }

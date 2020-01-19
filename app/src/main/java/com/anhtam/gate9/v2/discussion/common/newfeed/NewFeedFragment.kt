@@ -48,9 +48,9 @@ class NewFeedFragment(private val _userId: Int) : CommonDiscussionFragment() {
                 is Resource.Success -> {
                     val data = resource.data
                     val response = resource.mResponse?.body as? RestResponse<*>
-                    mCountTab1 = response?.mCountTab1 ?: 0
-                    mCountTab2 = response?.mCountTab2 ?: 0
-                    mCountTab3 = response?.mCountTab3 ?: 0
+                    mCountTab1 = (response?.mMeta?.get("countTab1") as? String)?.convertInt() ?: 0
+                    mCountTab2 = (response?.mMeta?.get("countTab2") as? String)?.convertInt() ?: 0
+                    mCountTab3 = (response?.mMeta?.get("countTab3") as? String)?.convertInt() ?: 0
                     updateTabLayout()
 
                     if (data.isNullOrEmpty()) {

@@ -40,10 +40,6 @@ abstract class Lv2FetchResource<RequestType> {
                     Timber.d("ApiSuccessResponse")
                     val unwrapped: RequestType? = response.body.run {
                         data?.let { return@run data}
-                        banner?.let { return@run banner }
-                        game?.let { return@run game }
-                        favorite?.let { return@run favorite}
-                        download?.let { return@run download }
                     }
                     result.value = Resource.Success(unwrapped, response)
                 }

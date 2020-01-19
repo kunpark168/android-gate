@@ -8,16 +8,23 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
 import com.anhtam.gate9.utils.autoCleared
+import com.anhtam.gate9.utils.convertInt
 import com.google.android.material.tabs.TabLayout
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
 import of.bum.network.helper.Resource
+import of.bum.network.helper.RestResponse
 
 
 class GGameFragment: CommonDiscussionFragment() {
 
     private var mAdapter by autoCleared<GameQuickAdapter>()
     private var mUserId: Int = 0
+    private var mCountTab1: Int = 0
+    private var mCountTab2: Int = 0
+    private var mCountTab3: Int = 0
+    private var mCountTab4: Int = 0
+
 //    private lateinit var mAdapter: GameQuickAdapter
     private val viewModel: GGameViewModel by viewModels { vmFactory }
 
@@ -43,13 +50,13 @@ class GGameFragment: CommonDiscussionFragment() {
 
     override fun updateTabLayout() {
         tabLayout.getTabAt(0)?.text = Phrase.from(resources.getString(R.string.open_category))
-                .put("amount", "0").format()
+                .put("amount", mCountTab1).format()
         tabLayout.getTabAt(1)?.text = Phrase.from(resources.getString(R.string.beta_category))
-                .put("amount", "0").format()
+                .put("amount", mCountTab2).format()
         tabLayout.getTabAt(2)?.text = Phrase.from(resources.getString(R.string.coming_category))
-                .put("amount", "0").format()
+                .put("amount", mCountTab3).format()
         tabLayout.getTabAt(3)?.text = Phrase.from(resources.getString(R.string.closed_category))
-                .put("amount", "0").format()
+                .put("amount", mCountTab4).format()
     }
 
     private fun initRv() {
@@ -67,6 +74,12 @@ class GGameFragment: CommonDiscussionFragment() {
             when(resource) {
                 is Resource.Success -> {
                     val data = resource.data?.map { it.wrap }
+                    val response = resource.mResponse?.body as? RestResponse<*>
+                    mCountTab1 = (response?.mMeta?.get("countTab1") as? String)?.convertInt() ?: 0
+                    mCountTab2 = (response?.mMeta?.get("countTab2") as? String)?.convertInt() ?: 0
+                    mCountTab3 = (response?.mMeta?.get("countTab3") as? String)?.convertInt() ?: 0
+                    mCountTab4 = (response?.mMeta?.get("countTab4") as? String)?.convertInt() ?: 0
+                    updateTabLayout()
                     if (data.isNullOrEmpty()) {
                         mAdapter.loadMoreEnd()
                     } else {

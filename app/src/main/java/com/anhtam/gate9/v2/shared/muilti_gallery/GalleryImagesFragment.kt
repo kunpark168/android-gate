@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
+import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -19,8 +20,12 @@ import javax.inject.Inject
 class GalleryImagesFragment private constructor(): DaggerNavigationFragment(){
 
     companion object{
+        private const val NUM_GALLERY_PER_PAGE = 18
         fun newInstance() = GalleryImagesFragment()
     }
+
+    private val mImages = arrayListOf<String>()
+    private var mPage = 0
 
     private var mAdapter: ChooseGalleryAdapter? = null
     private var mViewModel: GalleryViewModel? = null
@@ -52,9 +57,42 @@ class GalleryImagesFragment private constructor(): DaggerNavigationFragment(){
 
     private fun observerImagesChange(){
         mViewModel?.getImages()?.observe(viewLifecycleOwner, Observer {
-            if (it.isNullOrEmpty()) return@Observer
-            mAdapter?.setNewData(it)
+            mPage = 0
+            mAdapter?.setNewData(null)
+            if (it.isNullOrEmpty()) {
+                return@Observer
+            }
+            mImages.addAll(it)
+//            loadMoreAdapter(load(mPage))
         })
+    }
+
+//    private fun load(page: Int): List<String>{
+//        val first = page * NUM_GALLERY_PER_PAGE
+//        val end = (page + 1) * NUM_GALLERY_PER_PAGE
+//        val size = mImages.size
+//        return if (size > first){
+//            if (size < end){
+//                mImages.subList(page* NUM_GALLERY_PER_PAGE, size - 1)
+//            } else {
+//                mImages.subList(page* NUM_GALLERY_PER_PAGE, (page + 1)* NUM_GALLERY_PER_PAGE - 1)
+//            }
+//        } else {
+//            emptyList()
+//        }
+//    }
+
+    private fun loadMoreAdapter(data: List<String>){
+        if (data.isNullOrEmpty()) {
+            mAdapter?.loadMoreEnd()
+        } else {
+            if (mPage == 0) {
+                mAdapter?.setNewData(data)
+            } else {
+                mAdapter?.addData(data)
+            }
+            mAdapter?.loadMoreComplete()
+        }
     }
 
     private fun initRecyclerView(){
@@ -65,6 +103,11 @@ class GalleryImagesFragment private constructor(): DaggerNavigationFragment(){
                 mSelectedGallery.addAll(data)
             }
         })
+        mAdapter?.setLoadMoreView(CustomLoadMoreView())
+        mAdapter?.setOnLoadMoreListener({
+            mPage++
+//            loadMoreAdapter(load(mPage))
+        }, rvImages)
         rvImages?.adapter = mAdapter
         rvImages?.layoutManager = GridLayoutManager(context, 3)
     }
