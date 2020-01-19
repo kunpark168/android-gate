@@ -38,9 +38,9 @@ data class Userv1(
         override var mNote: String? = null,
         @Json(name = "facebook")
         override var mFacebook: String? =  null,
-        @Json(name = "flower")
+        @Json(name = "num_follower")
         override var mFlower: String? = null,
-        @Json(name = "flowing")
+        @Json(name = "num_following")
         override var mFlowing: String? = null,
         @Json(name = "last_login")
         override var mLastLogin: String? = null,

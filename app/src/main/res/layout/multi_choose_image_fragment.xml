@@ -8,41 +8,69 @@
     android:clickable="true"
     android:focusable="true">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_gravity="top"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:background="@color/colorPrimary"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title=""
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp"
         android:layout_height="?attr/actionBarSize">
 
-        <FrameLayout
-            android:id="@+id/backFrameLayout"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/closeIcon"
+            android:layout_width="@dimen/material_icon_size_24dp"
+            android:layout_height="@dimen/material_icon_size_24dp"
+            android:src="@drawable/ic_close_black_24dp"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="@dimen/layout_margin_16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/filterFolderLayout"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toStartOf="parent">
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgBack"
-                android:layout_marginStart="20dp"
-                android:src="@drawable/ic_back"
-                android:layout_width="7dp"
-                android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/layout_margin_16dp"
+            android:layout_gravity="center_vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/closeIcon">
             <TextView
-                android:id="@+id/tvBack"
-                android:textSize="15sp"
-                android:textAllCaps="true"
-                android:fontFamily="@font/roboto_medium"
-                android:textColor="@color/colorWhite"
-                android:gravity="center"
-                android:text="@string/back"
-                android:layout_marginStart="33dp"
+                android:id="@+id/galleryLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-        </FrameLayout>
-    </androidx.appcompat.widget.Toolbar>
+                android:layout_height="wrap_content"
+                android:text="@string/gallery"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/white"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/dropIcon"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:src="@drawable/ic_dropdown"
+                android:tint="@color/white"
+                android:layout_marginStart="@dimen/layout_margin_8dp"
+                android:layout_marginTop="@dimen/layout_margin_4dp"
+                app:layout_constraintStart_toEndOf="@id/galleryLabel"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/material_icon_size_24dp"
+            android:layout_height="@dimen/material_icon_size_24dp"
+            android:src="@drawable/wrap_ic_camera"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="@dimen/layout_margin_16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvImages"

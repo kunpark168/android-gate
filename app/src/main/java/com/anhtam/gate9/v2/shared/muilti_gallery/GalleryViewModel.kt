@@ -1,12 +1,8 @@
-package com.anhtam.gate9.v2.shared
+package com.anhtam.gate9.v2.shared.muilti_gallery
 
 import android.app.Application
-import android.os.Build
 import android.provider.MediaStore
-import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.anhtam.domain.v2.Folder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,8 +18,11 @@ class GalleryViewModel @Inject constructor(private val application: Application)
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
-    private val imagesLiveData = MutableLiveData<List<Folder>>()
-    fun getImages(): LiveData<List<Folder>> = imagesLiveData
+    private val imagesLiveData = MediatorLiveData<List<Folder>>()
+    private val mImage = MutableLiveData<List<String>>()
+
+    fun getFolders(): LiveData<List<Folder>> = imagesLiveData
+    fun getImages(): LiveData<List<String>> = mImage
 
     private fun loadImagesFromSdCard(): List<Folder>{
         val projection = arrayOf(MediaStore.Images.Media.BUCKET_DISPLAY_NAME, MediaStore.Images.Media.DATA)
@@ -52,14 +51,11 @@ class GalleryViewModel @Inject constructor(private val application: Application)
                 }
             } while (cursor.moveToPrevious())
         }
-        folders.forEach{
-            getPicturesBucket(it.bucketDisplayName)
-        }
         cursor.close()
         return folders
     }
 
-    private fun getPicturesBucket(bucket: String){
+    private fun getPicturesBucket(bucket: String): List<String>{
         val projection = arrayOf(MediaStore.Images.Media.DISPLAY_NAME, MediaStore.Images.Media.DATA)
         val cursor = application.contentResolver.query(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
@@ -67,13 +63,13 @@ class GalleryViewModel @Inject constructor(private val application: Application)
                 MediaStore.Images.Media.BUCKET_DISPLAY_NAME +" =?",
                 arrayOf(bucket),
                 MediaStore.Images.Media.DATE_ADDED)
-                ?: return
+                ?: return emptyList()
         val images = ArrayList<String>(cursor.count)
         val albumSet = hashSetOf<String>()
         var file: File
         if (cursor.moveToLast()){
             do {
-                if (Thread.interrupted()) return
+                if (Thread.interrupted()) return emptyList()
                 val path = cursor.getString(cursor.getColumnIndex(projection[1]))
                 file = File(path)
                 if (file.exists() && !albumSet.contains(path)){
@@ -83,12 +79,21 @@ class GalleryViewModel @Inject constructor(private val application: Application)
             } while (cursor.moveToPrevious())
         }
         cursor.close()
+        return images
     }
 
     fun getAllImages(){
         launch(Dispatchers.Main){
             imagesLiveData.value = with(Dispatchers.IO){
                 loadImagesFromSdCard()
+            }
+        }
+    }
+
+    fun getImageByFolder(folder: Folder){
+        launch {
+            mImage.value = with(Dispatchers.IO){
+                getPicturesBucket(folder.bucketDisplayName)
             }
         }
     }
