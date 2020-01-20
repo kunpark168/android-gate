@@ -9,17 +9,19 @@ import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.squareup.phrase.Phrase
+import kotlinx.android.synthetic.main.activity_shared_discussion.*
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
 import of.bum.network.helper.Resource
 
 class DataFragment: CommonDiscussionFragment() {
     override fun loadData() {
-        viewModel.requestFirstPage(mUserId, DataCategory.NEWS)
+        viewModel.requestFirstPage(mUserId, mCurrentCategory)
     }
 
     private var mUserId: Int = 0
     private lateinit var mAdapter: ArticleNewsAdapter
     private val viewModel: DataViewModel by viewModels { vmFactory }
+    private var mCurrentCategory = DataCategory.NEWS
 
     override val colorTextTab: Int = R.color.colorTabData
 
@@ -112,13 +114,18 @@ class DataFragment: CommonDiscussionFragment() {
             }
 
         })
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+            loadData()
+        }
     }
 
     private fun newRequestType(category: DataCategory) {
+        mCurrentCategory = category
         mAdapter.data.clear()
         mAdapter.notifyDataSetChanged()
         if (viewModel.mCategory != category) {
-            viewModel.requestFirstPage(mUserId.toInt(), category)
+            viewModel.requestFirstPage(mUserId, category)
         }
     }
 

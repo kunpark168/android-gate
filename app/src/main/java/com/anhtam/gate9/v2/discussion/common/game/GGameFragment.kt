@@ -24,6 +24,7 @@ class GGameFragment: CommonDiscussionFragment() {
     private var mCountTab2: Int = 0
     private var mCountTab3: Int = 0
     private var mCountTab4: Int = 0
+    private var mCurrentCategory = GameCategory.OPEN
 
 //    private lateinit var mAdapter: GameQuickAdapter
     private val viewModel: GGameViewModel by viewModels { vmFactory }
@@ -31,7 +32,7 @@ class GGameFragment: CommonDiscussionFragment() {
     override val colorTextTab: Int = R.color.colorTabGame
 
     override fun loadData() {
-        viewModel.requestFirstPage(mUserId, GameCategory.OPEN)
+        viewModel.requestFirstPage(mUserId, mCurrentCategory)
     }
 
     override fun initView() {
@@ -129,9 +130,14 @@ class GGameFragment: CommonDiscussionFragment() {
             }
 
         })
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+            loadData()
+        }
     }
 
     private fun newRequestType(category: GameCategory) {
+        mCurrentCategory = category
         mAdapter.data.clear()
         mAdapter.notifyDataSetChanged()
         if (viewModel.mCategory != category) {

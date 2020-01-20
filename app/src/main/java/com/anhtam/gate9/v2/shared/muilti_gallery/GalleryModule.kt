@@ -11,6 +11,9 @@ import dagger.multibindings.IntoMap
 interface GalleryModule {
     @ContributesAndroidInjector
     fun contributeGalleryImagesFragment(): GalleryImagesFragment
+    
+    @ContributesAndroidInjector
+    fun contributeGalleryFolderFragment(): GalleryFolderFragment
 
     @Binds
     @IntoMap

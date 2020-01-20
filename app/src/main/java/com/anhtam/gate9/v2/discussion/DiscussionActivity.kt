@@ -126,9 +126,6 @@ abstract class DiscussionActivity : DaggerNavigationFragment() {
             childFragmentManager.beginTransaction().show(fragmentInfo).commit()
             container?.visibility = View.VISIBLE
         }
-        swipeRefreshLayout?.setOnRefreshListener {
-            swipeRefreshLayout?.isRefreshing = false
-        }
         tabNewFeed?.debounceClick {
             navigation?.newRootFragment(HomeFragment.newInstance())
         }

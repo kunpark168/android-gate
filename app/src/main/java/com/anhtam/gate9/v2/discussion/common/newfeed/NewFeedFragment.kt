@@ -116,9 +116,14 @@ class NewFeedFragment(private val _userId: Int) : CommonDiscussionFragment() {
             }
 
         })
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+            loadData()
+        }
     }
 
     private fun newRequestType(category: PostCategory) {
+        mCurrentCategory = category
         mAdapter.data.clear()
         mAdapter.notifyDataSetChanged()
         if (viewModel.mCategory != category) {

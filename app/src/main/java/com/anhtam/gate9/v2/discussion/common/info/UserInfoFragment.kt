@@ -38,6 +38,7 @@ class UserInfoFragment: DaggerNavigationFragment() {
     private fun init() {
         mDiscussionViewModel?._bottomStatus?.value = false
         observer()
+        initEvents()
     }
 
     private fun observer() {
@@ -53,6 +54,12 @@ class UserInfoFragment: DaggerNavigationFragment() {
                 }
             }
         })
+    }
+
+    private fun initEvents(){
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+        }
     }
 
     private fun bindInfo() {

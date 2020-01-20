@@ -63,24 +63,17 @@ class GalleryImagesFragment private constructor(): DaggerNavigationFragment(){
                 return@Observer
             }
             mImages.addAll(it)
-//            loadMoreAdapter(load(mPage))
+            loadMoreAdapter(load(mPage))
         })
     }
 
-//    private fun load(page: Int): List<String>{
-//        val first = page * NUM_GALLERY_PER_PAGE
-//        val end = (page + 1) * NUM_GALLERY_PER_PAGE
-//        val size = mImages.size
-//        return if (size > first){
-//            if (size < end){
-//                mImages.subList(page* NUM_GALLERY_PER_PAGE, size - 1)
-//            } else {
-//                mImages.subList(page* NUM_GALLERY_PER_PAGE, (page + 1)* NUM_GALLERY_PER_PAGE - 1)
-//            }
-//        } else {
-//            emptyList()
-//        }
-//    }
+    private fun load(page: Int): List<String>{
+        return if (mImages.size < 4)
+            mImages
+        else {
+            mImages.subList(0, 4)
+        }
+    }
 
     private fun loadMoreAdapter(data: List<String>){
         if (data.isNullOrEmpty()) {
@@ -89,7 +82,7 @@ class GalleryImagesFragment private constructor(): DaggerNavigationFragment(){
             if (mPage == 0) {
                 mAdapter?.setNewData(data)
             } else {
-                mAdapter?.addData(data)
+//                mAdapter?.addData(data)
             }
             mAdapter?.loadMoreComplete()
         }
@@ -106,10 +99,10 @@ class GalleryImagesFragment private constructor(): DaggerNavigationFragment(){
         mAdapter?.setLoadMoreView(CustomLoadMoreView())
         mAdapter?.setOnLoadMoreListener({
             mPage++
-//            loadMoreAdapter(load(mPage))
+            loadMoreAdapter(load(mPage))
         }, rvImages)
         rvImages?.adapter = mAdapter
-        rvImages?.layoutManager = GridLayoutManager(context, 3)
+        rvImages?.layoutManager = GridLayoutManager(context, 2)
     }
     class ChooseGalleryAdapter @Inject constructor(): BaseQuickAdapter<String, BaseViewHolder>(R.layout.multi_select_gallery_item_layout, mutableListOf()) {
 
