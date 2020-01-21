@@ -43,7 +43,7 @@ import com.anhtam.gate9.v2.detail_post.DetailPostModule
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
 import com.anhtam.gate9.v2.follow.FollowModule
 import com.anhtam.gate9.v2.reaction.ReactionModule
-import com.anhtam.gate9.v2.shared.MultiChooseImageScreen
+import com.anhtam.gate9.v2.shared.muilti_gallery.MultiChooseImageScreen
 import com.anhtam.gate9.v2.splash.SplashScreen
 import com.anhtam.gate9.v2.follow.FollowScreen
 import com.anhtam.gate9.v2.report.game.ReportGameActivity
@@ -52,7 +52,8 @@ import com.anhtam.gate9.v2.report.post.ReportPostActivity
 import com.anhtam.gate9.v2.report.post.ReportPostModule
 import com.anhtam.gate9.v2.report.user.ReportUserActivity
 import com.anhtam.gate9.v2.report.user.ReportUserModule
-import com.anhtam.gate9.v2.shared.GalleryViewModel
+import com.anhtam.gate9.v2.shared.muilti_gallery.GalleryModule
+import com.anhtam.gate9.v2.shared.muilti_gallery.GalleryViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -175,7 +176,9 @@ abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract fun contributeGalleryScreen(): GalleryScreen
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(
+            modules = [GalleryModule::class]
+    )
     abstract fun contributeMultiChooseImageScreen(): MultiChooseImageScreen
 
     @ContributesAndroidInjector(
@@ -207,10 +210,5 @@ abstract class FragmentBuildersModule {
     @IntoMap
     @ViewModelKey(NewFeedViewModel::class)
     abstract fun bindViewModel(newFeedViewModel: NewFeedViewModel): ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(GalleryViewModel::class)
-    abstract fun bindGalleryViewModel(galleryViewModel: GalleryViewModel): ViewModel
 
 }

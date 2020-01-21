@@ -21,6 +21,7 @@ abstract class DiscussionActivity : DaggerNavigationFragment() {
     abstract fun fragments(): List<Fragment>
     abstract fun tabInfoHeader(): List<TabInfo>
     abstract fun tabInfoBottom(): List<TabInfo>
+    open var isFollowing: Boolean = false
     abstract fun navigateToReport()
     private var mAdapter: SharePageAdapter? = null
     private val navViewModel: NavViewModel by viewModels()
@@ -124,9 +125,6 @@ abstract class DiscussionActivity : DaggerNavigationFragment() {
             navViewModel.mPositon.value = -1
             childFragmentManager.beginTransaction().show(fragmentInfo).commit()
             container?.visibility = View.VISIBLE
-        }
-        swipeRefreshLayout?.setOnRefreshListener {
-            swipeRefreshLayout?.isRefreshing = false
         }
         tabNewFeed?.debounceClick {
             navigation?.newRootFragment(HomeFragment.newInstance())

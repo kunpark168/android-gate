@@ -315,4 +315,6 @@
     <string name="favorite_label">Favorite</string>
     <string name="camera">Camera</string>
     <string name="next">Next</string>
+    <string name="view_label">View</string>
+    <string name="gallery">Gallery</string>
 </resources>

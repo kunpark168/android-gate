@@ -1,9 +1,8 @@
 package com.anhtam.gate9.adapter.v2
 
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.anhtam.domain.v2.User
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.utils.toImage
@@ -34,18 +33,27 @@ class MemberAdapter @Inject constructor(
                     val tvFollow = view as? TextView
                     if (tvFollow?.text == mContext.getString(R.string.following)){
                         // un follow
-                        tvFollow.background = ContextCompat.getDrawable(mContext, R.drawable.bg_follow)
-                        tvFollow.text = mContext.resources.getString(R.string.follow_plus)
-                        tvFollow.setTextColor(ContextCompat.getColor(mContext, R.color.color_follow))
+                        unFollowing(tvFollow)
                     } else {
                         // follow
-                        tvFollow?.background = ContextCompat.getDrawable(mContext, R.drawable.bg_following)
-                        tvFollow?.text = mContext.resources.getString(R.string.following)
-                        tvFollow?.setTextColor(ContextCompat.getColor(mContext, R.color.color_following))
+                        following(tvFollow)
                     }
                 }
             }
         }
+    }
+
+    private fun unFollowing(tv: TextView){
+        // un follow
+        tv.background = ContextCompat.getDrawable(mContext, R.drawable.bg_follow)
+        tv.text = mContext.resources.getString(R.string.follow_plus)
+        tv.setTextColor(ContextCompat.getColor(mContext, R.color.color_follow))
+    }
+
+    private fun following(tv: TextView?){
+        tv?.background = ContextCompat.getDrawable(mContext, R.drawable.bg_following)
+        tv?.text = mContext.resources.getString(R.string.following)
+        tv?.setTextColor(ContextCompat.getColor(mContext, R.color.color_following))
     }
 
     override fun convert(helper: BaseViewHolder?, item: User?) {
@@ -54,11 +62,15 @@ class MemberAdapter @Inject constructor(
         view.nameTextView?.text = user.mName ?: ""
         view.userIdTextView?.text = user.mId?.toString() ?: ""
         Glide.with(mContext)
-                .load(user.mAvatarPath?.toImage())
+                .load(user.mAvatar?.toImage())
                 .apply(avatarRequestOptions)
                 .into(view.avatarImageView)
         helper.addOnClickListener(R.id.nameTextView)
                 .addOnClickListener(R.id.avatarImageView)
                 .addOnClickListener(R.id.followButton)
+        when(user.mIsFollowing){
+            "true" -> following(view.followButton)
+            else -> unFollowing(view.followButton)
+        }
     }
 }

@@ -14,6 +14,7 @@ import com.anhtam.gate9.navigation.FragmentResultListener
 import com.anhtam.gate9.utils.FileUtils
 import com.anhtam.gate9.utils.PermissionUtils
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.shared.muilti_gallery.MultiChooseImageScreen
 import of.bum.network.helper.Resource
 import okhttp3.MediaType
 import okhttp3.MultipartBody

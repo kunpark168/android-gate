@@ -10,8 +10,6 @@ import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.fragment_rating.*
-import kotlinx.android.synthetic.main.shared_discussion_layout.rvShareDiscussion
-import kotlinx.android.synthetic.main.shared_discussion_layout.tabLayout
 
 class RatingFragment: CommonDiscussionFragment() {
 
@@ -68,7 +66,10 @@ class RatingFragment: CommonDiscussionFragment() {
     }
 
     override fun initEvents() {
-
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+            loadData()
+        }
     }
 
     companion object {

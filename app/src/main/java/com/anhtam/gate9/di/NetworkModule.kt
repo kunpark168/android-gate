@@ -109,14 +109,6 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideArticleService(
-            retrofit: Retrofit
-    ): ArticleService {
-        return retrofit.create(ArticleService::class.java)
-    }
-
-    @Singleton
-    @Provides
     fun provideReviewService(
             retrofit: Retrofit
     ): ReviewService {
@@ -129,14 +121,6 @@ class NetworkModule {
             retrofit: Retrofit
     ): SocialService {
         return retrofit.create(SocialService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGameServicev2(
-            retrofit: Retrofit
-    ): of.bum.network.v2.GameService {
-        return retrofit.create(of.bum.network.v2.GameService::class.java)
     }
 }
 

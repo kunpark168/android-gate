@@ -5,9 +5,9 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.anhtam.domain.v2.Game
-import com.anhtam.domain.v2.PostEntity
-import com.anhtam.domain.v2.User
+import com.anhtam.domain.v2.Gamev1
+import com.anhtam.domain.v2.Post
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.share.view.MoreDialog
@@ -15,6 +15,7 @@ import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
 import com.anhtam.gate9.v2.detail_post.ShowMoreFooterView
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
+import com.anhtam.gate9.v2.report.post.ReportPostActivity
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -31,13 +32,13 @@ class CommentAdapter @Inject constructor(
         val navigation: Navigation,
         @Named("avatar") val avatarOptions: RequestOptions,
         @Named("banner") val bannerOptions: RequestOptions
-) : BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.comment_item_layout, arrayListOf()){
+) : BaseQuickAdapter<Post, BaseViewHolder>(R.layout.comment_item_layout, arrayListOf()){
 
     companion object{
         private const val DEFAULT_DISPLAY_CHILD_NUM = 2
     }
 
-    private var mGame: Game? = null
+    private var mGame: Gamev1? = null
 
     init {
         setOnItemChildClickListener { _, view, position ->
@@ -58,10 +59,10 @@ class CommentAdapter @Inject constructor(
         }
     }
 
-    fun initialize(game: Game?){
+    fun initialize(game: Gamev1?){
         mGame = game
     }
-    override fun convert(helper: BaseViewHolder?, item: PostEntity?) {
+    override fun convert(helper: BaseViewHolder?, item: Post?) {
 
         val comment = item ?: return
         val view = helper?.itemView ?: return
@@ -124,17 +125,25 @@ class CommentAdapter @Inject constructor(
                 .addOnClickListener(R.id.moreImageView)
     }
 
-    private fun showMoreDialog(comment: PostEntity){
+    private fun showMoreDialog(comment: Post){
         val mMoreDialog = MoreDialog(mContext, object : MoreDialog.IMore {
-            override fun onreport() {
-//                        ReportPostActivity.start(mContext as BaseActivity)
+            override fun delete() {
+
+            }
+
+            override fun update() {
+
+            }
+
+            override fun onReport() {
+                        navigation.addFragment(ReportPostActivity.newInstance())
             }
         })
         mMoreDialog.idPost = comment.commentId?.toString()
         mMoreDialog.show()
     }
 
-    private fun toDetailComment(comment: PostEntity){
+    private fun toDetailComment(comment: Post){
         navigation.addFragment(DetailPostScreen.newInstance(comment, DetailPostScreen.Detail.COMMENT))
     }
 
@@ -158,7 +167,7 @@ class CommentAdapter @Inject constructor(
         }
         val adapter = PhotoAdapter(navigation, bannerOptions)
         adapter.user = user
-        val spanCount = adapter.setPhoto(stringConcat)
+        val spanCount = adapter.setPhoto(stringConcat, isComment = true)
         rv.layoutManager = GridLayoutManager(mContext, spanCount)
         rv.adapter = adapter
     }

@@ -15,13 +15,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.anhtam.domain.Banner
-import com.anhtam.domain.Game
-import com.anhtam.domain.v2.PostEntity
+import com.anhtam.domain.v2.Post
+import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.GroupBannerAdapter
 import com.anhtam.gate9.adapter.v2.PostAdapter
 import com.anhtam.gate9.share.view.CustomLoadMoreView
-import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.v2.search.SearchScreen
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
@@ -130,7 +129,7 @@ class NewFeedScreen : DaggerNavigationFragment() {
             if (it == null) return@Observer
             val avatar = when(it) {
                 is Resource.Loading, is Resource.Error -> ""
-                is Resource.Success -> it.data?.mAvatarPath
+                is Resource.Success -> it.data?.mAvatar
             }
             avatar?.run {
                 Glide.with(this@NewFeedScreen)
@@ -138,7 +137,7 @@ class NewFeedScreen : DaggerNavigationFragment() {
                         .apply {avatarOptions}
                         .into(imgAvatar)
             }
-            mUserId = it.data?.mUserId ?: return@Observer
+            mUserId = it.data?.mId ?: return@Observer
         })
     }
 
@@ -175,7 +174,7 @@ class NewFeedScreen : DaggerNavigationFragment() {
         mAdapter.setData(data?.map { it.url ?: "" } ?: mutableListOf())
     }
 
-    private fun bindingComment(data: List<PostEntity>?) {
+    private fun bindingComment(data: List<Post>?) {
         if (data == null) return
         mCommentAdapter.setNewData(data)
     }

@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anhtam.domain.v2.Gamev1
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.GroupBannerAdapter
 import com.anhtam.gate9.adapter.PostQuickAdapter
@@ -92,7 +93,7 @@ class FeatureChildrenFragment : DaggerNavigationFragment() {
                 .into(imgBanner)
     }
 
-    fun notifyGroupBannerData(data: Resource<List<com.anhtam.domain.Game>>) {
+    fun notifyGroupBannerData(data: Resource<List<Gamev1>>) {
         when(data) {
             is Resource.Success -> {
                 val games = data.data

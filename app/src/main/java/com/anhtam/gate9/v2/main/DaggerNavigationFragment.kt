@@ -47,7 +47,7 @@ abstract class DaggerNavigationFragment : NavigationFragment(){
     private fun observer(){
         mSessionManager.cachedUser.observe(viewLifecycleOwner, Observer {
             if (it == null) return@Observer
-            mAvatar = it.data?.mAvatar ?: it.data?.mAvatarPath
+            mAvatar = it.data?.mAvatar ?: it.data?.mAvatar
             mAvatar?.let {
                 activity?.invalidateOptionsMenu()
             }

@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.anhtam.domain.v2.User
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
+import com.anhtam.gate9.utils.convertInt
 import com.anhtam.gate9.v2.discussion.DiscussionViewModel
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.fragment_info_user.*
@@ -20,7 +20,6 @@ class UserInfoFragment: DaggerNavigationFragment() {
     private var mUser: User? = null
 
     private var mDiscussionViewModel: DiscussionViewModel? = null
-    private val viewModel: DiscussionViewModel by viewModels { vmFactory }
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -39,6 +38,7 @@ class UserInfoFragment: DaggerNavigationFragment() {
     private fun init() {
         mDiscussionViewModel?._bottomStatus?.value = false
         observer()
+        initEvents()
     }
 
     private fun observer() {
@@ -56,8 +56,14 @@ class UserInfoFragment: DaggerNavigationFragment() {
         })
     }
 
+    private fun initEvents(){
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+        }
+    }
+
     private fun bindInfo() {
-        tvId?.text = infoOrDefault(mUser?.mUserId?.toString())
+        tvId?.text = infoOrDefault(mUser?.mId?.toString())
         tvShortName?.text = infoOrDefault(mUser?.mName)
         tvDisplayName?.text = infoOrDefault(mUser?.mName)
 //        tvMedal?.text = infoOrDefault(mUser?)
@@ -65,12 +71,12 @@ class UserInfoFragment: DaggerNavigationFragment() {
 
         tvReview?.text = "-"
         tvRanking?.text = "-"
-        val gioitinh = when(mUser?.mGender) {
+        val icon = when(mUser?.mGender?.convertInt()) {
             1 -> "Nữ"
             2 -> "Nam"
             else -> "Không xác định"
         }
-        tvGender?.text = infoOrDefault(gioitinh)
+        tvGender?.text = infoOrDefault(icon)
         tvBirthDate?.text = infoOrDefault(mUser?.mBirth)
         tvCurrentLive?.text = infoOrDefault(mUser?.mAddress)
         tvStatus?.text = "-"

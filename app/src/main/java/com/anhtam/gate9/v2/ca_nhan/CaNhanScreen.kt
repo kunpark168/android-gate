@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.storage.StorageManager
+import com.anhtam.gate9.utils.convertInt
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.auth.register.RegisterScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
@@ -50,13 +51,13 @@ class CaNhanScreen : DaggerNavigationFragment() {
                 is Resource.Error -> ""
                 is Resource.Success -> {
                     tvTitle?.text = it.data?.mName
-                    val genderSrc = when(it.data?.mGender) {
+                    val icon = when(it.data?.mGender?.convertInt()) {
                         1 -> R.drawable.ic_male
                         2 -> R.drawable.ic_femail
                         else -> R.drawable.ic_gender
                     }
-                    tvTitle?.setCompoundDrawablesWithIntrinsicBounds(0, 0, genderSrc, 0)
-                    Config.IMG_URL + it.data?.mAvatarPath
+                    tvTitle?.setCompoundDrawablesWithIntrinsicBounds(0, 0, icon, 0)
+                    Config.IMG_URL + it.data?.mAvatar
                 }
             }
 

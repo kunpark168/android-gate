@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.anhtam.domain.Banner
-import com.anhtam.domain.Game
+import com.anhtam.domain.v2.Gamev1
 import com.anhtam.gate9.repository.GameRepository
 import com.anhtam.gate9.repository.PostRepository
 import com.anhtam.gate9.utils.setValueDiff
@@ -18,8 +18,8 @@ class CategoryViewmodel @Inject constructor(private val gameRepository: GameRepo
     val banner: LiveData<Resource<Banner>>
         get() = mBanner
 
-    private val mNewGame = MediatorLiveData<Resource<List<Game>>>()
-    val newGame: LiveData<Resource<List<Game>>>
+    private val mNewGame = MediatorLiveData<Resource<List<Gamev1>>>()
+    val newGame: LiveData<Resource<List<Gamev1>>>
         get() = mNewGame
 
     private val mPosts: MediatorLiveData<Resource<List<com.anhtam.domain.Post>>> = MediatorLiveData()

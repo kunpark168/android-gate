@@ -6,8 +6,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.anhtam.domain.v2.PostEntity
-import com.anhtam.domain.v2.User
+import com.anhtam.domain.v2.Post
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.navigation.Navigation
@@ -18,7 +18,7 @@ import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
-import com.anhtam.gate9.vo.IllegalReturn
+import com.anhtam.gate9.v2.report.post.ReportPostActivity
 import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -34,7 +34,7 @@ class PostAdapter @Inject constructor(
         val navigation: Navigation,
         @Named("avatar") val avatarOptions: RequestOptions,
         @Named("banner") val bannerOptions: RequestOptions)
-    : BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.shared_post_item_layout, ArrayList()) {
+    : BaseQuickAdapter<Post, BaseViewHolder>(R.layout.shared_post_item_layout, ArrayList()) {
 
     init {
         setOnItemChildClickListener { _, view, position ->
@@ -54,8 +54,16 @@ class PostAdapter @Inject constructor(
                 }
                 R.id.moreImageView -> {
                     val mMoreDialog = MoreDialog(mContext, object : MoreDialog.IMore {
-                        override fun onreport() {
-//                    ReportPostActivity.start(mContext as BaseActivity)
+                        override fun delete() {
+
+                        }
+
+                        override fun update() {
+
+                        }
+
+                        override fun onReport() {
+                            navigation.addFragment(ReportPostActivity.newInstance())
                         }
                     })
                     mMoreDialog.idPost = data[position].commentId?.toString()
@@ -78,7 +86,7 @@ class PostAdapter @Inject constructor(
         }
     }
 
-    override fun convert(helper: BaseViewHolder?, item: PostEntity?) {
+    override fun convert(helper: BaseViewHolder?, item: Post?) {
         val unwrapPost = item ?: return
         val view = helper?.itemView ?: return
         // Set content of Post
@@ -176,8 +184,8 @@ class PostAdapter @Inject constructor(
         navigation.addFragment(UserDiscussionScreen.newInstance(userId, Category.Member))
     }
 
-    private fun navigateToPostDetail(postEntity: PostEntity, listener: (Reaction)->Unit) {
-        navigation.addFragment(DetailPostScreen.newInstance(postEntity, DetailPostScreen.Detail.POST, listener))
+    private fun navigateToPostDetail(post: Post, listener: (Reaction)->Unit) {
+        navigation.addFragment(DetailPostScreen.newInstance(post, DetailPostScreen.Detail.POST, listener))
     }
 
     private fun navigateToGameDiscussion(){

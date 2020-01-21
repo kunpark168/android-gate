@@ -51,23 +51,40 @@
         <LinearLayout
             android:id="@+id/rightLayout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:visibility="visible">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgChooseImg"
-                android:layout_width="@dimen/material_icon_size_16dp"
-                android:layout_height="@dimen/material_icon_size_16dp"
-                android:src="@drawable/ic_pick_image"
-                android:layout_marginStart="@dimen/layout_margin_16dp"/>
+            <FrameLayout
+                android:id="@+id/imgFrameLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/layout_margin_8dp"
+                android:padding="@dimen/padding_8dp"
+                android:layout_gravity="center">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/material_icon_size_16dp"
-                android:layout_height="@dimen/material_icon_size_16dp"
-                android:src="@drawable/ic_motion"
-                android:layout_marginStart="@dimen/layout_margin_16dp"
-                android:layout_marginEnd="@dimen/layout_margin_16dp"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgChooseImg"
+                    android:layout_width="@dimen/material_icon_size_16dp"
+                    android:layout_height="@dimen/material_icon_size_16dp"
+                    android:src="@drawable/ic_pick_image"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/iconFrameLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="@dimen/layout_margin_8dp"
+                android:padding="@dimen/padding_8dp"
+                android:layout_gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/material_icon_size_16dp"
+                    android:layout_height="@dimen/material_icon_size_16dp"
+                    android:src="@drawable/ic_motion"/>
+            </FrameLayout>
         </LinearLayout>
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgSend"

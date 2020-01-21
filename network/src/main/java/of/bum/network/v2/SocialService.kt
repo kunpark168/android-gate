@@ -3,33 +3,29 @@ package of.bum.network.v2
 import androidx.lifecycle.LiveData
 import com.anhtam.domain.Banner
 import com.anhtam.domain.Base
-import com.anhtam.domain.Game
+import com.anhtam.domain.v2.Gamev1
 import com.anhtam.domain.v2.*
-import com.anhtam.domain.v2.wrap.WrapBase
-import com.anhtam.domain.v2.wrap.WrapGame
-import com.anhtam.domain.v2.wrap.WrapGames
-import com.anhtam.domain.v2.wrap.WrapListing
+import com.anhtam.domain.v2.wrap.*
 import of.bum.network.helper.ApiResponse
-import of.bum.network.helper.Resource
 import of.bum.network.helper.RestResponse
 import okhttp3.MultipartBody
 import retrofit2.http.*
 
 interface SocialService {
     @GET("login")
-    fun getInfo(): LiveData<ApiResponse<RestResponse<User>>>
+    fun getInfo(): LiveData<ApiResponse<RestResponse<Userv1>>>
 
     @GET("social/listing")
     fun getListPosts(
             @Query("page") page: Int = 0,
             @Query("limit") limit: Int = 60
-    ): LiveData<ApiResponse<RestResponse<List<PostEntity>>>>
+    ): LiveData<ApiResponse<RestResponse<List<Post>>>>
 
     @GET("social/get-banner")
     fun getBanners(): LiveData<ApiResponse<RestResponse<List<Banner>>>>
 
     @GET("social/get-game-nominate")
-    fun getGameNominate(): LiveData<ApiResponse<RestResponse<List<Game>>>>
+    fun getGameNominate(): LiveData<ApiResponse<RestResponse<List<Gamev2>>>>
 
     @GET("social/get-post-detail")
     fun getDetailPosts(@Query("postId") postId: Long,
@@ -50,7 +46,7 @@ interface SocialService {
             @Query("tab") type: Int,
             @Query("page") page: Int,
             @Query("limit") limit: Int
-    ): LiveData<ApiResponse<RestResponse<List<PostEntity>>>>
+    ): LiveData<ApiResponse<RestResponse<List<Post>>>>
 
     @GET("social/get-list-game-by-user")
     fun getGameRelatedToUser(
@@ -59,6 +55,12 @@ interface SocialService {
             @Query("page") page: Int,
             @Query("limit") limit: Int
     ): LiveData<ApiResponse<RestResponse<List<WrapGame>>>>
+
+    @GET("social/get-new-game")
+    fun getNewGame(
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
+    ): LiveData<ApiResponse<RestResponse<List<Gamev1>>>>
 
     @POST("social/get-data-info")
     fun getDataRelatedToUser(
@@ -69,12 +71,12 @@ interface SocialService {
     ): LiveData<ApiResponse<RestResponse<WrapGames>>>
 
     @GET("user/userInfo")
-    fun getOtherUserInfoById(@Query("userId") userId: Int): LiveData<ApiResponse<RestResponse<User>>>
+    fun getOtherUserInfoById(@Query("userId") userId: Int): LiveData<ApiResponse<RestResponse<Userv1>>>
 
     @GET("social/all-game")
-    fun GetMXHGame(@Query("tab") type: Int,
+    fun getMXHGame(@Query("tab") type: Int,
                    @Query("page") page:Int = 0,
-                   @Query("limit") limit: Int = 15) : LiveData<ApiResponse<RestResponse<List<GameEntity>>>>
+                   @Query("limit") limit: Int = 15) : LiveData<ApiResponse<RestResponse<List<Gamev1>>>>
 
     @POST("social/post-like")
     fun react(@Body params: Map<String, Int>): LiveData<ApiResponse<RestResponse<Base>>>
@@ -83,10 +85,10 @@ interface SocialService {
     fun getListSocialContact(@Query("commentId") commentId: Int,
                              @Query("tab") tab: Int,
                              @Query("page") page: Int,
-                             @Query("limit") limit: Int = 15): LiveData<ApiResponse<RestResponse<List<User>>>>
+                             @Query("limit") limit: Int = 15): LiveData<ApiResponse<RestResponse<List<Userv1>>>>
 
     @POST("social/post-view-forum")
-    fun postViewForum(@Query("commentId") commentId: Int): LiveData<ApiResponse<Base>>
+    fun postViewForum(@Query("commentId") commentId: Int): LiveData<ApiResponse<RestResponse<Base>>>
 
     @Multipart
     @POST("social/upload/file")
@@ -99,5 +101,18 @@ interface SocialService {
     fun getFollowingInfo(
             @Query("tab") tab: Int,
             @Query("page") page: Int,
-            @Query("limit") limit: Int = 40): LiveData<ApiResponse<RestResponse<List<PostEntity>>>>
+            @Query("limit") limit: Int = 40): LiveData<ApiResponse<RestResponse<List<Post>>>>
+
+    /*
+     *  POST
+     *  - create
+     *  - update
+     *  - delete
+     */
+
+    @DELETE("social/delete-post-forum")
+    fun delete(@Query("commentId") id: Int): LiveData<ApiResponse<RestResponse<Base>>>
+
+    @POST("social/update-post-forum")
+    fun update()
 }

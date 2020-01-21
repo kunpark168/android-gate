@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.anhtam.domain.Banner
-import com.anhtam.domain.Game
-import com.anhtam.domain.v2.PostEntity
+import com.anhtam.domain.v2.protocol.Game
+import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.GroupBannerAdapter
 import com.anhtam.gate9.adapter.v2.PostAdapter
@@ -145,7 +145,7 @@ class TatCaFollowingScreen constructor(val mTab: Int) : DaggerNavigationFragment
         mAdapter.setData(data?.map { it.url ?: "" } ?: mutableListOf())
     }
 
-    private fun bindingComment(data: List<PostEntity>?) {
+    private fun bindingComment(data: List<Post>?) {
         if (data == null) return
         mCommentAdapter.setNewData(data)
     }

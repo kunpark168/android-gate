@@ -2,7 +2,7 @@ package of.bum.network.service
 
 import androidx.lifecycle.LiveData
 import com.anhtam.domain.Game
-import com.anhtam.domain.GameDTO
+import com.anhtam.domain.v2.Gamev1
 import of.bum.network.helper.ApiResponse
 import of.bum.network.helper.RestResponse
 import retrofit2.http.GET
@@ -18,10 +18,5 @@ interface GameService {
     fun getAllGame(@Query("page") page : Int) : LiveData<ApiResponse<RestResponse<List<Game>>>>
 
     @GET("v1/api/social/newgamecomment")
-    fun getBannerGames(): LiveData<ApiResponse<RestResponse<List<Game>>>>
-
-    @GET("/v1/api/u/games/{id}")
-    fun getGameOfUser(@Path("id") userId : String,
-                      @Query("page") page: String?,
-                      @Query("type") type: String?) : LiveData<ApiResponse<RestResponse<List<GameDTO>>>>
+    fun getBannerGames(): LiveData<ApiResponse<RestResponse<List<Gamev1>>>>
 }

@@ -10,8 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.anhtam.domain.v2.PostEntity
+import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.ChooseGalleryAdapter
 import com.anhtam.gate9.adapter.v2.CommentAdapter
@@ -25,7 +24,6 @@ import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.report.post.ReportPostActivity
 import com.anhtam.gate9.v2.shared.AbstractGalleryFragment
-import com.anhtam.gate9.v2.shared.MultiChooseImageScreen
 import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -39,7 +37,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class DetailPostScreen private constructor(
-        private val _post: PostEntity,
+        private val _post: Post,
         private val _type: Detail,
         private val mListener: ((Reaction)-> Unit)?
 ): AbstractGalleryFragment(), INavigator{
@@ -62,7 +60,7 @@ class DetailPostScreen private constructor(
     }
 
     companion object{
-        fun newInstance(postEntity: PostEntity, type: Detail, listener: ((Reaction)->Unit)? = null) = DetailPostScreen(postEntity, type, listener)
+        fun newInstance(post: Post, type: Detail, listener: ((Reaction)->Unit)? = null) = DetailPostScreen(post, type, listener)
     }
 
     private val viewModel: DetailPostViewModel by viewModels { vmFactory }
@@ -107,7 +105,12 @@ class DetailPostScreen private constructor(
 
     private fun postViewForum(){
         // check auth
-        viewModel.postViewForum()
+        val isLogin = mSessionManager.checkLogin()
+        if (isLogin){
+            viewModel.postViewForum().observe(viewLifecycleOwner, Observer {
+                Timber.d("test")
+            })
+        }
     }
 
     private fun loadComment(){
@@ -274,11 +277,18 @@ class DetailPostScreen private constructor(
         tvFollowGame?.setTextColor(ContextCompat.getColor(unwrapContext, R.color.text_color_blue))
     }
 
+    private fun changeLabel(reaction: Reaction){
+        val show: Boolean = reaction != Reaction.None
+        tvView?.text = if (show) "0" else getString(R.string.view_label)
+        tvComment?.text = if (show) _post.totalReply else getString(R.string.reply)
+    }
+
     private fun initEvents() {
         // Reaction
-        reactionView?.onReactionChange(mSessionManager){
-            mListener?.invoke(it)
-            viewModel.react(it).observe(viewLifecycleOwner, Observer {
+        reactionView?.onReactionChange(mSessionManager){current, previous ->
+            changeLabel(current)
+            mListener?.invoke(current)
+            viewModel.react(current, previous).observe(viewLifecycleOwner, Observer {
                 Timber.d("Test") // TODO Bug
             })
         }
@@ -295,6 +305,7 @@ class DetailPostScreen private constructor(
         }
         swipeRefreshLayout?.setOnRefreshListener {
             swipeRefreshLayout?.isRefreshing = false
+            viewModel.getChildComment()
         }
         btnDonate?.setOnClickListener {
             val unwrapContext = context ?: return@setOnClickListener
@@ -332,7 +343,7 @@ class DetailPostScreen private constructor(
             postComment()
         }
 
-        imgChooseImg?.setOnClickListener {
+        imgFrameLayout?.setOnClickListener {
             selectedMultiImages()
         }
 
@@ -354,12 +365,12 @@ class DetailPostScreen private constructor(
 
     private fun readySendMode(){
         imgSend?.visibility = View.VISIBLE
-        rightLayout?.visibility = View.GONE
+        iconFrameLayout?.visibility = View.GONE
     }
 
     private fun noneTypeMode(){
         imgSend?.visibility = View.GONE
-        rightLayout?.visibility = View.VISIBLE
+        iconFrameLayout?.visibility = View.VISIBLE
     }
 
     private fun postComment(){

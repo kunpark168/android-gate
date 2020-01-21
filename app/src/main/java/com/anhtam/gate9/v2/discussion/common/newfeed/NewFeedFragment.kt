@@ -5,11 +5,13 @@ import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.PostAdapter
 import com.anhtam.gate9.share.view.CustomLoadMoreView
+import com.anhtam.gate9.utils.convertInt
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
 import com.google.android.material.tabs.TabLayout
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
 import of.bum.network.helper.Resource
+import of.bum.network.helper.RestResponse
 import javax.inject.Inject
 
 class NewFeedFragment(private val _userId: Int) : CommonDiscussionFragment() {
@@ -18,6 +20,13 @@ class NewFeedFragment(private val _userId: Int) : CommonDiscussionFragment() {
     private var mCurrentCategory: PostCategory = PostCategory.BOTH
     override val colorTextTab = R.color.colorTabDiscussion
     private val viewModel: NewFeedViewModel by viewModels { vmFactory }
+
+    /*
+     *
+     */
+    private var mCountTab1: Int = 0
+    private var mCountTab2: Int = 0
+    private var mCountTab3: Int = 0
 
     override fun loadData() {
         viewModel.requestFirstPage(_userId, mCurrentCategory)
@@ -38,6 +47,12 @@ class NewFeedFragment(private val _userId: Int) : CommonDiscussionFragment() {
             when(resource) {
                 is Resource.Success -> {
                     val data = resource.data
+                    val response = resource.mResponse?.body as? RestResponse<*>
+                    mCountTab1 = (response?.mMeta?.get("countTab1") as? String)?.convertInt() ?: 0
+                    mCountTab2 = (response?.mMeta?.get("countTab2") as? String)?.convertInt() ?: 0
+                    mCountTab3 = (response?.mMeta?.get("countTab3") as? String)?.convertInt() ?: 0
+                    updateTabLayout()
+
                     if (data.isNullOrEmpty()) {
                         mAdapter.loadMoreEnd()
                     } else {
@@ -69,11 +84,11 @@ class NewFeedFragment(private val _userId: Int) : CommonDiscussionFragment() {
 
     override fun updateTabLayout() {
         tabLayout.getTabAt(0)?.text = Phrase.from(resources.getString(R.string.number_all))
-                .put("amount", "0").format()
+                .put("amount", mCountTab1).format()
         tabLayout.getTabAt(1)?.text = Phrase.from(resources.getString(R.string.number_post))
-                .put("amount", "0").format()
+                .put("amount", mCountTab2).format()
         tabLayout.getTabAt(2)?.text = Phrase.from(resources.getString(R.string.number_comment))
-                .put("amount", "0").format()
+                .put("amount", mCountTab3).format()
     }
 
     override fun initEvents() {
@@ -101,9 +116,14 @@ class NewFeedFragment(private val _userId: Int) : CommonDiscussionFragment() {
             }
 
         })
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+            loadData()
+        }
     }
 
     private fun newRequestType(category: PostCategory) {
+        mCurrentCategory = category
         mAdapter.data.clear()
         mAdapter.notifyDataSetChanged()
         if (viewModel.mCategory != category) {
