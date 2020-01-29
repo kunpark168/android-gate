@@ -10,8 +10,8 @@ interface User{
     var mCreatedDate: String?
     var mFacebook: String?
     var mName: String?
-    var mFlower: String?
-    var mFlowing: String?
+    var mFlower: Long?
+    var mFlowing: Long?
     var mLastLogin: String?
     var mGender: String?
     var mAddress: String?
@@ -25,5 +25,5 @@ interface User{
     var mAccessToken: String?
     var mNumLike: String?
     var mTotalPost: String?
-    var mIsFollowing: String?
+    var mIsFollowing: Boolean?
 }

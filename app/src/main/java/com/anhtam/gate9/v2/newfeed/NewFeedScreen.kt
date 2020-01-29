@@ -30,7 +30,7 @@ import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.mxh_game.MXHGameScreen
 import com.anhtam.gate9.v2.notification.NotificationFragment
-import com.anhtam.gate9.v2.main.member.MemberHomeFragment
+import com.anhtam.gate9.v2.main.member.MemberFragment
 import com.anhtam.gate9.v2.messenger.ChannelFragment
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -203,7 +203,7 @@ class NewFeedScreen : DaggerNavigationFragment() {
         icChat?.setOnClickListener {
             navigation?.addFragment(ChannelFragment.newInstance())
         }
-        icGroup?.setOnClickListener { navigation?.addFragment(MemberHomeFragment.newInstance()) }
+        icGroup?.setOnClickListener { navigation?.addFragment(MemberFragment.newInstance()) }
         imgSearch?.setOnClickListener{
             navigation?.addFragment(SearchScreen.newInstance())
         }

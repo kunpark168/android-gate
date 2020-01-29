@@ -25,7 +25,7 @@ interface Game {
     var photos: String?
     var follower: String?
     var following: String?
-    var follow: String?
+    var follow: Boolean?
     var post: String?
     var imgCover: String?
 }

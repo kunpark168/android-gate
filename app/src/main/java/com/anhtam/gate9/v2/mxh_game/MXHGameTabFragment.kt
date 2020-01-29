@@ -137,7 +137,7 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
                     .put("post", data.post.toString())
                     .format()
             view.tvFollowAmount.text = followGame
-            if (data.follow == "true") {
+            if (data.follow == true) {
                 setFollowing(view.tvFollow)
             } else {
                 // check follow here

@@ -71,7 +71,7 @@ class SocialRepository @Inject constructor(
         override fun createCall() = socialService.getBanners()
     }.asLiveData()
 
-    fun getGameNominate() = object : FetchBoundResource<List<Gamev2>>(){
+    fun getGameNominate() = object : FetchBoundResource<List<Gamev1>>(){
         override fun createCall() = socialService.getGameNominate()
     }.asLiveData()
 
@@ -85,5 +85,9 @@ class SocialRepository @Inject constructor(
 
     fun uploadImages(file: List<MultipartBody.Part>) = object : Lv1FetchResource<List<String>>(){
         override fun createCall() = socialService.upload(file)
+    }.asLiveData()
+
+    fun listUser(role: Int, page: Int) = object : Lv2FetchResource<List<Userv1>>(){
+        override fun createCall() = socialService.listUser(role, page)
     }.asLiveData()
 }

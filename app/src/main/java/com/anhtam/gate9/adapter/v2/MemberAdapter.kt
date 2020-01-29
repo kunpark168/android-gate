@@ -69,7 +69,7 @@ class MemberAdapter @Inject constructor(
                 .addOnClickListener(R.id.avatarImageView)
                 .addOnClickListener(R.id.followButton)
         when(user.mIsFollowing){
-            "true" -> following(view.followButton)
+            true -> following(view.followButton)
             else -> unFollowing(view.followButton)
         }
     }

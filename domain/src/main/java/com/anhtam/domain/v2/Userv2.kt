@@ -39,9 +39,9 @@ data class Userv2(
         @Json(name = "facebook")
         override var mFacebook: String? =  null,
         @Json(name = "flower")
-        override var mFlower: String? = null,
+        override var mFlower: Long? = null,
         @Json(name = "flowing")
-        override var mFlowing: String? = null,
+        override var mFlowing: Long? = null,
         @Json(name = "last_login")
         override var mLastLogin: String? = null,
         @Json(name = "address")
@@ -53,6 +53,6 @@ data class Userv2(
         @Json(name = "total_post")
         override var mTotalPost: String? = null,
         @Json(name = "following")
-        override var mIsFollowing: String? = null
+        override var mIsFollowing: Boolean? = null
 
 ): User

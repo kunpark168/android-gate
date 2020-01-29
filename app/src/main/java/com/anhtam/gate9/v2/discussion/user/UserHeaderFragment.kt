@@ -75,8 +75,8 @@ class UserHeaderFragment : DaggerNavigationFragment() {
                 .into(imgAvatar)
 
         tvUserName?.text = user.mName
-        tvFollow?.text = user.mFlowing ?: "0"
-        tvFollower?.text = user.mFlower ?: "0"
+        tvFollow?.text = user.mFlowing?.toString() ?: "0"
+        tvFollower?.text = user.mFlower?.toString() ?: "0"
         tvCounting?.text = Phrase.from(resources.getString(R.string.number_point))
                 .put("point", user.mPoint)
                 .put("medal", /*user.medal TODO */ "").format()
@@ -99,8 +99,8 @@ class UserHeaderFragment : DaggerNavigationFragment() {
         csRating?.init("4.3", "4356")
 
         val followString = Phrase.from(resources.getString(R.string.following_follower_publisher))
-                .put("following", user.mFlowing ?: "0")
-                .put("follower", user.mFlower ?: "0")
+                .put("following", user.mFlowing?.toString() ?: "0")
+                .put("follower", user.mFlower?.toString() ?: "0")
                 .put("game", "100")
                 .format()
         tvGameCount?.text = followString

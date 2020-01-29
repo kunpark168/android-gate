@@ -203,8 +203,8 @@ class DetailPostScreen private constructor(
                 .into(imgAvatar)
         tvUserName?.text = user?.mName
         val follow = Phrase.from(getString(R.string.following_amount_and_follower_amount))
-                .put("following", user?.mFlowing ?: "0")
-                .put("follower", user?.mFlower ?: "0")
+                .put("following", user?.mFlowing?.toString() ?: "0")
+                .put("follower", user?.mFlower?.toString() ?: "0")
                 .format()
 
         tvFollowNumber.text = follow

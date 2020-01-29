@@ -24,27 +24,15 @@ class GGameViewModel @Inject constructor(private val socialRepository: SocialRep
         mUserId = userId
         mCategory = category
         mType = getCategory(category)
-        if(mCategory == GameCategory.CLOSED){
-            _game.addSource(socialRepository.getNewGame(mPage, 10)){
-//                _game.value = it
-            }
-        } else {
-            _game.addSource(socialRepository.getGameRelatedToUser(mUserId, mType, mPage, 10 )){
-                _game.value = it
-            }
+        _game.addSource(socialRepository.getGameRelatedToUser(mUserId, mType, mPage, 10 )){
+            _game.value = it
         }
     }
 
     fun requestMore() {
         mPage++
-        if(mCategory == GameCategory.CLOSED){
-            _game.addSource(socialRepository.getNewGame(mPage, 10)){
-                //                _game.value = it
-            }
-        } else {
-            _game.addSource(socialRepository.getGameRelatedToUser(mUserId, mType, mPage, 10 )){
-                _game.value = it
-            }
+        _game.addSource(socialRepository.getGameRelatedToUser(mUserId, mType, mPage, 10 )){
+            _game.value = it
         }
     }
 

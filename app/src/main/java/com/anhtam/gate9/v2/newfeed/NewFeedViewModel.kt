@@ -32,8 +32,8 @@ class NewFeedViewModel @Inject constructor(
     val banners: LiveData<Resource<List<Banner>>>
         get() = _banners
 
-    private val _games = MediatorLiveData<Resource<List<Gamev2>>>()
-    val games: LiveData<Resource<List<Gamev2>>>
+    private val _games = MediatorLiveData<Resource<List<Gamev1>>>()
+    val games: LiveData<Resource<List<Gamev1>>>
         get() = _games
 
     fun loadNewFeed(){

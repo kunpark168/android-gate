@@ -151,7 +151,7 @@ class PostAdapter @Inject constructor(
                     .put("post", game.post.toString())
                     .format()
             view.contentGameTextView.text = followGame
-            if (game.follow == "false") {
+            if (game.follow != true) {
                 // check follow here
                 setFollow(view.followGameTextView)
             } else {

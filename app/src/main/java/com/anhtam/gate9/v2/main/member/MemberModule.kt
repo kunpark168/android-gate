@@ -11,7 +11,7 @@ import dagger.multibindings.IntoMap
 abstract class MemberModule {
 
     @ContributesAndroidInjector
-    abstract fun contributeMemberFragment(): MemberFragment
+    abstract fun contributeMemberFragment(): MemberTabFragment
 
     /* Member */
     @Binds

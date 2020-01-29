@@ -50,7 +50,7 @@ class Gamev1(
         @Json(name = "following")
         override var following: String? = null,
         @Json(name = "follow")
-        override var follow: String? = null,
+        override var follow: Boolean? = null,
         @Json(name = "post")
         override var post: String? = null,
         @Json(name = "imgCover")

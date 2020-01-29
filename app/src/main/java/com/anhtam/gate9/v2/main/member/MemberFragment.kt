@@ -4,104 +4,89 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
+import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.R
-import com.anhtam.gate9.share.view.CustomLoadMoreView
-import com.anhtam.gate9.adapter.v2.MemberAdapter
+import com.anhtam.gate9.v2.charts.ChartScreen
+import com.anhtam.gate9.v2.main.member.all.MemberListFragment
 import com.anhtam.gate9.utils.customOnClickHolder
+import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
-import kotlinx.android.synthetic.main.gamer_activity.*
-import of.bum.network.helper.Resource
-import javax.inject.Inject
+import com.anhtam.gate9.vo.EUser
+import kotlinx.android.synthetic.main.member_fragment.*
 
-class MemberFragment : DaggerNavigationFragment() {
+class MemberFragment : DaggerNavigationFragment(), INavigator {
 
-    private val viewModel: MemberDefaultViewModel by viewModels { vmFactory }
-    private lateinit var mType: String
+    companion object {
+        fun newInstance() = MemberFragment()
+    }
 
-    @Inject lateinit var mAdapter: MemberAdapter
+    override fun navigateToMemberDetail(idUser: String?, type: String) {
+//        UserDiscussionScreen.start(context, idUser?.toInt() ?: 0, Category.Member)
+    }
 
-    private var mINavigator: INavigator? = null
+    override fun navigateToMemberFragment() {
+
+    }
+
+    override fun navigateToListFragment(type: EUser) {
+        navigation?.addFragment(MemberListFragment.newInstance(type))
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.gamer_activity, container, false)
+        return inflater.inflate(R.layout.member_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         init()
     }
 
-    private fun init(){
-        setData()
-        setUpRecyclerView()
+    private fun init() {
+        setUpViewPager()
         initEvents()
-        observer()
-    }
-
-    private fun setData() {
-        viewModel.requestMemberList(null, mType)
     }
 
     private fun initEvents() {
-        mINavigator = parentFragment as INavigator?
-        viewAllLinearLayout?.customOnClickHolder {
-            mINavigator?.navigateToListFragment(mType)
+        llGame?.customOnClickHolder {
+            vpTop.currentItem = 0
         }
+        llNPH?.customOnClickHolder {
+            vpTop.currentItem = 1
+        }
+
+        csCharts.debounceClick { navigation?.addFragment(ChartScreen.newInstance()) }
     }
 
+    private fun setUpViewPager(){
+        val fragments = arrayListOf<Fragment>()
+        fragments.add(MemberTabFragment.newInstance(EUser.TV))
+        fragments.add(MemberTabFragment.newInstance(EUser.NPH))
+        vpTop.adapter = SharePageAdapter(childFragmentManager, fragments)
+        vpTop.offscreenPageLimit = fragments.size
 
-    private fun setUpRecyclerView() {
-        mAdapter.setLoadMoreView(CustomLoadMoreView())
-        mAdapter.setOnItemClickListener{ _, view, position ->
-            view.customOnClickHolder {
-                val user = mAdapter.getItem(position)
-                user?.let { mINavigator?.navigateToMemberDetail(it.mId?.toString(), mType) }
+        vpTop.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+            override fun onPageScrollStateChanged(state: Int) {
+
             }
-        }
-        rvUsers.adapter = mAdapter
-        rvUsers.layoutManager = LinearLayoutManager(context)
-        mAdapter.setOnLoadMoreListener({
-            /* Request */
-            viewModel.requestMore()
-        },rvUsers)
-        mAdapter.setEmptyView(R.layout.share_loading_load_more_view)
-        mAdapter.isUseEmpty(true)
-    }
 
-    private fun observer() {
-        viewModel.userList.observe(this, Observer {
-            when(it) {
-                is Resource.Success -> {
-                    val data = it.data
-                    if (data.isNullOrEmpty()) {
-                        mAdapter.loadMoreEnd()
-                    } else {
-                        if (viewModel.page == 1) {
-//                            mAdapter.setNewData(data)
-                        } else {
-//                            mAdapter.addData(data)
-                        }
-                        mAdapter.loadMoreComplete()
-                        mAdapter.removeAllHeaderView()
-                    }
-                }
-                is Resource.Error -> {
-                    mAdapter.removeAllHeaderView()
-                }
-                else -> {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 
+            }
+
+            override fun onPageSelected(position: Int) {
+
+                if(position == 0){
+                    vGamer.visibility = View.VISIBLE
+                    vNPH.visibility = View.GONE
+                } else {
+                    vNPH.visibility = View.VISIBLE
+                    vGamer.visibility = View.GONE
                 }
             }
+
         })
     }
 
-    companion object {
-        fun newInstance(type: String): MemberFragment {
-            val fragment = MemberFragment()
-            fragment.mType = type
-            return fragment
-        }
-    }
 }

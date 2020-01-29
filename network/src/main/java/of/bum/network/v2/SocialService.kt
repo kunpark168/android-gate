@@ -25,7 +25,7 @@ interface SocialService {
     fun getBanners(): LiveData<ApiResponse<RestResponse<List<Banner>>>>
 
     @GET("social/get-game-nominate")
-    fun getGameNominate(): LiveData<ApiResponse<RestResponse<List<Gamev2>>>>
+    fun getGameNominate(): LiveData<ApiResponse<RestResponse<List<Gamev1>>>>
 
     @GET("social/get-post-detail")
     fun getDetailPosts(@Query("postId") postId: Long,
@@ -115,4 +115,10 @@ interface SocialService {
 
     @POST("social/update-post-forum")
     fun update()
+
+    @GET("user/list-user")
+    fun listUser(@Query("role") role: Int,
+                 @Query("page") page: Int,
+                 @Query("limit") limit: Int = 10,
+                 @Query("keyword") keyword: String? = ""): LiveData<ApiResponse<RestResponse<List<Userv1>>>>
 }
