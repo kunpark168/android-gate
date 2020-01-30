@@ -185,7 +185,7 @@ class PostAdapter @Inject constructor(
     }
 
     private fun navigateToPostDetail(post: Post, listener: (Reaction)->Unit) {
-        navigation.addFragment(DetailPostScreen.newInstance(post, DetailPostScreen.Detail.POST, listener))
+        navigation.addFragment(DetailPostScreen.newInstance(post, DetailPostScreen.Detail.POST, listener), tag = Config.DETAIL_POST_FRAGMENT_TAG)
     }
 
     private fun navigateToGameDiscussion(){

@@ -6,6 +6,7 @@ import android.text.Html
 import android.text.TextWatcher
 import android.view.*
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +16,7 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.ChooseGalleryAdapter
 import com.anhtam.gate9.adapter.v2.CommentAdapter
 import com.anhtam.gate9.adapter.v2.PhotoAdapter
+import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.share.view.donate.DonateDialog
 import com.anhtam.gate9.utils.convertInt
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
@@ -305,7 +307,11 @@ class DetailPostScreen private constructor(
             val unwrapContext = context ?: return@setOnClickListener
             DonateDialog(unwrapContext).show()
         }
-        tvOriPost?.setOnClickListener { /**/ }
+        tvOriPost?.setOnClickListener {
+            val backstack = requireActivity().supportFragmentManager.popBackStackImmediate()
+            val bt = requireActivity().supportFragmentManager.getBackStackEntryAt(0)
+            val x = 3
+        }
         csComment?.setOnClickListener { etPost?.requestFocus() }
         etPost.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
