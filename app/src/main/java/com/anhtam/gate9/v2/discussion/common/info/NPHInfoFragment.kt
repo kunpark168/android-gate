@@ -14,20 +14,13 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 
 import of.bum.network.helper.Resource
 
-class NPHInfoFragment: DaggerNavigationFragment() {
+class NPHInfoFragment: DaggerNavigationFragment(R.layout.fragment_info_nph) {
 
 
     private var mUser: User? = null
 
     private var mDiscussionViewModel: DiscussionViewModel? = null
     private val viewModel: DiscussionViewModel by viewModels { vmFactory }
-
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_info_nph, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activity?.let {

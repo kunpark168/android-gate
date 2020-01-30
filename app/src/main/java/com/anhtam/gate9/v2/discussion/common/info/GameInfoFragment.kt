@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_info_game.tvHome
 import kotlinx.android.synthetic.main.fragment_info_game.tvIntro
 import of.bum.network.helper.Resource
 
-class GameInfoFragment: DaggerNavigationFragment() {
+class GameInfoFragment: DaggerNavigationFragment(R.layout.fragment_info_game) {
 
 
     private var mGame: Game? = null
@@ -25,12 +25,6 @@ class GameInfoFragment: DaggerNavigationFragment() {
     private var mDiscussionViewModel: DiscussionViewModel? = null
     private val viewModel: DiscussionViewModel by viewModels { vmFactory }
 
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_info_game, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         activity?.let {

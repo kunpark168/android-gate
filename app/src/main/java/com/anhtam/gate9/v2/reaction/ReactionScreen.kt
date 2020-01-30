@@ -15,7 +15,7 @@ import java.util.*
 
 class ReactionScreen private constructor(
         private val mCommentId: Int
-): DaggerNavigationFragment() {
+): DaggerNavigationFragment(R.layout.reaction_screen) {
 
     companion object {
         private const val CODE_LIKE = 1
@@ -27,10 +27,6 @@ class ReactionScreen private constructor(
     }
 
     private lateinit var mAdapter: SharePageAdapter
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.reaction_screen, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

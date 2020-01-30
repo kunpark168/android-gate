@@ -10,11 +10,7 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.chart_screen.*
 
-class ChartScreen : DaggerNavigationFragment() {
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.chart_screen, container, false)
-    }
+class ChartScreen : DaggerNavigationFragment(R.layout.chart_screen) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

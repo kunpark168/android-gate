@@ -29,7 +29,7 @@ import of.bum.network.helper.Resource
 import javax.inject.Inject
 import javax.inject.Named
 
-class MXHGameTabFragment : DaggerNavigationFragment() {
+class MXHGameTabFragment : DaggerNavigationFragment(R.layout.mxh_game_tab_fragment) {
     companion object{
         fun newInstance(type: MXHGameScreen.MXHGameTab): MXHGameTabFragment{
             val fragment = MXHGameTabFragment()
@@ -43,10 +43,6 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
     private var mLoading = false
 
     @field:Named("banner") @Inject lateinit var bannerOptions: RequestOptions
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.mxh_game_tab_fragment, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

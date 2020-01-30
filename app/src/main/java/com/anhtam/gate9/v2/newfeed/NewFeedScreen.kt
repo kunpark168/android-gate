@@ -42,7 +42,7 @@ import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Named
 
-class NewFeedScreen : DaggerNavigationFragment() {
+class NewFeedScreen : DaggerNavigationFragment(R.layout.new_feed_screen) {
 
     fun update() {
         Timber.d("War")
@@ -63,10 +63,6 @@ class NewFeedScreen : DaggerNavigationFragment() {
     @Inject lateinit var mGroup4Adapter: GroupBannerAdapter
     @Inject @field:Named("avatar") lateinit var avatarOptions: RequestOptions
     @Inject @field:Named("banner") lateinit var bannerOptions: RequestOptions
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.new_feed_screen, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

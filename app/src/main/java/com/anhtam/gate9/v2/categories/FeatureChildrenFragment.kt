@@ -21,17 +21,12 @@ import kotlinx.android.synthetic.main.fragment_category.*
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 
-class FeatureChildrenFragment : DaggerNavigationFragment() {
+class FeatureChildrenFragment : DaggerNavigationFragment(R.layout.fragment_category) {
 
     private var categoryViewmodel: CategoryViewmodel?= null
     @Inject lateinit var mAdapter: GroupBannerAdapter
     private lateinit var mAdapterPostQuick: PostQuickAdapter
     private var tab = 0
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_category, container, false)
-    }
 
     companion object {
         fun newInstance(tab: Int): FeatureChildrenFragment{

@@ -12,7 +12,7 @@ import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.mxh_game_screen.*
 
-class MXHGameScreen : DaggerNavigationFragment(){
+class MXHGameScreen : DaggerNavigationFragment(R.layout.mxh_game_screen){
 
     companion object {
         fun newInstance() = MXHGameScreen()
@@ -20,10 +20,6 @@ class MXHGameScreen : DaggerNavigationFragment(){
 
     private var mAdapter: SharePageAdapter by autoCleared()
     private val mTabs by lazy { arrayOf(tabAll, tabLove, tabDownload, tabFollowing)}
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.mxh_game_screen, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

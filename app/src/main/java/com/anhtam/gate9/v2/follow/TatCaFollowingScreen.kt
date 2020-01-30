@@ -35,14 +35,10 @@ import of.bum.network.helper.Resource
 import javax.inject.Inject
 import javax.inject.Named
 
-class TatCaFollowingScreen constructor(val mTab: Int) : DaggerNavigationFragment(){
+class TatCaFollowingScreen constructor(val mTab: Int) : DaggerNavigationFragment(R.layout.tat_ca_following_screen){
 
     companion object{
         fun newInstance(tab: Int) = TatCaFollowingScreen(tab)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.tat_ca_following_screen, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

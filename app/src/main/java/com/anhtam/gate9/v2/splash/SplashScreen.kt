@@ -11,14 +11,10 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.main.home.HomeFragment
 import kotlinx.android.synthetic.main.splash_screen.*
 
-class SplashScreen : DaggerNavigationFragment() {
+class SplashScreen : DaggerNavigationFragment(R.layout.splash_screen) {
 
     companion object {
         fun newInstance() = SplashScreen()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.splash_screen, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

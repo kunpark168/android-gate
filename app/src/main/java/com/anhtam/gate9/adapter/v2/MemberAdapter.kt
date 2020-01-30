@@ -27,7 +27,11 @@ class MemberAdapter @Inject constructor(
             when(view.id){
                 R.id.nameTextView, R.id.avatarImageView -> {
                     val idUser = data[position].mId ?: return@setOnItemChildClickListener
-                    navigation.addFragment(UserDiscussionScreen.newInstance(idUser, Category.Member))
+                    val role = when(data[position].mRoleId){
+                        "5" -> Category.Publisher
+                        else -> Category.Member
+                    }
+                    navigation.addFragment(UserDiscussionScreen.newInstance(idUser, role))
                 }
                 R.id.followButton -> {
                     val tvFollow = view as? TextView

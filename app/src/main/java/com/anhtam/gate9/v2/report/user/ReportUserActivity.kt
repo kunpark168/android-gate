@@ -1,22 +1,14 @@
 package com.anhtam.gate9.v2.report.user
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.report.game.ReportGameType
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.activity_report_game.*
 
-class ReportUserActivity : DaggerNavigationFragment() {
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.activity_report_user, container, false)
-    }
+class ReportUserActivity : DaggerNavigationFragment(R.layout.activity_report_user) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

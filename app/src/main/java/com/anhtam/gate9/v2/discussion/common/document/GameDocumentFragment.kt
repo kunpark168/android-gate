@@ -10,11 +10,7 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 
-class GameDocumentFragment : DaggerNavigationFragment() {
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.game_document_fragment, container, false)
-    }
+class GameDocumentFragment : DaggerNavigationFragment(R.layout.game_document_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -25,17 +25,11 @@ import kotlinx.android.synthetic.main.item_recently_search.view.*
 /**
  * A simple [Fragment] subclass.
  */
-class ChartSearchFragment : DaggerNavigationFragment() {
+class ChartSearchFragment : DaggerNavigationFragment(R.layout.fragment_chart_search) {
 
     private var mAdapter by autoCleared<BannerGameAdapter>()
     private var mRecentAdapter by autoCleared<Adapter>()
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chart_search, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

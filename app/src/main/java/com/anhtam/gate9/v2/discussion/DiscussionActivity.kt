@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_shared_discussion.*
 import kotlinx.android.synthetic.main.view_footer_discussion.*
 import kotlinx.android.synthetic.main.view_nav_controller_discussion.*
 
-abstract class DiscussionActivity : DaggerNavigationFragment() {
+abstract class DiscussionActivity : DaggerNavigationFragment(R.layout.activity_shared_discussion) {
 
     abstract val headerFragment: Fragment
     abstract fun fragments(): List<Fragment>
@@ -28,9 +28,6 @@ abstract class DiscussionActivity : DaggerNavigationFragment() {
     abstract val fragmentInfo: Fragment
     protected val viewModel: DiscussionViewModel by viewModels { vmFactory }
     abstract fun loadData()
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.activity_shared_discussion, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

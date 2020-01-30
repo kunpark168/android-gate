@@ -16,13 +16,9 @@ import kotlinx.android.synthetic.main.fragment_result_search.*
 /**
  * A simple [Fragment] subclass.
  */
-class ResultSearchFragment : DaggerNavigationFragment() {
+class ResultSearchFragment : DaggerNavigationFragment(R.layout.fragment_result_search) {
 
     private val viewModel: SearchViewModel by viewModels { vmFactory }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_result_search, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

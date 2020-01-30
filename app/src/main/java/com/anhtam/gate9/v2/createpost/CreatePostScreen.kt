@@ -20,7 +20,7 @@ import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Named
 
-class CreatePostScreen : AbstractGalleryFragment() {
+class CreatePostScreen : AbstractGalleryFragment(R.layout.create_post_screen) {
 
     @Inject lateinit var mediaService: MediaService
     @Inject lateinit var mAdapter: ChooseGalleryAdapter
@@ -29,12 +29,6 @@ class CreatePostScreen : AbstractGalleryFragment() {
 
     companion object {
         fun newInstance()= CreatePostScreen()
-    }
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-        return inflater.inflate(R.layout.create_post_screen, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

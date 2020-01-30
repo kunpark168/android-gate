@@ -40,7 +40,7 @@ class DetailPostScreen private constructor(
         private val _post: Post,
         private val _type: Detail,
         private val mListener: ((Reaction)-> Unit)?
-): AbstractGalleryFragment(), INavigator{
+): AbstractGalleryFragment(R.layout.detail_post_screen), INavigator{
 
     override fun toLogin() {
         navigation?.addFragment(LoginScreen.newInstance(false))
@@ -71,12 +71,6 @@ class DetailPostScreen private constructor(
     @Inject lateinit var mPhotoAdapter: PhotoAdapter
     @Inject lateinit var mAdapter: CommentAdapter
     @Inject lateinit var mGalleryAdapter: ChooseGalleryAdapter
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-        return inflater.inflate(R.layout.detail_post_screen, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -12,14 +12,10 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.register_screen.*
 
 
-class RegisterScreen : DaggerNavigationFragment() {
+class RegisterScreen : DaggerNavigationFragment(R.layout.register_screen) {
 
     companion object{
         fun newInstance() = RegisterScreen()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.register_screen, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -17,7 +17,7 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
 import of.bum.network.helper.Resource
 
-abstract class CommonDiscussionFragment : DaggerNavigationFragment() {
+abstract class CommonDiscussionFragment : DaggerNavigationFragment(R.layout.shared_discussion_layout) {
 
     protected var mUser: User? = null
 
@@ -30,10 +30,6 @@ abstract class CommonDiscussionFragment : DaggerNavigationFragment() {
     abstract fun initEvents()
     open fun inflateLayout() : Int? {
         return null
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.shared_discussion_layout, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

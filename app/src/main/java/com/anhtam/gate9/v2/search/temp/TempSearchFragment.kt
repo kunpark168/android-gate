@@ -21,16 +21,9 @@ import kotlinx.android.synthetic.main.layout_rating_game.view.*
 /**
  * A simple [Fragment] subclass.
  */
-class TempSearchFragment : DaggerNavigationFragment() {
+class TempSearchFragment : DaggerNavigationFragment(R.layout.fragment_temp_search) {
 
     private var mRecentAdapter by autoCleared<Adapter>()
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_temp_search, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

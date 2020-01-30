@@ -14,19 +14,12 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.fragment_info_user.*
 import of.bum.network.helper.Resource
 
-class UserInfoFragment: DaggerNavigationFragment() {
+class UserInfoFragment: DaggerNavigationFragment(R.layout.fragment_info_user) {
 
 
     private var mUser: User? = null
 
     private var mDiscussionViewModel: DiscussionViewModel? = null
-
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_info_user, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         parentFragment?.let {

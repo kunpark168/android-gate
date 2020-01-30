@@ -9,14 +9,10 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.inbox_fragment.*
 
-class InboxFragment : DaggerNavigationFragment() {
+class InboxFragment : DaggerNavigationFragment(R.layout.inbox_fragment) {
 
     companion object{
         fun newInstance() = InboxFragment()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.inbox_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -16,7 +16,7 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.vo.EUser
 import kotlinx.android.synthetic.main.member_fragment.*
 
-class MemberFragment : DaggerNavigationFragment(), INavigator {
+class MemberFragment : DaggerNavigationFragment(R.layout.member_fragment), INavigator {
 
     companion object {
         fun newInstance() = MemberFragment()
@@ -34,9 +34,7 @@ class MemberFragment : DaggerNavigationFragment(), INavigator {
         navigation?.addFragment(MemberListFragment.newInstance(type))
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.member_fragment, container, false)
-    }
+    override fun menuRes() = R.menu.menu_chat_search_more
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.anhtam.domain.v2.protocol.User
@@ -26,26 +27,14 @@ import kotlinx.android.synthetic.main.header_publisher_discussion.*
 import of.bum.network.helper.Resource
 import timber.log.Timber
 
-class UserHeaderFragment : DaggerNavigationFragment() {
+class UserHeaderFragment(private val mType: Category, @LayoutRes layoutId: Int) : DaggerNavigationFragment(layoutId){
 
-    private lateinit var mType: Category
     private var viewModel: DiscussionViewModel? = null
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(layoutRes(), container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = parentFragment?.let { ViewModelProviders.of(it, vmFactory).get(DiscussionViewModel::class.java) }
         observer()
-    }
-
-    private fun layoutRes(): Int {
-        return when(mType) {
-            Category.Member -> R.layout.header_gamer_discussion
-            Category.Publisher -> R.layout.header_publisher_discussion
-        }
     }
 
     private fun observer() {
@@ -116,10 +105,12 @@ class UserHeaderFragment : DaggerNavigationFragment() {
     }
 
     companion object {
-        fun newInstance(type: Category) : UserHeaderFragment {
-            val fragment = UserHeaderFragment()
-            fragment.mType = type
-            return fragment
+        fun newInstance(type: Category)  : UserHeaderFragment{
+            val layout = when(type) {
+                Category.Member -> R.layout.header_gamer_discussion
+                Category.Publisher -> R.layout.header_publisher_discussion
+            }
+            return UserHeaderFragment(type, layout)
         }
     }
 }

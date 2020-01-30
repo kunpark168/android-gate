@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.gallery_images_fragment.*
 import kotlinx.android.synthetic.main.multi_select_gallery_item_layout.view.*
 import javax.inject.Inject
 
-class GalleryImagesFragment private constructor(): DaggerNavigationFragment(){
+class GalleryImagesFragment private constructor(): DaggerNavigationFragment(R.layout.gallery_images_fragment){
 
     companion object{
         private const val NUM_GALLERY_PER_PAGE = 18
@@ -30,10 +30,6 @@ class GalleryImagesFragment private constructor(): DaggerNavigationFragment(){
     private var mAdapter: ChooseGalleryAdapter? = null
     private var mViewModel: GalleryViewModel? = null
     private val mSelectedGallery = arrayListOf<String>()
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.gallery_images_fragment, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

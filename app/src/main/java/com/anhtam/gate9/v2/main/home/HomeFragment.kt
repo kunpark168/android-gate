@@ -20,7 +20,7 @@ import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
 import com.anhtam.gate9.v2.mxh_gate.MXHGateScreen
 
 
-class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
+class HomeFragment : DaggerNavigationFragment(R.layout.main_fragment), FragmentResultListener {
 
     override fun onFragmentResult(args: Bundle) {
         mNewFeedScreen?.update()
@@ -34,10 +34,6 @@ class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
     /* Manager bottom view vars */
     private var mStateFb = false
     private var mNewFeedScreen: NewFeedScreen? = null
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.main_fragment, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

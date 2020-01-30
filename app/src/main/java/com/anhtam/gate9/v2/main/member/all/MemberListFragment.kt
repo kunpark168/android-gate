@@ -19,7 +19,7 @@ import of.bum.network.helper.Resource
 import javax.inject.Inject
 
 class MemberListFragment
-    : DaggerNavigationFragment() , AlphabetAdapter.IChangeAlphabetIndex {
+    : DaggerNavigationFragment(R.layout.member_list_fragment) , AlphabetAdapter.IChangeAlphabetIndex {
 
 
     companion object {
@@ -40,10 +40,6 @@ class MemberListFragment
     private lateinit var mType: EUser
 
     @Inject lateinit var mAdapter: MemberAdapter
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.member_list_fragment, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

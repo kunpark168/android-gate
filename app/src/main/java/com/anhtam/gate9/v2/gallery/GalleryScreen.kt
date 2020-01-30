@@ -20,7 +20,7 @@ import javax.inject.Named
 
 class GalleryScreen private constructor(
         val mImages: List<String>,
-        val mUser: User) : DaggerNavigationFragment(){
+        val mUser: User) : DaggerNavigationFragment(R.layout.gallery_screen){
 
     companion object{
         fun newInstance(images: List<String>, user: User): GalleryScreen{
@@ -31,10 +31,6 @@ class GalleryScreen private constructor(
     @Inject @field:Named("banner") lateinit var bannerOptions: RequestOptions
     @Inject @field:Named("avatar") lateinit var avatarOptions: RequestOptions
     private var mAdapter by autoCleared<GalleryAdapter>()
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.gallery_screen, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

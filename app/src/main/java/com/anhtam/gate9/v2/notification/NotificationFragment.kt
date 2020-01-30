@@ -13,14 +13,10 @@ import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.notification_activity.*
 
-class NotificationFragment : DaggerNavigationFragment() {
+class NotificationFragment : DaggerNavigationFragment(R.layout.notification_activity) {
 
     companion object {
         fun newInstance() = NotificationFragment()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.notification_activity, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

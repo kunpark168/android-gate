@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.member_tab_fragment.*
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 
-class MemberTabFragment : DaggerNavigationFragment() {
+class MemberTabFragment : DaggerNavigationFragment(R.layout.member_tab_fragment) {
 
     private val viewModel: MemberDefaultViewModel by viewModels { vmFactory }
     private lateinit var mType: EUser
@@ -25,10 +25,6 @@ class MemberTabFragment : DaggerNavigationFragment() {
     @Inject lateinit var mAdapter: MemberAdapter
 
     private var mINavigator: INavigator? = null
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.member_tab_fragment, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         init()
