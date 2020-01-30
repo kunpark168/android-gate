@@ -7,12 +7,13 @@ import com.anhtam.gate9.repository.GameRepository
 import com.anhtam.gate9.repository.SocialRepository
 import com.anhtam.gate9.repository.UserRepository
 import com.anhtam.gate9.utils.AbsentLiveData
+import com.anhtam.gate9.vo.EUser
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 
-class DiscussionViewModel @Inject constructor(private val userRepository: UserRepository,
-                                              private val gameRepository: GameRepository,
-                                              private val socialRepository: SocialRepository) : ViewModel() {
+class DiscussionViewModel @Inject constructor(
+        private val gameRepository: GameRepository,
+        private val socialRepository: SocialRepository) : ViewModel() {
 
     val mUserId: MutableLiveData<Int> = MutableLiveData()
 

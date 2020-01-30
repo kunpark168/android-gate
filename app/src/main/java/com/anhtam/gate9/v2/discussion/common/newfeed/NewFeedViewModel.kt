@@ -4,6 +4,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.repository.SocialRepository
+import com.anhtam.gate9.vo.EUser
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 
@@ -17,6 +18,11 @@ class NewFeedViewModel @Inject constructor(private val socialRepository: SocialR
     var mCategory: PostCategory = PostCategory.BOTH
     private var mUserId: Int = 0
 
+    private var mEUser = EUser.NPH
+
+    fun initialize(eUser: EUser){
+        mEUser = eUser
+    }
 
     fun requestFirstPage(userId: Int,
                          category: PostCategory) {
@@ -24,16 +30,22 @@ class NewFeedViewModel @Inject constructor(private val socialRepository: SocialR
         mUserId = userId
         mType = getCategory(category)
         mCategory = category
-        _post.addSource(socialRepository.getPostAndCommentByUser(
-                userId,mType, mPage, 10)){
+        val source = when(mEUser){
+            EUser.NPH -> socialRepository.getPostAndCommentByUser(userId,mType, mPage, 10)
+            EUser.TV -> socialRepository.getNPHPost(userId,mType, mPage, 10)
+        }
+        _post.addSource(source){
             _post.value = it
         }
     }
 
     fun requestMore(){
         mPage++
-        _post.addSource(socialRepository.getPostAndCommentByUser(
-                mUserId,mType, mPage, 10)){
+        val source = when(mEUser){
+            EUser.NPH -> socialRepository.getPostAndCommentByUser(mUserId,mType, mPage, 10)
+            EUser.TV -> socialRepository.getNPHPost(mUserId,mType, mPage, 10)
+        }
+        _post.addSource(source){
             _post.value = it
         }
     }
@@ -42,9 +54,11 @@ class NewFeedViewModel @Inject constructor(private val socialRepository: SocialR
         if(userId == 0) {
             mUserId = userId
         }
-        mPage++
-        _post.addSource(socialRepository.getPostAndCommentByUser(
-                mUserId,mType, mPage, 10)){
+        val source = when(mEUser){
+            EUser.NPH -> socialRepository.getPostAndCommentByUser(mUserId,mType, mPage, 10)
+            EUser.TV -> socialRepository.getNPHPost(mUserId,mType, mPage, 10)
+        }
+        _post.addSource(source){
             _post.value = it
         }
     }

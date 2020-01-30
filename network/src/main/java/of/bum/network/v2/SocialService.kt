@@ -48,6 +48,14 @@ interface SocialService {
             @Query("limit") limit: Int
     ): LiveData<ApiResponse<RestResponse<List<Post>>>>
 
+    @GET("social/nph/discuss")
+    fun getNPHPost(
+            @Query("userId") userId: Int,
+            @Query("tab") type: Int,
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
+    ): LiveData<ApiResponse<RestResponse<List<Post>>>>
+
     @GET("social/get-list-game-by-user")
     fun getGameRelatedToUser(
             @Query("userId") userId: Int,

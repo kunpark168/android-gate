@@ -12,6 +12,7 @@ import com.anhtam.gate9.v2.discussion.common.info.UserInfoFragment
 import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
 import com.anhtam.gate9.v2.report.user.ReportUserActivity
+import com.anhtam.gate9.vo.EUser
 import com.anhtam.gate9.vo.model.Category
 import kotlinx.android.synthetic.main.shared_discussion_fragment.*
 import of.bum.network.helper.Resource
@@ -33,7 +34,11 @@ class UserDiscussionScreen : DiscussionFragment() {
 
     override fun fragments(): List<Fragment> {
         val fragments = ArrayList<Fragment>()
-        fragments.add(NewFeedFragment(mUserId))
+        val euser = when(mType){
+            Category.Member -> EUser.TV
+            Category.Publisher -> EUser.NPH
+        }
+        fragments.add(NewFeedFragment(mUserId, euser))
         fragments.add(RatingFragment.newInstance(mUserId, mType))
         fragments.add(DataFragment.newInstance(mUserId))
         fragments.add(GGameFragment.newInstance(mUserId))
