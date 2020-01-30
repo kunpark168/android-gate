@@ -3,7 +3,7 @@ package com.anhtam.gate9.v2.discussion.user
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
-import com.anhtam.gate9.v2.discussion.DiscussionActivity
+import com.anhtam.gate9.v2.discussion.DiscussionFragment
 import com.anhtam.gate9.v2.discussion.TabInfo
 import com.anhtam.gate9.v2.discussion.common.data.DataFragment
 import com.anhtam.gate9.v2.discussion.common.game.GGameFragment
@@ -13,10 +13,10 @@ import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
 import com.anhtam.gate9.v2.report.user.ReportUserActivity
 import com.anhtam.gate9.vo.model.Category
-import kotlinx.android.synthetic.main.activity_shared_discussion.*
+import kotlinx.android.synthetic.main.shared_discussion_fragment.*
 import of.bum.network.helper.Resource
 
-class UserDiscussionScreen : DiscussionActivity() {
+class UserDiscussionScreen : DiscussionFragment() {
 
     private var mUserId: Int = 0
     private lateinit var mType: Category

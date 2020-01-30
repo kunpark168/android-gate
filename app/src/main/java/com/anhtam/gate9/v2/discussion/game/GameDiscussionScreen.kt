@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.anhtam.domain.Game
 import com.anhtam.gate9.R
-import com.anhtam.gate9.v2.discussion.DiscussionActivity
+import com.anhtam.gate9.v2.discussion.DiscussionFragment
 import com.anhtam.gate9.v2.discussion.TabInfo
 import com.anhtam.gate9.v2.discussion.common.data.DataFragment
 import com.anhtam.gate9.v2.discussion.common.discussion.DiscussionGameFragment
@@ -15,11 +15,11 @@ import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
 import com.anhtam.gate9.v2.report.game.ReportGameActivity
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.activity_shared_discussion.*
+import kotlinx.android.synthetic.main.shared_discussion_fragment.*
 import kotlinx.android.synthetic.main.header_game_discussion.*
 import of.bum.network.helper.Resource
 
-class GameDiscussionScreen: DiscussionActivity() {
+class GameDiscussionScreen: DiscussionFragment() {
 
     private lateinit var mLink: String
     private lateinit var mGameId: String

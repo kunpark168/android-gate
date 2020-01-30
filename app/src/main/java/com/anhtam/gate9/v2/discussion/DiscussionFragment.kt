@@ -11,11 +11,11 @@ import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.main.home.HomeFragment
-import kotlinx.android.synthetic.main.activity_shared_discussion.*
+import kotlinx.android.synthetic.main.shared_discussion_fragment.*
 import kotlinx.android.synthetic.main.view_footer_discussion.*
 import kotlinx.android.synthetic.main.view_nav_controller_discussion.*
 
-abstract class DiscussionActivity : DaggerNavigationFragment(R.layout.activity_shared_discussion) {
+abstract class DiscussionFragment : DaggerNavigationFragment(R.layout.shared_discussion_fragment) {
 
     abstract val headerFragment: Fragment
     abstract fun fragments(): List<Fragment>

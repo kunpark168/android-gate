@@ -9,7 +9,7 @@ import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.squareup.phrase.Phrase
-import kotlinx.android.synthetic.main.activity_shared_discussion.*
+import kotlinx.android.synthetic.main.shared_discussion_fragment.*
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
 import of.bum.network.helper.Resource
 

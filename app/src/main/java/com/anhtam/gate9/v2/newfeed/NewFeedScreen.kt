@@ -21,6 +21,7 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.GroupBannerAdapter
 import com.anhtam.gate9.adapter.v2.PostAdapter
 import com.anhtam.gate9.share.view.CustomLoadMoreView
+import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.v2.search.SearchScreen
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
@@ -66,6 +67,7 @@ class NewFeedScreen : DaggerNavigationFragment(R.layout.new_feed_screen) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Timber.d("ACCESS TOKEN ${StorageManager.getAccessToken()}")
         init()
     }
 
