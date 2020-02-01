@@ -90,6 +90,10 @@ class NavigationDispatcher(
 
     override fun onBackPressed() = (getCurrentFragment() as? BackListener ?: EMPTY_BACK_LISTENER).onBackPressed()
 
+    override fun clear(upToTag: String, includeMatch: Boolean) {
+        activity.supportFragmentManager.popBackStack(upToTag, if (includeMatch) FragmentManager.POP_BACK_STACK_INCLUSIVE else 0)
+    }
+
     private fun getCurrentFragment() =
             activity.supportFragmentManager.findFragmentById(containerId)
 }

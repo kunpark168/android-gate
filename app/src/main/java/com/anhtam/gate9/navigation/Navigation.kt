@@ -10,6 +10,7 @@ interface Navigation{
     fun newRootFragment(fragment: Fragment)
     fun changeBackStack(vararg fragmentCreators: () -> Fragment)
     fun back()
+    fun clear(upToTag: String, includeMatch: Boolean)
     fun showDialog(dialog: DialogFragment, requestCode: Int)
 
     // pass data to previous fragment

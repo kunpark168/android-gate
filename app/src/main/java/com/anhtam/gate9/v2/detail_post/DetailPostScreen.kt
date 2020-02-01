@@ -308,9 +308,7 @@ class DetailPostScreen private constructor(
             DonateDialog(unwrapContext).show()
         }
         tvOriPost?.setOnClickListener {
-            val backstack = requireActivity().supportFragmentManager.popBackStackImmediate()
-            val bt = requireActivity().supportFragmentManager.getBackStackEntryAt(0)
-            val x = 3
+            navigation?.clear(Config.DETAIL_POST_FRAGMENT_TAG, false)
         }
         csComment?.setOnClickListener { etPost?.requestFocus() }
         etPost.addTextChangedListener(object : TextWatcher {
