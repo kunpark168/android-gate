@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.shared_play_banner_game_layout.view.*
 
 class GameQuickAdapter :
         BaseQuickAdapter<Game, BaseViewHolder>(R.layout.shared_item_game_layout) {
+
+
     override fun convert(helper: BaseViewHolder?, item: Game?) {
         val unwrappedHolder = helper ?: return
         val unwrappedGame = item ?: return

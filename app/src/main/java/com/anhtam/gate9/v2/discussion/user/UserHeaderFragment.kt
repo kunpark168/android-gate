@@ -67,7 +67,7 @@ class UserHeaderFragment(private val mType: Category, @LayoutRes layoutId: Int) 
         tvFollow?.text = user.mFlowing?.toString() ?: "0"
         tvFollower?.text = user.mFlower?.toString() ?: "0"
         tvCounting?.text = Phrase.from(resources.getString(R.string.number_point))
-                .put("point", user.mPoint)
+                .put("point", user.mPoint?.toString())
                 .put("medal", /*user.medal TODO */ "").format()
         tvSlogan?.text = user.mNote
         val icon = when(user.mGender?.convertInt()) {

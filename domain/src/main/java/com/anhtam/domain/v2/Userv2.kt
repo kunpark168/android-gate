@@ -25,7 +25,7 @@ data class Userv2(
         @Json(name = "lang_id")
         override var mLangId: String? = null,
         @Json(name = "point")
-        override var mPoint: String? = null,
+        override var mPoint: Int? = null,
         @Json(name = "birth")
         override var mBirth: String? = null,
         @Json(name = "num_like")
@@ -53,6 +53,22 @@ data class Userv2(
         @Json(name = "total_post")
         override var mTotalPost: String? = null,
         @Json(name = "following")
-        override var mIsFollowing: Boolean? = null
-
+        override var mIsFollowing: Boolean? = null,
+        @Json(name = "appellation")
+        override var mRanking: String? = null,
+        @Json(name = "first_name")
+        override var mFirstName: String? = null,
+        @Json(name = "last_name")
+        override var mLastName: String? = null,
+        @Json(name = "location")
+        override var mLocation: String? = null,
+        @Json(name = "user_name")
+        override var mUserName: String? = null,
+        override var mAppellation: String? = null,
+        @Json(name = "theme")
+        override var mTheme: String? = null,
+        @Json(name = "web")
+        override var mWeb: String? = null,
+        @Json(name = "point_use")
+        override var mPointUse: Int? = null
 ): User

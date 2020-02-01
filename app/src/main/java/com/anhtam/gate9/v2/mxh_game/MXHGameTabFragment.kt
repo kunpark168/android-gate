@@ -17,6 +17,7 @@ import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
+import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -116,6 +117,18 @@ class MXHGameTabFragment : DaggerNavigationFragment(R.layout.mxh_game_tab_fragme
     }
 
     inner class Adapter : BaseQuickAdapter<Game, BaseViewHolder>(R.layout.mxh_game_item_layout, arrayListOf()){
+
+        init {
+            setOnItemChildClickListener { _, view, position ->
+                when(view.id){
+                    R.id.tvTitle, R.id.imgAvatarGame -> {
+                        navigation?.addFragment(GameDiscussionScreen.newInstance("", data[position].gameId?.toString() ?: ""))
+                    }
+                }
+            }
+        }
+
+
         override fun convert(helper: BaseViewHolder?, item: Game?) {
             val view = helper?.itemView ?: return
             val data = item ?: return

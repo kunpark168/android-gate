@@ -59,14 +59,14 @@ class UserInfoFragment: DaggerNavigationFragment(R.layout.fragment_info_user) {
         tvId?.text = infoOrDefault(mUser?.mId?.toString())
         tvShortName?.text = infoOrDefault(mUser?.mName)
         tvDisplayName?.text = infoOrDefault(mUser?.mName)
-//        tvMedal?.text = infoOrDefault(mUser?)
-        tvTotalPoint?.text = infoOrDefault(mUser?.mPoint)
+        tvMedal?.text = infoOrDefault(mUser?.mAppellation)
+        tvTotalPoint?.text = infoOrDefault(mUser?.mPoint?.toString())
 
         tvReview?.text = "-"
-        tvRanking?.text = "-"
+        tvRanking?.text = infoOrDefault(mUser?.mRanking)
         val icon = when(mUser?.mGender?.convertInt()) {
-            1 -> "Nữ"
-            2 -> "Nam"
+            1 -> "Nam"
+            2 -> "Nữ"
             else -> "Không xác định"
         }
         tvGender?.text = infoOrDefault(icon)
@@ -75,7 +75,7 @@ class UserInfoFragment: DaggerNavigationFragment(R.layout.fragment_info_user) {
         tvStatus?.text = "-"
         tvCreatedDate?.text = infoOrDefault(mUser?.mCreatedDate)
         tvIntro?.text = infoOrDefault(mUser?.mNote)
-//        tvHome?.text = infoOrDefault(mUser?.url)
+        tvHome?.text = infoOrDefault("http://9gate.net/u/${mUser?.mId}")
         tvFacebook?.text = infoOrDefault(mUser?.mFacebook)
         tvEmail?.text = infoOrDefault(mUser?.mEmail)
         tvPhone?.text = infoOrDefault(mUser?.mPhone)
