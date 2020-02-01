@@ -73,13 +73,12 @@ class UserDiscussionScreen : DiscussionFragment() {
             when(it) {
                 is Resource.Success -> {
                     hideProgress()
+                    val user = it.data ?: return@Observer
+                    val id = user.mId ?: return@Observer
+                    val roleId = user.mRoleId?.toInt() ?: return@Observer
                     // following here
-                    val following = it.data?.mIsFollowing ?: ""
-                    isFollowing = when(following){
-                        "true" -> true
-                        else -> false
-                    }
-                    navControllerView?.initialize(isFollowing)
+                    val following = user.mIsFollowing ?: false
+                    navControllerView?.initialize(following, id, roleId)
                 }
                 is Resource.Error -> {
                     hideProgress()

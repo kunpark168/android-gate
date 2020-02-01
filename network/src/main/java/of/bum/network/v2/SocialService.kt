@@ -9,6 +9,7 @@ import com.anhtam.domain.v2.wrap.*
 import of.bum.network.helper.ApiResponse
 import of.bum.network.helper.RestResponse
 import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import retrofit2.http.*
 
 interface SocialService {
@@ -129,4 +130,7 @@ interface SocialService {
                  @Query("page") page: Int,
                  @Query("limit") limit: Int = 10,
                  @Query("keyword") keyword: String? = ""): LiveData<ApiResponse<RestResponse<List<Userv1>>>>
+
+    @POST("social/post-follow")
+    fun follow(@Body params: Map<String, String>): LiveData<ApiResponse<RestResponse<ResponseBody>>>
 }

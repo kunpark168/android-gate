@@ -72,4 +72,8 @@ class NewFeedViewModel @Inject constructor(
         }
     }
 
+    fun follow(){
+        repository.follow()
+    }
+
 }

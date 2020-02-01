@@ -11,6 +11,7 @@ import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.navigation.Navigation
+import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.utils.convertInt
@@ -70,6 +71,7 @@ class PostAdapter @Inject constructor(
                     mMoreDialog.show()
                 }
                 R.id.followGameTextView -> {
+                    BackgroundTasks.postFollowGame(data[position].game?.gameId ?: return@setOnItemChildClickListener)
                     if (checkLogin()) {
                         if(view.followGameTextView?.text == mContext.getString(R.string.follow)) {
                             setFollowing(view.followGameTextView)

@@ -4,8 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import com.anhtam.gate9.R
+import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.v2.shared.CustomTabItem
 import kotlinx.android.synthetic.main.view_nav_controller_discussion.view.*
 
@@ -16,6 +16,8 @@ class NavControllerView @JvmOverloads constructor(
 ) : LinearLayout(context, attributeSet, defStyleAttr) {
 
     private var mIsFollow: Boolean = false
+    private var mUserId: Int = 0
+    private var mRoleId: Int = 0
 
     init {
         View.inflate(context, R.layout.view_nav_controller_discussion, this)
@@ -24,6 +26,7 @@ class NavControllerView @JvmOverloads constructor(
 
     private fun initEvents(){
         tabFollow?.setOnClickListener {
+            BackgroundTasks.postUserFollow(mUserId, mRoleId)
             mIsFollow = if (mIsFollow){
                 // un follow
                 unFollow()
@@ -36,8 +39,10 @@ class NavControllerView @JvmOverloads constructor(
         }
     }
 
-    fun initialize(isFollowing: Boolean){
+    fun initialize(isFollowing: Boolean, userId: Int, roleId: Int){
         mIsFollow = isFollowing
+        mUserId = userId
+        mRoleId = roleId
         when(mIsFollow){
             true -> follow()
             false -> unFollow()

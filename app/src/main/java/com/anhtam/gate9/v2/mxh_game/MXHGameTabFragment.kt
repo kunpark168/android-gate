@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.gate9.R
+import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
@@ -141,6 +142,7 @@ class MXHGameTabFragment : DaggerNavigationFragment(R.layout.mxh_game_tab_fragme
             }
 
             view.tvFollow.setOnClickListener {
+                BackgroundTasks.postFollowGame(data.gameId ?: return@setOnClickListener)
                 if(view.tvFollow?.text == mContext.getString(R.string.follow)) {
                     setFollowing(view.tvFollow)
                 } else {

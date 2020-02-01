@@ -94,4 +94,12 @@ class SocialRepository @Inject constructor(
     fun listUser(role: Int, page: Int) = object : Lv2FetchResource<List<Userv1>>(){
         override fun createCall() = socialService.listUser(role, page)
     }.asLiveData()
+
+    fun follow(){
+        val params = hashMapOf<String, String>()
+        params["userid"] = "2"
+        params["roleid"] = "4"
+        params["gameid"] = "0"
+        socialService.follow(params)
+    }
 }
