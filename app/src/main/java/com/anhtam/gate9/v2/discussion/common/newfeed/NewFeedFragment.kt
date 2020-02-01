@@ -5,7 +5,7 @@ import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.PostAdapter
 import com.anhtam.gate9.share.view.CustomLoadMoreView
-import com.anhtam.gate9.utils.convertInt
+import com.anhtam.gate9.v2.discussion.DiscussionViewModel
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
 import com.anhtam.gate9.vo.EUser
 import com.google.android.material.tabs.TabLayout
@@ -22,6 +22,7 @@ class NewFeedFragment(private val _userId: Int, private val mEUser: EUser) : Com
     private var mCurrentCategory: PostCategory = PostCategory.BOTH
     override val colorTextTab = R.color.colorTabDiscussion
     private val viewModel: NewFeedViewModel by viewModels { vmFactory }
+    private val mDiscussionViewModel: DiscussionViewModel by viewModels({requireParentFragment()}, {vmFactory})
 
     /*
      *
@@ -31,8 +32,7 @@ class NewFeedFragment(private val _userId: Int, private val mEUser: EUser) : Com
     private var mCountTab3: Double = 0.0
 
     override fun loadData() {
-        viewModel.initialize(mEUser)
-        viewModel.requestFirstPage(_userId, mCurrentCategory)
+
     }
 
     override fun initView() {
@@ -46,6 +46,16 @@ class NewFeedFragment(private val _userId: Int, private val mEUser: EUser) : Com
 
     override fun observer() {
         super.observer()
+        mDiscussionViewModel.mUser.observe(viewLifecycleOwner, Observer {
+            val user = it?.data ?: return@Observer
+            val role = when(user.mRoleId){
+                "5" -> EUser.NPH
+                else -> EUser.TV
+            }
+            val userId = user.mId ?: return@Observer
+            viewModel.initialize(role)
+            viewModel.requestFirstPage(userId, mCurrentCategory)
+        })
         viewModel._post.observe(this, Observer {resource ->
             when(resource) {
                 is Resource.Success -> {

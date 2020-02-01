@@ -31,8 +31,8 @@ class NewFeedViewModel @Inject constructor(private val socialRepository: SocialR
         mType = getCategory(category)
         mCategory = category
         val source = when(mEUser){
-            EUser.NPH -> socialRepository.getPostAndCommentByUser(userId,mType, mPage, 10)
-            EUser.TV -> socialRepository.getNPHPost(userId,mType, mPage, 10)
+            EUser.NPH -> socialRepository.getNPHPost(userId,mType, mPage, 10)
+            EUser.TV -> socialRepository.getPostAndCommentByUser(userId,mType, mPage, 10)
         }
         _post.addSource(source){
             _post.value = it
@@ -42,8 +42,8 @@ class NewFeedViewModel @Inject constructor(private val socialRepository: SocialR
     fun requestMore(){
         mPage++
         val source = when(mEUser){
-            EUser.NPH -> socialRepository.getPostAndCommentByUser(mUserId,mType, mPage, 10)
-            EUser.TV -> socialRepository.getNPHPost(mUserId,mType, mPage, 10)
+            EUser.NPH -> socialRepository.getNPHPost(mUserId,mType, mPage, 10)
+            EUser.TV -> socialRepository.getPostAndCommentByUser(mUserId,mType, mPage, 10)
         }
         _post.addSource(source){
             _post.value = it
@@ -55,8 +55,8 @@ class NewFeedViewModel @Inject constructor(private val socialRepository: SocialR
             mUserId = userId
         }
         val source = when(mEUser){
-            EUser.NPH -> socialRepository.getPostAndCommentByUser(mUserId,mType, mPage, 10)
-            EUser.TV -> socialRepository.getNPHPost(mUserId,mType, mPage, 10)
+            EUser.NPH -> socialRepository.getNPHPost(mUserId,mType, mPage, 10)
+            EUser.TV -> socialRepository.getPostAndCommentByUser(mUserId,mType, mPage, 10)
         }
         _post.addSource(source){
             _post.value = it
