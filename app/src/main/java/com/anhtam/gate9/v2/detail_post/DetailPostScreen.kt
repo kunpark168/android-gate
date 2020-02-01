@@ -211,7 +211,9 @@ class DetailPostScreen private constructor(
         val like = unwrapPost.totalLike.convertInt()
         val dislike = unwrapPost.totalDislike.convertInt()
         val love = unwrapPost.totalLove.convertInt()
-        reactionView?.initialize(like, dislike, love, Reaction.react(react))
+        val comment = unwrapPost.totalReply.convertInt()
+        val view = 0 // TODO FROM SERVER
+        reactionView?.initialize(like, dislike, love, Reaction.react(react), view, comment)
 
         // Set photo
         // photos
@@ -273,16 +275,9 @@ class DetailPostScreen private constructor(
         tvFollowGame?.setTextColor(ContextCompat.getColor(unwrapContext, R.color.text_color_blue))
     }
 
-    private fun changeLabel(reaction: Reaction){
-        val show: Boolean = reaction != Reaction.None
-        tvView?.text = if (show) "0" else getString(R.string.view_label)
-        tvComment?.text = if (show) _post.totalReply else getString(R.string.reply)
-    }
-
     private fun initEvents() {
         // Reaction
         reactionView?.onReactionChange(mSessionManager){current, previous ->
-            changeLabel(current)
             mListener?.invoke(current)
             viewModel.react(current, previous).observe(viewLifecycleOwner, Observer {
                 Timber.d("Test") // TODO Bug
@@ -296,9 +291,7 @@ class DetailPostScreen private constructor(
                 setFollow()
             }
         }
-        csShare?.setOnClickListener{
-            viewModel.sharePost()
-        }
+
         swipeRefreshLayout?.setOnRefreshListener {
             swipeRefreshLayout?.isRefreshing = false
             viewModel.getChildComment()
@@ -310,7 +303,7 @@ class DetailPostScreen private constructor(
         tvOriPost?.setOnClickListener {
             navigation?.clear(Config.DETAIL_POST_FRAGMENT_TAG, false)
         }
-        csComment?.setOnClickListener { etPost?.requestFocus() }
+
         etPost.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 
