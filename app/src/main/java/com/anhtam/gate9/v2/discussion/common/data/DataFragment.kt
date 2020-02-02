@@ -2,14 +2,13 @@ package com.anhtam.gate9.v2.discussion.common.data
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.anhtam.gate9.adapter.article.ArticleNewsAdapter
+import com.anhtam.domain.v2.Article
 import com.anhtam.gate9.R
+import com.anhtam.gate9.adapter.article.ArticleImageAdapter
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
-import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.squareup.phrase.Phrase
-import kotlinx.android.synthetic.main.shared_discussion_fragment.*
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
 import of.bum.network.helper.Resource
 
@@ -19,7 +18,7 @@ class DataFragment: CommonDiscussionFragment() {
     }
 
     private var mUserId: Int = 0
-    private lateinit var mAdapter: ArticleNewsAdapter
+    private lateinit var mAdapter: ArticleImageAdapter
     private val viewModel: DataViewModel by viewModels { vmFactory }
     private var mCurrentCategory = DataCategory.NEWS
 
@@ -51,7 +50,7 @@ class DataFragment: CommonDiscussionFragment() {
     }
 
     private fun initRv() {
-        mAdapter = ArticleNewsAdapter(Glide.with(context!!))
+        mAdapter = ArticleImageAdapter()
         mAdapter.setLoadMoreView(CustomLoadMoreView())
         rvShareDiscussion?.adapter = mAdapter
         mAdapter.setOnLoadMoreListener ({
@@ -64,7 +63,15 @@ class DataFragment: CommonDiscussionFragment() {
         viewModel._articles.observe(viewLifecycleOwner, Observer {resource ->
             when(resource) {
                 is Resource.Success -> {
-                    val data = resource.data?.wrap
+                    val data: List<Article>? = resource.data?.let {
+                        when{
+                            !it.mGallery.isNullOrEmpty() -> it.mGallery
+                            !it.mVideo.isNullOrEmpty() -> it.mVideo
+                            !it.mGames.isNullOrEmpty() -> it.mGames
+                            !it.mManual.isNullOrEmpty() -> it.mManual
+                            else -> null
+                        }
+                    }
                     if (data.isNullOrEmpty()) {
                         mAdapter.loadMoreEnd()
                     } else {

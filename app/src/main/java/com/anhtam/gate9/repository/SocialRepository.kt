@@ -5,6 +5,7 @@ import com.anhtam.domain.Banner
 import com.anhtam.domain.Base
 import com.anhtam.domain.Game
 import com.anhtam.domain.v2.*
+import com.anhtam.domain.v2.wrap.WrapArticle
 import com.anhtam.domain.v2.wrap.WrapComments
 import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.domain.v2.wrap.WrapGames
@@ -48,6 +49,10 @@ class SocialRepository @Inject constructor(
 
     fun getDataRelatedToUser(userId: Int, type: Int, page: Int, limit: Int)= object: Lv2FetchResource<WrapGames>(){
         override fun createCall() = socialService.getDataRelatedToUser(userId, type, page, limit)
+    }.asLiveData()
+
+    fun getNPHData(userId: Int, type: Int, page: Int, limit: Int)= object: Lv2FetchResource<WrapArticle>(){
+        override fun createCall() = socialService.getNPHData(userId, type, page, limit)
     }.asLiveData()
 
     fun getOtherUserInfoById(userId: Int) = object: Lv2FetchResource<Userv1>(){
