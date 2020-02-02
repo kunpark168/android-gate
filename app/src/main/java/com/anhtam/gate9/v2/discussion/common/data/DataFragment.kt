@@ -11,6 +11,7 @@ import com.google.android.material.tabs.TabLayout
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
 import of.bum.network.helper.Resource
+import of.bum.network.helper.RestResponse
 
 class DataFragment: CommonDiscussionFragment() {
     override fun loadData() {
@@ -21,6 +22,11 @@ class DataFragment: CommonDiscussionFragment() {
     private lateinit var mAdapter: ArticleImageAdapter
     private val viewModel: DataViewModel by viewModels { vmFactory }
     private var mCurrentCategory = DataCategory.NEWS
+
+    private var mCountTab1 = 0
+    private var mCountTab2 = 0
+    private var mCountTab3 = 0
+    private var mCountTab4 = 0
 
     override val colorTextTab: Int = R.color.colorTabData
 
@@ -40,13 +46,13 @@ class DataFragment: CommonDiscussionFragment() {
 
     override fun updateTabLayout() {
         tabLayout.getTabAt(0)?.text = Phrase.from(resources.getString(R.string.news_category))
-                .put("amount", "0").format()
+                .put("amount", mCountTab1).format()
         tabLayout.getTabAt(1)?.text = Phrase.from(resources.getString(R.string.tip_category))
-                .put("amount", "0").format()
+                .put("amount", mCountTab2).format()
         tabLayout.getTabAt(2)?.text = Phrase.from(resources.getString(R.string.video_category))
-                .put("amount", "0").format()
+                .put("amount", mCountTab3).format()
         tabLayout.getTabAt(3)?.text = Phrase.from(resources.getString(R.string.image_category))
-                .put("amount", "0").format()
+                .put("amount", mCountTab4).format()
     }
 
     private fun initRv() {
@@ -63,6 +69,12 @@ class DataFragment: CommonDiscussionFragment() {
         viewModel._articles.observe(viewLifecycleOwner, Observer {resource ->
             when(resource) {
                 is Resource.Success -> {
+                    val response = resource.mResponse?.body as? RestResponse<*>
+                    mCountTab1 = ((response?.mMeta?.get("countTab1") as? Double) ?: 0.0).toInt()
+                    mCountTab2 = ((response?.mMeta?.get("countTab2") as? Double) ?: 0.0).toInt()
+                    mCountTab3 = ((response?.mMeta?.get("countTab3") as? Double) ?: 0.0).toInt()
+                    mCountTab4 = ((response?.mMeta?.get("countTab4") as? Double) ?: 0.0).toInt()
+                    updateTabLayout()
                     val data: List<Article>? = resource.data?.let {
                         when{
                             !it.mGallery.isNullOrEmpty() -> it.mGallery
