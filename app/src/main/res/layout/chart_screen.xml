@@ -6,7 +6,8 @@
     android:focusable="true"
     android:clickable="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_gravity="top"
@@ -116,7 +117,7 @@
             android:layout_width="@dimen/dp40"
             android:layout_height="@dimen/dp40">
         </de.hdodenhof.circleimageview.CircleImageView>
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
             app:layout_constraintEnd_toEndOf="@+id/imgAvatar"
             android:src="@drawable/ic_cup"
@@ -135,8 +136,8 @@
             android:paddingStart="@dimen/dp15"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/tvUserName"
-                android:text="Kun Park"
+                android:id="@+id/tvName"
+                tools:text="Kun Park"
                 android:textSize="@dimen/sp_15"
                 android:fontFamily="@font/roboto_regular"
                 android:textColor="@color/black"
@@ -146,10 +147,10 @@
                 android:layout_height="wrap_content" />
             <TextView
                 android:textSize="@dimen/sp11"
-                android:text="ID : 83648"
+                tools:text="ID : 83648"
                 android:layout_marginTop="@dimen/dp3"
                 android:fontFamily="@font/roboto_regular"
-                android:id="@+id/tvTime"
+                android:id="@+id/tvId"
                 app:layout_constraintStart_toEndOf="@+id/imgAvatar"
                 app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
                 android:layout_width="wrap_content"
@@ -167,7 +168,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-                android:text="73674"
+                android:id="@+id/tvRanking"
+                tools:text="73674"
                 android:textSize="@dimen/sp_15"
                 android:textStyle="bold"
                 android:textColor="@color/colorNoCharts"
@@ -196,7 +198,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-                android:text="73674"
+                android:id="@+id/tvPoint"
+                tools:text="73674"
                 android:textSize="@dimen/sp_15"
                 android:textStyle="bold"
                 android:textColor="@color/colorPointCharts"

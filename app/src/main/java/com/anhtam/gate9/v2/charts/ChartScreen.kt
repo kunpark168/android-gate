@@ -10,9 +10,12 @@ import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.chart_screen.*
 import of.bum.network.helper.Resource
 import javax.inject.Inject
+import javax.inject.Named
 
 class ChartScreen(
         private val mUser: User
@@ -20,6 +23,7 @@ class ChartScreen(
 
     private val viewModel: ChartViewModel by viewModels { vmFactory }
     @Inject lateinit var mAdapter: ChartsAdapter
+    @field:Named("avatar") @Inject lateinit var avatarOptions: RequestOptions
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,13 +31,28 @@ class ChartScreen(
     }
 
     private fun init(){
+        initUserView()
+        initRecyclerView()
+        observerRanking()
+    }
+
+    private fun initUserView(){
         when (mUser.mRoleId){
             Config.NPH_ROLEID.toString() -> viewModel.getNPHRanking(true)
             else -> viewModel.getUserRanking(true)
         }
-        initRecyclerView()
-        observerRanking()
+        val user = mSessionManager.cachedUser.value?.data ?: return
+        tvName?.text = user.mName
+        tvId?.text = user.mId?.toString()
+        Glide.with(this)
+                .load(user.mAvatar)
+                .apply(avatarOptions)
+                .into(imgAvatar)
+        // follow
+        tvPoint?.text = user.mPoint?.toString()
+        tvRanking?.text = user.mRanking
     }
+
 
     override fun menuRes() = R.menu.menu_chat_search_more
 

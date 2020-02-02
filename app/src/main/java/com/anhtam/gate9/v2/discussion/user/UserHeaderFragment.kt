@@ -109,6 +109,7 @@ class UserHeaderFragment(private val mType: Category, @LayoutRes layoutId: Int) 
                 .into(imgGender)
 
         imgChart?.setOnClickListener {
+            val user = mUser ?: return@setOnClickListener
             navigation?.addFragment(ChartScreen.newInstance(user))
         }
     }
