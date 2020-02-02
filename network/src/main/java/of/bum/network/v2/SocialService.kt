@@ -149,4 +149,9 @@ interface SocialService {
 
     @POST("social/post-follow")
     fun follow(@Body params: Map<String, String>): LiveData<ApiResponse<RestResponse<ResponseBody>>>
+
+    @GET("user/ranking-list")
+    fun getRanking(@Query("roleId") roleId: Int,
+                 @Query("page") page: Int,
+                 @Query("limit") limit: Int = 10): LiveData<ApiResponse<RestResponse<List<Userv1>>>>
 }

@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.utils.convertInt
 import com.anhtam.gate9.utils.toImage
+import com.anhtam.gate9.v2.charts.ChartScreen
 import com.anhtam.gate9.v2.discussion.DiscussionViewModel
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.vo.model.Category
@@ -29,20 +31,20 @@ import timber.log.Timber
 
 class UserHeaderFragment(private val mType: Category, @LayoutRes layoutId: Int) : DaggerNavigationFragment(layoutId){
 
-    private var viewModel: DiscussionViewModel? = null
+    private val viewModel: DiscussionViewModel by viewModels({requireParentFragment()}, {vmFactory})
+    private var mUser: User? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = parentFragment?.let { ViewModelProviders.of(it, vmFactory).get(DiscussionViewModel::class.java) }
         observer()
     }
 
     private fun observer() {
-        viewModel?.mUser?.observe(this, Observer {
+        viewModel.mUser.observe(this, Observer {
             when(it) {
                 is Resource.Success -> {
-                    val user = it.data ?: return@Observer
-                    bindView(user)
+                    mUser = it.data ?: return@Observer
+                    bindView()
                 }
                 else -> {
                     Timber.d("Type")
@@ -51,14 +53,15 @@ class UserHeaderFragment(private val mType: Category, @LayoutRes layoutId: Int) 
         })
     }
 
-    private fun bindView(user: User) {
+    private fun bindView() {
         when(mType) {
-            Category.Member -> bindMember(user)
-            Category.Publisher -> bindPublisher(user)
+            Category.Member -> bindMember()
+            Category.Publisher -> bindPublisher()
         }
     }
 
-    private fun bindMember(user: User) {
+    private fun bindMember() {
+        val user = mUser ?: return
         Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder))
                 .load(user.mAvatar?.toImage())
                 .into(imgAvatar)
@@ -79,7 +82,8 @@ class UserHeaderFragment(private val mType: Category, @LayoutRes layoutId: Int) 
                 .into(imgGender)
     }
 
-    private fun bindPublisher(user: User) {
+    private fun bindPublisher() {
+        val user = mUser ?: return
         Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder))
                 .load(user.mAvatar?.toImage())
                 .into(imgAvatar)
@@ -103,6 +107,10 @@ class UserHeaderFragment(private val mType: Category, @LayoutRes layoutId: Int) 
         Glide.with(this).load(icon)
                 .fitCenter()
                 .into(imgGender)
+
+        imgChart?.setOnClickListener {
+            navigation?.addFragment(ChartScreen.newInstance(user))
+        }
     }
 
     companion object {

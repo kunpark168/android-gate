@@ -17,6 +17,7 @@ import com.anhtam.gate9.v2.auth.register.RegisterScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.auth.login.LoginModule
 import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
+import com.anhtam.gate9.v2.charts.ChartModule
 import com.anhtam.gate9.v2.createimage.CreateImageScreen
 import com.anhtam.gate9.v2.createpost.CreatePostScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
@@ -115,7 +116,9 @@ abstract class FragmentBuildersModule {
     abstract fun contributeChatFragment(): ChatFragment
 
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(
+            modules = [ChartModule::class]
+    )
     abstract fun contributeChartsActivity(): ChartScreen
 
 

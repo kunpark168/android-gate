@@ -2,12 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/csTop2"
-    app:layout_constraintTop_toBottomOf="@+id/csTop1"
+    android:id="@+id/csTop1"
+    app:layout_constraintTop_toBottomOf="@+id/csTime"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgStstus"
@@ -15,7 +14,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="@dimen/dp15"
-        android:src="@drawable/ic_increase"
+        android:src="@drawable/ic_rank_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -26,18 +25,19 @@
         app:layout_constraintStart_toEndOf="@+id/imgStstus"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/img_avatar_holder"
-        android:layout_width="@dimen/dp40"
-        android:layout_height="@dimen/dp40">
-    </de.hdodenhof.circleimageview.CircleImageView>
+        android:layout_width="@dimen/dp50"
+        android:layout_height="@dimen/dp50"/>
+
     <androidx.appcompat.widget.AppCompatImageView
-        app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+        android:id="@+id/imgTop1"
+        app:layout_constraintTop_toTopOf="@+id/imgAvatar"
+        app:layout_constraintStart_toStartOf="@+id/imgAvatar"
         app:layout_constraintEnd_toEndOf="@+id/imgAvatar"
-        android:src="@drawable/ic_cup"
-        android:padding="@dimen/dp3"
-        android:tint="@color/colorWhite"
-        android:background="@drawable/bg_circle_red"
-        android:layout_width="@dimen/dp15"
-        android:layout_height="@dimen/dp15" />
+        android:src="@drawable/img_top1"
+        android:layout_marginTop="@dimen/dp45"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
         android:gravity="center_vertical"
         android:orientation="vertical"
@@ -47,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_marginStart="@dimen/layout_margin_16dp"
         android:layout_height="wrap_content">
+
         <TextView
             android:id="@+id/tvName"
             tools:text="Kun Park"
@@ -57,24 +58,54 @@
             app:layout_constraintTop_toTopOf="@+id/imgAvatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
         <TextView
+            android:id="@+id/tvPoint"
+            android:textSize="@dimen/sp11"
+            tools:text="83648"
+            android:layout_marginTop="@dimen/dp3"
+            android:fontFamily="@font/roboto_regular"
+            app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+            app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvId"
             android:textSize="@dimen/sp11"
             tools:text="ID : 83648"
             android:layout_marginTop="@dimen/dp3"
             android:fontFamily="@font/roboto_regular"
-            android:id="@+id/tvId"
             app:layout_constraintStart_toEndOf="@+id/imgAvatar"
             app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
+
+    <View
+        android:background="@color/colorGray"
+        android:alpha="0.5"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@+id/imgTop1"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="@dimen/dp50"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/img_cup_top1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/tvFollow"
-        android:textColor="@color/colorError"
-        tools:text="+ Follow"
+        android:textColor="@color/colorHome"
+        android:text="@string/following"
         android:fontFamily="@font/roboto_light"
-        android:background="@drawable/bg_follow"
+        android:background="@drawable/bg_following"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -83,13 +114,4 @@
         android:gravity="center"
         android:textSize="@dimen/sp_12"
         android:layout_height="@dimen/dp25" />
-
-
-    <View
-        android:background="@color/colorGray"
-        android:alpha="0.5"
-        android:layout_marginTop="@dimen/dp7"
-        app:layout_constraintTop_toBottomOf="@+id/imgAvatar"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

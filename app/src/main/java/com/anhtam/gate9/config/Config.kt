@@ -1,6 +1,10 @@
 package com.anhtam.gate9.config
 
 object Config {
+    const val USER_ROLEID: Int = 4
+    const val NPH_ROLEID: Int = 5
+
+
     const val DEFAULT_TIME_OUT = 30L /*Seconds*/
 
     // url

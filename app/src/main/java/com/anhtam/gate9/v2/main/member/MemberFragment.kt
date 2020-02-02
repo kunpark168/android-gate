@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.charts.ChartScreen
@@ -54,7 +55,10 @@ class MemberFragment : DaggerNavigationFragment(R.layout.member_fragment), INavi
             vpTop.currentItem = 1
         }
 
-        csCharts.debounceClick { navigation?.addFragment(ChartScreen.newInstance()) }
+        csCharts.setOnClickListener {
+            val user = mSessionManager.cachedUser.value?.data ?: return@setOnClickListener
+            navigation?.addFragment(ChartScreen.newInstance(user))
+        }
     }
 
     private fun setUpViewPager(){
