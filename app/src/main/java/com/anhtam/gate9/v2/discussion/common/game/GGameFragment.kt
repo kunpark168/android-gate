@@ -8,6 +8,8 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
 import com.anhtam.gate9.utils.autoCleared
+import com.anhtam.gate9.v2.discussion.DiscussionViewModel
+import com.anhtam.gate9.vo.EUser
 import com.google.android.material.tabs.TabLayout
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
@@ -28,6 +30,7 @@ class GGameFragment: CommonDiscussionFragment() {
 
 //    private lateinit var mAdapter: GameQuickAdapter
     private val viewModel: GGameViewModel by viewModels { vmFactory }
+    private val mDiscussionViewModel: DiscussionViewModel by viewModels({requireParentFragment()}, { vmFactory })
 
     override val colorTextTab: Int = R.color.colorTabGame
 
@@ -71,6 +74,17 @@ class GGameFragment: CommonDiscussionFragment() {
 
     override fun observer() {
         super.observer()
+        mDiscussionViewModel.mUser.observe(viewLifecycleOwner, Observer {
+            val user = it?.data ?: return@Observer
+            val role = when(user.mRoleId){
+                "5" -> EUser.NPH
+                else -> EUser.TV
+            }
+            mUserId = user.mId ?: return@Observer
+            viewModel.initialize(role)
+            viewModel.requestFirstPage(mUserId, mCurrentCategory)
+        })
+
         viewModel._game.observe(viewLifecycleOwner, Observer {resource ->
             when(resource) {
                 is Resource.Success -> {
@@ -146,11 +160,7 @@ class GGameFragment: CommonDiscussionFragment() {
     }
 
     companion object {
-        fun newInstance(userId: Int) : GGameFragment {
-            val fragment = GGameFragment()
-            fragment.mUserId = userId
-            return fragment
-        }
+        fun newInstance() = GGameFragment()
     }
 
 }

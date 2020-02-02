@@ -38,10 +38,10 @@ class UserDiscussionScreen : DiscussionFragment() {
             Category.Member -> EUser.TV
             Category.Publisher -> EUser.NPH
         }
-        fragments.add(NewFeedFragment(mUserId, euser))
+        fragments.add(NewFeedFragment())
         fragments.add(RatingFragment.newInstance(mUserId, mType))
         fragments.add(DataFragment.newInstance(mUserId))
-        fragments.add(GGameFragment.newInstance(mUserId))
+        fragments.add(GGameFragment.newInstance())
         return fragments
     }
 

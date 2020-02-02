@@ -68,7 +68,7 @@ class UserHeaderFragment(private val mType: Category, @LayoutRes layoutId: Int) 
         tvFollower?.text = user.mFlower?.toString() ?: "0"
         tvCounting?.text = Phrase.from(resources.getString(R.string.number_point))
                 .put("point", user.mPoint?.toString())
-                .put("medal", /*user.medal TODO */ "").format()
+                .put("medal", user.mAppellation).format()
         tvSlogan?.text = user.mNote
         val icon = when(user.mGender?.convertInt()) {
             1 -> R.drawable.ic_female
@@ -101,6 +101,7 @@ class UserHeaderFragment(private val mType: Category, @LayoutRes layoutId: Int) 
             else -> R.drawable.ic_gender
         }
         Glide.with(this).load(icon)
+                .fitCenter()
                 .into(imgGender)
     }
 

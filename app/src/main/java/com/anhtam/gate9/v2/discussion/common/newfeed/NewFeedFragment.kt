@@ -16,7 +16,7 @@ import of.bum.network.helper.RestResponse
 import javax.inject.Inject
 import kotlin.math.roundToLong
 
-class NewFeedFragment(private val _userId: Int, private val mEUser: EUser) : CommonDiscussionFragment() {
+class NewFeedFragment : CommonDiscussionFragment() {
 
     @Inject lateinit var mAdapter: PostAdapter
     private var mCurrentCategory: PostCategory = PostCategory.BOTH
@@ -30,6 +30,8 @@ class NewFeedFragment(private val _userId: Int, private val mEUser: EUser) : Com
     private var mCountTab1: Double = 0.0
     private var mCountTab2: Double = 0.0
     private var mCountTab3: Double = 0.0
+
+    private var mUserId: Int = 0
 
     override fun loadData() {
 
@@ -52,11 +54,11 @@ class NewFeedFragment(private val _userId: Int, private val mEUser: EUser) : Com
                 "5" -> EUser.NPH
                 else -> EUser.TV
             }
-            val userId = user.mId ?: return@Observer
+            mUserId = user.mId ?: return@Observer
             viewModel.initialize(role)
-            viewModel.requestFirstPage(userId, mCurrentCategory)
+            viewModel.requestFirstPage(mUserId, mCurrentCategory)
         })
-        viewModel._post.observe(this, Observer {resource ->
+        viewModel._post.observe(viewLifecycleOwner, Observer {resource ->
             when(resource) {
                 is Resource.Success -> {
                     val data = resource.data
@@ -140,7 +142,7 @@ class NewFeedFragment(private val _userId: Int, private val mEUser: EUser) : Com
         mAdapter.data.clear()
         mAdapter.notifyDataSetChanged()
         if (viewModel.mCategory != category) {
-            viewModel.requestFirstPage(_userId, category)
+            viewModel.requestFirstPage(mUserId, category)
         }
     }
 }

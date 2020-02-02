@@ -4,6 +4,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.gate9.repository.SocialRepository
+import com.anhtam.gate9.vo.EUser
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 
@@ -17,6 +18,12 @@ class GGameViewModel @Inject constructor(private val socialRepository: SocialRep
     private var mType: Int = 0
     private var mUserId: Int = 0
 
+    private var mEUser = EUser.NPH
+
+    fun initialize(eUser: EUser){
+        mEUser = eUser
+    }
+
 
     fun requestFirstPage(userId: Int,
                          category: GameCategory) {
@@ -24,14 +31,22 @@ class GGameViewModel @Inject constructor(private val socialRepository: SocialRep
         mUserId = userId
         mCategory = category
         mType = getCategory(category)
-        _game.addSource(socialRepository.getGameRelatedToUser(mUserId, mType, mPage, 10 )){
+        val source = when(mEUser){
+            EUser.NPH -> socialRepository.getNPHGame(mUserId,mType, mPage, 10)
+            EUser.TV -> socialRepository.getGameRelatedToUser(mUserId, mType, mPage, 10 )
+        }
+        _game.addSource(source){
             _game.value = it
         }
     }
 
     fun requestMore() {
         mPage++
-        _game.addSource(socialRepository.getGameRelatedToUser(mUserId, mType, mPage, 10 )){
+        val source = when(mEUser){
+            EUser.NPH -> socialRepository.getNPHGame(mUserId,mType, mPage, 10)
+            EUser.TV -> socialRepository.getGameRelatedToUser(mUserId, mType, mPage, 10 )
+        }
+        _game.addSource(source){
             _game.value = it
         }
     }
