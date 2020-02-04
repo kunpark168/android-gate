@@ -1,5 +1,9 @@
 package com.anhtam.gate9.v2.discussion.common.game
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.anhtam.gate9.adapter.GameQuickAdapter
@@ -28,6 +32,22 @@ class GGameFragment: CommonDiscussionFragment() {
     private var mCountTab4: Double = 0.0
     private var mCurrentCategory = GameCategory.OPEN
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        if (userVisibleHint) loadFirst()
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser && isResumed){
+            loadFirst()
+        }
+    }
+
+    private fun loadFirst(){
+        viewModel.requestFirstPage(mUserId, mCurrentCategory)
+    }
+
 //    private lateinit var mAdapter: GameQuickAdapter
     private val viewModel: GGameViewModel by viewModels { vmFactory }
     private val mDiscussionViewModel: DiscussionViewModel by viewModels({requireParentFragment()}, { vmFactory })
@@ -35,7 +55,7 @@ class GGameFragment: CommonDiscussionFragment() {
     override val colorTextTab: Int = R.color.colorTabGame
 
     override fun loadData() {
-        viewModel.requestFirstPage(mUserId, mCurrentCategory)
+
     }
 
     override fun initView() {

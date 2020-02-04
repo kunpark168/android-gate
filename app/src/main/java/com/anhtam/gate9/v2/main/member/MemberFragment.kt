@@ -59,6 +59,7 @@ class MemberFragment : DaggerNavigationFragment(R.layout.member_fragment), INavi
             val user = mSessionManager.cachedUser.value?.data ?: return@setOnClickListener
             navigation?.addFragment(ChartScreen.newInstance(user))
         }
+
     }
 
     private fun setUpViewPager(){

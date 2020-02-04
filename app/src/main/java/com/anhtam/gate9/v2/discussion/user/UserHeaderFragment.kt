@@ -1,13 +1,10 @@
 package com.anhtam.gate9.v2.discussion.user
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.utils.convertInt
@@ -80,6 +77,9 @@ class UserHeaderFragment(private val mType: Category, @LayoutRes layoutId: Int) 
         }
         Glide.with(this).load(icon)
                 .into(imgGender)
+        iconChart?.setOnClickListener {
+            navigation?.addFragment(ChartScreen.newInstance(user))
+        }
     }
 
     private fun bindPublisher() {
@@ -99,17 +99,9 @@ class UserHeaderFragment(private val mType: Category, @LayoutRes layoutId: Int) 
         tvGameCount?.text = followString
 
         tvSlogan?.text = user.mNote
-        val icon = when(user.mGender?.convertInt()) {
-            1 -> R.drawable.ic_male
-            2 -> R.drawable.ic_femail
-            else -> R.drawable.ic_gender
-        }
-        Glide.with(this).load(icon)
-                .fitCenter()
-                .into(imgGender)
+        imgGender?.visibility = View.GONE
 
         imgChart?.setOnClickListener {
-            val user = mUser ?: return@setOnClickListener
             navigation?.addFragment(ChartScreen.newInstance(user))
         }
     }

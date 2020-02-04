@@ -151,6 +151,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tvCounting" />
 
         <ImageView
+            android:id="@+id/iconChart"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="50dp"
