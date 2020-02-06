@@ -1,21 +1,22 @@
 package com.anhtam.gate9.v2.discussion.common.rating
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.R
-import com.anhtam.gate9.adapter.ReviewAdapter
+import com.anhtam.gate9.adapter.v2.PostAdapter
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
-import com.anhtam.gate9.utils.loadingToAdapter
 import com.anhtam.gate9.vo.model.Category
-import com.bumptech.glide.Glide
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.fragment_rating.*
 
-class RatingFragment: CommonDiscussionFragment() {
+class RatingFragment: CommonDiscussionFragment<Post, PostAdapter>() {
+
+    override fun onTabChanged(id: Int) {
+
+    }
 
     private var mUserId: Int = 0
     private var mType = Category.Member
-    private lateinit var mAdapter: ReviewAdapter
     private val viewModel: RatingViewModel by viewModels { vmFactory }
 
     override val colorTextTab: Int = R.color.colorTabRating
@@ -28,7 +29,6 @@ class RatingFragment: CommonDiscussionFragment() {
 
     override fun initView() {
         super.initView()
-        initRv()
         ratingComponent?.ratingInfo(mType)
         ratingComponent?.initView(arrayOf(0.01f, 0.01f, 0.02f, 0.01f, 0.45f))
     }
@@ -53,24 +53,6 @@ class RatingFragment: CommonDiscussionFragment() {
                 .put("amount", 0).format()
     }
 
-    private fun initRv() {
-        mAdapter = ReviewAdapter(Glide.with(context!!))
-        rvShareDiscussion?.adapter = mAdapter
-    }
-
-    override fun observer() {
-        super.observer()
-        viewModel.reviews.observe(this, Observer {
-            it.loadingToAdapter(mAdapter, viewModel.page)
-        })
-    }
-
-    override fun initEvents() {
-        swipeRefreshLayout?.setOnRefreshListener {
-            swipeRefreshLayout?.isRefreshing = false
-            loadData()
-        }
-    }
 
     companion object {
         fun newInstance(userId: Int, type: Category) : RatingFragment {

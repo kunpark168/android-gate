@@ -140,7 +140,7 @@ class NewFeedScreen : DaggerNavigationFragment(R.layout.new_feed_screen) {
     }
 
     private fun loadMore(){
-        mPostViewModel.requestMore(mUserId)
+//        mPostViewModel.requestMore(mUserId)
     }
 
     private fun loadData() {

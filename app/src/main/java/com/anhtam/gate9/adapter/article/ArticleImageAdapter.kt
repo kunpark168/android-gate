@@ -7,8 +7,9 @@ import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.mxh_gate_anh_item_layout.view.*
+import javax.inject.Inject
 
-class ArticleImageAdapter : BaseQuickAdapter<Article, BaseViewHolder>(R.layout.mxh_gate_anh_item_layout, ArrayList()) {
+class ArticleImageAdapter @Inject constructor() : BaseQuickAdapter<Article, BaseViewHolder>(R.layout.mxh_gate_anh_item_layout, ArrayList()) {
     override fun convert(helper: BaseViewHolder?, item: Article?) {
         val view = helper?.itemView ?: return
         val article = item ?: return

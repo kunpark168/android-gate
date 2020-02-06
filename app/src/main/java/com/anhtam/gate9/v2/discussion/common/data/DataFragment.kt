@@ -2,24 +2,24 @@ package com.anhtam.gate9.v2.discussion.common.data
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.anhtam.domain.ReviewDTO
 import com.anhtam.domain.v2.Article
+import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.article.ArticleImageAdapter
-import com.anhtam.gate9.share.view.CustomLoadMoreView
+import com.anhtam.gate9.adapter.v2.PostAdapter
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
-import com.google.android.material.tabs.TabLayout
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
 import of.bum.network.helper.Resource
 import of.bum.network.helper.RestResponse
 
-class DataFragment: CommonDiscussionFragment() {
+class DataFragment: CommonDiscussionFragment<Article, ArticleImageAdapter>() {
     override fun loadData() {
         viewModel.requestFirstPage(mUserId, mCurrentCategory)
     }
 
     private var mUserId: Int = 0
-    private lateinit var mAdapter: ArticleImageAdapter
     private val viewModel: DataViewModel by viewModels { vmFactory }
     private var mCurrentCategory = DataCategory.NEWS
 
@@ -29,11 +29,6 @@ class DataFragment: CommonDiscussionFragment() {
     private var mCountTab4 = 0
 
     override val colorTextTab: Int = R.color.colorTabData
-
-    override fun initView() {
-        super.initView()
-        initRv()
-    }
 
     override fun configTabLayout() {
         tabLayout.apply {
@@ -53,15 +48,6 @@ class DataFragment: CommonDiscussionFragment() {
                 .put("amount", mCountTab3).format()
         tabLayout.getTabAt(3)?.text = Phrase.from(resources.getString(R.string.image_category))
                 .put("amount", mCountTab4).format()
-    }
-
-    private fun initRv() {
-        mAdapter = ArticleImageAdapter()
-        mAdapter.setLoadMoreView(CustomLoadMoreView())
-        rvShareDiscussion?.adapter = mAdapter
-        mAdapter.setOnLoadMoreListener ({
-            viewModel.requestMore()
-        }, rvShareDiscussion)
     }
 
     override fun observer() {
@@ -105,37 +91,20 @@ class DataFragment: CommonDiscussionFragment() {
         })
     }
 
-    override fun initEvents() {
-        tabLayout?.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(p0: TabLayout.Tab?) {
-                // Don't do anything here
+    override fun onTabChanged(id: Int) {
+        when(id) {
+            0 -> {
+                newRequestType(DataCategory.NEWS)
             }
-
-            override fun onTabUnselected(p0: TabLayout.Tab?) {
-
+            1 -> {
+                newRequestType(DataCategory.TIP)
             }
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when(tab?.position) {
-                    0 -> {
-                        newRequestType(DataCategory.NEWS)
-                    }
-                    1 -> {
-                        newRequestType(DataCategory.TIP)
-                    }
-                    2 -> {
-                        newRequestType(DataCategory.VIDEO)
-                    }
-                    else -> {
-                        newRequestType(DataCategory.IMAGE)
-                    }
-                }
+            2 -> {
+                newRequestType(DataCategory.VIDEO)
             }
-
-        })
-        swipeRefreshLayout?.setOnRefreshListener {
-            swipeRefreshLayout?.isRefreshing = false
-            loadData()
+            else -> {
+                newRequestType(DataCategory.IMAGE)
+            }
         }
     }
 

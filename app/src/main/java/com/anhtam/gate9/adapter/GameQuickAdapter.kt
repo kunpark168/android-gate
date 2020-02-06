@@ -11,8 +11,9 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.shared_item_game_layout.view.*
 import kotlinx.android.synthetic.main.shared_play_banner_game_layout.view.*
+import javax.inject.Inject
 
-class GameQuickAdapter :
+class GameQuickAdapter @Inject constructor() :
         BaseQuickAdapter<Game, BaseViewHolder>(R.layout.shared_item_game_layout) {
 
 

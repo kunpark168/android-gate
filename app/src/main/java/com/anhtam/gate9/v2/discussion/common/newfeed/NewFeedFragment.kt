@@ -2,63 +2,53 @@ package com.anhtam.gate9.v2.discussion.common.newfeed
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.anhtam.domain.v2.Post
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.PostAdapter
-import com.anhtam.gate9.share.view.CustomLoadMoreView
-import com.anhtam.gate9.v2.discussion.DiscussionViewModel
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
-import com.anhtam.gate9.vo.EUser
-import com.google.android.material.tabs.TabLayout
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
 import of.bum.network.helper.Resource
 import of.bum.network.helper.RestResponse
-import javax.inject.Inject
 import kotlin.math.roundToLong
 
-class NewFeedFragment : CommonDiscussionFragment() {
+class NewFeedFragment : CommonDiscussionFragment<Post, PostAdapter>() {
+    override fun onTabChanged(id: Int) {
+        when(id) {
+            0 -> {
+                newRequestType(PostCategory.BOTH)
+            }
+            1 -> {
+                newRequestType(PostCategory.POST)
+            }
+            else -> {
+                newRequestType(PostCategory.COMMENT)
+            }
+        }
+    }
 
-    @Inject lateinit var mAdapter: PostAdapter
     private var mCurrentCategory: PostCategory = PostCategory.BOTH
     override val colorTextTab = R.color.colorTabDiscussion
     private val viewModel: NewFeedViewModel by viewModels { vmFactory }
-    private val mDiscussionViewModel: DiscussionViewModel by viewModels({requireParentFragment()}, {vmFactory})
+    override var mLazyLoad = false
 
-    /*
-     *
-     */
     private var mCountTab1: Double = 0.0
     private var mCountTab2: Double = 0.0
     private var mCountTab3: Double = 0.0
 
-    private var mUserId: Int = 0
-
     override fun loadData() {
-
+        viewModel.loadData(mCurrentCategory.category, refresh = true)
     }
 
-    override fun initView() {
-        super.initView()
-        mAdapter.setLoadMoreView(CustomLoadMoreView())
-        rvShareDiscussion?.adapter = mAdapter
-        mAdapter.setOnLoadMoreListener ({
-            viewModel.requestMore()
-        }, rvShareDiscussion)
+    override fun onAttachUser(user: User) {
+        super.onAttachUser(user)
+        viewModel.initialize(user)
     }
 
     override fun observer() {
         super.observer()
-        mDiscussionViewModel.mUser.observe(viewLifecycleOwner, Observer {
-            val user = it?.data ?: return@Observer
-            val role = when(user.mRoleId){
-                "5" -> EUser.NPH
-                else -> EUser.TV
-            }
-            mUserId = user.mId ?: return@Observer
-            viewModel.initialize(role)
-            viewModel.requestFirstPage(mUserId, mCurrentCategory)
-        })
-        viewModel._post.observe(viewLifecycleOwner, Observer {resource ->
+        viewModel.data.observe(viewLifecycleOwner, Observer {resource ->
             when(resource) {
                 is Resource.Success -> {
                     val data = resource.data
@@ -71,7 +61,7 @@ class NewFeedFragment : CommonDiscussionFragment() {
                     if (data.isNullOrEmpty()) {
                         mAdapter.loadMoreEnd()
                     } else {
-                        if (viewModel.page == 0) {
+                        if (viewModel.mPage == 0) {
                             mAdapter.setNewData(data)
                         } else {
                             mAdapter.addData(data)
@@ -106,43 +96,17 @@ class NewFeedFragment : CommonDiscussionFragment() {
                 .put("amount", mCountTab3.roundToLong().toString()).format()
     }
 
-    override fun initEvents() {
-        tabLayout?.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(p0: TabLayout.Tab?) {
-                // Don't do anything here
-            }
-
-            override fun onTabUnselected(p0: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                when(tab?.position) {
-                    0 -> {
-                        newRequestType(PostCategory.BOTH)
-                    }
-                    1 -> {
-                        newRequestType(PostCategory.POST)
-                    }
-                    else -> {
-                        newRequestType(PostCategory.COMMENT)
-                    }
-                }
-            }
-
-        })
-        swipeRefreshLayout?.setOnRefreshListener {
-            swipeRefreshLayout?.isRefreshing = false
-            loadData()
-        }
+    override fun loadMore() {
+        super.loadMore()
+        viewModel.loadData()
     }
 
     private fun newRequestType(category: PostCategory) {
         mCurrentCategory = category
         mAdapter.data.clear()
         mAdapter.notifyDataSetChanged()
-        if (viewModel.mCategory != category) {
-            viewModel.requestFirstPage(mUserId, category)
+        if (viewModel.mCategory != category.category) {
+            viewModel.loadData(category.category, refresh = true)
         }
     }
 }

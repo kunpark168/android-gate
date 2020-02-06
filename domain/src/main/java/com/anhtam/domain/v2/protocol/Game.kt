@@ -1,5 +1,6 @@
 package com.anhtam.domain.v2.protocol
 
+import com.anhtam.domain.Base
 import com.anhtam.domain.Type
 
 interface Game {
