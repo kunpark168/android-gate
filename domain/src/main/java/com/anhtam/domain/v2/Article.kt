@@ -1,7 +1,7 @@
 package com.anhtam.domain.v2
 import com.squareup.moshi.Json
 
-data class Article(
+open class Article(
     @Json(name = "article_id")
     var mArticleId: Int? = null,
     @Json(name = "title")
@@ -21,5 +21,7 @@ data class Article(
     @Json(name = "link")
     var mLink: String? = null,
     @Json(name = "number_comment")
-    var mNumberComment: Int? = null
+    var mNumberComment: Int? = null,
+    @Json(name = "game")
+    var mGame: Gamev1? = null
 )

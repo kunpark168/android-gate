@@ -51,7 +51,7 @@ class SocialRepository @Inject constructor(
         override fun createCall() = socialService.getNewGame(page, limit)
     }.asLiveData()
 
-    fun getDataRelatedToUser(userId: Int, type: Int, page: Int, limit: Int)= object: Lv2FetchResource<WrapGames>(){
+    fun getDataRelatedToUser(userId: Int, type: Int, page: Int, limit: Int)= object: Lv2FetchResource<List<Article>>(){
         override fun createCall() = socialService.getDataRelatedToUser(userId, type, page, limit)
     }.asLiveData()
 

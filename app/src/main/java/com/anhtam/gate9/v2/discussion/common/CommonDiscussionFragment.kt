@@ -22,7 +22,8 @@ import of.bum.network.helper.RestResponse
 import timber.log.Timber
 import javax.inject.Inject
 
-abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder>, V: CommonDiscussionViewModel<T>> : AbstractVisibleFragment(R.layout.shared_discussion_layout) {
+abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder>, V: CommonDiscussionViewModel<T>>
+    : AbstractVisibleFragment(R.layout.shared_discussion_layout) {
 
     private val mDiscussionViewModel: DiscussionViewModel by viewModels({requireParentFragment()}, {vmFactory})
     private var mFirstLoad = true
@@ -44,12 +45,13 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
         updateTabLayout()
     }
     private fun updateTabLayout(){
-        (0..tabTitle.size).forEach { index ->
-            val amount = if (index < tabAmount.size - 1) index else 0
+        for (index in 0 until tabTitle.size){
+            val amount = if (index < tabAmount.size) tabAmount[index] else 0
             tabLayout.getTabAt(index)?.text = Phrase.from(
                     getString(tabTitle[index]))
                     .put("amount", amount)
-                    .format() }
+                    .format()
+        }
     }
 
     open fun inflateLayout() : Int? {
@@ -95,20 +97,22 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
         mViewModel?.data?.observe(viewLifecycleOwner, Observer {resource ->
             when(resource) {
                 is Resource.Success -> {
+                    hideProgress()
                     val data = resource.data
-                    val response = resource.mResponse?.body as? RestResponse<*>
-                    val countTab1 = (response?.mMeta?.get("countTab1") as? Double)?.toInt() ?: 0
-                    val countTab2 = (response?.mMeta?.get("countTab2") as? Double)?.toInt() ?: 0
-                    val countTab3 = (response?.mMeta?.get("countTab3") as? Double)?.toInt() ?: 0
-                    tabAmount.add(countTab1)
-                    tabAmount.add(countTab2)
-                    tabAmount.add(countTab3)
-                    if (tabTitle.size == 4){
-                        val countTab4 = (response?.mMeta?.get("countTab4") as? Double)?.toInt() ?: 0
-                        tabAmount.add(countTab4)
+                    if (tabAmount.isEmpty()){
+                        val response = resource.mResponse?.body as? RestResponse<*>
+                        val countTab1 = (response?.mMeta?.get("countTab1") as? Double)?.toInt() ?: 0
+                        val countTab2 = (response?.mMeta?.get("countTab2") as? Double)?.toInt() ?: 0
+                        val countTab3 = (response?.mMeta?.get("countTab3") as? Double)?.toInt() ?: 0
+                        tabAmount.add(countTab1)
+                        tabAmount.add(countTab2)
+                        tabAmount.add(countTab3)
+                        if (tabTitle.size == 4){
+                            val countTab4 = (response?.mMeta?.get("countTab4") as? Double)?.toInt() ?: 0
+                            tabAmount.add(countTab4)
+                        }
+                        updateTabLayout()
                     }
-                    updateTabLayout()
-
                     if (data.isNullOrEmpty()) {
                         mAdapter.loadMoreEnd()
                     } else {
@@ -124,6 +128,7 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
 
                 }
                 else -> {
+                    hideProgress()
                     mAdapter.loadMoreFail()
                 }
             }
@@ -147,7 +152,9 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
 
 
     private fun loadData(){
-        mViewModel?.loadData(mCurrentCategory, refresh = true)}
+        showProgress()
+        mViewModel?.loadData(mCurrentCategory, refresh = true)
+    }
     private fun initEvents(){
         swipeRefreshLayout?.setOnRefreshListener {
             swipeRefreshLayout?.isRefreshing = false
@@ -169,7 +176,8 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
         })
     }
 
-    private fun newRequestType(category: Int) {
+    private fun newRequestType(position: Int) {
+        val category = position + 1
         mCurrentCategory = category
         mAdapter.data.clear()
         mAdapter.notifyDataSetChanged()

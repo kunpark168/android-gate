@@ -13,6 +13,7 @@ sealed class ApiResponse<T> {
 
     companion object {
         fun <T> create(error: Throwable): ApiErrorResponse<T> {
+            Timber.d(error.message ?: "unknown error")
             return ApiErrorResponse(error.message ?: "unknown error")
         }
 

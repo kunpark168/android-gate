@@ -1,5 +1,6 @@
 package com.anhtam.gate9.v2.discussion.common.game
 
+import androidx.fragment.app.viewModels
 import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.gate9.adapter.GameQuickAdapter
 import com.anhtam.gate9.R
@@ -10,7 +11,7 @@ class GGameFragment: CommonDiscussionFragment<WrapGame, GameQuickAdapter, GGameV
 
     override val tabTitle: List<Int>
         get() = arrayListOf(R.string.open_category, R.string.beta_category, R.string.coming_category, R.string.closed_category)
-
+    override val mViewModel: GGameViewModel by viewModels { vmFactory }
     override val colorTextTab: Int = R.color.colorTabGame
 
     companion object {

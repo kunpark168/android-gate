@@ -35,10 +35,6 @@ class UserDiscussionScreen : DiscussionFragment() {
 
     override fun fragments(): List<AbstractVisibleFragment> {
         val fragments = ArrayList<AbstractVisibleFragment>()
-        val euser = when(mType){
-            Category.Member -> EUser.TV
-            Category.Publisher -> EUser.NPH
-        }
         fragments.add(NewFeedFragment())
         fragments.add(RatingFragment.newInstance(mUserId, mType))
         fragments.add(DataFragment.newInstance(mUserId))
@@ -64,7 +60,6 @@ class UserDiscussionScreen : DiscussionFragment() {
     }
 
     override fun loadData() {
-        showProgress()
         viewModel.mUserId.value = mUserId
     }
 
@@ -73,7 +68,6 @@ class UserDiscussionScreen : DiscussionFragment() {
         viewModel.mUser.observe(viewLifecycleOwner, Observer {
             when(it) {
                 is Resource.Success -> {
-                    hideProgress()
                     val user = it.data ?: return@Observer
                     val id = user.mId ?: return@Observer
                     val roleId = user.mRoleId?.toInt() ?: return@Observer
@@ -82,7 +76,7 @@ class UserDiscussionScreen : DiscussionFragment() {
                     navControllerView?.initialize(following, id, roleId)
                 }
                 is Resource.Error -> {
-                    hideProgress()
+
                 }
             }
         })

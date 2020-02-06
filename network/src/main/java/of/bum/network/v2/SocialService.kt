@@ -79,13 +79,13 @@ interface SocialService {
             @Query("limit") limit: Int
     ): LiveData<ApiResponse<RestResponse<List<Gamev1>>>>
 
-    @GET("social/get-data-info")
+    @GET("social/user/data-info")
     fun getDataRelatedToUser(
             @Query("userId") userId: Int,
             @Query("tab") type: Int,
             @Query("page") page: Int,
             @Query("limit") limit: Int
-    ): LiveData<ApiResponse<RestResponse<WrapGames>>>
+    ): LiveData<ApiResponse<RestResponse<List<Article>>>>
 
     @GET("social/nph/data-info")
     fun getNPHData(
