@@ -93,7 +93,7 @@ interface SocialService {
             @Query("tab") type: Int,
             @Query("page") page: Int,
             @Query("limit") limit: Int
-    ): LiveData<ApiResponse<RestResponse<WrapArticle>>>
+    ): LiveData<ApiResponse<RestResponse<List<Article>>>>
 
     @GET("user/userInfo")
     fun getOtherUserInfoById(@Query("userId") userId: Int): LiveData<ApiResponse<RestResponse<Userv1>>>

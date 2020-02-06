@@ -17,16 +17,19 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
+import of.bum.network.helper.Resource
+import of.bum.network.helper.RestResponse
 import timber.log.Timber
 import javax.inject.Inject
 
-abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder>> : AbstractVisibleFragment(R.layout.shared_discussion_layout) {
+abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder>, V: CommonDiscussionViewModel<T>> : AbstractVisibleFragment(R.layout.shared_discussion_layout) {
 
     private val mDiscussionViewModel: DiscussionViewModel by viewModels({requireParentFragment()}, {vmFactory})
     private var mFirstLoad = true
     private var mHasUser = false
     @Inject lateinit var mAdapter: A
     open var mLazyLoad = true
+    open val mViewModel: V? = null
 
     abstract val colorTextTab: Int
     abstract fun configTabLayout()
@@ -71,6 +74,35 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
                 lazyLoad()
             } else {
                 loadData()
+            }
+        })
+        mViewModel?.data?.observe(viewLifecycleOwner, Observer {resource ->
+            when(resource) {
+                is Resource.Success -> {
+                    val data = resource.data
+                    val response = resource.mResponse?.body as? RestResponse<*>
+//                    mCountTab1 = (response?.mMeta?.get("countTab1") as? Double) ?: 0.0
+//                    mCountTab2 = (response?.mMeta?.get("countTab2") as? Double) ?: 0.0
+//                    mCountTab3 = (response?.mMeta?.get("countTab3") as? Double) ?: 0.0
+                    updateTabLayout()
+
+                    if (data.isNullOrEmpty()) {
+                        mAdapter.loadMoreEnd()
+                    } else {
+                        if (mViewModel?.mPage == 0) {
+                            mAdapter.setNewData(data)
+                        } else {
+                            mAdapter.addData(data)
+                        }
+                        mAdapter.loadMoreComplete()
+                    }
+                }
+                is Resource.Loading -> {
+
+                }
+                else -> {
+                    mAdapter.loadMoreFail()
+                }
             }
         })
     }

@@ -2,6 +2,7 @@ package com.anhtam.gate9.adapter
 
 import android.view.View
 import com.anhtam.domain.v2.protocol.Game
+import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.gate9.R
 import com.anhtam.gate9.utils.toImage
 import com.bumptech.glide.Glide
@@ -14,12 +15,12 @@ import kotlinx.android.synthetic.main.shared_play_banner_game_layout.view.*
 import javax.inject.Inject
 
 class GameQuickAdapter @Inject constructor() :
-        BaseQuickAdapter<Game, BaseViewHolder>(R.layout.shared_item_game_layout) {
+        BaseQuickAdapter<WrapGame, BaseViewHolder>(R.layout.shared_item_game_layout) {
 
 
-    override fun convert(helper: BaseViewHolder?, item: Game?) {
+    override fun convert(helper: BaseViewHolder?, item: WrapGame?) {
         val unwrappedHolder = helper ?: return
-        val unwrappedGame = item ?: return
+        val unwrappedGame = item?.wrap ?: return
         unwrappedHolder.itemView.apply {
             tvTitle?.text = unwrappedGame.name
             Glide.with(mContext)

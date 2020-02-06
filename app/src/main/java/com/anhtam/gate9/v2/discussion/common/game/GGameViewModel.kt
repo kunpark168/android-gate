@@ -1,62 +1,12 @@
 package com.anhtam.gate9.v2.discussion.common.game
 
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.ViewModel
 import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.gate9.repository.SocialRepository
-import com.anhtam.gate9.vo.EUser
-import of.bum.network.helper.Resource
+import com.anhtam.gate9.v2.discussion.common.CommonDiscussionViewModel
 import javax.inject.Inject
 
-class GGameViewModel @Inject constructor(private val socialRepository: SocialRepository) : ViewModel() {
-    val _game = MediatorLiveData<Resource<List<WrapGame>>>()
+class GGameViewModel @Inject constructor(private val socialRepository: SocialRepository) : CommonDiscussionViewModel<WrapGame>() {
+    override fun getNPHData(userId: Int) = socialRepository.getNPHGame(userId, mCategory, mPage, 10)
 
-    private var mPage = 0
-    var mCategory: GameCategory = GameCategory.OPEN
-    val page: Int
-        get() = mPage
-    private var mType: Int = 0
-    private var mUserId: Int = 0
-
-    private var mEUser = EUser.NPH
-
-    fun initialize(eUser: EUser){
-        mEUser = eUser
-    }
-
-
-    fun requestFirstPage(userId: Int,
-                         category: GameCategory) {
-        mPage = 0
-        mUserId = userId
-        mCategory = category
-        mType = getCategory(category)
-        val source = when(mEUser){
-            EUser.NPH -> socialRepository.getNPHGame(mUserId,mType, mPage, 10)
-            EUser.TV -> socialRepository.getGameRelatedToUser(mUserId, mType, mPage, 10 )
-        }
-        _game.addSource(source){
-            _game.value = it
-        }
-    }
-
-    fun requestMore() {
-        mPage++
-        val source = when(mEUser){
-            EUser.NPH -> socialRepository.getNPHGame(mUserId,mType, mPage, 10)
-            EUser.TV -> socialRepository.getGameRelatedToUser(mUserId, mType, mPage, 10 )
-        }
-        _game.addSource(source){
-            _game.value = it
-        }
-    }
-
-    private fun getCategory(category: GameCategory): Int {
-        return when(category) {
-            GameCategory.OPEN -> 1
-            GameCategory.BETA -> 2
-            GameCategory.COMING -> 3
-            GameCategory.CLOSED -> 4
-        }
-    }
+    override fun getUserData(userId: Int) = socialRepository.getGameRelatedToUser(userId, mCategory, mPage, 10 )
 }

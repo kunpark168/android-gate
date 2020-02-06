@@ -5,11 +5,12 @@ import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.PostAdapter
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
+import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedViewModel
 import com.anhtam.gate9.vo.model.Category
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.fragment_rating.*
 
-class RatingFragment: CommonDiscussionFragment<Post, PostAdapter>() {
+class RatingFragment: CommonDiscussionFragment<Post, PostAdapter, NewFeedViewModel>() {
 
     override fun onTabChanged(id: Int) {
 

@@ -1,22 +1,16 @@
 package com.anhtam.gate9.v2.discussion.common.data
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import com.anhtam.domain.ReviewDTO
 import com.anhtam.domain.v2.Article
-import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.article.ArticleImageAdapter
-import com.anhtam.gate9.adapter.v2.PostAdapter
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
-import of.bum.network.helper.Resource
-import of.bum.network.helper.RestResponse
 
-class DataFragment: CommonDiscussionFragment<Article, ArticleImageAdapter>() {
+class DataFragment: CommonDiscussionFragment<Article, ArticleImageAdapter, DataViewModel>() {
     override fun loadData() {
-        viewModel.requestFirstPage(mUserId, mCurrentCategory)
+        viewModel.loadData(mCurrentCategory.category, refresh = true)
     }
 
     private var mUserId: Int = 0
@@ -50,47 +44,6 @@ class DataFragment: CommonDiscussionFragment<Article, ArticleImageAdapter>() {
                 .put("amount", mCountTab4).format()
     }
 
-    override fun observer() {
-        super.observer()
-        viewModel._articles.observe(viewLifecycleOwner, Observer {resource ->
-            when(resource) {
-                is Resource.Success -> {
-                    val response = resource.mResponse?.body as? RestResponse<*>
-                    mCountTab1 = ((response?.mMeta?.get("countTab1") as? Double) ?: 0.0).toInt()
-                    mCountTab2 = ((response?.mMeta?.get("countTab2") as? Double) ?: 0.0).toInt()
-                    mCountTab3 = ((response?.mMeta?.get("countTab3") as? Double) ?: 0.0).toInt()
-                    mCountTab4 = ((response?.mMeta?.get("countTab4") as? Double) ?: 0.0).toInt()
-                    updateTabLayout()
-                    val data: List<Article>? = resource.data?.let {
-                        when{
-                            !it.mGallery.isNullOrEmpty() -> it.mGallery
-                            !it.mVideo.isNullOrEmpty() -> it.mVideo
-                            !it.mGames.isNullOrEmpty() -> it.mGames
-                            !it.mManual.isNullOrEmpty() -> it.mManual
-                            else -> null
-                        }
-                    }
-                    if (data.isNullOrEmpty()) {
-                        mAdapter.loadMoreEnd()
-                    } else {
-                        if (viewModel.page == 0) {
-                            mAdapter.setNewData(data)
-                        } else {
-                            mAdapter.addData(data)
-                        }
-                        mAdapter.loadMoreComplete()
-                    }
-                }
-                is Resource.Loading -> {
-
-                }
-                else -> {
-                    mAdapter.loadMoreFail()
-                }
-            }
-        })
-    }
-
     override fun onTabChanged(id: Int) {
         when(id) {
             0 -> {
@@ -112,8 +65,8 @@ class DataFragment: CommonDiscussionFragment<Article, ArticleImageAdapter>() {
         mCurrentCategory = category
         mAdapter.data.clear()
         mAdapter.notifyDataSetChanged()
-        if (viewModel.mCategory != category) {
-            viewModel.requestFirstPage(mUserId, category)
+        if (viewModel.mCategory != category.category) {
+            viewModel.loadData(category.category)
         }
     }
 

@@ -7,11 +7,12 @@ import com.anhtam.domain.v2.Article
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.article.ArticleImageAdapter
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
+import com.anhtam.gate9.v2.discussion.common.data.DataViewModel
 import com.anhtam.gate9.v2.discussion.common.newfeed.PostCategory
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
 
-class DiscussionGameFragment : CommonDiscussionFragment<Article, ArticleImageAdapter>() {
+class DiscussionGameFragment : CommonDiscussionFragment<Article, ArticleImageAdapter, DataViewModel>() {
 
     private var mLink: String = ""
     private var mCurrentCategory: PostCategory = PostCategory.BOTH

@@ -55,7 +55,7 @@ class SocialRepository @Inject constructor(
         override fun createCall() = socialService.getDataRelatedToUser(userId, type, page, limit)
     }.asLiveData()
 
-    fun getNPHData(userId: Int, type: Int, page: Int, limit: Int)= object: Lv2FetchResource<WrapArticle>(){
+    fun getNPHData(userId: Int, type: Int, page: Int, limit: Int)= object: Lv2FetchResource<List<Article>>(){
         override fun createCall() = socialService.getNPHData(userId, type, page, limit)
     }.asLiveData()
 
