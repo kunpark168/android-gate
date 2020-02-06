@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.v2.discussion.DiscussionViewModel
@@ -16,6 +15,7 @@ import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.android.material.tabs.TabLayout
+import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
 import of.bum.network.helper.Resource
 import of.bum.network.helper.RestResponse
@@ -28,13 +28,29 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
     private var mFirstLoad = true
     private var mHasUser = false
     @Inject lateinit var mAdapter: A
+    private var mCurrentCategory = 1
     open var mLazyLoad = true
     open val mViewModel: V? = null
 
     abstract val colorTextTab: Int
-    abstract fun configTabLayout()
-    abstract fun updateTabLayout()
-    open fun loadMore(){}
+    abstract val tabTitle: List<Int>
+    private val tabAmount = mutableListOf<Int>()
+    open fun configTabLayout(){
+        tabLayout.apply {
+            repeat(tabTitle.size) {
+                addTab(newTab())
+            }
+        }
+        updateTabLayout()
+    }
+    private fun updateTabLayout(){
+        (0..tabTitle.size).forEach { index ->
+            val amount = if (index < tabAmount.size - 1) index else 0
+            tabLayout.getTabAt(index)?.text = Phrase.from(
+                    getString(tabTitle[index]))
+                    .put("amount", amount)
+                    .format() }
+    }
 
     open fun inflateLayout() : Int? {
         return null
@@ -61,14 +77,14 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
         mAdapter.setLoadMoreView(CustomLoadMoreView())
         rvShareDiscussion?.adapter = mAdapter
         mAdapter.setOnLoadMoreListener ({
-            loadMore()
+            mViewModel?.loadData()
         }, rvShareDiscussion)
     }
 
     protected open fun observer() {
         mDiscussionViewModel.mUser.observe(viewLifecycleOwner, Observer {
             val user = it?.data ?: return@Observer
-            onAttachUser(user)
+            mViewModel?.initialize(user)
             mHasUser = true
             if (mLazyLoad){
                 lazyLoad()
@@ -81,9 +97,16 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
                 is Resource.Success -> {
                     val data = resource.data
                     val response = resource.mResponse?.body as? RestResponse<*>
-//                    mCountTab1 = (response?.mMeta?.get("countTab1") as? Double) ?: 0.0
-//                    mCountTab2 = (response?.mMeta?.get("countTab2") as? Double) ?: 0.0
-//                    mCountTab3 = (response?.mMeta?.get("countTab3") as? Double) ?: 0.0
+                    val countTab1 = (response?.mMeta?.get("countTab1") as? Double)?.toInt() ?: 0
+                    val countTab2 = (response?.mMeta?.get("countTab2") as? Double)?.toInt() ?: 0
+                    val countTab3 = (response?.mMeta?.get("countTab3") as? Double)?.toInt() ?: 0
+                    tabAmount.add(countTab1)
+                    tabAmount.add(countTab2)
+                    tabAmount.add(countTab3)
+                    if (tabTitle.size == 4){
+                        val countTab4 = (response?.mMeta?.get("countTab4") as? Double)?.toInt() ?: 0
+                        tabAmount.add(countTab4)
+                    }
                     updateTabLayout()
 
                     if (data.isNullOrEmpty()) {
@@ -107,8 +130,6 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
         })
     }
 
-    open fun onAttachUser(user: User){}
-
     override fun onUiVisibleChange(isUiVisible: Boolean) {
         super.onUiVisibleChange(isUiVisible)
         if (isUiVisible && mFirstLoad){
@@ -125,8 +146,8 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
     }
 
 
-    open fun loadData(){}
-    abstract fun onTabChanged(id: Int)
+    private fun loadData(){
+        mViewModel?.loadData(mCurrentCategory, refresh = true)}
     private fun initEvents(){
         swipeRefreshLayout?.setOnRefreshListener {
             swipeRefreshLayout?.isRefreshing = false
@@ -143,9 +164,18 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val id = tab?.position ?: return
-                onTabChanged(id)
+                newRequestType(id)
             }
         })
+    }
+
+    private fun newRequestType(category: Int) {
+        mCurrentCategory = category
+        mAdapter.data.clear()
+        mAdapter.notifyDataSetChanged()
+        if (mViewModel?.mCategory != category) {
+            mViewModel?.loadData(category, refresh = true)
+        }
     }
 
 }

@@ -91,10 +91,6 @@ class GameDiscussionScreen: DiscussionFragment() {
         })
     }
 
-    override fun initEvents() {
-        super.initEvents()
-    }
-
     private fun bindingView(game: Game) {
         csRating.setGameInformation(game)
         Glide.with(this)
