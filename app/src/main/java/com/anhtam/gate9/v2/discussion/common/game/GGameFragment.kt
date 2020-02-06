@@ -19,6 +19,7 @@ import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
 import of.bum.network.helper.Resource
 import of.bum.network.helper.RestResponse
+import timber.log.Timber
 import kotlin.math.roundToLong
 
 
@@ -51,6 +52,8 @@ class GGameFragment: CommonDiscussionFragment() {
 //    private lateinit var mAdapter: GameQuickAdapter
     private val viewModel: GGameViewModel by viewModels { vmFactory }
     private val mDiscussionViewModel: DiscussionViewModel by viewModels({requireParentFragment()}, { vmFactory })
+    private var mFirstLoad = true
+    private var mHasUser = false
 
     override val colorTextTab: Int = R.color.colorTabGame
 
@@ -70,6 +73,14 @@ class GGameFragment: CommonDiscussionFragment() {
             }
         }
         updateTabLayout()
+    }
+
+    override fun onUiVisibleChange(isUiVisible: Boolean) {
+        super.onUiVisibleChange(isUiVisible)
+        if (isUiVisible && mFirstLoad){
+            mFirstLoad = false
+            lazyLoad()
+        }
     }
 
     override fun updateTabLayout() {
@@ -102,7 +113,8 @@ class GGameFragment: CommonDiscussionFragment() {
             }
             mUserId = user.mId ?: return@Observer
             viewModel.initialize(role)
-            viewModel.requestFirstPage(mUserId, mCurrentCategory)
+            mHasUser = true
+            lazyLoad()
         })
 
         viewModel._game.observe(viewLifecycleOwner, Observer {resource ->
@@ -134,6 +146,13 @@ class GGameFragment: CommonDiscussionFragment() {
                 }
             }
         })
+    }
+
+    private fun lazyLoad(){
+        if (!mFirstLoad && mHasUser){
+            Timber.d("Has loading G Game h.........")
+            viewModel.requestFirstPage(mUserId, mCurrentCategory)
+        }
     }
 
     override fun initEvents() {

@@ -11,6 +11,7 @@ import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.main.home.HomeFragment
+import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import kotlinx.android.synthetic.main.shared_discussion_fragment.*
 import kotlinx.android.synthetic.main.view_footer_discussion.*
 import kotlinx.android.synthetic.main.view_nav_controller_discussion.*
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.view_nav_controller_discussion.*
 abstract class DiscussionFragment : DaggerNavigationFragment(R.layout.shared_discussion_fragment) {
 
     abstract val headerFragment: Fragment
-    abstract fun fragments(): List<Fragment>
+    abstract fun fragments(): List<AbstractVisibleFragment>
     abstract fun tabInfoHeader(): List<TabInfo>
     abstract fun tabInfoBottom(): List<TabInfo>
     abstract fun navigateToReport()
@@ -56,7 +57,8 @@ abstract class DiscussionFragment : DaggerNavigationFragment(R.layout.shared_dis
                 .replace(R.id.headerFrameLayout, headerFragment)
                 .commit()
         // Set up view pager
-        mAdapter = SharePageAdapter(childFragmentManager, fragments())
+        var mFragments = fragments()
+        mAdapter = SharePageAdapter(childFragmentManager, mFragments)
         vpContainer?.adapter = mAdapter
         vpContainer?.offscreenPageLimit = 4
         vpContainer?.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
@@ -70,6 +72,7 @@ abstract class DiscussionFragment : DaggerNavigationFragment(R.layout.shared_dis
 
             override fun onPageSelected(position: Int) {
                 navViewModel.mPositon.value = position
+                mFragments.forEachIndexed { index, fragment -> fragment.changeVisible(position == index)}
             }
 
         })

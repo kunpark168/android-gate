@@ -1,9 +1,7 @@
 package com.anhtam.gate9.v2.discussion.common
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -13,11 +11,10 @@ import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.discussion.DiscussionViewModel
 import com.anhtam.gate9.utils.getColorCompat
-import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
-import of.bum.network.helper.Resource
 
-abstract class CommonDiscussionFragment : DaggerNavigationFragment(R.layout.shared_discussion_layout) {
+abstract class CommonDiscussionFragment : AbstractVisibleFragment(R.layout.shared_discussion_layout) {
 
     protected var mUser: User? = null
 
@@ -28,6 +25,7 @@ abstract class CommonDiscussionFragment : DaggerNavigationFragment(R.layout.shar
     abstract fun updateTabLayout()
     abstract fun loadData()
     abstract fun initEvents()
+
     open fun inflateLayout() : Int? {
         return null
     }
@@ -58,16 +56,10 @@ abstract class CommonDiscussionFragment : DaggerNavigationFragment(R.layout.shar
 
     protected open fun observer() {
         mDiscussionViewModel?.mUser?.observe(this, Observer {
-            when(it) {
-                is Resource.Success -> {
-                    hideProgress()
-                    mUser = it.data
-                    updateTabLayout()
-                }
-                else -> {
-
-                }
-            }
+            val user = it?.data ?: return@Observer
+            onAttachUser(user)
         })
     }
+
+    open fun onAttachUser(user: User){}
 }

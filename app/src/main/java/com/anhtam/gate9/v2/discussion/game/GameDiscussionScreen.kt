@@ -13,6 +13,7 @@ import com.anhtam.gate9.v2.discussion.common.document.GameDocumentFragment
 import com.anhtam.gate9.v2.discussion.common.info.GameInfoFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
 import com.anhtam.gate9.v2.report.game.ReportGameActivity
+import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.shared_discussion_fragment.*
@@ -33,8 +34,8 @@ class GameDiscussionScreen: DiscussionFragment() {
     override val headerFragment: Fragment
         get() = GameHeaderFragment.newInstance()
 
-    override fun fragments(): List<Fragment> {
-        val fragments = ArrayList<Fragment>()
+    override fun fragments(): List<AbstractVisibleFragment> {
+        val fragments = ArrayList<AbstractVisibleFragment>()
         fragments.add(GameDocumentFragment.newInstance(mGameId))
         fragments.add(RatingFragment.newInstance(mGameId.toInt(), Category.Member))
         fragments.add(DataFragment.newInstance(mGameId.toInt()))

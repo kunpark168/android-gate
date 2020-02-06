@@ -12,6 +12,7 @@ import com.anhtam.gate9.v2.discussion.common.info.UserInfoFragment
 import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
 import com.anhtam.gate9.v2.report.user.ReportUserActivity
+import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import com.anhtam.gate9.vo.EUser
 import com.anhtam.gate9.vo.model.Category
 import kotlinx.android.synthetic.main.shared_discussion_fragment.*
@@ -32,8 +33,8 @@ class UserDiscussionScreen : DiscussionFragment() {
     override val headerFragment: Fragment
         get() = UserHeaderFragment.newInstance(mType)
 
-    override fun fragments(): List<Fragment> {
-        val fragments = ArrayList<Fragment>()
+    override fun fragments(): List<AbstractVisibleFragment> {
+        val fragments = ArrayList<AbstractVisibleFragment>()
         val euser = when(mType){
             Category.Member -> EUser.TV
             Category.Publisher -> EUser.NPH

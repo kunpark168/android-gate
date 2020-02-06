@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 
-class GameDocumentFragment : DaggerNavigationFragment(R.layout.game_document_fragment) {
+class GameDocumentFragment : AbstractVisibleFragment(R.layout.game_document_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
