@@ -70,7 +70,7 @@ class ChannelFragment : DaggerNavigationFragment(R.layout.channel_fragment) {
 
     private fun events() {
         mAdapter?.setOnItemClickListener { _, _, position ->
-            navigation?.addFragment(ChatFragment.newInstance(mAdapter?.data?.get(position)?.user?.user_id))
+            navigation?.addFragment(ChatFragment.newInstance(mAdapter?.data?.get(position)?.user?.mId?.toString()))
         }
         label?.setOnClickListener {
             navigation?.addFragment(InboxFragment.newInstance())

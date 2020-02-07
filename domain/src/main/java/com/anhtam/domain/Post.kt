@@ -17,7 +17,7 @@ data class Post(
         @Json(name = "total_dislike") val totalDislike: Long?,
         @Json(name = "total_reply") val totalReply: Long?,
         @Json(name = "game") val game: Game?,
-        @Json(name = "user") val user: User?,
+//        @Json(name = "user") val user: User?,
         @Json(name = "parent") val parent: Parent?,
         @Json(name = "list_like") val listLike: ListLike? = null
 ): Base() {

@@ -9,7 +9,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.Reusable
 import of.bum.network.helper.LiveDataCallAdapterFactory
-import of.bum.network.service.*
 import of.bum.network.v2.MediaService
 import of.bum.network.v2.SocialService
 import okhttp3.OkHttpClient
@@ -73,46 +72,6 @@ class NetworkModule {
                 .baseUrl(Config.BASE_URL)
                 .client(client)
                 .build()
-    }
-
-    @Singleton
-    @Provides
-    fun providePostService(
-            retrofit: Retrofit
-    ): PostService {
-        return retrofit.create(PostService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGameService(
-            retrofit: Retrofit
-    ): GameService {
-        return retrofit.create(GameService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideUserService(
-            retrofit: Retrofit
-    ): UserService {
-        return retrofit.create(UserService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideBannerService(
-            retrofit: Retrofit
-    ): BannerService {
-        return retrofit.create(BannerService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideReviewService(
-            retrofit: Retrofit
-    ): ReviewService {
-        return retrofit.create(ReviewService::class.java)
     }
 
     @Singleton

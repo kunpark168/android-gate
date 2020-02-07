@@ -78,19 +78,19 @@ class ChatFragment : DaggerNavigationFragment(R.layout.chat_fragment) {
     }
 
     private fun observer() {
-        viewModel.userInfo.observe(viewLifecycleOwner, Observer {
-            when(it) {
-                is Resource.Success -> {
-                    shimmer?.stopShimmerAnimation()
-                    shimmer?.visibility = View.GONE
-                    shimmerRoot?.visibility = View.VISIBLE
-                    val user = it.data?.user ?: return@Observer
-                    imgAvatar?.loadImage(this, user.avatar_path)
-                    tvName?.text = user.name
-                    tvId?.text = user.user_id
-                    initRv(user.avatar_path)
-                }
-            }
-        })
+//        viewModel.userInfo.observe(viewLifecycleOwner, Observer {
+//            when(it) {
+//                is Resource.Success -> {
+//                    shimmer?.stopShimmerAnimation()
+//                    shimmer?.visibility = View.GONE
+//                    shimmerRoot?.visibility = View.VISIBLE
+//                    val user = it.data?.user ?: return@Observer
+//                    imgAvatar?.loadImage(this, user.avatar_path)
+//                    tvName?.text = user.name
+//                    tvId?.text = user.user_id
+//                    initRv(user.avatar_path)
+//                }
+//            }
+//        })
     }
 }
