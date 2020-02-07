@@ -1,7 +1,7 @@
 package of.bum.network.v2
 
 import androidx.lifecycle.LiveData
-import com.anhtam.domain.Banner
+import com.anhtam.domain.v2.Banner
 import com.anhtam.domain.Base
 import com.anhtam.domain.v2.Gamev1
 import com.anhtam.domain.v2.*

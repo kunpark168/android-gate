@@ -1,7 +1,6 @@
 package com.anhtam.domain
 
 import androidx.annotation.DrawableRes
-import com.anhtam.domain.dto.Game
 
 data class GameEntity(
 

@@ -1,14 +1,11 @@
 package com.anhtam.gate9.repository
 
 import androidx.lifecycle.LiveData
-import com.anhtam.domain.Banner
+import com.anhtam.domain.v2.Banner
 import com.anhtam.domain.Base
-import com.anhtam.domain.Game
 import com.anhtam.domain.v2.*
-import com.anhtam.domain.v2.wrap.WrapArticle
 import com.anhtam.domain.v2.wrap.WrapComments
 import com.anhtam.domain.v2.wrap.WrapGame
-import com.anhtam.domain.v2.wrap.WrapGames
 import of.bum.network.FetchBoundResource
 import of.bum.network.helper.*
 import of.bum.network.v2.SocialService

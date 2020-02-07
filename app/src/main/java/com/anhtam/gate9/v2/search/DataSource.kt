@@ -2,7 +2,7 @@ package com.anhtam.gate9.v2.search
 
 
 import com.anhtam.domain.GameEntity
-import com.anhtam.domain.dto.Game
+import com.anhtam.domain.Game
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.chat.Message
 

@@ -3,7 +3,7 @@ package com.anhtam.gate9.v2.discussion.game
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.anhtam.domain.Game
+import com.anhtam.domain.v2.Gamev1
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.discussion.DiscussionFragment
 import com.anhtam.gate9.v2.discussion.TabInfo
@@ -91,13 +91,13 @@ class GameDiscussionScreen: DiscussionFragment() {
         })
     }
 
-    private fun bindingView(game: Game) {
+    private fun bindingView(game: Gamev1) {
         csRating.setGameInformation(game)
         Glide.with(this)
                 .load(game.avatar)
                 .into(avatarImageView)
         Glide.with(this)
-                .load(game.cover)
+                .load(game.avatar)
                 .into(bannerImageView)
     }
 

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.anhtam.domain.Game;
+import com.anhtam.domain.v2.Gamev1;
 import com.anhtam.gate9.R;
 
 public class RatingGame extends ConstraintLayout {
@@ -24,7 +24,7 @@ public class RatingGame extends ConstraintLayout {
     private TextView tvTitleGame, tvRatingCount, tvCounting, tvCountingFollow;
     private ImageView imgStar1, imgStar2, imgStar3, imgStar4, imgStar5;
     private String follow, post;
-    private Game game;
+    private Gamev1 game;
     public RatingGame(Context context) {
         super(context);
         addView(context, null);
@@ -116,24 +116,24 @@ public class RatingGame extends ConstraintLayout {
         return this;
     }
 
-    public void setGameInformation(Game game) {
+    public void setGameInformation(Gamev1 game) {
         this.game = game;
         setDataGame ();
     }
 
     private void setDataGame (){
-       try {
-           if (game.getRating() != null) {
-               rating = game.getRating().toString();
-           }
-           if (game.getName() != null) titleGame = game.getName();
-           if (game.getTotalPost() != null) post = game.getTotalPost().toString();
-           if (game.getFollower() != null) follow = game.getFollower().toString();
-           if (game.getVote() != null && game.getVote().getTotalVote() != null)
-               countingUser = game.getVote().getTotalVote().toString();
-           setData();
-       } catch (Exception ex){
-           ex.printStackTrace();
-       }
+//       try {
+//           if (game.getRating() != null) {
+//               rating = game.getRating().toString();
+//           }
+//           if (game.getName() != null) titleGame = game.getName();
+//           if (game.getTotalPost() != null) post = game.getTotalPost().toString();
+//           if (game.getFollower() != null) follow = game.getFollower().toString();
+//           if (game.getVote() != null && game.getVote().getTotalVote() != null)
+//               countingUser = game.getVote().getTotalVote().toString();
+//           setData();
+//       } catch (Exception ex){
+//           ex.printStackTrace();
+//       }
     }
 }

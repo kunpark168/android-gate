@@ -2,19 +2,16 @@ package com.anhtam.gate9.v2.categories
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anhtam.domain.v2.Banner
 import com.anhtam.domain.v2.Gamev1
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.GroupBannerAdapter
-import com.anhtam.gate9.adapter.PostQuickAdapter
 import com.anhtam.gate9.config.Config
-import com.anhtam.gate9.utils.loadingToAdapter
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_category.*
@@ -25,7 +22,6 @@ class FeatureChildrenFragment : DaggerNavigationFragment(R.layout.fragment_categ
 
     private var categoryViewmodel: CategoryViewmodel?= null
     @Inject lateinit var mAdapter: GroupBannerAdapter
-    private lateinit var mAdapterPostQuick: PostQuickAdapter
     private var tab = 0
 
     companion object {
@@ -57,8 +53,8 @@ class FeatureChildrenFragment : DaggerNavigationFragment(R.layout.fragment_categ
     }
 
     private fun initPostList(){
-        mAdapterPostQuick = PostQuickAdapter(Glide.with(this))
-        rvPostCategory.adapter = mAdapterPostQuick
+//        mAdapterPostQuick = PostQuickAdapter(Glide.with(this))
+//        rvPostCategory.adapter = mAdapterPostQuick
         rvPostCategory.layoutManager = LinearLayoutManager(context)
 
         rvPostCategory.isNestedScrollingEnabled = false
@@ -73,14 +69,9 @@ class FeatureChildrenFragment : DaggerNavigationFragment(R.layout.fragment_categ
         categoryViewmodel?.newGame?.observe(this, Observer {
             notifyGroupBannerData(it)
         })
-
-
-        categoryViewmodel?.posts?.observe(this, Observer {
-            it?.loadingToAdapter(mAdapterPostQuick, 1)
-        })
     }
 
-    private fun notifyBannerImage(data: Resource<com.anhtam.domain.Banner>) {
+    private fun notifyBannerImage(data: Resource<Banner>) {
         val banner = data.data ?: return
         Glide.with(this)
                 .load(Config.IMG_URL + banner.url)

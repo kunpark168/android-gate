@@ -1,4 +1,4 @@
-package com.anhtam.domain
+package com.anhtam.domain.v2
 
 import com.squareup.moshi.Json
 

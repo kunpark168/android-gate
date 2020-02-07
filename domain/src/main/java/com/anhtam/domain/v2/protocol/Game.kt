@@ -1,7 +1,6 @@
 package com.anhtam.domain.v2.protocol
 
-import com.anhtam.domain.Base
-import com.anhtam.domain.Type
+import com.anhtam.domain.v2.Type
 
 interface Game {
     var gameId: Int?

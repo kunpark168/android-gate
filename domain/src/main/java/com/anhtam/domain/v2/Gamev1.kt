@@ -1,7 +1,5 @@
 package com.anhtam.domain.v2
 
-import com.anhtam.domain.Base
-import com.anhtam.domain.Type
 import com.anhtam.domain.v2.protocol.Game
 import com.squareup.moshi.Json
 

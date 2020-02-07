@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
-import com.anhtam.domain.Banner
+import com.anhtam.domain.v2.Banner
 import com.anhtam.domain.v2.Post
 import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.gate9.R
