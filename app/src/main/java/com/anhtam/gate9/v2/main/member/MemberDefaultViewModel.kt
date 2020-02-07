@@ -5,7 +5,6 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.anhtam.domain.v2.Userv1
 import com.anhtam.gate9.repository.SocialRepository
-import com.anhtam.gate9.repository.UserRepository
 import com.anhtam.gate9.utils.setValueDiff
 import com.anhtam.gate9.vo.EUser
 import of.bum.network.helper.Resource

@@ -32,8 +32,8 @@ class ResultSearchFragment : DaggerNavigationFragment(R.layout.fragment_result_s
     }
 
     private fun observer() {
-        viewModel.games.observe(this, Observer {
-        })
+//        viewModel.games.observe(this, Observer {
+//        })
     }
 
     private fun initEvents() {
