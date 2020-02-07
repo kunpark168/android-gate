@@ -28,7 +28,7 @@ class GroupBannerAdapter @Inject constructor(val navigation: Navigation?,
     override fun convert(helper: BaseViewHolder?, item: Game?) {
         val game = item ?: return
         val view = helper?.itemView ?: return
-        val type = game.gameTypes?.firstOrNull()?.name ?: ""
+        val type = game.gameType?.name ?: ""
         view.tvContent?.text = type
         view.tvTitle?.text = game.name ?: ""
         Glide.with(mContext)
