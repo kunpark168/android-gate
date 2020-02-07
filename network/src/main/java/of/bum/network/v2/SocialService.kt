@@ -13,8 +13,15 @@ import okhttp3.ResponseBody
 import retrofit2.http.*
 
 interface SocialService {
+
+    /*
+     *
+     */
     @GET("login")
     fun getInfo(): LiveData<ApiResponse<RestResponse<Userv1>>>
+
+    @POST("user/registration")
+    fun register(@Body params: @JvmSuppressWildcards Map<String, String>): LiveData<ApiResponse<RestResponse<Base>>>
 
     @GET("social/listing")
     fun getListPosts(

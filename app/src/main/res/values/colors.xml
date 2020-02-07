@@ -80,4 +80,6 @@
     <color name="text_color_dark">#333333</color>
     <color name="background_color_dark">#DDDDDD</color>
     <color name="background_color_grey">#f4f2f0</color>
+    <color name="toolbar_color_orange">#fa5a36</color>
+    <color name="toolbar_color_blue">#55b3f9</color>
 </resources>

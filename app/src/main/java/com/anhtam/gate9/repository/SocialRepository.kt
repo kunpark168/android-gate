@@ -10,10 +10,7 @@ import com.anhtam.domain.v2.wrap.WrapComments
 import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.domain.v2.wrap.WrapGames
 import of.bum.network.FetchBoundResource
-import of.bum.network.helper.ApiResponse
-import of.bum.network.helper.Lv1FetchResource
-import of.bum.network.helper.Lv2FetchResource
-import of.bum.network.helper.RestResponse
+import of.bum.network.helper.*
 import of.bum.network.v2.SocialService
 import okhttp3.MultipartBody
 import javax.inject.Inject
@@ -114,5 +111,15 @@ class SocialRepository @Inject constructor(
         params["roleid"] = "4"
         params["gameid"] = "0"
         socialService.follow(params)
+    }
+
+    fun registerWithEmail(email: String, password: String, name: String): LiveData<Resource<Base>>{
+        val params = hashMapOf<String, String>()
+        params["email"] = email
+        params["password"] = password
+        params["name"] = name
+        return object: Lv2FetchResource<Base>(){
+            override fun createCall() = socialService.register(params)
+        }.asLiveData()
     }
 }
