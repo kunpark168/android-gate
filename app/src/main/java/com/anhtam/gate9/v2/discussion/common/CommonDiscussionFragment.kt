@@ -7,6 +7,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.gate9.R
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.v2.discussion.DiscussionViewModel
@@ -45,7 +47,7 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
         updateTabLayout()
     }
     private fun updateTabLayout(){
-        for (index in 0 until tabTitle.size){
+        for (index in tabTitle.indices){
             val amount = if (index < tabAmount.size) tabAmount[index] else 0
             tabLayout.getTabAt(index)?.text = Phrase.from(
                     getString(tabTitle[index]))
@@ -67,7 +69,12 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
 
     protected open fun initView() {
         configTabLayout()
+        setUpRecyclerView()
+    }
+
+    private fun setUpRecyclerView(){
         val unwrappedContext = context ?: return
+        tabLayout.setTabTextColors(unwrappedContext.getColorCompat(R.color.defaultGrayColor), unwrappedContext.getColorCompat(colorTextTab))
         context?.let {
             val dividerItemDecoration = DividerItemDecoration(it, LinearLayout.VERTICAL)
             val drawableDivider = ContextCompat.getDrawable(it, R.drawable.divider_item_decorator) ?: return
@@ -75,7 +82,6 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
             rvShareDiscussion?.addItemDecoration(dividerItemDecoration)
 
         }
-        tabLayout.setTabTextColors(unwrappedContext.getColorCompat(R.color.defaultGrayColor), unwrappedContext.getColorCompat(colorTextTab))
         mAdapter.setLoadMoreView(CustomLoadMoreView())
         rvShareDiscussion?.adapter = mAdapter
         mAdapter.setOnLoadMoreListener ({
@@ -172,8 +178,13 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val id = tab?.position ?: return
                 newRequestType(id)
+                changeRvManager(rvShareDiscussion, id)
             }
         })
+    }
+
+    open fun changeRvManager(rv: RecyclerView?, id: Int){
+
     }
 
     private fun newRequestType(position: Int) {

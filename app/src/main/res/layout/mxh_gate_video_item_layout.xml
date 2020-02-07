@@ -5,7 +5,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_margin="@dimen/layout_margin_4dp"
+    android:layout_marginStart="@dimen/layout_margin_2dp"
+    android:layout_marginEnd="@dimen/layout_margin_2dp"
     android:padding="@dimen/layout_margin_4dp"
     android:background="@color/white">
     <TextView
