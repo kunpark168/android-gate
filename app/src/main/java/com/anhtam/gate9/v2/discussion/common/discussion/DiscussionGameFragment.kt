@@ -4,10 +4,11 @@ import com.anhtam.domain.v2.Article
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.article.ArticleEntity
 import com.anhtam.gate9.adapter.article.ArticleImageAdapter
+import com.anhtam.gate9.adapter.v2.ArticleAdapter
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
 import com.anhtam.gate9.v2.discussion.common.data.DataViewModel
 
-class DiscussionGameFragment : CommonDiscussionFragment<ArticleEntity, ArticleImageAdapter, DataViewModel>() {
+class DiscussionGameFragment : CommonDiscussionFragment<Article, ArticleAdapter, DataViewModel>() {
 
     private var mLink: String = ""
     override val colorTextTab = R.color.colorTabDiscussion

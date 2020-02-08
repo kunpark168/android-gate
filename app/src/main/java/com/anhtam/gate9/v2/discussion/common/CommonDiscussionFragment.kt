@@ -178,13 +178,8 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val id = tab?.position ?: return
                 newRequestType(id)
-                changeRvManager(rvShareDiscussion, id)
             }
         })
-    }
-
-    open fun changeRvManager(rv: RecyclerView?, id: Int){
-
     }
 
     private fun newRequestType(position: Int) {
