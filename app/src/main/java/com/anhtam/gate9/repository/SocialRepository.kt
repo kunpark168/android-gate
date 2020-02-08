@@ -70,8 +70,8 @@ class SocialRepository @Inject constructor(
         override fun createCall() = socialService.postViewForum(commentId)
     }.asLiveData()
 
-    fun getListingPost() = object : FetchBoundResource<List<Post>>(){
-        override fun createCall() = socialService.getListPosts()
+    fun getListingPost(page: Int, limit: Int) = object : FetchBoundResource<List<Post>>(){
+        override fun createCall() = socialService.getListPosts(page, limit)
     }.asLiveData()
 
     fun getFollowingInfo(tab: Int, page: Int) = object : FetchBoundResource<List<Post>>(){

@@ -13,6 +13,7 @@ import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import kotlinx.android.synthetic.main.follow_screen.*
 
 class FollowScreen : DaggerNavigationFragment(R.layout.follow_screen) {
@@ -65,7 +66,7 @@ class FollowScreen : DaggerNavigationFragment(R.layout.follow_screen) {
     }
 
     private fun setUpViewPager() {
-        val fragments = ArrayList<Fragment>()
+        val fragments = ArrayList<AbstractVisibleFragment>()
         fragments.add(TatCaFollowingScreen.newInstance(1))
         fragments.add(TatCaFollowingScreen.newInstance(2))
         fragments.add(TatCaFollowingScreen.newInstance(3))
@@ -84,6 +85,7 @@ class FollowScreen : DaggerNavigationFragment(R.layout.follow_screen) {
 
             override fun onPageSelected(position: Int) {
                 enableTab(position)
+                fragments.forEachIndexed { index, fragment -> fragment.changeVisible(position == index)}
             }
         })
     }

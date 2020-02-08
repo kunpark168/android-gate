@@ -187,8 +187,7 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
     private fun newRequestType(position: Int) {
         val category = position + 1
         mCurrentCategory = category
-        mAdapter.data.clear()
-        mAdapter.notifyDataSetChanged()
+        mAdapter.setNewData(null)
         if (mViewModel?.mCategory != category) {
             mViewModel?.loadData(category, refresh = true)
         }

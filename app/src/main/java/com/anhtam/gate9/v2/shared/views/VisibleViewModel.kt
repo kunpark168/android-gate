@@ -5,5 +5,5 @@ import androidx.lifecycle.ViewModel
 
 class VisibleViewModel : ViewModel(){
 
-    val mIsUIVisible = MutableLiveData<Boolean>(false)
+    val mIsUIVisible = MutableLiveData(false)
 }

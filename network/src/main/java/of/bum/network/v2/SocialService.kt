@@ -25,8 +25,8 @@ interface SocialService {
 
     @GET("social/listing")
     fun getListPosts(
-            @Query("page") page: Int = 0,
-            @Query("limit") limit: Int = 60
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
     ): LiveData<ApiResponse<RestResponse<List<Post>>>>
 
     @GET("social/get-banner")
