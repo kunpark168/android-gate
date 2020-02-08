@@ -7,8 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.v2.discussion.DiscussionViewModel
@@ -89,9 +88,12 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
         }, rvShareDiscussion)
     }
 
+    protected open fun onLoadUser(user: User){}
+
     protected open fun observer() {
         mDiscussionViewModel.mUser.observe(viewLifecycleOwner, Observer {
             val user = it?.data ?: return@Observer
+            onLoadUser(user)
             mViewModel?.initialize(user)
             mHasUser = true
             if (mLazyLoad){
