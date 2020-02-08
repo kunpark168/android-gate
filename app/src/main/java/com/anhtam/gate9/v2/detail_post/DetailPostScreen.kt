@@ -53,7 +53,8 @@ class DetailPostScreen private constructor(
     }
 
     override fun toGameDiscussion() {
-        navigation?.addFragment(GameDiscussionScreen.newInstance("", viewModel._gameId.toString()))
+        val game = _post.game ?: return
+        navigation?.addFragment(GameDiscussionScreen.newInstance(game))
     }
 
     override fun toReact() {
@@ -236,7 +237,7 @@ class DetailPostScreen private constructor(
 
         tvTitle?.text = game.name
         val contentStr = Phrase.from(getString(R.string.follower_amount_and_post_amount))
-                .put("follower", _post.game?.follower ?: "0")
+                .put("follower", _post.game?.follower?.toString() ?: "0")
                 .put("post", _post.game?.post?.toString() ?: "0")
                 .format()
         tvContentGame?.text = contentStr

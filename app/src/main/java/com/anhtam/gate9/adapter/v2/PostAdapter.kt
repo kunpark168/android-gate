@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.domain.v2.Post
+import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
@@ -51,7 +52,8 @@ class PostAdapter @Inject constructor(
                     navigateToMemberDiscussion(userId)
                 }
                 R.id.gameImageView, R.id.titleGameTextView -> {
-                    navigateToGameDiscussion()
+                    val game = data[position].game ?: return@setOnItemChildClickListener
+                    navigateToGameDiscussion(game)
                 }
                 R.id.moreImageView -> {
                     val mMoreDialog = MoreDialog(mContext, object : MoreDialog.IMore {
@@ -99,8 +101,7 @@ class PostAdapter @Inject constructor(
         view.pointTextView.text = unwrapPost.point
         view.loveTextView.text = unwrapPost.totalLove
         view.dateTextView.text = unwrapPost.createdDate
-        val react = Reaction.react(unwrapPost.like?.convertInt()?:0)
-        when(react){
+        when(Reaction.react(unwrapPost.like?.convertInt()?:0)){
             Reaction.Like -> {
                 view.likeIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_main_blue))
                 view.dislikeIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_react_grey_dark))
@@ -149,8 +150,8 @@ class PostAdapter @Inject constructor(
             view.titleGameTextView.text = game.name
             val followDescription = mContext.getString(R.string.follower_amount_and_post_amount)
             val followGame = Phrase.from(followDescription)
-                    .put("follower", game.follower ?: "0")
-                    .put("post", game.post.toString())
+                    .put("follower", game.follower?.toString() ?: "0")
+                    .put("post", game.post?.toString() ?: "0")
                     .format()
             view.contentGameTextView.text = followGame
             if (game.follow != true) {
@@ -190,8 +191,8 @@ class PostAdapter @Inject constructor(
         navigation.addFragment(DetailPostScreen.newInstance(post, DetailPostScreen.Detail.POST, listener), tag = Config.DETAIL_POST_FRAGMENT_TAG)
     }
 
-    private fun navigateToGameDiscussion(){
-        navigation.addFragment(GameDiscussionScreen.newInstance("", "1"))
+    private fun navigateToGameDiscussion(game: Game){
+        navigation.addFragment(GameDiscussionScreen.newInstance(game))
     }
 
 

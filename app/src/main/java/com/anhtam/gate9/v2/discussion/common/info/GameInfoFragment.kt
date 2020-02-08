@@ -38,16 +38,7 @@ class GameInfoFragment: DaggerNavigationFragment(R.layout.fragment_info_game) {
 
     private fun observer() {
         mDiscussionViewModel?.mGame?.observe(viewLifecycleOwner, Observer {
-            when(it) {
-                is Resource.Success -> {
-                    hideProgress()
-                    mGame = it.data
-                    bindInfo()
-                }
-                else -> {
 
-                }
-            }
         })
     }
 

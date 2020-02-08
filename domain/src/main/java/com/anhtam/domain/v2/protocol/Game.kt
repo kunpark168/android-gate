@@ -23,9 +23,9 @@ interface Game {
     var fanPage: String?
     var homepage: String?
     var photos: String?
-    var follower: String?
-    var following: String?
+    var follower: Int?
+    var following: Int?
     var follow: Boolean?
-    var post: String?
+    var post: Int?
     var imgCover: String?
 }

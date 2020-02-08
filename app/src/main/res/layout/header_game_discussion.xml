@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -34,49 +35,77 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/csInforGame"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp75"
+    <LinearLayout
+        android:id="@+id/llAvatarGame"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@color/colorWhite"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/dp155"
-        android:paddingStart="@dimen/dp_10"
-        android:paddingEnd="@dimen/dp_10"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginStart="@dimen/layout_margin_8dp">
+        <com.anhtam.gate9.share.view.RoundRectCornerImageView
+            android:id="@+id/avatarImageView"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/img_holder_banner"
+            android:layout_width="56dp"
+            android:layout_height="56dp"/>
+    </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/llAvatarGame"
-            android:layout_width="@dimen/dp75"
-            android:layout_height="@dimen/dp75"
-            android:background="@color/colorWhite"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-            <com.anhtam.gate9.share.view.RoundRectCornerImageView
-                android:id="@+id/avatarImageView"
-                android:scaleType="centerCrop"
-                tools:src="@drawable/img_holder_banner"
-                android:layout_width="@dimen/dp60"
-                android:layout_height="@dimen/dp60"/>
-        </LinearLayout>
+    <TextView
+        android:id="@+id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/csTop"
+        app:layout_constraintStart_toEndOf="@id/llAvatarGame"
+        app:layout_constraintEnd_toEndOf="@id/iconBXH"
+        tools:text="Hiep khach Giang Ho Mobile"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp_12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_margin_8dp"
+        android:layout_marginTop="@dimen/layout_margin_4dp"/>
 
-        <com.anhtam.gate9.share.view.RatingGame
-            android:id="@+id/csRating"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/dp5"
-            android:layout_marginTop="@dimen/dp20"
-            android:layout_marginBottom="@dimen/dp7"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/llAvatarGame"
-            app:layout_constraintTop_toTopOf="parent">
-        </com.anhtam.gate9.share.view.RatingGame>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="?attr/ratingBarStyleSmall"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintBottom_toTopOf="@id/tvFollowAndPost"
+        app:layout_constraintStart_toStartOf="@id/tvTitle"/>
 
-    <View
-        android:id="@+id/vInforGame"
+    <TextView
+        android:id="@+id/tvFollowAndPost"
+        android:gravity="center"
+        android:fontFamily="@font/roboto_regular"
+        android:layout_marginTop="3dp"
+        android:layout_marginStart="3dp"
+        android:textSize="@dimen/sp_10"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp12"
+        app:layout_constraintBottom_toBottomOf="@id/llAvatarGame"
+        app:layout_constraintTop_toBottomOf="@id/ratingBar"
+        app:layout_constraintStart_toStartOf="@id/tvTitle"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iconBXH"
+        android:layout_width="@dimen/material_icon_size_24dp"
+        android:layout_height="@dimen/material_icon_size_24dp"
+        android:layout_marginEnd="@dimen/layout_margin_16dp"
+        android:background="@drawable/bg_charts"
+        android:padding="@dimen/dp7"
+        android:src="@drawable/ic_charts"
+        android:tint="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="@id/llAvatarGame"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <include
+        app:layout_constraintTop_toBottomOf="@id/llAvatarGame"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="#eeeeee"
-        app:layout_constraintTop_toBottomOf="@+id/csInforGame" />
+        android:layout_height="wrap_content"
+        layout="@layout/share_divider_item_layout"
+        android:layout_marginTop="@dimen/layout_margin_8dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

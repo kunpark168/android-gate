@@ -13,7 +13,7 @@ class DiscussionGameFragment : CommonDiscussionFragment<Article, ArticleAdapter,
     private var mLink: String = ""
     override val colorTextTab = R.color.colorTabDiscussion
     override val tabTitle: List<Int>
-        get() = arrayListOf(R.string.number_all, R.string.number_post, R.string.comment)
+        get() = arrayListOf(R.string.number_all, R.string.number_post, R.string.number_comment)
 
     companion object {
         fun newInstance(link: String) : DiscussionGameFragment {

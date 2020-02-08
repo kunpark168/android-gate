@@ -119,12 +119,8 @@ class MXHGameTabFragment : DaggerNavigationFragment(R.layout.mxh_game_tab_fragme
     inner class Adapter : BaseQuickAdapter<Game, BaseViewHolder>(R.layout.mxh_game_item_layout, arrayListOf()){
 
         init {
-            setOnItemChildClickListener { _, view, position ->
-                when(view.id){
-                    R.id.tvTitle, R.id.imgAvatarGame -> {
-                        navigation?.addFragment(GameDiscussionScreen.newInstance("", data[position].gameId?.toString() ?: ""))
-                    }
-                }
+            setOnItemClickListener { _, _, position ->
+                navigation?.addFragment(GameDiscussionScreen.newInstance(data[position]))
             }
         }
 
@@ -143,8 +139,8 @@ class MXHGameTabFragment : DaggerNavigationFragment(R.layout.mxh_game_tab_fragme
                     .into(view.imgAvatarGame)
             val followDescription = mContext.getString(R.string.follower_amount_and_post_amount)
             val followGame = Phrase.from(followDescription)
-                    .put("follower", data.follower ?: "0")
-                    .put("post", data.post.toString())
+                    .put("follower", data.follower?.toString() ?: "0")
+                    .put("post", data.post?.toString() ?: "0")
                     .format()
             view.tvFollowAmount.text = followGame
             if (data.follow == true) {

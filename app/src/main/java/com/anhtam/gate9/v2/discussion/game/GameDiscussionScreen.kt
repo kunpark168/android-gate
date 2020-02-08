@@ -4,6 +4,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.anhtam.domain.v2.Gamev1
+import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.discussion.DiscussionFragment
 import com.anhtam.gate9.v2.discussion.TabInfo
@@ -20,10 +21,10 @@ import kotlinx.android.synthetic.main.shared_discussion_fragment.*
 import kotlinx.android.synthetic.main.header_game_discussion.*
 import of.bum.network.helper.Resource
 
-class GameDiscussionScreen: DiscussionFragment() {
+class GameDiscussionScreen(
+        private val mGame: Game
+): DiscussionFragment() {
 
-    private lateinit var mLink: String
-    private lateinit var mGameId: String
     override val fragmentInfo: Fragment
         get() = GameInfoFragment.newInstance()
 
@@ -36,10 +37,10 @@ class GameDiscussionScreen: DiscussionFragment() {
 
     override fun fragments(): List<AbstractVisibleFragment> {
         val fragments = ArrayList<AbstractVisibleFragment>()
-        fragments.add(GameDocumentFragment.newInstance(mGameId))
-        fragments.add(RatingFragment.newInstance(mGameId.toInt(), Category.Member))
-        fragments.add(DataFragment.newInstance(mGameId.toInt()))
-        fragments.add(DiscussionGameFragment.newInstance(mLink))
+        fragments.add(GameDocumentFragment.newInstance("1"))
+        fragments.add(RatingFragment.newInstance(1, Category.Member))
+        fragments.add(DataFragment.newInstance(1))
+        fragments.add(DiscussionGameFragment.newInstance(""))
         return fragments
     }
 
@@ -61,7 +62,7 @@ class GameDiscussionScreen: DiscussionFragment() {
     }
 
     override fun loadData() {
-        viewModel.mGameId.value = mGameId
+        viewModel.mGame.value = mGame
     }
 
     override fun observer() {
@@ -74,39 +75,9 @@ class GameDiscussionScreen: DiscussionFragment() {
                 footerFrameLayout?.visibility = View.GONE
             }
         })
-        viewModel.mGame.observe(this, Observer {
-            when(it) {
-                is Resource.Success -> {
-                    it.data?.let {game ->
-                        bindingView(game)
-                    }
-                }
-                is Resource.Loading -> {
-
-                }
-                else -> {
-
-                }
-            }
-        })
-    }
-
-    private fun bindingView(game: Gamev1) {
-        csRating.setGameInformation(game)
-        Glide.with(this)
-                .load(game.avatar)
-                .into(avatarImageView)
-        Glide.with(this)
-                .load(game.avatar)
-                .into(bannerImageView)
     }
 
     companion object {
-        fun newInstance(linkGame: String, gameId: String): GameDiscussionScreen {
-            val fragment = GameDiscussionScreen()
-            fragment.mLink = linkGame
-            fragment.mGameId = gameId
-            return fragment
-        }
+        fun newInstance(game: Game) = GameDiscussionScreen(game)
     }
 }
