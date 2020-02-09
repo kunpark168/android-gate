@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.charts
+package com.anhtam.gate9.v2.bxh
 
 import android.os.Bundle
 import android.view.View
@@ -6,20 +6,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
-import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import kotlinx.android.synthetic.main.chart_screen.*
+import kotlinx.android.synthetic.main.bxh_screen.*
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 import javax.inject.Named
 
-class ChartScreen(
-        private val mUser: User
-) : DaggerNavigationFragment(R.layout.chart_screen) {
+class BXHScreen(
+        private val mRoleId: Int
+) : DaggerNavigationFragment(R.layout.bxh_screen) {
 
     private val viewModel: ChartViewModel by viewModels { vmFactory }
     @Inject lateinit var mAdapter: ChartsAdapter
@@ -37,9 +35,9 @@ class ChartScreen(
     }
 
     private fun initUserView(){
-        when (mUser.mRoleId){
-            Config.NPH_ROLEID.toString() -> viewModel.getNPHRanking(true)
-            else -> viewModel.getUserRanking(true)
+        when (mRoleId){
+            5 -> viewModel.getNPHRanking(true)
+            4 -> viewModel.getUserRanking(true)
         }
         val user = mSessionManager.cachedUser.value?.data ?: return
         tvName?.text = user.mName
@@ -115,6 +113,6 @@ class ChartScreen(
     }
 
     companion object{
-        fun newInstance(user: User) = ChartScreen(user)
+        fun newInstance(roleId: Int) = BXHScreen(roleId)
     }
 }

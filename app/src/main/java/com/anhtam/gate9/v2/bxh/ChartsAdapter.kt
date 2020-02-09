@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.charts
+package com.anhtam.gate9.v2.bxh
 
 import android.widget.ImageView
 import android.widget.TextView

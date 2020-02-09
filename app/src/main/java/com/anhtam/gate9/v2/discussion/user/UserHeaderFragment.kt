@@ -9,7 +9,7 @@ import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.utils.convertInt
 import com.anhtam.gate9.utils.toImage
-import com.anhtam.gate9.v2.charts.ChartScreen
+import com.anhtam.gate9.v2.bxh.BXHScreen
 import com.anhtam.gate9.v2.discussion.DiscussionViewModel
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.vo.model.Category
@@ -75,10 +75,11 @@ class UserHeaderFragment(private val mType: Category, @LayoutRes layoutId: Int) 
             2 -> R.drawable.ic_male_circle
             else -> R.drawable.ic_gender
         }
+        imgGender.visibility = View.VISIBLE
         Glide.with(this).load(icon)
                 .into(imgGender)
         iconChart?.setOnClickListener {
-            navigation?.addFragment(ChartScreen.newInstance(user))
+            navigation?.addFragment(BXHScreen.newInstance(4))
         }
     }
 
@@ -102,7 +103,7 @@ class UserHeaderFragment(private val mType: Category, @LayoutRes layoutId: Int) 
         imgGender?.visibility = View.GONE
 
         imgChart?.setOnClickListener {
-            navigation?.addFragment(ChartScreen.newInstance(user))
+            navigation?.addFragment(BXHScreen.newInstance(5))
         }
     }
 

@@ -1,18 +1,14 @@
-package com.anhtam.gate9.v2.main.member
+package com.anhtam.gate9.v2.member
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.R
-import com.anhtam.gate9.v2.charts.ChartScreen
-import com.anhtam.gate9.v2.main.member.all.MemberListFragment
+import com.anhtam.gate9.v2.bxh.BXHScreen
+import com.anhtam.gate9.v2.member.all.MemberListFragment
 import com.anhtam.gate9.utils.customOnClickHolder
-import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.vo.EUser
 import kotlinx.android.synthetic.main.member_fragment.*
@@ -55,9 +51,12 @@ class MemberFragment : DaggerNavigationFragment(R.layout.member_fragment), INavi
             vpTop.currentItem = 1
         }
 
-        csCharts.setOnClickListener {
-            val user = mSessionManager.cachedUser.value?.data ?: return@setOnClickListener
-            navigation?.addFragment(ChartScreen.newInstance(user))
+        topBXHUserLayout.setOnClickListener {
+            navigation?.addFragment(BXHScreen.newInstance(4))
+        }
+
+        topBXHNPHLayout.setOnClickListener {
+            navigation?.addFragment(BXHScreen.newInstance(5))
         }
 
     }

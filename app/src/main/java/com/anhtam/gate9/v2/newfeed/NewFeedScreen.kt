@@ -18,7 +18,7 @@ import com.anhtam.gate9.v2.BackgroundViewModel
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.notification.NotificationFragment
-import com.anhtam.gate9.v2.main.member.MemberFragment
+import com.anhtam.gate9.v2.member.MemberFragment
 import com.anhtam.gate9.v2.messenger.ChannelFragment
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
