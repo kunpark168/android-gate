@@ -93,17 +93,10 @@ class DetailPostScreen private constructor(
 
     private fun init() {
         viewModel.initialize(_post, this)
-        loadComment()
+        viewModel.getChildComment()
         initView()
         initEvents()
         observer()
-    }
-
-    private fun loadComment(){
-        val reply = _post.totalReply.convertInt()
-        if(reply > 0){
-            viewModel.getChildComment()
-        }
     }
 
     private fun initView(){
@@ -164,9 +157,9 @@ class DetailPostScreen private constructor(
                     }
                 }
                 is Resource.Loading -> {
-                    hideProgress()
                 }
                 else -> {
+                    hideProgress()
                     mAdapter.loadMoreFail()
                 }
             }
@@ -198,11 +191,11 @@ class DetailPostScreen private constructor(
         tvContent?.text = Html.fromHtml(unwrapPost.content ?: "")
         tvTime?.text = unwrapPost.createdDate
         val react = unwrapPost.like?.convertInt() ?: 0
-        val like = unwrapPost.totalLike.convertInt()
-        val dislike = unwrapPost.totalDislike.convertInt()
-        val love = unwrapPost.totalLove.convertInt()
-        val comment = unwrapPost.totalReply.convertInt()
-        val view = 0 // TODO FROM SERVER
+        val like = unwrapPost.totalLike ?: 0
+        val dislike = unwrapPost.totalDislike ?: 0
+        val love = unwrapPost.totalLove ?: 0
+        val comment = unwrapPost.totalReply ?: 0
+        val view = unwrapPost.totalView ?: 0
         reactionView?.initialize(like, dislike, love, Reaction.react(react), view, comment)
 
         // Set photo
@@ -269,9 +262,7 @@ class DetailPostScreen private constructor(
         // Reaction
         reactionView?.onReactionChange(mSessionManager){current, previous ->
             mListener?.invoke(current)
-            viewModel.react(current, previous).observe(viewLifecycleOwner, Observer {
-                Timber.d("Test") // TODO Bug
-            })
+            viewModel.react(current, previous).observe(viewLifecycleOwner, Observer {})
         }
 
         tvFollowGame?.setOnClickListener {

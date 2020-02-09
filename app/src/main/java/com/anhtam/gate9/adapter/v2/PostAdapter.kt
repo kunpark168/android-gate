@@ -95,11 +95,11 @@ class PostAdapter @Inject constructor(
         val view = helper?.itemView ?: return
         // Set content of Post
         view.contentTextView.text = unwrapPost.content?.let { Html.fromHtml(it) }
-        view.likeTextView.text = unwrapPost.totalLike
-        view.dislikeTextView.text = unwrapPost.totalDislike
-        view.commentTextView.text = unwrapPost.totalReply
-        view.pointTextView.text = unwrapPost.point
-        view.loveTextView.text = unwrapPost.totalLove
+        view.likeTextView.text = unwrapPost.totalLike?.toString() ?: "0"
+        view.dislikeTextView.text = unwrapPost.totalDislike?.toString() ?: "0"
+        view.commentTextView.text = unwrapPost.totalReply?.toString() ?: "0"
+        view.pointTextView.text = unwrapPost.point?.toString() ?: "0"
+        view.loveTextView.text = unwrapPost.totalLove?.toString() ?: "0"
         view.dateTextView.text = unwrapPost.createdDate
         when(Reaction.react(unwrapPost.like?.convertInt()?:0)){
             Reaction.Like -> {
@@ -210,32 +210,34 @@ class PostAdapter @Inject constructor(
 
     private fun changeReaction(react: Reaction, position: Int){
         val post = data[position]
+        data.removeAt(position)
         val preReact = Reaction.react(data[position].like?.convertInt() ?: 0)
         post.like = Reaction.value(react).toString()
         // count
         when(preReact){
             Reaction.Love -> {
-                post.totalLove = (post.totalLove.toInt() - 1).toString()
+                post.totalLove = (post.totalLove ?: 0) - 1
             }
             Reaction.Like -> {
-                post.totalLike = (post.totalLike.toInt() - 1).toString()
+                post.totalLike = (post.totalLike ?: 0) - 1
             }
             Reaction.Dislike -> {
-                post.totalDislike = (post.totalDislike.toInt() - 1).toString()
+                post.totalDislike = (post.totalDislike ?: 0) - 1
             }
         }
         when(react){
             Reaction.Love -> {
-                post.totalLove = (post.totalLove.toInt() + 1).toString()
+                post.totalLove = (post.totalLove ?: 0) + 1
             }
             Reaction.Like -> {
-                post.totalLike = (post.totalLike.toInt() + 1).toString()
+                post.totalLike = (post.totalLike ?: 0) + 1
             }
             Reaction.Dislike -> {
-                post.totalDislike = (post.totalDislike.toInt() + 1).toString()
+                post.totalDislike = (post.totalDislike ?: 0) + 1
             }
         }
-        notifyItemChanged(position)
+        data.add(position, post)
+        notifyDataSetChanged()
     }
 
     private fun initPhoto(photo: String?, rv: RecyclerView, user: User){
