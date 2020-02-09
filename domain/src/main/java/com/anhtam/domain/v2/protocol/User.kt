@@ -31,7 +31,7 @@ interface User{
     var mGameTypes: String?
     var mAccessToken: String?
     var mNumLike: String?
-    var mTotalPost: String?
+    var mTotalPost: Int?
     var mIsFollowing: Boolean?
     var mRanking: String?
     var mAppellation: String?

@@ -12,7 +12,7 @@ import com.anhtam.gate9.vo.IllegalReturn
 import com.anhtam.gate9.vo.Reaction
 import of.bum.network.FetchBoundResource
 import of.bum.network.helper.Resource
-import of.bum.network.v2.SocialService
+import com.anhtam.gate9.restful.SocialService
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import kotlin.properties.Delegates

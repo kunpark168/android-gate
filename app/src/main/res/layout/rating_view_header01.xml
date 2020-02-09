@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/text_color_red_light"
         android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="@id/oneStarLabel"
         app:layout_constraintEnd_toStartOf="@id/fiveStarLabel"
@@ -31,6 +31,7 @@
         android:stepSize="0.5"
         android:scaleX="0.7"
         android:scaleY="0.7"
+        android:theme="@style/SmallRatingBar"
         style="?android:attr/ratingBarStyleSmall"
         app:layout_constraintStart_toStartOf="@id/txtPoint"
         app:layout_constraintEnd_toEndOf="@id/txtPoint"
@@ -92,12 +93,12 @@
         android:layout_height="0dp"
         android:background="@color/colorFiveRating"
         app:layout_constraintBottom_toBottomOf="@id/fiveStarLabel"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
         app:layout_constraintTop_toTopOf="@id/fiveStarLabel"
-        app:layout_constraintWidth_percent="0.25" />
+        app:layout_constraintWidth_percent="0.25"/>
 
     <View
         android:id="@+id/fourStarProgress"
@@ -105,7 +106,7 @@
         android:layout_height="0dp"
         android:background="@color/colorFourRating"
         app:layout_constraintBottom_toBottomOf="@id/fourStarLabel"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
@@ -118,7 +119,7 @@
         android:layout_height="0dp"
         android:background="@color/colorThreeRating"
         app:layout_constraintBottom_toBottomOf="@id/threeStarLabel"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
@@ -131,7 +132,7 @@
         android:layout_height="0dp"
         android:background="@color/colorTwoRating"
         app:layout_constraintBottom_toBottomOf="@id/twoStarLabel"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
@@ -144,7 +145,7 @@
         android:layout_height="0dp"
         android:background="@color/colorOneRating"
         app:layout_constraintBottom_toBottomOf="@id/oneStarLabel"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
@@ -158,6 +159,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

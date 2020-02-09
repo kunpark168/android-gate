@@ -94,7 +94,6 @@
         android:text="@string/read_more"
         android:textSize="@dimen/text_size_12sp"
         android:textColor="@color/colorHome"/>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/gameConstraintLayout"
         android:layout_width="0dp"
@@ -102,37 +101,29 @@
         app:layout_constraintTop_toBottomOf="@id/readMoreTextView"
         app:layout_constraintStart_toStartOf="@id/avatarImageView"
         app:layout_constraintEnd_toEndOf="@id/moreImageView"
-        android:layout_marginTop="@dimen/layout_margin_4dp"
-        android:visibility="visible">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/raterImageView"
+        android:layout_marginTop="@dimen/layout_margin_4dp">
+        <com.anhtam.gate9.share.view.RoundRectCornerImageView
+            android:id="@+id/gameImageView"
             android:scaleType="centerCrop"
-            tools:src="@drawable/img_avatar_holder"
+            tools:src="@drawable/img_holder_banner"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="@dimen/dp50"
             android:layout_height="@dimen/dp50">
-        </de.hdodenhof.circleimageview.CircleImageView>
-
-        <ImageView
-            app:layout_constraintBottom_toBottomOf="@+id/raterImageView"
-            app:layout_constraintEnd_toEndOf="@+id/raterImageView"
-            android:src="@drawable/ic_medal_star"
-            android:layout_width="@dimen/icon_small_size"
-            android:layout_height="@dimen/icon_small_size" />
+        </com.anhtam.gate9.share.view.RoundRectCornerImageView>
 
         <LinearLayout
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/followGameTextView"
+            app:layout_constraintEnd_toStartOf="@+id/tvDownload"
             android:orientation="vertical"
             android:layout_marginStart="@dimen/dp15"
-            app:layout_constraintStart_toEndOf="@+id/raterImageView"
+            app:layout_constraintStart_toEndOf="@+id/gameImageView"
             android:layout_width="0dp"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/nameRaterTextView"
+                android:id="@+id/titleTextView"
                 android:textStyle="bold"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -153,19 +144,22 @@
                 android:layout_height="0dp" />
         </LinearLayout>
 
+
         <TextView
-            android:id="@+id/followGameTextView"
-            android:textColor="@color/colorError"
-            tools:background="@drawable/bg_follow"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="80dp"
-            tools:text="+ Follow"
-            android:textSize="12sp"
+            android:id="@+id/tvDownload"
+            android:layout_width="70dp"
+            android:layout_height="25dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_follow"
             android:fontFamily="@font/roboto_light"
             android:gravity="center"
-            android:layout_height="25dp" />
+            android:text="@string/download"
+            android:textColor="@color/colorError"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/gameImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/gameImageView" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
@@ -194,6 +188,7 @@
             android:stepSize="0.5"
             android:scaleX="0.7"
             android:scaleY="0.7"
+            android:theme="@style/SmallRatingBar"
             style="?android:attr/ratingBarStyleSmall"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

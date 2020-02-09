@@ -10,7 +10,7 @@ import dagger.Provides
 import dagger.Reusable
 import of.bum.network.helper.LiveDataCallAdapterFactory
 import of.bum.network.v2.MediaService
-import of.bum.network.v2.SocialService
+import com.anhtam.gate9.restful.SocialService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
