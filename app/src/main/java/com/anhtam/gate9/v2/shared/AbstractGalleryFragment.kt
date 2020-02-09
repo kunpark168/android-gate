@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -21,7 +22,9 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 
-abstract class AbstractGalleryFragment : DaggerNavigationFragment(), FragmentResultListener{
+abstract class AbstractGalleryFragment(
+        @LayoutRes private val layoutId: Int
+) : DaggerNavigationFragment(layoutId), FragmentResultListener{
 
     private val viewModel: ShareViewModel by viewModels({requireActivity()}, {vmFactory})
     private var mIsMulti = false

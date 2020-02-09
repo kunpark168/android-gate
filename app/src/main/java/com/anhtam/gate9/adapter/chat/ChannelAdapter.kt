@@ -2,7 +2,7 @@ package com.anhtam.gate9.adapter.chat
 
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.anhtam.domain.User
+import com.anhtam.domain.v2.Userv1
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.lib.loadImage
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -13,8 +13,8 @@ class ChannelAdapter(private val fragment: Fragment) : BaseQuickAdapter<Channel,
     override fun convert(helper: BaseViewHolder?, item: Channel?) {
         helper?.itemView?.apply {
             val user = item?.user ?:return
-            imgAvatar?.loadImage(fragment, user.avatar)
-            tvUserName?.text = user.name
+            imgAvatar?.loadImage(fragment, user.mAvatar)
+            tvUserName?.text = user.mName
             tvMessage?.text = item.messageLatest
             tvTimestamp?.text = item.timestamp
             if(item.hasNewMessage) {
@@ -29,4 +29,4 @@ class ChannelAdapter(private val fragment: Fragment) : BaseQuickAdapter<Channel,
 
 }
 
-data class Channel(val user: User, val messageLatest: String?, val timestamp: String?, val hasNewMessage: Boolean)
+data class Channel(val user: Userv1, val messageLatest: String?, val timestamp: String?, val hasNewMessage: Boolean)

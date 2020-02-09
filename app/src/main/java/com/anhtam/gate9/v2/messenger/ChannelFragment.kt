@@ -20,7 +20,7 @@ import com.anhtam.gate9.v2.messenger.inbox.InboxFragment
 import kotlinx.android.synthetic.main.channel_fragment.*
 import of.bum.network.helper.Resource
 
-class ChannelFragment : DaggerNavigationFragment() {
+class ChannelFragment : DaggerNavigationFragment(R.layout.channel_fragment) {
 
     companion object {
         fun newInstance() = ChannelFragment()
@@ -28,10 +28,6 @@ class ChannelFragment : DaggerNavigationFragment() {
 
     private val viewModel: ChannelViewModel by viewModels { vmFactory }
     private var mAdapter: ChannelAdapter? = null
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.channel_fragment, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,7 +70,7 @@ class ChannelFragment : DaggerNavigationFragment() {
 
     private fun events() {
         mAdapter?.setOnItemClickListener { _, _, position ->
-            navigation?.addFragment(ChatFragment.newInstance(mAdapter?.data?.get(position)?.user?.user_id))
+            navigation?.addFragment(ChatFragment.newInstance(mAdapter?.data?.get(position)?.user?.mId?.toString()))
         }
         label?.setOnClickListener {
             navigation?.addFragment(InboxFragment.newInstance())

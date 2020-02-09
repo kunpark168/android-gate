@@ -124,18 +124,19 @@ class ReactionView @JvmOverloads constructor(context: Context?,
     }
 
     private fun changeLabel(){
-        val show: Boolean = previousState != Reaction.None
-        tvFavorite?.text = if (show) mLove.toString() else context.getString(R.string.favorite_label)
-        tvLike?.text = if (show) mLike.toString() else context.getString(R.string.like_label)
-        tvDislike?.text = if (show) mDislike.toString() else context.getString(R.string.dislike_label)
+        tvFavorite?.text = mLove.toString()
+        tvLike?.text = mLike.toString()
+        tvDislike?.text = mDislike.toString()
     }
 
-    fun initialize(like: Int, dislike: Int, love: Int, reaction: Reaction){
+    fun initialize(like: Int, dislike: Int, love: Int, reaction: Reaction, view: Int, comment: Int){
         // set new reaction
         mLike = like
         mDislike = dislike
         mLove = love
         previousState = reaction
+        tvView?.text = view.toString()
+        tvComment?.text = comment.toString()
         when(reaction){
             Reaction.Like -> {
                 imgLike?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)

@@ -8,7 +8,7 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.multi_choose_image_fragment.*
 
-class MultiChooseImageScreen: DaggerNavigationFragment(){
+class MultiChooseImageScreen: DaggerNavigationFragment(R.layout.multi_choose_image_fragment){
 
     private var mState: State = State.Image
 
@@ -27,10 +27,6 @@ class MultiChooseImageScreen: DaggerNavigationFragment(){
     }
 
     private val mViewModel: GalleryViewModel by viewModels { vmFactory }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.multi_choose_image_fragment, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

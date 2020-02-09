@@ -1,6 +1,10 @@
 package com.anhtam.gate9.config
 
 object Config {
+    const val USER_ROLEID: Int = 4
+    const val NPH_ROLEID: Int = 5
+
+
     const val DEFAULT_TIME_OUT = 30L /*Seconds*/
 
     // url
@@ -10,4 +14,6 @@ object Config {
 
     const val REQUEST_CODE_CHOOSE_IMAGE_FROM_CREATE_POST = 10001
     const val RESULT_CODE_SELECT_MULTI = "SELECT_MULTI"
+
+    const val DETAIL_POST_FRAGMENT_TAG = "DETAIL_POST_FRAGMENT_TAG"
 }

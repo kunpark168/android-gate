@@ -79,11 +79,7 @@ class CommentAdapter @Inject constructor(
                 .into(view.avatarImageView)
 
         // Check has reply comment
-        val totalReply = try {
-            comment.totalReply.toInt()
-        } catch (e: NumberFormatException) {
-            0
-        }
+        val totalReply = comment.totalReply ?: 0
         val childComment = comment.child
         if (totalReply == 0 || childComment.isNullOrEmpty()){
             view.rvChildComment?.visibility = View.GONE

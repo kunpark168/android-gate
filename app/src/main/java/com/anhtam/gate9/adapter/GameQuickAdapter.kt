@@ -1,9 +1,11 @@
 package com.anhtam.gate9.adapter
 
 import android.view.View
-import com.anhtam.domain.v2.protocol.Game
+import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.gate9.R
+import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.utils.toImage
+import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -11,12 +13,24 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.shared_item_game_layout.view.*
 import kotlinx.android.synthetic.main.shared_play_banner_game_layout.view.*
+import javax.inject.Inject
 
-class GameQuickAdapter :
-        BaseQuickAdapter<Game, BaseViewHolder>(R.layout.shared_item_game_layout) {
-    override fun convert(helper: BaseViewHolder?, item: Game?) {
+class GameQuickAdapter @Inject constructor(
+        private val navigation: Navigation
+) :
+        BaseQuickAdapter<WrapGame, BaseViewHolder>(R.layout.shared_item_game_layout) {
+
+    init {
+        setOnItemClickListener { _, _, position ->
+            val game = data[position].wrap
+            navigation.addFragment(GameDiscussionScreen.newInstance(game))
+        }
+    }
+
+
+    override fun convert(helper: BaseViewHolder?, item: WrapGame?) {
         val unwrappedHolder = helper ?: return
-        val unwrappedGame = item ?: return
+        val unwrappedGame = item?.wrap ?: return
         unwrappedHolder.itemView.apply {
             tvTitle?.text = unwrappedGame.name
             Glide.with(mContext)
@@ -36,18 +50,9 @@ class GameQuickAdapter :
                         .into(imgBannerGame)
             }
             tvCategoryGame?.text = Phrase.from(context?.getString(R.string.game_type_and_download))
-                    .put("type", unwrappedGame.gameTypeStr ?: "")
-                    .put("size", unwrappedGame.capacity ?: "0MB").format()
-            csRating?.init(unwrappedGame.point ?: "0", "-" ?: "0")
-//
-//            imgAvatarGame?.debounceClick {
-//                GameDiscussionScreen.start(context, unwrappedGame.link, unwrappedGame.gameId)
-//            }
-//
-//            tvTitle?.debounceClick {
-//                GameDiscussionScreen.start(context, unwrappedGame.link, unwrappedGame.gameId)
-//            }
-
+                    .put("type", unwrappedGame.gameType?.name ?: "-")
+                    .put("size", unwrappedGame.capacity?.plus("MB") ?: "0MB").format()
+            csRating?.init(unwrappedGame.point ?: "0", "-")
         }
     }
 }

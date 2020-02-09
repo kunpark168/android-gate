@@ -9,14 +9,10 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.create_image_screen.*
 
-class CreateImageScreen : DaggerNavigationFragment() {
+class CreateImageScreen : DaggerNavigationFragment(R.layout.create_image_screen) {
 
     companion object {
         fun newInstance() = CreateImageScreen()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.create_image_screen, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

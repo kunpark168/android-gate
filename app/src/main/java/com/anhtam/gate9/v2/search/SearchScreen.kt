@@ -12,11 +12,7 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.search_screen.*
 
 
-class SearchScreen : DaggerNavigationFragment() {
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.search_screen, container, false)
-    }
+class SearchScreen : DaggerNavigationFragment(R.layout.search_screen) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

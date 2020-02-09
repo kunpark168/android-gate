@@ -1,55 +1,79 @@
 package com.anhtam.gate9.v2.discussion.common
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
+import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.v2.discussion.DiscussionViewModel
 import com.anhtam.gate9.utils.getColorCompat
-import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
+import com.google.android.material.tabs.TabLayout
+import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.shared_discussion_layout.*
 import of.bum.network.helper.Resource
+import of.bum.network.helper.RestResponse
+import timber.log.Timber
+import javax.inject.Inject
 
-abstract class CommonDiscussionFragment : DaggerNavigationFragment() {
+abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder>, V: CommonDiscussionViewModel<T>>
+    : AbstractVisibleFragment(R.layout.shared_discussion_layout) {
 
-    protected var mUser: User? = null
-
-    private var mDiscussionViewModel: DiscussionViewModel? = null
+    private val mDiscussionViewModel: DiscussionViewModel by viewModels({requireParentFragment()}, {vmFactory})
+    private var mFirstLoad = true
+    private var mHasUser = false
+    @Inject lateinit var mAdapter: A
+    private var mCurrentCategory = 1
+    open var mLazyLoad = true
+    open val mViewModel: V? = null
 
     abstract val colorTextTab: Int
-    abstract fun configTabLayout()
-    abstract fun updateTabLayout()
-    abstract fun loadData()
-    abstract fun initEvents()
+    abstract val tabTitle: List<Int>
+    private val tabAmount = mutableListOf<Int>()
+    open fun configTabLayout(){
+        tabLayout.apply {
+            repeat(tabTitle.size) {
+                addTab(newTab())
+            }
+        }
+        updateTabLayout()
+    }
+    private fun updateTabLayout(){
+        for (index in tabTitle.indices){
+            val amount = if (index < tabAmount.size) tabAmount[index] else 0
+            tabLayout.getTabAt(index)?.text = Phrase.from(
+                    getString(tabTitle[index]))
+                    .put("amount", amount)
+                    .format()
+        }
+    }
+
     open fun inflateLayout() : Int? {
         return null
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.shared_discussion_layout, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadData()
         initView()
         initEvents()
         observer()
     }
 
     protected open fun initView() {
-        activity?.let {
-            mDiscussionViewModel = ViewModelProviders.of(it, vmFactory).get(DiscussionViewModel::class.java)
-        }
         configTabLayout()
+        setUpRecyclerView()
+    }
+
+    private fun setUpRecyclerView(){
         val unwrappedContext = context ?: return
+        tabLayout.setTabTextColors(unwrappedContext.getColorCompat(R.color.defaultGrayColor), unwrappedContext.getColorCompat(colorTextTab))
         context?.let {
             val dividerItemDecoration = DividerItemDecoration(it, LinearLayout.VERTICAL)
             val drawableDivider = ContextCompat.getDrawable(it, R.drawable.divider_item_decorator) ?: return
@@ -57,21 +81,116 @@ abstract class CommonDiscussionFragment : DaggerNavigationFragment() {
             rvShareDiscussion?.addItemDecoration(dividerItemDecoration)
 
         }
-        tabLayout.setTabTextColors(unwrappedContext.getColorCompat(R.color.defaultGrayColor), unwrappedContext.getColorCompat(colorTextTab))
+        mAdapter.setLoadMoreView(CustomLoadMoreView())
+        rvShareDiscussion?.adapter = mAdapter
+        mAdapter.setOnLoadMoreListener ({
+            mViewModel?.loadData()
+        }, rvShareDiscussion)
     }
 
+    protected open fun onLoadUser(user: User){}
+
     protected open fun observer() {
-        mDiscussionViewModel?.mUser?.observe(this, Observer {
-            when(it) {
+        mDiscussionViewModel.mUser.observe(viewLifecycleOwner, Observer {
+            val user = it?.data ?: return@Observer
+            onLoadUser(user)
+            mViewModel?.initialize(user)
+            mHasUser = true
+            if (mLazyLoad){
+                lazyLoad()
+            } else {
+                loadData()
+            }
+        })
+        mViewModel?.data?.observe(viewLifecycleOwner, Observer {resource ->
+            when(resource) {
                 is Resource.Success -> {
                     hideProgress()
-                    mUser = it.data
-                    updateTabLayout()
+                    val data = resource.data
+                    if (tabAmount.isEmpty()){
+                        val response = resource.mResponse?.body as? RestResponse<*>
+                        val countTab1 = (response?.mMeta?.get("countTab1") as? Double)?.toInt() ?: 0
+                        val countTab2 = (response?.mMeta?.get("countTab2") as? Double)?.toInt() ?: 0
+                        val countTab3 = (response?.mMeta?.get("countTab3") as? Double)?.toInt() ?: 0
+                        tabAmount.add(countTab1)
+                        tabAmount.add(countTab2)
+                        tabAmount.add(countTab3)
+                        if (tabTitle.size == 4){
+                            val countTab4 = (response?.mMeta?.get("countTab4") as? Double)?.toInt() ?: 0
+                            tabAmount.add(countTab4)
+                        }
+                        updateTabLayout()
+                    }
+                    if (data.isNullOrEmpty()) {
+                        mAdapter.loadMoreEnd()
+                    } else {
+                        if (mViewModel?.mPage == 0) {
+                            mAdapter.setNewData(data)
+                        } else {
+                            mAdapter.addData(data)
+                        }
+                        mAdapter.loadMoreComplete()
+                    }
+                }
+                is Resource.Loading -> {
+
                 }
                 else -> {
-
+                    hideProgress()
+                    mAdapter.loadMoreFail()
                 }
             }
         })
     }
+
+    override fun onUiVisibleChange(isUiVisible: Boolean) {
+        super.onUiVisibleChange(isUiVisible)
+        if (isUiVisible && mFirstLoad){
+            mFirstLoad = false
+            lazyLoad()
+        }
+    }
+
+    private fun lazyLoad(){
+        if (!mFirstLoad && mHasUser && mLazyLoad){
+            Timber.d("Has loading G Game h.........")
+            loadData()
+        }
+    }
+
+
+    private fun loadData(){
+        showProgress()
+        mViewModel?.loadData(mCurrentCategory, refresh = true)
+    }
+    private fun initEvents(){
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+            loadData()
+        }
+        tabLayout?.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
+            override fun onTabReselected(p0: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabUnselected(p0: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val id = tab?.position ?: return
+                newRequestType(id)
+            }
+        })
+    }
+
+    private fun newRequestType(position: Int) {
+        val category = position + 1
+        mCurrentCategory = category
+        mAdapter.setNewData(null)
+        if (mViewModel?.mCategory != category) {
+            mViewModel?.loadData(category, refresh = true)
+        }
+    }
+
 }

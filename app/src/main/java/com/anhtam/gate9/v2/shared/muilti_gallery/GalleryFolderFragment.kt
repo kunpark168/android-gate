@@ -16,7 +16,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.gallery_folder_fragment.*
 import kotlinx.android.synthetic.main.gallery_folder_item_layout.view.*
 
-class GalleryFolderFragment private constructor(val mListener: (Int)->Unit) : DaggerNavigationFragment(){
+class GalleryFolderFragment private constructor(val mListener: (Int)->Unit) : DaggerNavigationFragment(R.layout.gallery_folder_fragment){
 
     companion object{
         fun newInstance(listener: (Int)->Unit) = GalleryFolderFragment(mListener = listener)
@@ -24,10 +24,6 @@ class GalleryFolderFragment private constructor(val mListener: (Int)->Unit) : Da
 
     private var mViewModel: GalleryViewModel? = null
     private var mAdapter: GalleryFolderAdapter? = null
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.gallery_folder_fragment, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -5,9 +5,9 @@ import androidx.fragment.app.Fragment
 class HideKeyboardNavigation(
         private val origin: Navigation
 ) : Navigation by origin {
-    override fun changeFragment(fragment: Fragment, backStack: Boolean) {
+    override fun changeFragment(fragment: Fragment, backStack: Boolean, tag: String?) {
         hideKeyboard()
-        origin.changeFragment(fragment, backStack)
+        origin.changeFragment(fragment, backStack, tag)
     }
 
     override fun back() {

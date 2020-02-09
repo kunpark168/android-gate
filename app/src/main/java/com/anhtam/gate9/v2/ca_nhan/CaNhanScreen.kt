@@ -16,14 +16,10 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.ca_nhan_screen.*
 import of.bum.network.helper.Resource
 
-class CaNhanScreen : DaggerNavigationFragment() {
+class CaNhanScreen : DaggerNavigationFragment(R.layout.ca_nhan_screen) {
 
     companion object{
         fun newInstance() = CaNhanScreen()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.ca_nhan_screen, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

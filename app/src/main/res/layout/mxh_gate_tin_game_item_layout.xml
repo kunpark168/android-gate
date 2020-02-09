@@ -1,87 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/layout_margin_8dp">
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/layout_margin_8dp">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgTinTuc"
         android:layout_width="150dp"
         android:layout_height="80dp"
-        android:src="@drawable/img_holder_banner"
         android:scaleType="centerCrop"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:src="@drawable/img_holder_banner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.anhtam.gate9.share.view.RoundRectCornerImageView
         android:id="@+id/imgGame"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_holder_banner"
-        app:layout_constraintTop_toBottomOf="@id/imgTinTuc"
-        app:layout_constraintStart_toStartOf="@id/imgTinTuc"
         android:layout_width="@dimen/dp50"
         android:layout_height="@dimen/dp50"
-        android:layout_marginTop="@dimen/layout_margin_8dp">
-    </com.anhtam.gate9.share.view.RoundRectCornerImageView>
+        android:layout_marginTop="@dimen/layout_margin_8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_holder_banner"
+        app:layout_constraintStart_toStartOf="@id/imgTinTuc"
+        app:layout_constraintTop_toBottomOf="@id/imgTinTuc"/>
 
     <TextView
         android:id="@+id/tvTinTuc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/sample_title_news"
-        android:maxLines="2"
-        android:ellipsize="end"
-        android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imgTinTuc"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="@dimen/layout_margin_8dp"
-        android:layout_marginEnd="@dimen/layout_margin_8dp"/>
+        android:layout_marginEnd="@dimen/layout_margin_8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="@string/sample_title_news"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/imgTinTuc"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
         android:lines="1"
         android:text="12.5 19:44 Tin Nóng"
-        android:ellipsize="end"
-        app:layout_constraintStart_toStartOf="@id/tvTinTuc"
-        app:layout_constraintBottom_toBottomOf="@id/imgTinTuc"/>
+        app:layout_constraintBottom_toBottomOf="@id/imgTinTuc"
+        app:layout_constraintStart_toStartOf="@id/tvTinTuc" />
+
     <TextView
         android:id="@+id/tvTitleGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_margin_16dp"
         android:lines="1"
-        android:textColor="@color/black"
         android:text="@string/sample_title_game"
-        app:layout_constraintTop_toTopOf="@id/imgGame"
-        app:layout_constraintStart_toEndOf="@id/imgGame"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@id/tvTypeGame"
-        android:layout_marginStart="@dimen/layout_margin_16dp"/>
+        app:layout_constraintStart_toEndOf="@id/imgGame"
+        app:layout_constraintTop_toTopOf="@id/imgGame" />
+
     <TextView
         android:id="@+id/tvTypeGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lines="1"
         android:text="@string/sample_type_game"
-        app:layout_constraintTop_toBottomOf="@id/tvTitleGame"
+        app:layout_constraintBottom_toBottomOf="@id/imgGame"
         app:layout_constraintStart_toStartOf="@id/tvTitleGame"
-        app:layout_constraintBottom_toBottomOf="@id/imgGame"/>
+        app:layout_constraintTop_toBottomOf="@id/tvTitleGame" />
+
     <TextView
         android:id="@+id/followGameTextView"
-        android:textColor="@color/colorError"
-        android:background="@drawable/bg_follow"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/imgGame"
-        app:layout_constraintBottom_toBottomOf="@id/imgGame"
-        android:layout_marginEnd="@dimen/layout_margin_16dp"
         android:layout_width="80dp"
-        android:text="@string/tai_ve"
-        android:textSize="12sp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="@dimen/layout_margin_16dp"
+        android:background="@drawable/bg_follow"
         android:fontFamily="@font/roboto_light"
         android:gravity="center"
-        android:layout_height="25dp" />
+        android:text="@string/tai_ve"
+        android:textColor="@color/colorError"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/imgGame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/imgGame" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        tools:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tvTitleGame,tvTypeGame,imgGame,followGameTextView"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

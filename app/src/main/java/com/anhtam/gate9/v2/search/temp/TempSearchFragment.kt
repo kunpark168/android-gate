@@ -1,14 +1,12 @@
 package com.anhtam.gate9.v2.search.temp
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.anhtam.domain.dto.Game
+import com.anhtam.domain.Game
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.search.DataSource
 import com.anhtam.gate9.utils.autoCleared
@@ -21,16 +19,9 @@ import kotlinx.android.synthetic.main.layout_rating_game.view.*
 /**
  * A simple [Fragment] subclass.
  */
-class TempSearchFragment : DaggerNavigationFragment() {
+class TempSearchFragment : DaggerNavigationFragment(R.layout.fragment_temp_search) {
 
     private var mRecentAdapter by autoCleared<Adapter>()
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_temp_search, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

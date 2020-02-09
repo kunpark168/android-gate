@@ -3,30 +3,34 @@ package com.anhtam.gate9.v2.main.member
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import com.anhtam.gate9.repository.UserRepository
+import com.anhtam.domain.v2.Userv1
+import com.anhtam.gate9.repository.SocialRepository
 import com.anhtam.gate9.utils.setValueDiff
+import com.anhtam.gate9.vo.EUser
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 
 class MemberDefaultViewModel @Inject constructor(
-        private val userRepository: UserRepository
+        private val repository: SocialRepository
 ): ViewModel() {
 
-    private var mPage = 1
-    private var mOrderBy: String? = null
-    private var mType = "member"
-    private var mUserList: MediatorLiveData<Resource<List<com.anhtam.domain.User>>> = MediatorLiveData()
+    private var mPage = 0
+    private var mType = EUser.TV
+    private var mUserList: MediatorLiveData<Resource<List<Userv1>>> = MediatorLiveData()
     val page: Int
         get() = mPage
-    val userList: LiveData<Resource<List<com.anhtam.domain.User>>>
+    val userList: LiveData<Resource<List<Userv1>>>
         get() = mUserList
-    fun requestMemberList(orderBy: String?,
-                          type: String
+    fun requestMemberList(
+                          type: EUser
     ) {
-        mPage = 1
-        mOrderBy = orderBy
+        mPage = 0
         mType = type
-        val newData = userRepository.requestMemberList(mPage, mOrderBy, mType)
+        val role = when(mType){
+            EUser.NPH -> 5
+            EUser.TV -> 4
+        }
+        val newData = repository.listUser(role, mPage)
         mUserList.addSource(newData) {
             it?.let { mUserList.setValueDiff(it) }
         }
@@ -34,8 +38,11 @@ class MemberDefaultViewModel @Inject constructor(
 
     fun requestMore() {
         ++mPage
-        userRepository.requestMemberList(mPage, mOrderBy, mType)
-        val newData = userRepository.requestMemberList(mPage, mOrderBy, mType)
+        val role = when(mType){
+            EUser.NPH -> 5
+            EUser.TV -> 4
+        }
+        val newData = repository.listUser(role, mPage)
         mUserList.addSource(newData) {
             it?.let { mUserList.setValueDiff(it) }
         }

@@ -19,15 +19,17 @@ data class Post(
     @Json(name = "title")
     var title: String? = null,
     @Json(name = "total_like")
-    var totalLike: String = "0",
+    var totalLike: Int?,
     @Json(name = "total_dislike")
-    var totalDislike: String = "0",
+    var totalDislike: Int?,
     @Json(name = "total_reply")
-    var totalReply: String = "0",
+    var totalReply: Int?,
     @Json(name = "total_love")
-    var totalLove: String = "0",
+    var totalLove: Int?,
+    @Json(name = "total_view")
+    var totalView: Int?,
     @Json(name = "point")
-    var point: String = "0",
+    var point: Int?,
     @Json(name = "game")
     var game: Gamev1? = null,
     @Json(name = "child")

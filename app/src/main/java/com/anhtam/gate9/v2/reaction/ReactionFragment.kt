@@ -18,16 +18,12 @@ import javax.inject.Inject
 class ReactionFragment(
         private val mCommentId: Int,
         private val mTabId: Int
-): DaggerNavigationFragment(){
+): DaggerNavigationFragment(R.layout.reaction_fragment){
 
     @Inject lateinit var mAdapter: MemberAdapter
     private val viewModel: ReactionViewModel by viewModels { vmFactory }
     companion object{
         fun newInstance(commentId: Int, tabId: Int) = ReactionFragment(commentId, tabId)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.reaction_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

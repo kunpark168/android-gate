@@ -6,7 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white"
-    android:layout_margin="@dimen/layout_margin_4dp"
+    android:layout_marginStart="@dimen/layout_margin_2dp"
+    android:layout_marginEnd="@dimen/layout_margin_2dp"
     android:padding="@dimen/layout_margin_4dp">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bannerLayout"
@@ -15,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imgBannerGame"
+            android:id="@+id/imgTinTuc"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:contentDescription="@null"
@@ -27,8 +28,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="@id/imgBannerGame"
-            app:layout_constraintBottom_toBottomOf="@id/imgBannerGame"
+            app:layout_constraintTop_toTopOf="@id/imgTinTuc"
+            app:layout_constraintBottom_toBottomOf="@id/imgTinTuc"
             android:background="#10090000" />
         <ImageView
             android:id="@+id/imgIconPlay"
@@ -36,14 +37,14 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_image_holder"
-            app:layout_constraintBottom_toBottomOf="@id/imgBannerGame"
+            app:layout_constraintBottom_toBottomOf="@id/imgTinTuc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/imgBannerGame" />
+            app:layout_constraintTop_toTopOf="@id/imgTinTuc" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/tvNews"
+        android:id="@+id/tvTinTuc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="3"
@@ -57,10 +58,10 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorDivider"
-        app:layout_constraintTop_toBottomOf="@id/tvNews"
+        app:layout_constraintTop_toBottomOf="@id/tvTinTuc"
         android:layout_marginTop="@dimen/layout_margin_8dp"/>
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgaAvatarGame"
+        android:id="@+id/imgAvatar"
         android:layout_width="@dimen/image_circle_medium"
         android:layout_height="@dimen/image_circle_medium"
         android:src="@drawable/img_avatar_holder"
@@ -69,23 +70,23 @@
         android:layout_marginTop="@dimen/layout_margin_8dp"/>
 
     <TextView
-        android:id="@+id/tvTitleGame"
+        android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lines="1"
         android:textColor="@color/black"
         android:text="@string/sample_title_game"
-        app:layout_constraintTop_toTopOf="@id/imgaAvatarGame"
-        app:layout_constraintStart_toEndOf="@id/imgaAvatarGame"
-        app:layout_constraintBottom_toTopOf="@id/tvTypeGame"
+        app:layout_constraintTop_toTopOf="@id/imgAvatar"
+        app:layout_constraintStart_toEndOf="@id/imgAvatar"
+        app:layout_constraintBottom_toTopOf="@id/tvCreateTime"
         android:layout_marginStart="@dimen/layout_margin_16dp"/>
     <TextView
-        android:id="@+id/tvTypeGame"
+        android:id="@+id/tvCreateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lines="1"
         android:text="3-6 19:23"
-        app:layout_constraintTop_toBottomOf="@id/tvTitleGame"
-        app:layout_constraintStart_toStartOf="@id/tvTitleGame"
-        app:layout_constraintBottom_toBottomOf="@id/imgaAvatarGame"/>
+        app:layout_constraintTop_toBottomOf="@id/tvName"
+        app:layout_constraintStart_toStartOf="@id/tvName"
+        app:layout_constraintBottom_toBottomOf="@id/imgAvatar"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

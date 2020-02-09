@@ -21,19 +21,13 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.main.home.HomeFragment
 import kotlinx.android.synthetic.main.login_screen.*
 
-class LoginScreen(private val isDirect: Boolean) : DaggerNavigationFragment() {
+class LoginScreen(private val isDirect: Boolean) : DaggerNavigationFragment(R.layout.login_screen) {
 
     companion object {
         fun newInstance(isDirect: Boolean) = LoginScreen(isDirect)
     }
 
     private val loginViewModel: LoginViewModel by viewModels { vmFactory }
-
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.login_screen, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

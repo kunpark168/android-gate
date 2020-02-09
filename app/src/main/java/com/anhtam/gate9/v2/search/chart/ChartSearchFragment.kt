@@ -2,15 +2,13 @@ package com.anhtam.gate9.v2.search.chart
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.anhtam.gate9.adapter.BannerGameAdapter
-import com.anhtam.domain.dto.Game
+import com.anhtam.domain.Game
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.search.DataSource
 import com.anhtam.gate9.utils.autoCleared
@@ -25,17 +23,11 @@ import kotlinx.android.synthetic.main.item_recently_search.view.*
 /**
  * A simple [Fragment] subclass.
  */
-class ChartSearchFragment : DaggerNavigationFragment() {
+class ChartSearchFragment : DaggerNavigationFragment(R.layout.fragment_chart_search) {
 
     private var mAdapter by autoCleared<BannerGameAdapter>()
     private var mRecentAdapter by autoCleared<Adapter>()
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chart_search, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

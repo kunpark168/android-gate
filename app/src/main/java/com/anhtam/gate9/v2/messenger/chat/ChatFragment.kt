@@ -14,7 +14,7 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.chat_fragment.*
 import of.bum.network.helper.Resource
 
-class ChatFragment : DaggerNavigationFragment() {
+class ChatFragment : DaggerNavigationFragment(R.layout.chat_fragment) {
 
     private var mAdapter: MessengerAdapter? = null
     private val viewModel: ChatViewModel by viewModels { vmFactory }
@@ -26,11 +26,6 @@ class ChatFragment : DaggerNavigationFragment() {
             fragment.userId = userId
             return fragment
         }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-        return inflater.inflate(R.layout.chat_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,19 +78,19 @@ class ChatFragment : DaggerNavigationFragment() {
     }
 
     private fun observer() {
-        viewModel.userInfo.observe(viewLifecycleOwner, Observer {
-            when(it) {
-                is Resource.Success -> {
-                    shimmer?.stopShimmerAnimation()
-                    shimmer?.visibility = View.GONE
-                    shimmerRoot?.visibility = View.VISIBLE
-                    val user = it.data?.user ?: return@Observer
-                    imgAvatar?.loadImage(this, user.avatar_path)
-                    tvName?.text = user.name
-                    tvId?.text = user.user_id
-                    initRv(user.avatar_path)
-                }
-            }
-        })
+//        viewModel.userInfo.observe(viewLifecycleOwner, Observer {
+//            when(it) {
+//                is Resource.Success -> {
+//                    shimmer?.stopShimmerAnimation()
+//                    shimmer?.visibility = View.GONE
+//                    shimmerRoot?.visibility = View.VISIBLE
+//                    val user = it.data?.user ?: return@Observer
+//                    imgAvatar?.loadImage(this, user.avatar_path)
+//                    tvName?.text = user.name
+//                    tvId?.text = user.user_id
+//                    initRv(user.avatar_path)
+//                }
+//            }
+//        })
     }
 }

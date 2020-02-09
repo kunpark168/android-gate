@@ -7,10 +7,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.domain.v2.Post
+import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.navigation.Navigation
+import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.utils.convertInt
@@ -50,7 +52,8 @@ class PostAdapter @Inject constructor(
                     navigateToMemberDiscussion(userId)
                 }
                 R.id.gameImageView, R.id.titleGameTextView -> {
-                    navigateToGameDiscussion()
+                    val game = data[position].game ?: return@setOnItemChildClickListener
+                    navigateToGameDiscussion(game)
                 }
                 R.id.moreImageView -> {
                     val mMoreDialog = MoreDialog(mContext, object : MoreDialog.IMore {
@@ -70,6 +73,7 @@ class PostAdapter @Inject constructor(
                     mMoreDialog.show()
                 }
                 R.id.followGameTextView -> {
+                    BackgroundTasks.postFollowGame(data[position].game?.gameId ?: return@setOnItemChildClickListener)
                     if (checkLogin()) {
                         if(view.followGameTextView?.text == mContext.getString(R.string.follow)) {
                             setFollowing(view.followGameTextView)
@@ -91,14 +95,13 @@ class PostAdapter @Inject constructor(
         val view = helper?.itemView ?: return
         // Set content of Post
         view.contentTextView.text = unwrapPost.content?.let { Html.fromHtml(it) }
-        view.likeTextView.text = unwrapPost.totalLike
-        view.dislikeTextView.text = unwrapPost.totalDislike
-        view.commentTextView.text = unwrapPost.totalReply
-        view.pointTextView.text = unwrapPost.point
-        view.loveTextView.text = unwrapPost.totalLove
+        view.likeTextView.text = unwrapPost.totalLike?.toString() ?: "0"
+        view.dislikeTextView.text = unwrapPost.totalDislike?.toString() ?: "0"
+        view.commentTextView.text = unwrapPost.totalReply?.toString() ?: "0"
+        view.pointTextView.text = unwrapPost.point?.toString() ?: "0"
+        view.loveTextView.text = unwrapPost.totalLove?.toString() ?: "0"
         view.dateTextView.text = unwrapPost.createdDate
-        val react = Reaction.react(unwrapPost.like?.convertInt()?:0)
-        when(react){
+        when(Reaction.react(unwrapPost.like?.convertInt()?:0)){
             Reaction.Like -> {
                 view.likeIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_main_blue))
                 view.dislikeIcon?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_react_grey_dark))
@@ -147,11 +150,11 @@ class PostAdapter @Inject constructor(
             view.titleGameTextView.text = game.name
             val followDescription = mContext.getString(R.string.follower_amount_and_post_amount)
             val followGame = Phrase.from(followDescription)
-                    .put("follower", game.follower ?: "0")
-                    .put("post", game.post.toString())
+                    .put("follower", game.follower?.toString() ?: "0")
+                    .put("post", game.post?.toString() ?: "0")
                     .format()
             view.contentGameTextView.text = followGame
-            if (game.follow == "false") {
+            if (game.follow != true) {
                 // check follow here
                 setFollow(view.followGameTextView)
             } else {
@@ -185,11 +188,11 @@ class PostAdapter @Inject constructor(
     }
 
     private fun navigateToPostDetail(post: Post, listener: (Reaction)->Unit) {
-        navigation.addFragment(DetailPostScreen.newInstance(post, DetailPostScreen.Detail.POST, listener))
+        navigation.addFragment(DetailPostScreen.newInstance(post, DetailPostScreen.Detail.POST, listener), tag = Config.DETAIL_POST_FRAGMENT_TAG)
     }
 
-    private fun navigateToGameDiscussion(){
-        navigation.addFragment(GameDiscussionScreen.newInstance("", "1"))
+    private fun navigateToGameDiscussion(game: Game){
+        navigation.addFragment(GameDiscussionScreen.newInstance(game))
     }
 
 
@@ -212,27 +215,27 @@ class PostAdapter @Inject constructor(
         // count
         when(preReact){
             Reaction.Love -> {
-                post.totalLove = (post.totalLove.toInt() - 1).toString()
+                post.totalLove = (post.totalLove ?: 0) - 1
             }
             Reaction.Like -> {
-                post.totalLike = (post.totalLike.toInt() - 1).toString()
+                post.totalLike = (post.totalLike ?: 0) - 1
             }
             Reaction.Dislike -> {
-                post.totalDislike = (post.totalDislike.toInt() - 1).toString()
+                post.totalDislike = (post.totalDislike ?: 0) - 1
             }
         }
         when(react){
             Reaction.Love -> {
-                post.totalLove = (post.totalLove.toInt() + 1).toString()
+                post.totalLove = (post.totalLove ?: 0) + 1
             }
             Reaction.Like -> {
-                post.totalLike = (post.totalLike.toInt() + 1).toString()
+                post.totalLike = (post.totalLike ?: 0) + 1
             }
             Reaction.Dislike -> {
-                post.totalDislike = (post.totalDislike.toInt() + 1).toString()
+                post.totalDislike = (post.totalDislike ?: 0) + 1
             }
         }
-        notifyItemChanged(position)
+        notifyDataSetChanged()
     }
 
     private fun initPhoto(photo: String?, rv: RecyclerView, user: User){

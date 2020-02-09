@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.annotation.ColorRes
+import androidx.annotation.LayoutRes
 import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -24,13 +25,19 @@ import kotlinx.android.synthetic.main.layout_avatar_menu.view.*
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
-abstract class DaggerNavigationFragment : NavigationFragment(){
+abstract class DaggerNavigationFragment constructor(
+        @LayoutRes private val layoutId: Int
+) : NavigationFragment(){
 
     @Inject lateinit var vmFactory: ViewModelProviderFactory
     @Inject lateinit var mSessionManager: SessionManager
 
     private var mProgressDialog: DialogProgressUtils? = null
     private var mAvatar: String? = null
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(layoutId, container, false)
+    }
 
     @MenuRes
     open fun menuRes():  Int?  = null

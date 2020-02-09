@@ -15,7 +15,7 @@ import com.anhtam.gate9.v2.mxh_gate.tin_game.MXHGateTinGameScreen
 import com.anhtam.gate9.v2.mxh_gate.video.MXHGateVideoScreen
 import kotlinx.android.synthetic.main.mxh_gate_screen.*
 
-class MXHGateScreen : DaggerNavigationFragment() {
+class MXHGateScreen : DaggerNavigationFragment(R.layout.mxh_gate_screen) {
 
     companion object{
         fun newInstance() = MXHGateScreen()
@@ -24,9 +24,6 @@ class MXHGateScreen : DaggerNavigationFragment() {
     private var mAdapter by autoCleared<SharePageAdapter>()
 
     private val mTabs by lazy { arrayOf(tabAll, tabLove, tabDownload, tabFollowing)}
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.mxh_gate_screen, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -6,6 +6,7 @@ import android.text.Html
 import android.text.TextWatcher
 import android.view.*
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +16,7 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.ChooseGalleryAdapter
 import com.anhtam.gate9.adapter.v2.CommentAdapter
 import com.anhtam.gate9.adapter.v2.PhotoAdapter
+import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.share.view.donate.DonateDialog
 import com.anhtam.gate9.utils.convertInt
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
@@ -40,7 +42,7 @@ class DetailPostScreen private constructor(
         private val _post: Post,
         private val _type: Detail,
         private val mListener: ((Reaction)-> Unit)?
-): AbstractGalleryFragment(), INavigator{
+): AbstractGalleryFragment(R.layout.detail_post_screen), INavigator{
 
     override fun toLogin() {
         navigation?.addFragment(LoginScreen.newInstance(false))
@@ -51,7 +53,8 @@ class DetailPostScreen private constructor(
     }
 
     override fun toGameDiscussion() {
-        navigation?.addFragment(GameDiscussionScreen.newInstance("", viewModel._gameId.toString()))
+        val game = _post.game ?: return
+        navigation?.addFragment(GameDiscussionScreen.newInstance(game))
     }
 
     override fun toReact() {
@@ -72,12 +75,6 @@ class DetailPostScreen private constructor(
     @Inject lateinit var mAdapter: CommentAdapter
     @Inject lateinit var mGalleryAdapter: ChooseGalleryAdapter
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-        return inflater.inflate(R.layout.detail_post_screen, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
@@ -96,28 +93,10 @@ class DetailPostScreen private constructor(
 
     private fun init() {
         viewModel.initialize(_post, this)
-        loadComment()
-        postViewForum()
+        viewModel.getChildComment()
         initView()
         initEvents()
         observer()
-    }
-
-    private fun postViewForum(){
-        // check auth
-        val isLogin = mSessionManager.checkLogin()
-        if (isLogin){
-            viewModel.postViewForum().observe(viewLifecycleOwner, Observer {
-                Timber.d("test")
-            })
-        }
-    }
-
-    private fun loadComment(){
-        val reply = _post.totalReply.convertInt()
-        if(reply > 0){
-            viewModel.getChildComment()
-        }
     }
 
     private fun initView(){
@@ -178,9 +157,9 @@ class DetailPostScreen private constructor(
                     }
                 }
                 is Resource.Loading -> {
-                    hideProgress()
                 }
                 else -> {
+                    hideProgress()
                     mAdapter.loadMoreFail()
                 }
             }
@@ -203,8 +182,8 @@ class DetailPostScreen private constructor(
                 .into(imgAvatar)
         tvUserName?.text = user?.mName
         val follow = Phrase.from(getString(R.string.following_amount_and_follower_amount))
-                .put("following", user?.mFlowing ?: "0")
-                .put("follower", user?.mFlower ?: "0")
+                .put("following", user?.mFlowing?.toString() ?: "0")
+                .put("follower", user?.mFlower?.toString() ?: "0")
                 .format()
 
         tvFollowNumber.text = follow
@@ -212,10 +191,12 @@ class DetailPostScreen private constructor(
         tvContent?.text = Html.fromHtml(unwrapPost.content ?: "")
         tvTime?.text = unwrapPost.createdDate
         val react = unwrapPost.like?.convertInt() ?: 0
-        val like = unwrapPost.totalLike.convertInt()
-        val dislike = unwrapPost.totalDislike.convertInt()
-        val love = unwrapPost.totalLove.convertInt()
-        reactionView?.initialize(like, dislike, love, Reaction.react(react))
+        val like = unwrapPost.totalLike ?: 0
+        val dislike = unwrapPost.totalDislike ?: 0
+        val love = unwrapPost.totalLove ?: 0
+        val comment = unwrapPost.totalReply ?: 0
+        val view = unwrapPost.totalView ?: 0
+        reactionView?.initialize(like, dislike, love, Reaction.react(react), view, comment)
 
         // Set photo
         // photos
@@ -238,7 +219,7 @@ class DetailPostScreen private constructor(
 
         tvTitle?.text = game.name
         val contentStr = Phrase.from(getString(R.string.follower_amount_and_post_amount))
-                .put("follower", _post.game?.follower ?: "0")
+                .put("follower", _post.game?.follower?.toString() ?: "0")
                 .put("post", _post.game?.post?.toString() ?: "0")
                 .format()
         tvContentGame?.text = contentStr
@@ -277,20 +258,11 @@ class DetailPostScreen private constructor(
         tvFollowGame?.setTextColor(ContextCompat.getColor(unwrapContext, R.color.text_color_blue))
     }
 
-    private fun changeLabel(reaction: Reaction){
-        val show: Boolean = reaction != Reaction.None
-        tvView?.text = if (show) "0" else getString(R.string.view_label)
-        tvComment?.text = if (show) _post.totalReply else getString(R.string.reply)
-    }
-
     private fun initEvents() {
         // Reaction
         reactionView?.onReactionChange(mSessionManager){current, previous ->
-            changeLabel(current)
             mListener?.invoke(current)
-            viewModel.react(current, previous).observe(viewLifecycleOwner, Observer {
-                Timber.d("Test") // TODO Bug
-            })
+            viewModel.react(current, previous).observe(viewLifecycleOwner, Observer {})
         }
 
         tvFollowGame?.setOnClickListener {
@@ -300,9 +272,7 @@ class DetailPostScreen private constructor(
                 setFollow()
             }
         }
-        csShare?.setOnClickListener{
-            viewModel.sharePost()
-        }
+
         swipeRefreshLayout?.setOnRefreshListener {
             swipeRefreshLayout?.isRefreshing = false
             viewModel.getChildComment()
@@ -311,8 +281,10 @@ class DetailPostScreen private constructor(
             val unwrapContext = context ?: return@setOnClickListener
             DonateDialog(unwrapContext).show()
         }
-        tvOriPost?.setOnClickListener { /**/ }
-        csComment?.setOnClickListener { etPost?.requestFocus() }
+        tvOriPost?.setOnClickListener {
+            navigation?.clear(Config.DETAIL_POST_FRAGMENT_TAG, false)
+        }
+
         etPost.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 

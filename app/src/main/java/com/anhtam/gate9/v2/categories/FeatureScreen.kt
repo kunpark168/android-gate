@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.feature_screen.*
 import java.util.*
 import javax.inject.Inject
 
-class FeatureScreen : DaggerNavigationFragment() {
+class FeatureScreen : DaggerNavigationFragment(R.layout.feature_screen) {
 
     private var tab: Int = 0
     @Inject
@@ -27,11 +27,6 @@ class FeatureScreen : DaggerNavigationFragment() {
     private lateinit var mAdapter: SharePageAdapter
     private val categoryViewModel: CategoryViewmodel by viewModels { vmFactory }
     private var idUser: String? = null
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.feature_screen, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -105,7 +105,7 @@
         android:layout_marginTop="@dimen/layout_margin_4dp"
         android:visibility="visible">
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/gameImageView"
+            android:id="@+id/raterImageView"
             android:scaleType="centerCrop"
             tools:src="@drawable/img_avatar_holder"
             app:layout_constraintTop_toTopOf="parent"
@@ -116,8 +116,8 @@
         </de.hdodenhof.circleimageview.CircleImageView>
 
         <ImageView
-            app:layout_constraintBottom_toBottomOf="@+id/gameImageView"
-            app:layout_constraintEnd_toEndOf="@+id/gameImageView"
+            app:layout_constraintBottom_toBottomOf="@+id/raterImageView"
+            app:layout_constraintEnd_toEndOf="@+id/raterImageView"
             android:src="@drawable/ic_medal_star"
             android:layout_width="@dimen/icon_small_size"
             android:layout_height="@dimen/icon_small_size" />
@@ -128,11 +128,11 @@
             app:layout_constraintEnd_toStartOf="@+id/followGameTextView"
             android:orientation="vertical"
             android:layout_marginStart="@dimen/dp15"
-            app:layout_constraintStart_toEndOf="@+id/gameImageView"
+            app:layout_constraintStart_toEndOf="@+id/raterImageView"
             android:layout_width="0dp"
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/titleGameTextView"
+                android:id="@+id/nameRaterTextView"
                 android:textStyle="bold"
                 android:maxLines="1"
                 android:ellipsize="end"
@@ -144,7 +144,7 @@
                 android:layout_height="0dp" />
 
             <TextView
-                android:id="@+id/contentGameTextView"
+                android:id="@+id/typeTextView"
                 android:textSize="@dimen/sp_12"
                 android:gravity="center_vertical"
                 android:textColor="@color/colorText"

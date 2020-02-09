@@ -3,7 +3,7 @@ package com.anhtam.gate9.v2.discussion.user
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
-import com.anhtam.gate9.v2.discussion.DiscussionActivity
+import com.anhtam.gate9.v2.discussion.DiscussionFragment
 import com.anhtam.gate9.v2.discussion.TabInfo
 import com.anhtam.gate9.v2.discussion.common.data.DataFragment
 import com.anhtam.gate9.v2.discussion.common.game.GGameFragment
@@ -12,11 +12,13 @@ import com.anhtam.gate9.v2.discussion.common.info.UserInfoFragment
 import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
 import com.anhtam.gate9.v2.report.user.ReportUserActivity
+import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
+import com.anhtam.gate9.vo.EUser
 import com.anhtam.gate9.vo.model.Category
-import kotlinx.android.synthetic.main.activity_shared_discussion.*
+import kotlinx.android.synthetic.main.shared_discussion_fragment.*
 import of.bum.network.helper.Resource
 
-class UserDiscussionScreen : DiscussionActivity() {
+class UserDiscussionScreen : DiscussionFragment() {
 
     private var mUserId: Int = 0
     private lateinit var mType: Category
@@ -31,12 +33,12 @@ class UserDiscussionScreen : DiscussionActivity() {
     override val headerFragment: Fragment
         get() = UserHeaderFragment.newInstance(mType)
 
-    override fun fragments(): List<Fragment> {
-        val fragments = ArrayList<Fragment>()
-        fragments.add(NewFeedFragment(mUserId))
+    override fun fragments(): List<AbstractVisibleFragment> {
+        val fragments = ArrayList<AbstractVisibleFragment>()
+        fragments.add(NewFeedFragment())
         fragments.add(RatingFragment.newInstance(mUserId, mType))
         fragments.add(DataFragment.newInstance(mUserId))
-        fragments.add(GGameFragment.newInstance(mUserId))
+        fragments.add(GGameFragment.newInstance())
         return fragments
     }
 
@@ -58,7 +60,6 @@ class UserDiscussionScreen : DiscussionActivity() {
     }
 
     override fun loadData() {
-        showProgress()
         viewModel.mUserId.value = mUserId
     }
 
@@ -67,17 +68,15 @@ class UserDiscussionScreen : DiscussionActivity() {
         viewModel.mUser.observe(viewLifecycleOwner, Observer {
             when(it) {
                 is Resource.Success -> {
-                    hideProgress()
+                    val user = it.data ?: return@Observer
+                    val id = user.mId ?: return@Observer
+                    val roleId = user.mRoleId?.toInt() ?: return@Observer
                     // following here
-                    val following = it.data?.mIsFollowing ?: ""
-                    isFollowing = when(following){
-                        "true" -> true
-                        else -> false
-                    }
-                    navControllerView?.initialize(isFollowing)
+                    val following = user.mIsFollowing ?: false
+                    navControllerView?.initialize(following, id, roleId)
                 }
                 is Resource.Error -> {
-                    hideProgress()
+
                 }
             }
         })

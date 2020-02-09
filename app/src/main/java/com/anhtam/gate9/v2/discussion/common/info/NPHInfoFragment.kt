@@ -1,48 +1,35 @@
 package com.anhtam.gate9.v2.discussion.common.info
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.discussion.DiscussionViewModel
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import kotlinx.android.synthetic.main.fragment_info_nph.*
 
 import of.bum.network.helper.Resource
 
-class NPHInfoFragment: DaggerNavigationFragment() {
+class NPHInfoFragment: DaggerNavigationFragment(R.layout.fragment_info_nph) {
 
 
     private var mUser: User? = null
 
-    private var mDiscussionViewModel: DiscussionViewModel? = null
-    private val viewModel: DiscussionViewModel by viewModels { vmFactory }
-
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_info_nph, container, false)
-    }
+    private val viewModel: DiscussionViewModel by viewModels ({requireParentFragment()}, { vmFactory })
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        activity?.let {
-            mDiscussionViewModel = ViewModelProviders.of(it, vmFactory).get(DiscussionViewModel::class.java)
-        }
         init()
     }
 
     private fun init() {
-        mDiscussionViewModel?._bottomStatus?.value = false
+        viewModel._bottomStatus.value = false
         observer()
     }
 
     private fun observer() {
-        mDiscussionViewModel?.mUser?.observe(viewLifecycleOwner, Observer {
+        viewModel.mUser.observe(viewLifecycleOwner, Observer {
             when(it) {
                 is Resource.Success -> {
                     hideProgress()
@@ -57,22 +44,22 @@ class NPHInfoFragment: DaggerNavigationFragment() {
     }
 
     private fun bindInfo() {
-//        tvId?.text = infoOrDefault(mUser?.user_id)
-//        tvShortName?.text = infoOrDefault(mUser?.userName)
-//        tvDisplayName?.text = infoOrDefault(mUser?.name)
-//
-//        tvReview?.text = "-"
-//        tvRanking?.text = "-"
-//        tvTotalGame?.text = infoOrDefault(mUser?.totalGame?.totalgameopen)
-////        tvCountry?.text = infoOrDefault(mUser?.)
-//        tvCreatedDate?.text = infoOrDefault(mUser?.createdDate)
-//        tvIntro?.text = infoOrDefault(mUser?.note)
-//        tvHome?.text = infoOrDefault(mUser?.url)
-//        tvEmail?.text = infoOrDefault(mUser?.email)
-//        tvPhone?.text = infoOrDefault(mUser?.phone)
-//        tvSkype?.text = infoOrDefault(mUser?.skype)
-//        tvLocation?.text = infoOrDefault(mUser?.address)
-//        tvQQ?.text = infoOrDefault(mUser?.qq)
+        tvId?.text = infoOrDefault(mUser?.mId?.toString())
+        tvShortName?.text = infoOrDefault(mUser?.mName)
+        tvDisplayName?.text = infoOrDefault(mUser?.mName)
+
+        tvReview?.text = "-"
+        tvRanking?.text = infoOrDefault(mUser?.mRanking)
+        tvTotalGame?.text = "-"
+        tvCountry?.text = "-"
+        tvCreatedDate?.text = infoOrDefault(mUser?.mCreatedDate)
+        tvIntro?.text = infoOrDefault(mUser?.mNote)
+        tvHome?.text = infoOrDefault(mUser?.mWeb)
+        tvEmail?.text = infoOrDefault(mUser?.mEmail)
+        tvPhone?.text = infoOrDefault(mUser?.mPhone)
+        tvSkype?.text = infoOrDefault(mUser?.mSkype)
+        tvLocation?.text = infoOrDefault(mUser?.mAddress)
+        tvQQ?.text = infoOrDefault(mUser?.mQQ)
     }
 
     companion object {

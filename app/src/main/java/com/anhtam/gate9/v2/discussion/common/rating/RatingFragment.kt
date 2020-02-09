@@ -1,76 +1,43 @@
 package com.anhtam.gate9.v2.discussion.common.rating
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import com.anhtam.domain.v2.Post
+import com.anhtam.domain.v2.Rating
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
-import com.anhtam.gate9.adapter.ReviewAdapter
+import com.anhtam.gate9.adapter.v2.PostAdapter
+import com.anhtam.gate9.adapter.v2.RatingAdapter
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
-import com.anhtam.gate9.utils.loadingToAdapter
+import com.anhtam.gate9.v2.shared.RatingComponent
 import com.anhtam.gate9.vo.model.Category
-import com.bumptech.glide.Glide
-import com.squareup.phrase.Phrase
-import kotlinx.android.synthetic.main.fragment_rating.*
 
-class RatingFragment: CommonDiscussionFragment() {
+class RatingFragment: CommonDiscussionFragment<Rating, RatingAdapter, RatingViewModel>() {
 
     private var mUserId: Int = 0
     private var mType = Category.Member
-    private lateinit var mAdapter: ReviewAdapter
-    private val viewModel: RatingViewModel by viewModels { vmFactory }
-
+    override val tabTitle: List<Int>
+        get() = arrayListOf(R.string.me_category, R.string.game_category, R.string.publisher_category, R.string.gamer_category)
     override val colorTextTab: Int = R.color.colorTabRating
-
+    override val mViewModel: RatingViewModel by viewModels { vmFactory }
+    private var mRatingView: RatingComponent? = null
     override fun inflateLayout() = R.layout.fragment_rating
 
-    override fun loadData() {
-        viewModel.requestFirst(mUserId)
+
+    override fun onLoadUser(user: User) {
+        super.onLoadUser(user)
+        val rand = (0..100).random() / 100f
+        mAdapter.setUser(user)
+        mRatingView?.ratingInfo(mType)
+        mRatingView?.initView(arrayOf(rand, (1-rand) / 4, (1-rand) / 4, (1-rand) / 4, (1-rand) / 4))
     }
 
     override fun initView() {
         super.initView()
-        initRv()
-        ratingComponent?.ratingInfo(mType)
-        ratingComponent?.initView(arrayOf(0.01f, 0.01f, 0.02f, 0.01f, 0.45f))
+        mRatingView = RatingComponent(context)
+        mAdapter.setHeaderView(mRatingView)
     }
 
-    override fun configTabLayout() {
-        tabLayout.apply {
-            repeat(4) {
-                addTab(newTab())
-            }
-        }
-        updateTabLayout()
-    }
 
-    override fun updateTabLayout() {
-        tabLayout.getTabAt(0)?.text = Phrase.from(resources.getString(R.string.me_category))
-                .put("amount", 0).format()
-        tabLayout.getTabAt(1)?.text = Phrase.from(resources.getString(R.string.game_category))
-                .put("amount", 0).format()
-        tabLayout.getTabAt(2)?.text = Phrase.from(resources.getString(R.string.publisher_category))
-                .put("amount", 0).format()
-        tabLayout.getTabAt(3)?.text = Phrase.from(resources.getString(R.string.gamer_category))
-                .put("amount", 0).format()
-    }
-
-    private fun initRv() {
-        mAdapter = ReviewAdapter(Glide.with(context!!))
-        rvShareDiscussion?.adapter = mAdapter
-    }
-
-    override fun observer() {
-        super.observer()
-        viewModel.reviews.observe(this, Observer {
-            it.loadingToAdapter(mAdapter, viewModel.page)
-        })
-    }
-
-    override fun initEvents() {
-        swipeRefreshLayout?.setOnRefreshListener {
-            swipeRefreshLayout?.isRefreshing = false
-            loadData()
-        }
-    }
 
     companion object {
         fun newInstance(userId: Int, type: Category) : RatingFragment {

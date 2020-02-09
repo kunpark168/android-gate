@@ -9,7 +9,7 @@ import com.anhtam.gate9.v2.categories.FeatureScreen
 import com.anhtam.gate9.v2.charts.ChartScreen
 import com.anhtam.gate9.v2.notification.NotificationFragment
 import com.anhtam.gate9.v2.notification.NotificationModule
-import com.anhtam.gate9.v2.main.member.MemberHomeFragment
+import com.anhtam.gate9.v2.main.member.MemberFragment
 import com.anhtam.gate9.v2.main.member.MemberModule
 import com.anhtam.gate9.v2.main.member.all.MemberListFragment
 import com.anhtam.gate9.v2.main.member.all.MemberListModule
@@ -17,6 +17,7 @@ import com.anhtam.gate9.v2.auth.register.RegisterScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.auth.login.LoginModule
 import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
+import com.anhtam.gate9.v2.charts.ChartModule
 import com.anhtam.gate9.v2.createimage.CreateImageScreen
 import com.anhtam.gate9.v2.createpost.CreatePostScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
@@ -53,7 +54,6 @@ import com.anhtam.gate9.v2.report.post.ReportPostModule
 import com.anhtam.gate9.v2.report.user.ReportUserActivity
 import com.anhtam.gate9.v2.report.user.ReportUserModule
 import com.anhtam.gate9.v2.shared.muilti_gallery.GalleryModule
-import com.anhtam.gate9.v2.shared.muilti_gallery.GalleryViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -94,7 +94,7 @@ abstract class FragmentBuildersModule {
     @ContributesAndroidInjector(
             modules = [MemberModule::class]
     )
-    abstract fun contributeMemberHomeFragment(): MemberHomeFragment
+    abstract fun contributeMemberHomeFragment(): MemberFragment
 
 
     @ContributesAndroidInjector(
@@ -116,7 +116,9 @@ abstract class FragmentBuildersModule {
     abstract fun contributeChatFragment(): ChatFragment
 
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(
+            modules = [ChartModule::class]
+    )
     abstract fun contributeChartsActivity(): ChartScreen
 
 

@@ -11,15 +11,10 @@ import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.activity_report_game.*
 
-class ReportGameActivity : DaggerNavigationFragment() {
+class ReportGameActivity : DaggerNavigationFragment(R.layout.activity_report_game) {
 
     companion object {
         fun newInstance() = ReportGameActivity()
-    }
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.activity_report_game, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -10,8 +10,16 @@ interface User{
     var mCreatedDate: String?
     var mFacebook: String?
     var mName: String?
-    var mFlower: String?
-    var mFlowing: String?
+    var mFirstName: String?
+    var mLastName: String?
+    var mUserName: String?
+    var mLocation: String?
+    var mPoint: Int?
+    var mPointUse: Int?
+    var mTheme: String?
+    var mWeb: String?
+    var mFlower: Long?
+    var mFlowing: Long?
     var mLastLogin: String?
     var mGender: String?
     var mAddress: String?
@@ -20,10 +28,11 @@ interface User{
     var mSkype: String?
     var mLangId: String?
     var mBirth: String?
-    var mPoint: String?
     var mGameTypes: String?
     var mAccessToken: String?
     var mNumLike: String?
     var mTotalPost: String?
-    var mIsFollowing: String?
+    var mIsFollowing: Boolean?
+    var mRanking: String?
+    var mAppellation: String?
 }

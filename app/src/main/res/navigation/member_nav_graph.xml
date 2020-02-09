@@ -5,6 +5,6 @@
 
     <fragment
         android:id="@+id/memberHomeFragment"
-        android:name="com.anhtam.gate9.v2.main.member.MemberHomeFragment"
+        android:name="com.anhtam.gate9.v2.main.member.MemberFragment"
         android:label="MemberFragment" />
 </navigation>

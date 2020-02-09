@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
+import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.vo.model.Category
@@ -24,12 +25,17 @@ class MemberAdapter @Inject constructor(
 
     init {
         setOnItemChildClickListener { _, view, position ->
+            val idUser = data[position].mId ?: return@setOnItemChildClickListener
+            val role = when(data[position].mRoleId){
+                "5" -> Category.Publisher
+                else -> Category.Member
+            }
             when(view.id){
                 R.id.nameTextView, R.id.avatarImageView -> {
-                    val idUser = data[position].mId ?: return@setOnItemChildClickListener
-                    navigation.addFragment(UserDiscussionScreen.newInstance(idUser, Category.Member))
+                    navigation.addFragment(UserDiscussionScreen.newInstance(idUser, role))
                 }
                 R.id.followButton -> {
+                    BackgroundTasks.postUserFollow(idUser, role.id)
                     val tvFollow = view as? TextView
                     if (tvFollow?.text == mContext.getString(R.string.following)){
                         // un follow
@@ -69,7 +75,7 @@ class MemberAdapter @Inject constructor(
                 .addOnClickListener(R.id.avatarImageView)
                 .addOnClickListener(R.id.followButton)
         when(user.mIsFollowing){
-            "true" -> following(view.followButton)
+            true -> following(view.followButton)
             else -> unFollowing(view.followButton)
         }
     }

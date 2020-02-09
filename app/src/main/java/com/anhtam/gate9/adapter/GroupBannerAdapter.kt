@@ -18,26 +18,25 @@ import javax.inject.Named
 
 class GroupBannerAdapter @Inject constructor(val navigation: Navigation?,
                                              @Named("banner")val bannerOptions: RequestOptions
-): BaseQuickAdapter<Game, BaseViewHolder>(R.layout.item_new_game, emptyList()),
-        IBannerNavigator {
+): BaseQuickAdapter<Game, BaseViewHolder>(R.layout.item_new_game, emptyList()){
 
-    override fun navigateToSocialDiscussion(context: Context?, link: String, gameId: String) {
-        navigation?.addFragment(GameDiscussionScreen.newInstance(link, gameId))
+    init {
+        setOnItemClickListener { _, _, position ->
+            val game = data[position]
+            navigation?.addFragment(GameDiscussionScreen.newInstance(game))
+        }
     }
 
     override fun convert(helper: BaseViewHolder?, item: Game?) {
         val game = item ?: return
         val view = helper?.itemView ?: return
-        val type = game.gameTypes?.firstOrNull()?.name ?: ""
+        val type = game.gameType?.name ?: ""
         view.tvContent?.text = type
         view.tvTitle?.text = game.name ?: ""
         Glide.with(mContext)
                 .load(game.avatar?.toImage())
                 .apply(bannerOptions)
                 .into(view.imgNewGame)
-        view.setOnClickListener {
-            navigation?.addFragment(GameDiscussionScreen.newInstance("", game.gameId?.toString() ?: ""))
-        }
         ifNotNull(helper, item) {
             holder, _ ->
             if (holder.adapterPosition < 2) {

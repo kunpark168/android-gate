@@ -1,6 +1,6 @@
 package com.anhtam.gate9.adapter
 
-import com.anhtam.domain.dto.Game
+import com.anhtam.domain.Game
 import com.anhtam.gate9.R
 import com.anhtam.gate9.utils.ifNotNull
 import com.chad.library.adapter.base.BaseQuickAdapter

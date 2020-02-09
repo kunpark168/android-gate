@@ -7,11 +7,7 @@ import android.view.ViewGroup
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 
-class ChannelActivity : DaggerNavigationFragment(){
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.activity_channel, container ,false)
-    }
+class ChannelActivity : DaggerNavigationFragment(R.layout.activity_channel){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -11,12 +11,7 @@ import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.activity_report_post.*
 
-class ReportPostActivity : DaggerNavigationFragment() {
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.activity_report_post, container, false)
-    }
+class ReportPostActivity : DaggerNavigationFragment(R.layout.activity_report_post) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

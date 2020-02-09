@@ -1,7 +1,7 @@
 package of.bum.network.v2
 
 import androidx.lifecycle.LiveData
-import com.anhtam.domain.Banner
+import com.anhtam.domain.v2.Banner
 import com.anhtam.domain.Base
 import com.anhtam.domain.v2.Gamev1
 import com.anhtam.domain.v2.*
@@ -9,23 +9,31 @@ import com.anhtam.domain.v2.wrap.*
 import of.bum.network.helper.ApiResponse
 import of.bum.network.helper.RestResponse
 import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import retrofit2.http.*
 
 interface SocialService {
+
+    /*
+     *
+     */
     @GET("login")
     fun getInfo(): LiveData<ApiResponse<RestResponse<Userv1>>>
 
+    @POST("user/registration")
+    fun register(@Body params: @JvmSuppressWildcards Map<String, String>): LiveData<ApiResponse<RestResponse<Base>>>
+
     @GET("social/listing")
     fun getListPosts(
-            @Query("page") page: Int = 0,
-            @Query("limit") limit: Int = 60
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
     ): LiveData<ApiResponse<RestResponse<List<Post>>>>
 
     @GET("social/get-banner")
     fun getBanners(): LiveData<ApiResponse<RestResponse<List<Banner>>>>
 
     @GET("social/get-game-nominate")
-    fun getGameNominate(): LiveData<ApiResponse<RestResponse<List<Gamev2>>>>
+    fun getGameNominate(): LiveData<ApiResponse<RestResponse<List<Gamev1>>>>
 
     @GET("social/get-post-detail")
     fun getDetailPosts(@Query("postId") postId: Long,
@@ -48,6 +56,14 @@ interface SocialService {
             @Query("limit") limit: Int
     ): LiveData<ApiResponse<RestResponse<List<Post>>>>
 
+    @GET("social/nph/discuss")
+    fun getNPHPost(
+            @Query("userId") userId: Int,
+            @Query("tab") type: Int,
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
+    ): LiveData<ApiResponse<RestResponse<List<Post>>>>
+
     @GET("social/get-list-game-by-user")
     fun getGameRelatedToUser(
             @Query("userId") userId: Int,
@@ -56,19 +72,51 @@ interface SocialService {
             @Query("limit") limit: Int
     ): LiveData<ApiResponse<RestResponse<List<WrapGame>>>>
 
+    @GET("social/nph/game")
+    fun getNPHGame(
+            @Query("userId") userId: Int,
+            @Query("tab") type: Int,
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
+    ): LiveData<ApiResponse<RestResponse<List<WrapGame>>>>
+
+    @GET("social/nph/rate")
+    fun getNPHRating(
+            @Query("userId") userId: Int,
+            @Query("tab") tab: Int,
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
+    ): LiveData<ApiResponse<RestResponse<List<Rating>>>>
+
+    @GET("social/user-rating")
+    fun getUserRating(
+            @Query("userId") userId: Int,
+            @Query("tab") tab: Int,
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
+    ): LiveData<ApiResponse<RestResponse<List<Rating>>>>
+
     @GET("social/get-new-game")
     fun getNewGame(
             @Query("page") page: Int,
             @Query("limit") limit: Int
     ): LiveData<ApiResponse<RestResponse<List<Gamev1>>>>
 
-    @POST("social/get-data-info")
+    @GET("social/user/data-info")
     fun getDataRelatedToUser(
             @Query("userId") userId: Int,
             @Query("tab") type: Int,
             @Query("page") page: Int,
             @Query("limit") limit: Int
-    ): LiveData<ApiResponse<RestResponse<WrapGames>>>
+    ): LiveData<ApiResponse<RestResponse<List<Article>>>>
+
+    @GET("social/nph/data-info")
+    fun getNPHData(
+            @Query("userId") userId: Int,
+            @Query("tab") type: Int,
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
+    ): LiveData<ApiResponse<RestResponse<List<Article>>>>
 
     @GET("user/userInfo")
     fun getOtherUserInfoById(@Query("userId") userId: Int): LiveData<ApiResponse<RestResponse<Userv1>>>
@@ -115,4 +163,18 @@ interface SocialService {
 
     @POST("social/update-post-forum")
     fun update()
+
+    @GET("user/list-user")
+    fun listUser(@Query("role") role: Int,
+                 @Query("page") page: Int,
+                 @Query("limit") limit: Int = 10,
+                 @Query("keyword") keyword: String? = ""): LiveData<ApiResponse<RestResponse<List<Userv1>>>>
+
+    @POST("social/post-follow")
+    fun follow(@Body params: Map<String, String>): LiveData<ApiResponse<RestResponse<ResponseBody>>>
+
+    @GET("user/ranking-list")
+    fun getRanking(@Query("roleId") roleId: Int,
+                 @Query("page") page: Int,
+                 @Query("limit") limit: Int = 10): LiveData<ApiResponse<RestResponse<List<Userv1>>>>
 }

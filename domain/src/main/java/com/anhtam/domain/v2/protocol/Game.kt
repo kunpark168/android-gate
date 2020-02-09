@@ -1,6 +1,6 @@
 package com.anhtam.domain.v2.protocol
 
-import com.anhtam.domain.Type
+import com.anhtam.domain.v2.Type
 
 interface Game {
     var gameId: Int?
@@ -23,9 +23,9 @@ interface Game {
     var fanPage: String?
     var homepage: String?
     var photos: String?
-    var follower: String?
-    var following: String?
-    var follow: String?
-    var post: String?
+    var follower: Int?
+    var following: Int?
+    var follow: Boolean?
+    var post: Int?
     var imgCover: String?
 }

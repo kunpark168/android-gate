@@ -14,19 +14,12 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.fragment_info_user.*
 import of.bum.network.helper.Resource
 
-class UserInfoFragment: DaggerNavigationFragment() {
+class UserInfoFragment: DaggerNavigationFragment(R.layout.fragment_info_user) {
 
 
     private var mUser: User? = null
 
     private var mDiscussionViewModel: DiscussionViewModel? = null
-
-    override fun onCreateView(inflater: LayoutInflater,
-                              container: ViewGroup?,
-                              savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_info_user, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         parentFragment?.let {
@@ -66,14 +59,14 @@ class UserInfoFragment: DaggerNavigationFragment() {
         tvId?.text = infoOrDefault(mUser?.mId?.toString())
         tvShortName?.text = infoOrDefault(mUser?.mName)
         tvDisplayName?.text = infoOrDefault(mUser?.mName)
-//        tvMedal?.text = infoOrDefault(mUser?)
-        tvTotalPoint?.text = infoOrDefault(mUser?.mPoint)
+        tvMedal?.text = infoOrDefault(mUser?.mAppellation)
+        tvTotalPoint?.text = infoOrDefault(mUser?.mPoint?.toString())
 
         tvReview?.text = "-"
-        tvRanking?.text = "-"
+        tvRanking?.text = infoOrDefault(mUser?.mRanking)
         val icon = when(mUser?.mGender?.convertInt()) {
-            1 -> "Nữ"
-            2 -> "Nam"
+            1 -> "Nam"
+            2 -> "Nữ"
             else -> "Không xác định"
         }
         tvGender?.text = infoOrDefault(icon)
@@ -82,7 +75,7 @@ class UserInfoFragment: DaggerNavigationFragment() {
         tvStatus?.text = "-"
         tvCreatedDate?.text = infoOrDefault(mUser?.mCreatedDate)
         tvIntro?.text = infoOrDefault(mUser?.mNote)
-//        tvHome?.text = infoOrDefault(mUser?.url)
+        tvHome?.text = infoOrDefault("http://9gate.net/u/${mUser?.mId}")
         tvFacebook?.text = infoOrDefault(mUser?.mFacebook)
         tvEmail?.text = infoOrDefault(mUser?.mEmail)
         tvPhone?.text = infoOrDefault(mUser?.mPhone)

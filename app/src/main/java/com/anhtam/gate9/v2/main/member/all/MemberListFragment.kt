@@ -13,16 +13,17 @@ import com.anhtam.gate9.v2.main.member.MemberDefaultViewModel
 import com.anhtam.gate9.adapter.AlphabetAdapter
 import com.anhtam.gate9.adapter.v2.MemberAdapter
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.vo.EUser
 import kotlinx.android.synthetic.main.member_list_fragment.*
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 
 class MemberListFragment
-    : DaggerNavigationFragment() , AlphabetAdapter.IChangeAlphabetIndex {
+    : DaggerNavigationFragment(R.layout.member_list_fragment) , AlphabetAdapter.IChangeAlphabetIndex {
 
 
     companion object {
-        fun newInstance(type: String): MemberListFragment {
+        fun newInstance(type: EUser): MemberListFragment {
             val fragment = MemberListFragment()
             fragment.mType = type
             return fragment
@@ -32,17 +33,13 @@ class MemberListFragment
     override fun onChangeAlphabetIndex(letter: String) {
         /* Request page 1 and new letter */
         mAdapter.setNewData(emptyList())
-        viewModel.requestMemberList(letter, "member")
+        viewModel.requestMemberList(mType)
     }
 
     private val viewModel: MemberDefaultViewModel by viewModels { vmFactory }
-    private lateinit var mType: String
+    private lateinit var mType: EUser
 
     @Inject lateinit var mAdapter: MemberAdapter
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.member_list_fragment, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,7 +47,7 @@ class MemberListFragment
     }
 
     private fun init() {
-        viewModel.requestMemberList("All", "member")
+        viewModel.requestMemberList(mType)
         setUpRecyclerView()
         observer()
         initEvents()
@@ -63,7 +60,6 @@ class MemberListFragment
         alphabetRecyclerView.adapter = AlphabetAdapter(context, this)
         alphabetRecyclerView.layoutManager = LinearLayoutManager(context)
 
-//        mAdapter = MemberAdapter(Glide.with(this), mType)
         mAdapter.setLoadMoreView(CustomLoadMoreView())
         rvAllMembers.adapter = mAdapter
         rvAllMembers.layoutManager = LinearLayoutManager(context)
@@ -84,10 +80,10 @@ class MemberListFragment
                     if (data.isNullOrEmpty()) {
                         mAdapter.loadMoreEnd()
                     } else {
-                        if (viewModel.page == 1) {
-//                            mAdapter.setNewData(data)
+                        if (viewModel.page == 0) {
+                            mAdapter.setNewData(data)
                         } else {
-//                            mAdapter.addData(data)
+                            mAdapter.addData(data)
                         }
                         mAdapter.loadMoreComplete()
                         mAdapter.removeAllHeaderView()

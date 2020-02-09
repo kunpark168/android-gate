@@ -1,6 +1,5 @@
 package com.anhtam.domain.v2
 
-import com.anhtam.domain.Type
 import com.anhtam.domain.v2.protocol.Game
 import com.squareup.moshi.Json
 
@@ -45,14 +44,14 @@ class Gamev1(
         override var homepage: String? = null,
         @Json(name = "photos")
         override var photos: String? = null,
-        @Json(name = "follower")
-        override var follower: String? = null,
-        @Json(name = "following")
-        override var following: String? = null,
+        @Json(name = "num_follower")
+        override var follower: Int? = null,
+        @Json(name = "num_following")
+        override var following: Int? = null,
         @Json(name = "follow")
-        override var follow: String? = null,
+        override var follow: Boolean? = null,
         @Json(name = "post")
-        override var post: String? = null,
+        override var post: Int? = null,
         @Json(name = "imgCover")
         override var imgCover: String? = null
 ): Game
