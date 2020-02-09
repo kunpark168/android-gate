@@ -210,7 +210,6 @@ class PostAdapter @Inject constructor(
 
     private fun changeReaction(react: Reaction, position: Int){
         val post = data[position]
-        data.removeAt(position)
         val preReact = Reaction.react(data[position].like?.convertInt() ?: 0)
         post.like = Reaction.value(react).toString()
         // count
@@ -236,7 +235,6 @@ class PostAdapter @Inject constructor(
                 post.totalDislike = (post.totalDislike ?: 0) + 1
             }
         }
-        data.add(position, post)
         notifyDataSetChanged()
     }
 
