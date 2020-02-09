@@ -94,20 +94,9 @@ class DetailPostScreen private constructor(
     private fun init() {
         viewModel.initialize(_post, this)
         loadComment()
-        postViewForum()
         initView()
         initEvents()
         observer()
-    }
-
-    private fun postViewForum(){
-        // check auth
-        val isLogin = mSessionManager.checkLogin()
-        if (isLogin){
-            viewModel.postViewForum().observe(viewLifecycleOwner, Observer {
-                Timber.d("test")
-            })
-        }
     }
 
     private fun loadComment(){

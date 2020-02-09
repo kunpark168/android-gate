@@ -47,23 +47,38 @@ class TatCaFollowingScreen constructor(val mTab: Int) : AbstractVisibleFragment(
     }
 
     private fun observer(){
-        mViewModel.data.observe(viewLifecycleOwner, Observer {
-            when(it) {
-                is Resource.Success -> {
-                    hideProgress()
-                }
-                is Resource.Error ->{
-                    hideProgress()
-                }
-                else -> {
-
-                }
-            }
-        })
+        observerPost()
         observerBanner()
         observerGroup()
     }
 
+    private fun observerPost(){
+        mViewModel.data.observe(viewLifecycleOwner, Observer {
+            when(it) {
+                is Resource.Success -> {
+                    hideProgress()
+                    val data = it.data
+                    if (data.isNullOrEmpty()) {
+                        mAdapter.loadMoreEnd()
+                    } else {
+                        if (mViewModel.mPage == 0) {
+                            mAdapter.setNewData(data)
+                        } else {
+                            mAdapter.addData(data)
+                        }
+                        mAdapter.loadMoreComplete()
+                    }
+                }
+                is Resource.Loading -> {
+
+                }
+                else -> {
+                    hideProgress()
+                    mAdapter.loadMoreFail()
+                }
+            }
+        })
+    }
     private fun preloadData(){
         if (mTab != 1){
             lazyLoad()

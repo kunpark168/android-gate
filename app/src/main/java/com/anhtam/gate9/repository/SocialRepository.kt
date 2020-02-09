@@ -119,4 +119,13 @@ class SocialRepository @Inject constructor(
             override fun createCall() = socialService.register(params)
         }.asLiveData()
     }
+
+    // Rating
+    fun getNPHRating(userId: Int, tab: Int, page: Int, limit: Int) = object : FetchBoundResource<List<Rating>>(){
+        override fun createCall() = socialService.getNPHRating(userId, tab, page, limit)
+    }.asLiveData()
+
+    fun getUserRating(userId: Int, tab: Int, page: Int, limit: Int) = object : FetchBoundResource<List<Rating>>(){
+        override fun createCall() = socialService.getUserRating(userId, tab, page, limit)
+    }.asLiveData()
 }
