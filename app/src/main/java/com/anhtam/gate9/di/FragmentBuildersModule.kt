@@ -6,18 +6,18 @@ import com.anhtam.gate9.v2.search.SearchModule
 import com.anhtam.gate9.v2.search.SearchScreen
 import com.anhtam.gate9.v2.categories.CategoryModule
 import com.anhtam.gate9.v2.categories.FeatureScreen
-import com.anhtam.gate9.v2.charts.ChartScreen
+import com.anhtam.gate9.v2.bxh.BXHScreen
 import com.anhtam.gate9.v2.notification.NotificationFragment
 import com.anhtam.gate9.v2.notification.NotificationModule
-import com.anhtam.gate9.v2.main.member.MemberFragment
-import com.anhtam.gate9.v2.main.member.MemberModule
-import com.anhtam.gate9.v2.main.member.all.MemberListFragment
-import com.anhtam.gate9.v2.main.member.all.MemberListModule
+import com.anhtam.gate9.v2.member.MemberFragment
+import com.anhtam.gate9.v2.member.MemberModule
+import com.anhtam.gate9.v2.member.all.MemberListFragment
+import com.anhtam.gate9.v2.member.all.MemberListModule
 import com.anhtam.gate9.v2.auth.register.RegisterScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.auth.login.LoginModule
 import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
-import com.anhtam.gate9.v2.charts.ChartModule
+import com.anhtam.gate9.v2.bxh.ChartModule
 import com.anhtam.gate9.v2.createimage.CreateImageScreen
 import com.anhtam.gate9.v2.createpost.CreatePostScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
@@ -119,7 +119,7 @@ abstract class FragmentBuildersModule {
     @ContributesAndroidInjector(
             modules = [ChartModule::class]
     )
-    abstract fun contributeChartsActivity(): ChartScreen
+    abstract fun contributeChartsActivity(): BXHScreen
 
 
     /*FeatureScreen*/

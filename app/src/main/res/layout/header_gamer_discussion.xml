@@ -41,6 +41,7 @@
             android:layout_height="17dp"
             android:layout_marginStart="40dp"
             tools:src="@drawable/ic_female"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
             app:layout_constraintStart_toStartOf="@+id/imgAvatar" />
 

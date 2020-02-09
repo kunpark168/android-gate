@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.charts
+package com.anhtam.gate9.v2.bxh
 
 import androidx.lifecycle.ViewModel
 import com.anhtam.gate9.di.ViewModelKey

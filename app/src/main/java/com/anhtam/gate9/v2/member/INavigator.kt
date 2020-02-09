@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.main.member
+package com.anhtam.gate9.v2.member
 
 import com.anhtam.gate9.vo.EUser
 

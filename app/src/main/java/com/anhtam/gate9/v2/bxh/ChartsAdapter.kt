@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.charts
+package com.anhtam.gate9.v2.bxh
 
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,6 +23,8 @@ class ChartsAdapter @Inject constructor(
         @Named("avatar") val avatarOptions: RequestOptions
 ) : BaseMultiItemQuickAdapter<RankingEntity, BaseViewHolder>(ArrayList()){
 
+    var mRoleId = Category.Member
+
     init {
         addItemType(Ranking.CHAMPIONS.ranking, R.layout.item_top_1_ranking_layout)
         addItemType(Ranking.RUNNER_UP.ranking, R.layout.item_top_2_ranking_layout)
@@ -31,16 +33,12 @@ class ChartsAdapter @Inject constructor(
 
         setOnItemChildClickListener { _, view, position ->
             val idUser = data[position].user.mId ?: return@setOnItemChildClickListener
-            val role = when(data[position].user.mRoleId){
-                "5" -> Category.Publisher
-                else -> Category.Member
-            }
             when(view.id){
                 R.id.imgAvatar, R.id.tvName -> {
-                    navigation.addFragment(UserDiscussionScreen.newInstance(idUser, role))
+                    navigation.addFragment(UserDiscussionScreen.newInstance(idUser, mRoleId))
                 }
                 R.id.tvFollow -> {
-                    BackgroundTasks.postUserFollow(idUser, role.id)
+                    BackgroundTasks.postUserFollow(idUser, mRoleId.id)
                     val tvFollow = view as? TextView
                     if (tvFollow?.text == mContext.getString(R.string.following)){
                         // un follow

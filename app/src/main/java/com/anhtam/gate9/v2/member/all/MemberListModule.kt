@@ -1,22 +1,18 @@
-package com.anhtam.gate9.v2.main.member
+package com.anhtam.gate9.v2.member.all
 
 import androidx.lifecycle.ViewModel
 import com.anhtam.gate9.di.ViewModelKey
+import com.anhtam.gate9.v2.member.MemberDefaultViewModel
 import dagger.Binds
 import dagger.Module
-import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 
 @Module
-abstract class MemberModule {
-
-    @ContributesAndroidInjector
-    abstract fun contributeMemberFragment(): MemberTabFragment
+abstract class MemberListModule {
 
     /* Member */
     @Binds
     @IntoMap
     @ViewModelKey(MemberDefaultViewModel::class)
     abstract fun bindMemberDefaultViewModel(memberViewModel: MemberDefaultViewModel): ViewModel
-
 }
