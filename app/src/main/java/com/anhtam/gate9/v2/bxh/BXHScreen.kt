@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.bxh_screen.*
@@ -104,6 +105,7 @@ class BXHScreen(
     }
 
     private fun initRecyclerView(){
+        mAdapter.mRoleId = if (mRoleId == 5) Category.Publisher else Category.Member
         mAdapter.setOnLoadMoreListener({
             viewModel.getUserRanking()
         }, rvCharts)
