@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.gate9.R
+import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -36,10 +37,8 @@ class BXHScreen(
     }
 
     private fun initUserView(){
-        when (mRoleId){
-            5 -> viewModel.getNPHRanking(true)
-            4 -> viewModel.getUserRanking(true)
-        }
+        viewModel.setId(mRoleId)
+        viewModel.loadData(refresh = true)
         val user = mSessionManager.cachedUser.value?.data ?: return
         tvName?.text = user.mName
         tvId?.text = user.mId?.toString()
@@ -56,7 +55,7 @@ class BXHScreen(
     override fun menuRes() = R.menu.menu_chat_search_more
 
     private fun observerRanking(){
-        viewModel.users.observe(viewLifecycleOwner, Observer {
+        viewModel.data.observe(viewLifecycleOwner, Observer {
             when(it) {
                 is Resource.Success -> {
                     val data = it.data
@@ -105,9 +104,10 @@ class BXHScreen(
     }
 
     private fun initRecyclerView(){
+        mAdapter.setLoadMoreView(CustomLoadMoreView())
         mAdapter.mRoleId = if (mRoleId == 5) Category.Publisher else Category.Member
         mAdapter.setOnLoadMoreListener({
-            viewModel.getUserRanking()
+            viewModel.loadData()
         }, rvCharts)
         rvCharts.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         rvCharts.isNestedScrollingEnabled = false

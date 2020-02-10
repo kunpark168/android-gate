@@ -21,7 +21,7 @@ data class Userv1(
         @Json(name = "user_name")
         override var mUserName: String? = null,
         @Json(name = "role_id")
-        override var mRoleId: String? = null,
+        override var mRoleId: Int? = null,
         @Json(name = "created_date")
         override var mCreatedDate: String? = null,
         @Json(name = "name")

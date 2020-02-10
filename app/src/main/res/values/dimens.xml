@@ -87,4 +87,5 @@
     <dimen name="material_icon_size_16dp">18dp</dimen>
     <dimen name="thump_size_medium">56dp</dimen>
     <dimen name="layout_margin_2dp">2dp</dimen>
+    <dimen name="text_size_8sp">8sp</dimen>
 </resources>

@@ -8,6 +8,7 @@ import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.restful.BackgroundTasks
+import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -55,11 +56,11 @@ class ChartsAdapter @Inject constructor(
     override fun convert(helper: BaseViewHolder?, item: RankingEntity?) {
         val holder = helper ?: return
         val user = item?.user ?: return
-        holder.setText(R.id.tvId, user.mId?.toString())
+        holder.setText(R.id.tvPoint, user.mPoint?.toString())
         holder.setText(R.id.tvName, user.mName)
-        val tvPoint = holder.getView<TextView>(R.id.tvFollow)
-        tvPoint?.apply {
-            text = user.mPoint?.toString()
+        val tvId = holder.getView<TextView>(R.id.tvId)
+        tvId?.apply {
+            text = user.mId?.toString()
         }
         val tvFollow = holder.getView<TextView>(R.id.tvFollow)
         when(user.mIsFollowing){
@@ -70,9 +71,16 @@ class ChartsAdapter @Inject constructor(
         val imgAvatar = holder.getView<ImageView>(R.id.imgAvatar)
         imgAvatar?.run {
             Glide.with(mContext)
-                    .load(user.mAvatar)
+                    .load(user.mAvatar?.toImage())
                     .apply(avatarOptions)
                     .into(this)
+        }
+
+        val tvRanking = holder.getView<TextView>(R.id.tvRanking)
+
+        tvRanking?.apply {
+            val ranking = (data.indexOf(item) + 1)
+            text = if (ranking > 99) "99+" else ranking.toString()
         }
 
         holder.addOnClickListener(R.id.imgAvatar)

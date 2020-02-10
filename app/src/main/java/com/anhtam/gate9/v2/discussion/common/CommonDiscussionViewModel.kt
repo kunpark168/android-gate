@@ -25,7 +25,7 @@ abstract class CommonDiscussionViewModel<T>: ViewModel(){
         mCategory = category ?: mCategory
         val userId = mUser?.mId ?: 0
         val source: LiveData<Resource<List<T>>> = when(mUser?.mRoleId) {
-            "5" -> getNPHData(userId)
+            5 -> getNPHData(userId)
             else -> getUserData(userId)
         }
         _data.addSource(source){

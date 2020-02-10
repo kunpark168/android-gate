@@ -48,8 +48,13 @@ class PostAdapter @Inject constructor(
                     }
                 }
                 R.id.userNameTextView, R.id.avatarImageView -> {
-                    val userId = data[position].user?.mId ?: return@setOnItemChildClickListener
-                    navigateToMemberDiscussion(userId)
+                    val user = data[position].user ?: return@setOnItemChildClickListener
+                    val id = user.mId ?: return@setOnItemChildClickListener
+                    val role = when(user.mRoleId){
+                        5 -> Category.Publisher
+                        else -> Category.Member
+                    }
+                    navigateToMemberDiscussion(id, role)
                 }
                 R.id.gameImageView, R.id.titleGameTextView -> {
                     val game = data[position].game ?: return@setOnItemChildClickListener
@@ -73,8 +78,8 @@ class PostAdapter @Inject constructor(
                     mMoreDialog.show()
                 }
                 R.id.followGameTextView -> {
-                    BackgroundTasks.postFollowGame(data[position].game?.gameId ?: return@setOnItemChildClickListener)
                     if (checkLogin()) {
+                        BackgroundTasks.postFollowGame(data[position].game?.gameId ?: return@setOnItemChildClickListener)
                         if(view.followGameTextView?.text == mContext.getString(R.string.follow)) {
                             setFollowing(view.followGameTextView)
                             //sending request
@@ -183,8 +188,8 @@ class PostAdapter @Inject constructor(
         return accessToken.isNotEmpty()
     }
 
-    private fun navigateToMemberDiscussion(userId: Int) {
-        navigation.addFragment(UserDiscussionScreen.newInstance(userId, Category.Member))
+    private fun navigateToMemberDiscussion(userId: Int, role: Category) {
+        navigation.addFragment(UserDiscussionScreen.newInstance(userId, role))
     }
 
     private fun navigateToPostDetail(post: Post, listener: (Reaction)->Unit) {
