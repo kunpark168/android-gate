@@ -3,34 +3,25 @@ package com.anhtam.gate9.v2.bxh
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
+import androidx.viewpager.widget.PagerAdapter
 import com.anhtam.domain.v2.Userv1
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.repository.SocialRepository
+import com.anhtam.gate9.v2.discussion.common.CommonDiscussionViewModel
+import com.anhtam.gate9.v2.newfeed.PagingViewModel
+import com.anhtam.gate9.v2.shared.PageViewModel
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 
 class ChartViewModel @Inject constructor(
         private var mRepository: SocialRepository
-) : ViewModel(){
+) : PagingViewModel<Userv1>(){
 
-    private val mUsers = MediatorLiveData<Resource<List<Userv1>>>()
-    val users: LiveData<Resource<List<Userv1>>>
-    get() = mUsers
-    var mPage = 0
-
-    fun getUserRanking(refresh: Boolean = false){
-        mPage = if (refresh) 0 else mPage + 1
-        val source = mRepository.getListRanking(Config.USER_ROLEID, mPage)
-        mUsers.addSource(source){
-            mUsers.value = it
-        }
+    private var mUserId: Int = 4
+    fun setId(id: Int){
+        mUserId = id
     }
 
-    fun getNPHRanking(refresh: Boolean = false){
-        mPage = if (refresh) 0 else mPage + 1
-        val source = mRepository.getListRanking(Config.NPH_ROLEID, mPage)
-        mUsers.addSource(source){
-            mUsers.value = it
-        }
-    }
+    override fun fetchData() = mRepository.getListRanking(mUserId, mPage)
 }

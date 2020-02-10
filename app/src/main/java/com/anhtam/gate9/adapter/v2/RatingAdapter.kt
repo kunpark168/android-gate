@@ -95,7 +95,7 @@ class RatingAdapter @Inject constructor(
                     }
                     val idUser = user.mId ?: return@setOnItemChildClickListener
                     val role = when(user.mRoleId){
-                        "5" -> Category.Publisher
+                        5 -> Category.Publisher
                         else -> Category.Member
                     }
                     if (checkLogin()) {
@@ -198,7 +198,7 @@ class RatingAdapter @Inject constructor(
         helper.getView<TextView>(R.id.nameRaterTextView)?.text = user?.mName
 
         val type = when (user?.mRoleId) {
-            "5" -> mContext.getString(R.string.nha_phat_hanh)
+            5 -> mContext.getString(R.string.nha_phat_hanh)
             else -> mContext.getString(R.string.game_thu)
         }
         helper.getView<TextView>(R.id.typeTextView)?.text = type

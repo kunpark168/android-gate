@@ -63,6 +63,8 @@
             android:id="@+id/tvPoint"
             android:textSize="@dimen/sp11"
             tools:text="83648"
+            android:drawablePadding="@dimen/layout_margin_4dp"
+            android:drawableStart="@drawable/ic_point_purple"
             android:layout_marginTop="@dimen/dp3"
             android:fontFamily="@font/roboto_regular"
             app:layout_constraintStart_toEndOf="@+id/imgAvatar"

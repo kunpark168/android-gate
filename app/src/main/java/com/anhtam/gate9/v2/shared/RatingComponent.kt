@@ -43,6 +43,11 @@ class RatingComponent @JvmOverloads constructor(
             (index + 1) * item
         }.sum()
         val num = percent.sum()
+        if (sum == 0.0 || num == 0.0){
+            txtPoint?.text = "0"
+            ratingBar?.rating = 0.0f
+            return
+        }
         val arg = sum / num
         for (index in progresses.indices) {
             params = progresses[index].layoutParams as? LayoutParams

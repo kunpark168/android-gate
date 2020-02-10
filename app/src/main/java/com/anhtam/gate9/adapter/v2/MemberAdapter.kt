@@ -27,7 +27,7 @@ class MemberAdapter @Inject constructor(
         setOnItemChildClickListener { _, view, position ->
             val idUser = data[position].mId ?: return@setOnItemChildClickListener
             val role = when(data[position].mRoleId){
-                "5" -> Category.Publisher
+                5 -> Category.Publisher
                 else -> Category.Member
             }
             when(view.id){

@@ -13,7 +13,7 @@ data class Userv2(
         @Json(name = "status")
         override var mStatus: String? = null,
         @Json(name = "role_id")
-        override var mRoleId: String? = null,
+        override var mRoleId: Int? = null,
         @Json(name = "created_date")
         override var mCreatedDate: String? = null,
         @Json(name = "name")

@@ -5,7 +5,7 @@ interface User{
     var mEmail: String?
     var mAvatar: String?
     var mStatus: String?
-    var mRoleId: String?
+    var mRoleId: Int?
     var mNote: String?
     var mCreatedDate: String?
     var mFacebook: String?
