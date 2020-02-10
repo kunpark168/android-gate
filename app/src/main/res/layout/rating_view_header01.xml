@@ -98,7 +98,7 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
         app:layout_constraintTop_toTopOf="@id/fiveStarLabel"
-        app:layout_constraintWidth_percent="0.25"/>
+        app:layout_constraintWidth_percent="0"/>
 
     <View
         android:id="@+id/fourStarProgress"
@@ -111,7 +111,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
         app:layout_constraintTop_toTopOf="@id/fourStarLabel"
-        app:layout_constraintWidth_percent="0.05" />
+        app:layout_constraintWidth_percent="0" />
 
     <View
         android:id="@+id/threeStarProgress"
@@ -124,7 +124,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
         app:layout_constraintTop_toTopOf="@id/threeStarLabel"
-        app:layout_constraintWidth_percent="0.05" />
+        app:layout_constraintWidth_percent="0" />
 
     <View
         android:id="@+id/twoStarProgress"
@@ -137,7 +137,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
         app:layout_constraintTop_toTopOf="@id/twoStarLabel"
-        app:layout_constraintWidth_percent="0.15" />
+        app:layout_constraintWidth_percent="0" />
 
     <View
         android:id="@+id/oneStarProgress"
@@ -150,7 +150,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
         app:layout_constraintTop_toTopOf="@id/oneStarLabel"
-        app:layout_constraintWidth_percent="0.1" />
+        app:layout_constraintWidth_percent="0" />
 
 
     <androidx.constraintlayout.widget.Guideline
