@@ -145,6 +145,8 @@ class NewFeedScreen : DaggerNavigationFragment(R.layout.new_feed_screen) {
         swipeRefreshLayout?.setOnRefreshListener {
             swipeRefreshLayout?.isRefreshing = false
             showProgress()
+            mTopViewModel.getBanner()
+            mTopViewModel.getGames()
             loadData()
         }
 

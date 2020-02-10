@@ -33,7 +33,7 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
     private var mCurrentCategory = 1
     open var mLazyLoad = true
     open val mViewModel: V? = null
-
+    open fun onResponseSuccess(data: RestResponse<*>?){}
     abstract val colorTextTab: Int
     abstract val tabTitle: List<Int>
     private val tabAmount = mutableListOf<Int>()
@@ -115,6 +115,7 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
                         tabAmount.add(countTab1)
                         tabAmount.add(countTab2)
                         tabAmount.add(countTab3)
+                        onResponseSuccess(response)
                         if (tabTitle.size == 4){
                             val countTab4 = (response?.mMeta?.get("countTab4") as? Double)?.toInt() ?: 0
                             tabAmount.add(countTab4)

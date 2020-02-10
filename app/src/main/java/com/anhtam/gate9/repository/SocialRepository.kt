@@ -8,7 +8,8 @@ import com.anhtam.domain.v2.wrap.WrapComments
 import com.anhtam.domain.v2.wrap.WrapGame
 import of.bum.network.FetchBoundResource
 import of.bum.network.helper.*
-import of.bum.network.v2.SocialService
+import com.anhtam.gate9.restful.SocialService
+import com.anhtam.gate9.vo.Rating
 import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Singleton

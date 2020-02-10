@@ -1,17 +1,13 @@
 package com.anhtam.gate9.v2.createpost
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.ChooseGalleryAdapter
 import com.anhtam.gate9.v2.shared.AbstractGalleryFragment
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.create_post_screen.*
 import of.bum.network.v2.MediaService
-import of.bum.network.v2.SocialService
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback

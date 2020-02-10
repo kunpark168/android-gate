@@ -65,7 +65,7 @@ data class Userv1(
         @Json(name = "skype")
         override var mSkype: String? = null,
         @Json(name = "total_post")
-        override var mTotalPost: String? = null,
+        override var mTotalPost: Int? = null,
         @Json(name = "following")
         override var mIsFollowing: Boolean? = null,
         @Json(name = "appellation")
