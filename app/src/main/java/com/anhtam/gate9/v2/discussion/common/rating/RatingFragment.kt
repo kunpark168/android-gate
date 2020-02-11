@@ -27,6 +27,12 @@ class RatingFragment: CommonDiscussionFragment<Rating, RatingAdapter, RatingView
         mAdapter.setUser(user)
     }
 
+    override fun onTabChanged() {
+        super.onTabChanged()
+        mAdapter.setCategory(mCurrentCategory)
+    }
+
+
     override fun initView() {
         super.initView()
         mRatingView = RatingComponent(context)

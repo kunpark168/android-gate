@@ -150,8 +150,62 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
         app:layout_constraintTop_toTopOf="@id/oneStarLabel"
-        app:layout_constraintWidth_percent="0" />
+        app:layout_constraintWidth_percent="0.25" />
 
+    <TextView
+        android:id="@+id/tvOneStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/oneStarProgress"
+        app:layout_constraintBottom_toBottomOf="@id/oneStarProgress"
+        app:layout_constraintStart_toEndOf="@id/oneStarProgress"
+        android:layout_marginStart="@dimen/layout_margin_8dp"
+        style="@style/SmallText"
+        tools:text="1"/>
+
+    <TextView
+        android:id="@+id/tvTwoStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/twoStarProgress"
+        app:layout_constraintBottom_toBottomOf="@id/twoStarProgress"
+        app:layout_constraintStart_toEndOf="@id/twoStarProgress"
+        android:layout_marginStart="@dimen/layout_margin_8dp"
+        style="@style/SmallText"
+        tools:text="1"/>
+
+    <TextView
+        android:id="@+id/tvThreeStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/threeStarProgress"
+        app:layout_constraintBottom_toBottomOf="@id/threeStarProgress"
+        app:layout_constraintStart_toEndOf="@id/threeStarProgress"
+        android:layout_marginStart="@dimen/layout_margin_8dp"
+        style="@style/SmallText"
+        tools:text="1"/>
+
+    <TextView
+        android:id="@+id/tvFourStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/fourStarProgress"
+        app:layout_constraintBottom_toBottomOf="@id/fourStarProgress"
+        app:layout_constraintStart_toEndOf="@id/fourStarProgress"
+        android:layout_marginStart="@dimen/layout_margin_8dp"
+        style="@style/SmallText"
+        tools:text="1"/>
+
+    <TextView
+        android:id="@+id/tvFiveStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/fiveStarProgress"
+        app:layout_constraintBottom_toBottomOf="@id/fiveStarProgress"
+        app:layout_constraintStart_toEndOf="@id/fiveStarProgress"
+        android:layout_marginStart="@dimen/layout_margin_8dp"
+        style="@style/SmallText"
+        tools:text="1"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/centerGuideline"
