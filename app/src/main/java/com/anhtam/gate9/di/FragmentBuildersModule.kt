@@ -17,7 +17,7 @@ import com.anhtam.gate9.v2.auth.register.RegisterScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.auth.login.LoginModule
 import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
-import com.anhtam.gate9.v2.bxh.ChartModule
+import com.anhtam.gate9.v2.bxh.BXHModule
 import com.anhtam.gate9.v2.createimage.CreateImageScreen
 import com.anhtam.gate9.v2.createpost.CreatePostScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
@@ -117,7 +117,7 @@ abstract class FragmentBuildersModule {
 
 
     @ContributesAndroidInjector(
-            modules = [ChartModule::class]
+            modules = [BXHModule::class]
     )
     abstract fun contributeChartsActivity(): BXHScreen
 
