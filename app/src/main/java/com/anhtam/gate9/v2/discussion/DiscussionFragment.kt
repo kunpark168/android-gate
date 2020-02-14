@@ -57,7 +57,7 @@ abstract class DiscussionFragment : DaggerNavigationFragment(R.layout.shared_dis
                 .replace(R.id.headerFrameLayout, headerFragment)
                 .commit()
         // Set up view pager
-        var mFragments = fragments()
+        val mFragments = fragments()
         mAdapter = SharePageAdapter(childFragmentManager, mFragments)
         vpContainer?.adapter = mAdapter
         vpContainer?.offscreenPageLimit = 4

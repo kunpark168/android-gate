@@ -50,7 +50,7 @@ class MXHGateScreen : DaggerNavigationFragment(R.layout.mxh_gate_screen) {
 
     private fun setUpViewPager() {
         val fragments = arrayListOf<Fragment>()
-        fragments.add(MXHGateTinGameScreen.newInstance())
+        fragments.add(MXHGateTinGameScreen.newInstance(1))
         fragments.add(MXHGateCamNangScreen.newInstance())
         fragments.add(MXHGateVideoScreen.newInstance())
         fragments.add(MXHGateImageScreen.newInstance())

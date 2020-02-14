@@ -79,6 +79,7 @@ class TatCaFollowingScreen constructor(val mTab: Int) : AbstractVisibleFragment(
             }
         })
     }
+
     private fun preloadData(){
         if (mTab != 1){
             lazyLoad()

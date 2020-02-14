@@ -37,7 +37,6 @@ import com.anhtam.gate9.v2.mxh_game.MXHGameModule
 import com.anhtam.gate9.v2.mxh_gate.MXHGateScreen
 import com.anhtam.gate9.v2.mxh_gate.anh.MXHGateImageScreen
 import com.anhtam.gate9.v2.mxh_gate.cam_nang.MXHGateCamNangScreen
-import com.anhtam.gate9.v2.mxh_gate.tin_game.MXHGateTinGameScreen
 import com.anhtam.gate9.v2.mxh_gate.video.MXHGateVideoScreen
 import com.anhtam.gate9.v2.newfeed.NewFeedViewModel
 import com.anhtam.gate9.v2.detail_post.DetailPostModule
@@ -47,6 +46,7 @@ import com.anhtam.gate9.v2.reaction.ReactionModule
 import com.anhtam.gate9.v2.shared.muilti_gallery.MultiChooseImageScreen
 import com.anhtam.gate9.v2.splash.SplashScreen
 import com.anhtam.gate9.v2.follow.FollowScreen
+import com.anhtam.gate9.v2.mxh_gate.DuLieuModule
 import com.anhtam.gate9.v2.report.game.ReportGameActivity
 import com.anhtam.gate9.v2.report.game.ReportGameModule
 import com.anhtam.gate9.v2.report.post.ReportPostActivity
@@ -140,11 +140,10 @@ abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract fun contributeCaNhanScreen() :CaNhanScreen
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(
+            modules = [DuLieuModule::class]
+    )
     abstract fun contributeMXHGateScreen() :MXHGateScreen
-
-    @ContributesAndroidInjector
-    abstract fun contributeMXHGateTinGameScreen() :MXHGateTinGameScreen
 
     @ContributesAndroidInjector
     abstract fun contributeMXHCamNangScreen() :MXHGateCamNangScreen
