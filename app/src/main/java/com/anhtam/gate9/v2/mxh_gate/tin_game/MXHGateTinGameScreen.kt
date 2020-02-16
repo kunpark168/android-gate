@@ -53,7 +53,15 @@ open class MXHGateTinGameScreen<A: BaseQuickAdapter<Article, BaseViewHolder>> co
         mViewModel.setCategory(mTab)
         preloadData()
         initRecyclerView()
+        initSwipeEvent()
         observerDataChanged()
+    }
+
+    private fun initSwipeEvent(){
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+            loadData()
+        }
     }
 
     override fun onUiVisibleChange(isUiVisible: Boolean) {
