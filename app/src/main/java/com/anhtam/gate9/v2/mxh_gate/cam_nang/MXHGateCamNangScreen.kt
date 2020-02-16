@@ -1,26 +1,10 @@
 package com.anhtam.gate9.v2.mxh_gate.cam_nang
 
-import android.os.Bundle
-import android.view.*
-import com.anhtam.gate9.R
-import com.anhtam.gate9.navigation.NavigationFragment
-import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.anhtam.gate9.adapter.v2.ArticleAdapter
+import com.anhtam.gate9.v2.mxh_gate.tin_game.MXHGateTinGameScreen
 
-class MXHGateCamNangScreen : NavigationFragment() {
-
-    companion object{
-        fun newInstance() = MXHGateCamNangScreen()
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.mxh_gate_cam_nang_screen, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        init()
-    }
-    private fun init(){
-
-    }
+class MXHGateCamNangScreen(tab: Int): MXHGateTinGameScreen<ArticleAdapter>(tab){
+    override var mLayoutManager: RecyclerView.LayoutManager? = LinearLayoutManager(context)
 }

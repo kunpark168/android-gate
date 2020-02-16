@@ -17,7 +17,7 @@ import com.anhtam.gate9.v2.auth.register.RegisterScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.auth.login.LoginModule
 import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
-import com.anhtam.gate9.v2.bxh.ChartModule
+import com.anhtam.gate9.v2.bxh.BXHModule
 import com.anhtam.gate9.v2.createimage.CreateImageScreen
 import com.anhtam.gate9.v2.createpost.CreatePostScreen
 import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
@@ -35,10 +35,6 @@ import com.anhtam.gate9.v2.messenger.ChannelModule
 import com.anhtam.gate9.v2.messenger.chat.ChatModule
 import com.anhtam.gate9.v2.mxh_game.MXHGameModule
 import com.anhtam.gate9.v2.mxh_gate.MXHGateScreen
-import com.anhtam.gate9.v2.mxh_gate.anh.MXHGateImageScreen
-import com.anhtam.gate9.v2.mxh_gate.cam_nang.MXHGateCamNangScreen
-import com.anhtam.gate9.v2.mxh_gate.tin_game.MXHGateTinGameScreen
-import com.anhtam.gate9.v2.mxh_gate.video.MXHGateVideoScreen
 import com.anhtam.gate9.v2.newfeed.NewFeedViewModel
 import com.anhtam.gate9.v2.detail_post.DetailPostModule
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
@@ -47,6 +43,7 @@ import com.anhtam.gate9.v2.reaction.ReactionModule
 import com.anhtam.gate9.v2.shared.muilti_gallery.MultiChooseImageScreen
 import com.anhtam.gate9.v2.splash.SplashScreen
 import com.anhtam.gate9.v2.follow.FollowScreen
+import com.anhtam.gate9.v2.mxh_gate.DuLieuModule
 import com.anhtam.gate9.v2.report.game.ReportGameActivity
 import com.anhtam.gate9.v2.report.game.ReportGameModule
 import com.anhtam.gate9.v2.report.post.ReportPostActivity
@@ -117,7 +114,7 @@ abstract class FragmentBuildersModule {
 
 
     @ContributesAndroidInjector(
-            modules = [ChartModule::class]
+            modules = [BXHModule::class]
     )
     abstract fun contributeChartsActivity(): BXHScreen
 
@@ -140,20 +137,10 @@ abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract fun contributeCaNhanScreen() :CaNhanScreen
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(
+            modules = [DuLieuModule::class]
+    )
     abstract fun contributeMXHGateScreen() :MXHGateScreen
-
-    @ContributesAndroidInjector
-    abstract fun contributeMXHGateTinGameScreen() :MXHGateTinGameScreen
-
-    @ContributesAndroidInjector
-    abstract fun contributeMXHCamNangScreen() :MXHGateCamNangScreen
-
-    @ContributesAndroidInjector
-    abstract fun contributeMXHGateVideoScreen() :MXHGateVideoScreen
-
-    @ContributesAndroidInjector
-    abstract fun contributeMXHGateImageScreen() :MXHGateImageScreen
 
     @ContributesAndroidInjector(
             modules = [SearchModule::class]

@@ -21,7 +21,7 @@ class BXHScreen(
         private val mRoleId: Int
 ) : DaggerNavigationFragment(R.layout.bxh_screen) {
 
-    private val viewModel: ChartViewModel by viewModels { vmFactory }
+    private val viewModel: BXHViewModel by viewModels { vmFactory }
     @Inject lateinit var mAdapter: ChartsAdapter
     @field:Named("avatar") @Inject lateinit var avatarOptions: RequestOptions
 
@@ -83,7 +83,7 @@ class BXHScreen(
                                     source.add(RankingEntity(data.first(), Ranking.CHAMPIONS.ranking))
                                     source.add(RankingEntity(data[1], Ranking.RUNNER_UP.ranking))
                                     source.add(RankingEntity(data[2], Ranking.SECOND_RUNNER_UP.ranking))
-                                    source.addAll(data.subList(3, data.size - 1).map { user -> RankingEntity(user, Ranking.OTHERS.ranking) })
+                                    source.addAll(data.subList(3, data.size).map { user -> RankingEntity(user, Ranking.OTHERS.ranking) })
                                 }
                             }
                             mAdapter.setNewData(source)

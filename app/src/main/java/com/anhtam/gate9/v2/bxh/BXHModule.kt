@@ -7,9 +7,9 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 @Module
-interface ChartModule {
+interface BXHModule {
     @Binds
     @IntoMap
-    @ViewModelKey(ChartViewModel::class)
-    fun bindViewModel(chartViewModel: ChartViewModel): ViewModel
+    @ViewModelKey(BXHViewModel::class)
+    fun bindViewModel(BXHViewModel: BXHViewModel): ViewModel
 }
