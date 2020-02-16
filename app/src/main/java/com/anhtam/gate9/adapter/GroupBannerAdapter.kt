@@ -22,8 +22,8 @@ class GroupBannerAdapter @Inject constructor(val navigation: Navigation?,
 
     init {
         setOnItemClickListener { _, _, position ->
-            val game = data[position]
-            navigation?.addFragment(GameDiscussionScreen.newInstance(game))
+            val id = data[position].gameId ?: return@setOnItemClickListener
+            navigation?.addFragment(GameDiscussionScreen.newInstance(id))
         }
     }
 

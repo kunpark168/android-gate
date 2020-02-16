@@ -120,7 +120,8 @@ class MXHGameTabFragment : DaggerNavigationFragment(R.layout.mxh_game_tab_fragme
 
         init {
             setOnItemClickListener { _, _, position ->
-                navigation?.addFragment(GameDiscussionScreen.newInstance(data[position]))
+                val id = data[position].gameId ?: return@setOnItemClickListener
+                navigation?.addFragment(GameDiscussionScreen.newInstance(id))
             }
         }
 

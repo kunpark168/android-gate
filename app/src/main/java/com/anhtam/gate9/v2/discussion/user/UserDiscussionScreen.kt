@@ -1,9 +1,11 @@
 package com.anhtam.gate9.v2.discussion.user
 
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.discussion.DiscussionFragment
+import com.anhtam.gate9.v2.discussion.DiscussionViewModel
 import com.anhtam.gate9.v2.discussion.TabInfo
 import com.anhtam.gate9.v2.discussion.common.data.DataFragment
 import com.anhtam.gate9.v2.discussion.common.game.GGameFragment
@@ -13,7 +15,6 @@ import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
 import com.anhtam.gate9.v2.report.user.ReportUserActivity
 import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
-import com.anhtam.gate9.vo.EUser
 import com.anhtam.gate9.vo.model.Category
 import kotlinx.android.synthetic.main.shared_discussion_fragment.*
 import of.bum.network.helper.Resource
@@ -22,6 +23,7 @@ class UserDiscussionScreen : DiscussionFragment() {
 
     private var mUserId: Int = 0
     private lateinit var mType: Category
+    private val viewModel: DiscussionViewModel by viewModels { vmFactory }
     override val fragmentInfo: Fragment
         get() =
             if (mType == Category.Member)  UserInfoFragment.newInstance()

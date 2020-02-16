@@ -252,7 +252,8 @@ class RatingAdapter @Inject constructor(
     }
 
     private fun navigateToGameDiscussion(game: Game) {
-        navigation.addFragment(GameDiscussionScreen.newInstance(game))
+        val id = game.gameId ?: return
+        navigation.addFragment(GameDiscussionScreen.newInstance(id))
     }
 
     private fun changeReaction(react: Reaction, position: Int) {

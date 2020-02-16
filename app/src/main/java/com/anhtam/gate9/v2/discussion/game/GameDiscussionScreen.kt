@@ -2,28 +2,27 @@ package com.anhtam.gate9.v2.discussion.game
 
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.anhtam.domain.v2.Gamev1
-import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.gate9.R
+import com.anhtam.gate9.v2.ChiTietGameViewModel
 import com.anhtam.gate9.v2.discussion.DiscussionFragment
 import com.anhtam.gate9.v2.discussion.TabInfo
 import com.anhtam.gate9.v2.discussion.common.data.DataFragment
 import com.anhtam.gate9.v2.discussion.common.discussion.DiscussionGameFragment
-import com.anhtam.gate9.v2.discussion.common.document.GameDocumentFragment
 import com.anhtam.gate9.v2.discussion.common.info.GameInfoFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
+import com.anhtam.gate9.v2.discussion.game.thao_luan.ThaoLuanFragment
 import com.anhtam.gate9.v2.report.game.ReportGameActivity
 import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import com.anhtam.gate9.vo.model.Category
-import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.shared_discussion_fragment.*
-import kotlinx.android.synthetic.main.header_game_discussion.*
-import of.bum.network.helper.Resource
 
 class GameDiscussionScreen(
-        private val mGame: Game
+        private val mId: Int
 ): DiscussionFragment() {
+
+    private val mViewModel: ChiTietGameViewModel by viewModels { vmFactory }
 
     override val fragmentInfo: Fragment
         get() = GameInfoFragment.newInstance()
@@ -37,7 +36,7 @@ class GameDiscussionScreen(
 
     override fun fragments(): List<AbstractVisibleFragment> {
         val fragments = ArrayList<AbstractVisibleFragment>()
-        fragments.add(GameDocumentFragment.newInstance("1"))
+        fragments.add(ThaoLuanFragment.newInstance())
         fragments.add(RatingFragment.newInstance(1, Category.Member))
         fragments.add(DataFragment.newInstance(1))
         fragments.add(DiscussionGameFragment.newInstance(""))
@@ -62,13 +61,12 @@ class GameDiscussionScreen(
     }
 
     override fun loadData() {
-        viewModel.mGame.value = mGame
+        mViewModel.mGameId.value = mId
     }
 
     override fun observer() {
         super.observer()
-        viewModel._bottomStatus.observe(this, Observer {
-
+        mViewModel._bottomStatus.observe(this, Observer {
             if(it) {
                 footerFrameLayout?.visibility = View.VISIBLE
             } else {
@@ -78,6 +76,6 @@ class GameDiscussionScreen(
     }
 
     companion object {
-        fun newInstance(game: Game) = GameDiscussionScreen(game)
+        fun newInstance(id: Int) = GameDiscussionScreen(id)
     }
 }

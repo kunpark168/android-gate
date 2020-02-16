@@ -26,7 +26,6 @@ abstract class DiscussionFragment : DaggerNavigationFragment(R.layout.shared_dis
     private var mAdapter: SharePageAdapter? = null
     private val navViewModel: NavViewModel by viewModels()
     abstract val fragmentInfo: Fragment
-    protected val viewModel: DiscussionViewModel by viewModels { vmFactory }
     abstract fun loadData()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,7 +56,7 @@ abstract class DiscussionFragment : DaggerNavigationFragment(R.layout.shared_dis
                 .replace(R.id.headerFrameLayout, headerFragment)
                 .commit()
         // Set up view pager
-        var mFragments = fragments()
+        val mFragments = fragments()
         mAdapter = SharePageAdapter(childFragmentManager, mFragments)
         vpContainer?.adapter = mAdapter
         vpContainer?.offscreenPageLimit = 4

@@ -53,8 +53,8 @@ class DetailPostScreen private constructor(
     }
 
     override fun toGameDiscussion() {
-        val game = _post.game ?: return
-        navigation?.addFragment(GameDiscussionScreen.newInstance(game))
+        val id = _post.game?.gameId ?: return
+        navigation?.addFragment(GameDiscussionScreen.newInstance(id))
     }
 
     override fun toReact() {

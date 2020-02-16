@@ -2,6 +2,7 @@ package com.anhtam.gate9.v2.discussion.game
 
 import androidx.lifecycle.ViewModel
 import com.anhtam.gate9.di.ViewModelKey
+import com.anhtam.gate9.v2.ChiTietGameViewModel
 import com.anhtam.gate9.v2.discussion.DiscussionViewModel
 import com.anhtam.gate9.v2.discussion.common.data.DataFragment
 import com.anhtam.gate9.v2.discussion.common.data.DataModule
@@ -13,6 +14,8 @@ import com.anhtam.gate9.v2.discussion.common.game.GGameModule
 import com.anhtam.gate9.v2.discussion.common.info.GameInfoFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingModule
+import com.anhtam.gate9.v2.discussion.game.thao_luan.ThaoLuanFragment
+import com.anhtam.gate9.v2.discussion.game.thao_luan.ThaoLuanModule
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -41,8 +44,9 @@ abstract class GameDiscussionModule {
     abstract fun contributeDataFragment(): DataFragment
 
     @ContributesAndroidInjector(
+            modules = [ThaoLuanModule::class]
     )
-    abstract fun contributeDocumentFragment(): GameDocumentFragment
+    abstract fun contributeThaoLuanFragment(): ThaoLuanFragment
 
     @ContributesAndroidInjector(
             modules = [GGameModule::class]
@@ -58,5 +62,10 @@ abstract class GameDiscussionModule {
     @IntoMap
     @ViewModelKey(DiscussionViewModel::class)
     abstract fun bindGameDiscussionViewModel(discussionViewModel: DiscussionViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ChiTietGameViewModel::class)
+    abstract fun bindChiTietDiscussionViewModel(chiTietGameViewModel: ChiTietGameViewModel): ViewModel
 
 }
