@@ -40,7 +40,7 @@ object Versions {
     // UI
     const val constraintLayout = "1.1.3"
     const val googleAndroidMaterial = "1.2.0-alpha01"
-    const val recyclerView = "1.1.0-beta02"
+    const val recyclerView = "1.1.0-rc01"
     const val circleImage = "3.0.0"
     const val glide = "4.9.0"
     const val baseRecyclerView = "2.9.35"

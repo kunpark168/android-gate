@@ -35,9 +35,6 @@ import com.anhtam.gate9.v2.messenger.ChannelModule
 import com.anhtam.gate9.v2.messenger.chat.ChatModule
 import com.anhtam.gate9.v2.mxh_game.MXHGameModule
 import com.anhtam.gate9.v2.mxh_gate.MXHGateScreen
-import com.anhtam.gate9.v2.mxh_gate.anh.MXHGateImageScreen
-import com.anhtam.gate9.v2.mxh_gate.cam_nang.MXHGateCamNangScreen
-import com.anhtam.gate9.v2.mxh_gate.video.MXHGateVideoScreen
 import com.anhtam.gate9.v2.newfeed.NewFeedViewModel
 import com.anhtam.gate9.v2.detail_post.DetailPostModule
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
@@ -144,15 +141,6 @@ abstract class FragmentBuildersModule {
             modules = [DuLieuModule::class]
     )
     abstract fun contributeMXHGateScreen() :MXHGateScreen
-
-    @ContributesAndroidInjector
-    abstract fun contributeMXHCamNangScreen() :MXHGateCamNangScreen
-
-    @ContributesAndroidInjector
-    abstract fun contributeMXHGateVideoScreen() :MXHGateVideoScreen
-
-    @ContributesAndroidInjector
-    abstract fun contributeMXHGateImageScreen() :MXHGateImageScreen
 
     @ContributesAndroidInjector(
             modules = [SearchModule::class]

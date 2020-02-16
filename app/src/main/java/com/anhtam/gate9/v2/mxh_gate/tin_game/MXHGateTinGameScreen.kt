@@ -7,25 +7,28 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
+import com.anhtam.domain.v2.Article
 import com.anhtam.gate9.R
-import com.anhtam.gate9.adapter.v2.ArticleAdapter
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.v2.mxh_gate.DuLieuViewModel
 import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.mxh_gate_tin_game_screen.*
 import of.bum.network.helper.Resource
 import timber.log.Timber
 import javax.inject.Inject
 
-class MXHGateTinGameScreen constructor(val mTab: Int) : AbstractVisibleFragment(R.layout.mxh_gate_tin_game_screen) {
+open class MXHGateTinGameScreen<A: BaseQuickAdapter<Article, BaseViewHolder>> constructor(val mTab: Int) : AbstractVisibleFragment(R.layout.mxh_gate_tin_game_screen) {
 
     companion object{
-        fun newInstance(tab: Int) = MXHGateTinGameScreen(tab)
+        fun <A: BaseQuickAdapter<Article, BaseViewHolder>> newInstance(tab: Int) = MXHGateTinGameScreen<A>(tab)
     }
 
     private var mFirstLoad = true
-
-    @Inject lateinit var mAdapter: ArticleAdapter
+    protected open var mLayoutManager: RecyclerView.LayoutManager? = null
+    @Inject lateinit var mAdapter: A
     private val mViewModel: DuLieuViewModel by viewModels { vmFactory }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,6 +42,7 @@ class MXHGateTinGameScreen constructor(val mTab: Int) : AbstractVisibleFragment(
             mViewModel.loadData()
         }, rvTinGame)
         rvTinGame?.adapter = mAdapter
+        rvTinGame?.layoutManager = mLayoutManager
         val unwrappedContext = context ?: return
         val dividerItemDecoration = DividerItemDecoration(unwrappedContext, LinearLayout.VERTICAL)
         val drawableDivider = ContextCompat.getDrawable(unwrappedContext, R.drawable.divider_item_decorator) ?: return
@@ -46,6 +50,7 @@ class MXHGateTinGameScreen constructor(val mTab: Int) : AbstractVisibleFragment(
         rvTinGame?.addItemDecoration(dividerItemDecoration)
     }
     private fun init(){
+        mViewModel.setCategory(mTab)
         preloadData()
         initRecyclerView()
         observerDataChanged()
