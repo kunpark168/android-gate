@@ -6,7 +6,6 @@ import android.text.Html
 import android.text.TextWatcher
 import android.view.*
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -34,7 +33,6 @@ import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.bottom_bar_type_layout.*
 import kotlinx.android.synthetic.main.detail_post_screen.*
 import of.bum.network.helper.Resource
-import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -67,6 +65,8 @@ class DetailPostScreen private constructor(
     }
 
     private val viewModel: DetailPostViewModel by viewModels { vmFactory }
+    private var mIsRefresh = false
+    private var mPost: Post? = null
 
     @field:Named("avatar") @Inject lateinit var avatarOptions: RequestOptions
     @field:Named("banner") @Inject lateinit var bannerOptions: RequestOptions
@@ -92,6 +92,7 @@ class DetailPostScreen private constructor(
     }
 
     private fun init() {
+        mIsRefresh = true
         viewModel.initialize(_post, this)
         viewModel.getChildComment()
         initView()
@@ -104,7 +105,6 @@ class DetailPostScreen private constructor(
         initRvPhoto()
         initRvComment()
         initGalleryRv()
-        initUI()
     }
 
     private fun initGalleryRv(){
@@ -144,6 +144,11 @@ class DetailPostScreen private constructor(
             when(resource) {
                 is Resource.Success -> {
                     hideProgress()
+                    if (mIsRefresh) {
+                        mPost = resource.data?.mDetails ?: _post
+                        mIsRefresh = false
+                        updateUI()
+                    }
                     val data = resource.data?.mComments
                     if (data.isNullOrEmpty()) {
                         mAdapter.loadMoreEnd()
@@ -171,10 +176,10 @@ class DetailPostScreen private constructor(
      * 2) Display post - comment
      * 3) Display game
      */
-    private fun initUI() {
+    private fun updateUI() {
         initPhoto()
         // Set User
-        val unwrapPost = _post
+        val unwrapPost = mPost ?: return
         val user = unwrapPost.user
         Glide.with(this)
                 .load(user?.mAvatar?.toImage())
@@ -232,7 +237,7 @@ class DetailPostScreen private constructor(
     }
 
     private fun initPhoto(){
-        val photos = _post.photo ?: return
+        val photos = mPost?.photo ?: return
 //        val isFormat = "[[.*]]".toRegex().matches(photos) TODO Regex
         val isFormat = (photos.startsWith('[') && photos.endsWith(']'))
         val stringConcat = if (!isFormat) {
@@ -274,6 +279,8 @@ class DetailPostScreen private constructor(
         }
 
         swipeRefreshLayout?.setOnRefreshListener {
+            mIsRefresh = true
+            showProgress()
             swipeRefreshLayout?.isRefreshing = false
             viewModel.getChildComment()
         }

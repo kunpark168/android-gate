@@ -42,7 +42,7 @@ class DetailPostViewModel @Inject constructor(
         navigation = WeakReference(navigator)
         _userId = post.user?.mId ?: throw IllegalReturn()
         _gameId = try {
-            post.game?.gameId?.toInt() ?: 0
+            post.game?.gameId ?: 0
         } catch (e: NumberFormatException){
             throw IllegalReturn()
         }
