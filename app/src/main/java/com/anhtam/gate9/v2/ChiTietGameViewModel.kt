@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.discussion
+package com.anhtam.gate9.v2
 
 import androidx.lifecycle.*
 import com.anhtam.domain.v2.Gamev1
@@ -9,16 +9,16 @@ import com.anhtam.gate9.utils.AbsentLiveData
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 
-class DiscussionViewModel @Inject constructor(
-        private val socialRepository: SocialRepository) : ViewModel() {
+class ChiTietGameViewModel @Inject constructor(
+        private val repos: SocialRepository) : ViewModel() {
 
-    val mUserId: MutableLiveData<Int> = MutableLiveData()
+    val mGameId: MutableLiveData<Int> = MutableLiveData()
 
-    val mUser: LiveData<Resource<Userv1>> = Transformations.switchMap(mUserId) {
+    val mGame: LiveData<Resource<Gamev1>> = Transformations.switchMap(mGameId) {
         if (it == null) {
             AbsentLiveData.create()
         } else {
-            socialRepository.getOtherUserInfoById(it)
+            repos.getGameDetail(it)
         }
     }
 

@@ -22,8 +22,8 @@ class GameQuickAdapter @Inject constructor(
 
     init {
         setOnItemClickListener { _, _, position ->
-            val game = data[position].wrap
-            navigation.addFragment(GameDiscussionScreen.newInstance(game))
+            val id = data[position].wrap.gameId ?: return@setOnItemClickListener
+            navigation.addFragment(GameDiscussionScreen.newInstance(id))
         }
     }
 

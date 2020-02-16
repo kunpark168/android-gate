@@ -16,91 +16,91 @@ import javax.inject.Singleton
 
 @Singleton
 class SocialRepository @Inject constructor(
-        val socialService: SocialService
+        val service: SocialService
 ) {
     fun getPostAndCommentByUser(userId: Int, type: Int, page: Int, limit: Int) = object: Lv2FetchResource<List<Post>>(){
-        override fun createCall() = socialService.getPostAndCommentByUser(userId, type, page, limit)
+        override fun createCall() = service.getPostAndCommentByUser(userId, type, page, limit)
     }.asLiveData()
 
     fun getNPHPost(userId: Int, type: Int, page: Int, limit: Int) = object: Lv2FetchResource<List<Post>>(){
-        override fun createCall() = socialService.getNPHPost(userId, type, page, limit)
+        override fun createCall() = service.getNPHPost(userId, type, page, limit)
     }.asLiveData()
 
     fun getUserDetail() = object: Lv2FetchResource<Userv1>(){
-        override fun createCall() = socialService.getInfo()
+        override fun createCall() = service.getInfo()
     }.asLiveData()
 
     fun getListRanking(roleId: Int, page: Int, limit: Int = 10) = object: Lv2FetchResource<List<Userv1>>(){
-        override fun createCall() = socialService.getRanking(roleId, page, limit)
+        override fun createCall() = service.getRanking(roleId, page, limit)
     }.asLiveData()
 
     fun getGameRelatedToUser(userId: Int, type: Int, page: Int, limit: Int)= object: Lv2FetchResource<List<WrapGame>>(){
-        override fun createCall() = socialService.getGameRelatedToUser(userId, type, page, limit)
+        override fun createCall() = service.getGameRelatedToUser(userId, type, page, limit)
     }.asLiveData()
 
     fun getNPHGame(userId: Int, type: Int, page: Int, limit: Int)= object: Lv2FetchResource<List<WrapGame>>(){
-        override fun createCall() = socialService.getNPHGame(userId, type, page, limit)
+        override fun createCall() = service.getNPHGame(userId, type, page, limit)
     }.asLiveData()
 
     fun getNewGame(page: Int, limit: Int)= object: Lv2FetchResource<List<Gamev1>>(){
-        override fun createCall() = socialService.getNewGame(page, limit)
+        override fun createCall() = service.getNewGame(page, limit)
     }.asLiveData()
 
     fun getDataRelatedToUser(userId: Int, type: Int, page: Int, limit: Int)= object: Lv2FetchResource<List<Article>>(){
-        override fun createCall() = socialService.getDataRelatedToUser(userId, type, page, limit)
+        override fun createCall() = service.getDataRelatedToUser(userId, type, page, limit)
     }.asLiveData()
 
     fun getNPHData(userId: Int, type: Int, page: Int, limit: Int)= object: Lv2FetchResource<List<Article>>(){
-        override fun createCall() = socialService.getNPHData(userId, type, page, limit)
+        override fun createCall() = service.getNPHData(userId, type, page, limit)
     }.asLiveData()
 
     fun getOtherUserInfoById(userId: Int) = object: Lv2FetchResource<Userv1>(){
-        override fun createCall() = socialService.getOtherUserInfoById(userId)
+        override fun createCall() = service.getOtherUserInfoById(userId)
     }.asLiveData()
 
     fun getGamesByTab(pageNumber: Int, tab: Int) = object: FetchBoundResource<List<Gamev1>>() {
-        override fun createCall() = socialService.getMXHGame(tab, pageNumber)
+        override fun createCall() = service.getMXHGame(tab, pageNumber)
     }.asLiveData()
 
     fun react(params: Map<String, Int>) = object : Lv2FetchResource<Base>(){
-        override fun createCall() = socialService.react(params)
+        override fun createCall() = service.react(params)
 
     }.asLiveData()
 
     fun postViewForum(commentId: Int) = object : Lv2FetchResource<Base>(){
-        override fun createCall() = socialService.postViewForum(commentId)
+        override fun createCall() = service.postViewForum(commentId)
     }.asLiveData()
 
     fun getListingPost(page: Int, limit: Int) = object : FetchBoundResource<List<Post>>(){
-        override fun createCall() = socialService.getListPosts(page, limit)
+        override fun createCall() = service.getListPosts(page, limit)
     }.asLiveData()
 
     fun getFollowingInfo(tab: Int, page: Int) = object : FetchBoundResource<List<Post>>(){
-        override fun createCall() = socialService.getFollowingInfo(tab, page)
+        override fun createCall() = service.getFollowingInfo(tab, page)
     }.asLiveData()
 
     fun getBanners() = object : FetchBoundResource<List<Banner>>(){
-        override fun createCall() = socialService.getBanners()
+        override fun createCall() = service.getBanners()
     }.asLiveData()
 
     fun getGameNominate() = object : FetchBoundResource<List<Gamev1>>(){
-        override fun createCall() = socialService.getGameNominate()
+        override fun createCall() = service.getGameNominate()
     }.asLiveData()
 
     fun getSocialContact(commentId: Int, tab: Int, page: Int) = object : FetchBoundResource<List<Userv1>>(){
-        override fun createCall() = socialService.getListSocialContact(commentId, tab, page)
+        override fun createCall() = service.getListSocialContact(commentId, tab, page)
     }.asLiveData()
 
     fun getChildComment(postId: Int, page: Int) = object : FetchBoundResource<WrapComments>(){
-        override fun createCall() = socialService.getDetailPosts(postId.toLong(), page)
+        override fun createCall() = service.getDetailPosts(postId.toLong(), page)
     }.asLiveData()
 
     fun uploadImages(file: List<MultipartBody.Part>) = object : Lv1FetchResource<List<String>>(){
-        override fun createCall() = socialService.upload(file)
+        override fun createCall() = service.upload(file)
     }.asLiveData()
 
     fun listUser(role: Int, page: Int) = object : Lv2FetchResource<List<Userv1>>(){
-        override fun createCall() = socialService.listUser(role, page)
+        override fun createCall() = service.listUser(role, page)
     }.asLiveData()
 
     fun follow(){
@@ -108,7 +108,7 @@ class SocialRepository @Inject constructor(
         params["userid"] = "2"
         params["roleid"] = "4"
         params["gameid"] = "0"
-        socialService.follow(params)
+        service.follow(params)
     }
 
     fun registerWithEmail(email: String, password: String, name: String): LiveData<Resource<Base>>{
@@ -117,16 +117,24 @@ class SocialRepository @Inject constructor(
         params["password"] = password
         params["name"] = name
         return object: Lv2FetchResource<Base>(){
-            override fun createCall() = socialService.register(params)
+            override fun createCall() = service.register(params)
         }.asLiveData()
     }
 
     // Rating
     fun getNPHRating(userId: Int, tab: Int, page: Int, limit: Int) = object : FetchBoundResource<List<Rating>>(){
-        override fun createCall() = socialService.getNPHRating(userId, tab, page, limit)
+        override fun createCall() = service.getNPHRating(userId, tab, page, limit)
     }.asLiveData()
 
     fun getUserRating(userId: Int, tab: Int, page: Int, limit: Int) = object : FetchBoundResource<List<Rating>>(){
-        override fun createCall() = socialService.getUserRating(userId, tab, page, limit)
+        override fun createCall() = service.getUserRating(userId, tab, page, limit)
+    }.asLiveData()
+
+    fun getGameDetail(userId: Int) = object: Lv2FetchResource<Gamev1>(){
+        override fun createCall() = service.getGameDetail(userId)
+    }.asLiveData()
+
+    fun getThaoLuanGame(gameId: Int, page: Int, limit: Int = 5) = object: Lv2FetchResource<List<Post>>(){
+        override fun createCall() = service.getThaoLuanGame(gameId, page, limit)
     }.asLiveData()
 }
