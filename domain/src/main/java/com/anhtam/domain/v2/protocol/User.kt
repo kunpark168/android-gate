@@ -35,4 +35,7 @@ interface User{
     var mIsFollowing: Boolean?
     var mRanking: String?
     var mAppellation: String?
+    var mAvg: Double?
+    var mNumRating: Int?
+    var mNumGame: Int?
 }
