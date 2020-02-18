@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.gate9.R
 import com.anhtam.gate9.share.view.CustomLoadMoreView
+import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
@@ -43,7 +44,7 @@ class BXHScreen(
         tvName?.text = user.mName
         tvId?.text = user.mId?.toString()
         Glide.with(this)
-                .load(user.mAvatar)
+                .load(user.mAvatar?.toImage())
                 .apply(avatarOptions)
                 .into(imgAvatar)
         // follow
