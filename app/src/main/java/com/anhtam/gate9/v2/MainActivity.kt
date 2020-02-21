@@ -20,6 +20,10 @@ import com.anhtam.gate9.v2.notification.NotificationFragment
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
 import com.anhtam.gate9.v2.splash.SplashScreen
 import dagger.android.support.DaggerAppCompatActivity
+import nbouma.com.wstompclient.implementation.StompClient
+import nbouma.com.wstompclient.model.Frame
+import timber.log.Timber
+import java.net.ServerSocket
 
 
 class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
@@ -31,6 +35,8 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
         }
     }
 
+    private lateinit var mSocket: ServerSocket
+
     private val mNavigation: Navigation by lazy {
         HideKeyboardNavigation(
             NavigationDispatcher(this,
@@ -38,12 +44,34 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
         )
     }
 
+    private lateinit var stompClient: StompClient
+
     override fun provideNavigation() = mNavigation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.single_activity)
         mNavigation.newRootFragment(SplashScreen.newInstance())
+
+        stompClient = object: StompClient("ws://9gate.net:5201/ws/websocket"){
+            override fun onStompError(errorMessage: String?) {
+                Timber.d("Error")
+            }
+
+            override fun onConnection(connected: Boolean) {
+                Timber.d("Connection")
+            }
+
+            override fun onDisconnection(reason: String?) {
+                Timber.d("Disconnection")
+            }
+
+            override fun onStompMessage(frame: Frame?) {
+                Timber.d("Message")
+            }
+
+        }
+        mSocket = ServerSocket(5201)
     }
 
     override fun onBackPressed() {
