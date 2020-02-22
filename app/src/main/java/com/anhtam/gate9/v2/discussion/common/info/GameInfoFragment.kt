@@ -44,7 +44,7 @@ class GameInfoFragment: DaggerNavigationFragment(R.layout.fragment_info_game) {
         tvNameGame?.text = infoOrDefault(mGame?.name)
         tvTypeGame?.text = infoOrDefault(mGame?.gameType?.name)
         tvNPH?.text = infoOrDefault("-")
-        tvCountry?.text = infoOrDefault("-")
+        tvCountry?.text = infoOrDefault(mGame?.country)
         tvStatus?.text = infoOrDefault("")
 
         tvPublishDate?.text = infoOrDefault(mGame?.createdDate)
@@ -52,9 +52,9 @@ class GameInfoFragment: DaggerNavigationFragment(R.layout.fragment_info_game) {
 
         tvHome?.text = infoOrDefault(mGame?.homepage)
         tvFanpage?.text = infoOrDefault(mGame?.fanPage)
-        tvEmail?.text = infoOrDefault("-")
-        tvGroup?.text = infoOrDefault("-")
-        tvPhone?.text = infoOrDefault("-")
+        tvEmail?.text = infoOrDefault(mGame?.email)
+        tvGroup?.text = infoOrDefault(mGame?.group)
+        tvPhone?.text = infoOrDefault(mGame?.phone)
     }
 
     companion object {
