@@ -60,6 +60,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
 
             override fun onConnection(connected: Boolean) {
                 Timber.d("Connection")
+                stompClient.subscribe("/forum/public/1725")
             }
 
             override fun onDisconnection(reason: String?) {
@@ -68,10 +69,10 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
 
             override fun onStompMessage(frame: Frame?) {
                 Timber.d("Message")
+
             }
 
         }
-        mSocket = ServerSocket(5201)
     }
 
     override fun onBackPressed() {
