@@ -12,6 +12,7 @@ import com.anhtam.gate9.v2.discussion.common.data.DataFragment
 import com.anhtam.gate9.v2.discussion.common.discussion.DiscussionGameFragment
 import com.anhtam.gate9.v2.discussion.common.info.GameInfoFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
+import com.anhtam.gate9.v2.discussion.game.danh_gia.DanhGiaGameFragment
 import com.anhtam.gate9.v2.discussion.game.thao_luan.ThaoLuanFragment
 import com.anhtam.gate9.v2.report.game.ReportGameActivity
 import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
@@ -37,7 +38,7 @@ class GameDiscussionScreen(
     override fun fragments(): List<AbstractVisibleFragment> {
         val fragments = ArrayList<AbstractVisibleFragment>()
         fragments.add(ThaoLuanFragment.newInstance())
-        fragments.add(RatingFragment.newInstance(1, Category.Member))
+        fragments.add(DanhGiaGameFragment.newInstance())
         fragments.add(DataFragment.newInstance(1))
         fragments.add(DiscussionGameFragment.newInstance(""))
         return fragments

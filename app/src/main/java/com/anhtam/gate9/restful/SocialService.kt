@@ -188,4 +188,11 @@ interface SocialService {
             @Query("page") page: Int,
             @Query("limit") limit: Int
     ): LiveData<ApiResponse<RestResponse<List<Post>>>>
+
+    @GET("social/get-game-rate")
+    fun getGameRating(
+            @Query("gameId") userId: Int,
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
+    ): LiveData<ApiResponse<RestResponse<List<Rating>>>>
 }

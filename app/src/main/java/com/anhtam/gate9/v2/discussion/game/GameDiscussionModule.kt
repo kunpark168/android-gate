@@ -14,6 +14,9 @@ import com.anhtam.gate9.v2.discussion.common.game.GGameModule
 import com.anhtam.gate9.v2.discussion.common.info.GameInfoFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingModule
+import com.anhtam.gate9.v2.discussion.game.danh_gia.DanhGiaGameFragment
+import com.anhtam.gate9.v2.discussion.game.danh_gia.DanhGiaModule
+import com.anhtam.gate9.v2.discussion.game.danh_gia.DanhGiaViewModel
 import com.anhtam.gate9.v2.discussion.game.thao_luan.ThaoLuanFragment
 import com.anhtam.gate9.v2.discussion.game.thao_luan.ThaoLuanModule
 import dagger.Binds
@@ -31,9 +34,9 @@ abstract class GameDiscussionModule {
     abstract fun contributeHeaderFragment(): GameHeaderFragment
 
     @ContributesAndroidInjector(
-            modules = [RatingModule::class]
+            modules = [DanhGiaModule::class]
     )
-    abstract fun contributeRatingFragment(): RatingFragment
+    abstract fun contributeRatingFragment(): DanhGiaGameFragment
 
     @ContributesAndroidInjector
     abstract fun contributeGameInfoFragment(): GameInfoFragment

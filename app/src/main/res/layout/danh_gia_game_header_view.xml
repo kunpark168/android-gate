@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.anhtam.gate9.v2.shared.RatingComponent
+        android:id="@+id/ratingComponent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <include
+        layout="@layout/share_divider_item_layout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/csOrder"
+        android:background="@color/colorWhite"
+        android:layout_height="@dimen/dp35"
+        android:layout_marginBottom="1dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <View
+            android:id="@+id/viewIndicator"
+            android:layout_width="@dimen/dp5"
+            android:layout_height="@dimen/dp20"
+            android:background="@color/colorIndicator"
+            android:layout_marginStart="@dimen/layout_margin_8dp"/>
+
+        <TextView
+            android:textSize="13sp"
+            android:gravity="start"
+            android:text="@string/all"
+            android:textAllCaps="true"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_marginStart="12dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:textSize="13sp"
+            android:layout_gravity="end"
+            android:gravity="center"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/sort_as"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/layout_margin_16dp"
+            android:drawablePadding="8dp"
+            android:drawableEnd="@drawable/ic_dropdown"/>
+    </LinearLayout>
+</LinearLayout>
