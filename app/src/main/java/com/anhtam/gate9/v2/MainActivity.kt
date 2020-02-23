@@ -3,6 +3,7 @@ package com.anhtam.gate9.v2
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.HideKeyboardNavigation
@@ -52,24 +53,25 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.single_activity)
         mNavigation.newRootFragment(SplashScreen.newInstance())
-
         stompClient = object: StompClient("ws://9gate.net:5201/ws/websocket"){
             override fun onStompError(errorMessage: String?) {
-                Timber.d("Error")
+                Timber.d("Error $errorMessage")
             }
 
             override fun onConnection(connected: Boolean) {
-                Timber.d("Connection")
-                stompClient.subscribe("/forum/public/1725")
+                Timber.d("Connection value $connected")
+                stompClient.subscribe("/forum/public", "1725")
             }
 
             override fun onDisconnection(reason: String?) {
-                Timber.d("Disconnection")
+                Timber.d("Disconnection $reason")
             }
 
             override fun onStompMessage(frame: Frame?) {
-                Timber.d("Message")
-
+                Timber.d("Message ${frame?.body}")
+                runOnUiThread {
+                    Toast.makeText(this@MainActivity, frame?.body, Toast.LENGTH_LONG).show()
+                }
             }
 
         }
