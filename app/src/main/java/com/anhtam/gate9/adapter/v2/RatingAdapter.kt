@@ -17,9 +17,9 @@ import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.auth.login.LoginScreen
-import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
+import com.anhtam.gate9.v2.game_detail.DetailGameFragment
 import com.anhtam.gate9.v2.report.post.ReportPostActivity
 import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
@@ -253,7 +253,7 @@ class RatingAdapter @Inject constructor(
 
     private fun navigateToGameDiscussion(game: Game) {
         val id = game.gameId ?: return
-        navigation.addFragment(GameDiscussionScreen.newInstance(id))
+        navigation.addFragment(DetailGameFragment.newInstance(id))
     }
 
     private fun changeReaction(react: Reaction, position: Int) {

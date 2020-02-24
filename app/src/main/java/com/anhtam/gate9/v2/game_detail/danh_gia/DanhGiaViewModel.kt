@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.discussion.game.danh_gia
+package com.anhtam.gate9.v2.game_detail.danh_gia
 
 import androidx.lifecycle.LiveData
 import com.anhtam.gate9.repository.SocialRepository

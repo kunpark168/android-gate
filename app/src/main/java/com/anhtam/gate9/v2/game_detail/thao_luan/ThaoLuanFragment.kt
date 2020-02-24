@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.discussion.game.thao_luan
+package com.anhtam.gate9.v2.game_detail.thao_luan
 
 
 import android.os.Bundle
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.PostAdapter
 import com.anhtam.gate9.share.view.CustomLoadMoreView
-import com.anhtam.gate9.v2.ChiTietGameViewModel
+import com.anhtam.gate9.v2.game_detail.DetailGameViewModel
 import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import kotlinx.android.synthetic.main.shared_only_recycler_view_layout.*
 import of.bum.network.helper.Resource
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 class ThaoLuanFragment : AbstractVisibleFragment(R.layout.shared_only_recycler_view_layout){
 
-    private val mChiTietViewModel: ChiTietGameViewModel by viewModels({requireParentFragment()},{vmFactory})
+    private val mDetailViewModel: DetailGameViewModel by viewModels({requireParentFragment()},{vmFactory})
     private val mViewModel: ThaoLuanViewModel by viewModels { vmFactory }
     @Inject lateinit var mAdapter: PostAdapter
 
@@ -65,7 +65,7 @@ class ThaoLuanFragment : AbstractVisibleFragment(R.layout.shared_only_recycler_v
     }
 
     private fun observerGame(){
-        mChiTietViewModel.mGame.observe(viewLifecycleOwner, Observer {
+        mDetailViewModel.mGame.observe(viewLifecycleOwner, Observer {
             when(it){
                 is Resource.Success -> {
                     val mId = it.data?.gameId ?: return@Observer

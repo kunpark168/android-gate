@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.discussion.game.danh_gia
+package com.anhtam.gate9.v2.game_detail.danh_gia
 
 import android.content.Context
 import android.util.AttributeSet

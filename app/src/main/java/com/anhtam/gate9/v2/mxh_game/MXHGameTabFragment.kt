@@ -17,7 +17,7 @@ import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.utils.toImage
-import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
+import com.anhtam.gate9.v2.game_detail.DetailGameFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -121,7 +121,7 @@ class MXHGameTabFragment : DaggerNavigationFragment(R.layout.mxh_game_tab_fragme
         init {
             setOnItemClickListener { _, _, position ->
                 val id = data[position].gameId ?: return@setOnItemClickListener
-                navigation?.addFragment(GameDiscussionScreen.newInstance(id))
+                navigation?.addFragment(DetailGameFragment.newInstance(id))
             }
         }
 

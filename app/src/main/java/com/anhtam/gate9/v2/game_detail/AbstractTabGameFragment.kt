@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.discussion.game
+package com.anhtam.gate9.v2.game_detail
 
 import android.os.Bundle
 import android.view.View
@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anhtam.gate9.R
 import com.anhtam.gate9.share.view.CustomLoadMoreView
-import com.anhtam.gate9.v2.ChiTietGameViewModel
 import com.anhtam.gate9.v2.newfeed.PagingViewModel
 import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -21,7 +20,7 @@ import javax.inject.Inject
 
 abstract class AbstractTabGameFragment<D, A: BaseQuickAdapter<D, BaseViewHolder>, VM: PagingViewModel<D>> : AbstractVisibleFragment(R.layout.shared_only_recycler_view_layout) {
 
-    private val mChiTietViewModel: ChiTietGameViewModel by viewModels({ requireParentFragment() }, { vmFactory })
+    private val mDetailViewModel: DetailGameViewModel by viewModels({ requireParentFragment() }, { vmFactory })
     abstract val mViewModel: VM
     @Inject lateinit var mAdapter: A
     abstract fun initViewModel(id: Int)
@@ -70,7 +69,7 @@ abstract class AbstractTabGameFragment<D, A: BaseQuickAdapter<D, BaseViewHolder>
     }
 
     private fun observerGame() {
-        mChiTietViewModel.mGame.observe(viewLifecycleOwner, Observer {
+        mDetailViewModel.mGame.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     val mId = it.data?.gameId ?: return@Observer

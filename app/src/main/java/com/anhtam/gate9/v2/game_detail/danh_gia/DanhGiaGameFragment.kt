@@ -1,8 +1,8 @@
-package com.anhtam.gate9.v2.discussion.game.danh_gia
+package com.anhtam.gate9.v2.game_detail.danh_gia
 
 import androidx.fragment.app.viewModels
 import com.anhtam.gate9.adapter.v2.RatingGameAdapter
-import com.anhtam.gate9.v2.discussion.game.AbstractTabGameFragment
+import com.anhtam.gate9.v2.game_detail.AbstractTabGameFragment
 import com.anhtam.gate9.vo.Rating
 
 class DanhGiaGameFragment : AbstractTabGameFragment<Rating, RatingGameAdapter, DanhGiaViewModel>(){
