@@ -96,7 +96,11 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
+    //FCM
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+
     testImplementation TestLibs.jUnit
     androidTestImplementation TestLibs.testRunner
     androidTestImplementation TestLibs.testEspresso
 }
+apply plugin: 'com.google.gms.google-services'

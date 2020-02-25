@@ -319,4 +319,5 @@
     <string name="gallery">Gallery</string>
     <string name="nha_phat_hanh">Nhà Phat Hành</string>
     <string name="splash_phrase">{rating_avg}/{num_rating}</string>
+    <string name="chanel_id_notification">9Gate Chanel</string>
 </resources>
