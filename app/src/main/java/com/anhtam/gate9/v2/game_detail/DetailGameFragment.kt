@@ -9,6 +9,8 @@ import androidx.viewpager.widget.ViewPager
 import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.SharePageAdapter
+import com.anhtam.gate9.restful.BackgroundTasks
+import com.anhtam.gate9.utils.format
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.game_detail.danh_gia.DanhGiaGameFragment
 import com.anhtam.gate9.v2.game_detail.thao_luan.ThaoLuanFragment
@@ -34,6 +36,7 @@ class DetailGameFragment constructor(private val mGameId: Int) : DaggerNavigatio
     private var mFragments = mutableListOf<AbstractVisibleFragment>()
     private var mCurrent: Int = 0
     @Inject @field:Named("banner") lateinit var bannerOption: RequestOptions
+    private var mIsFollowing: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -87,12 +90,37 @@ class DetailGameFragment constructor(private val mGameId: Int) : DaggerNavigatio
             infoScrollView?.visibility = View.VISIBLE
             viewPager?.visibility = View.GONE
         }
-        tabFollow?.setOnClickListener {
 
+        tabFollow?.setOnClickListener {
+            if (mSessionManager.checkLogin(isDirect = true)){
+                mIsFollowing = !mIsFollowing
+                onUpdateFollow()
+                BackgroundTasks.postFollowGame(mGameId)
+            }
         }
         tabNewFeed?.setOnClickListener {
 
         }
+    }
+
+    private fun onUpdateFollow(){
+        if (mIsFollowing){
+            follow()
+        } else {
+            unFollow()
+        }
+    }
+
+    private fun follow(){
+        val unwrapContext = context ?: return
+        tabFollow?.changeText(unwrapContext.getString(R.string.following))
+        tabFollow?.changeColor(R.color.color_main_blue)
+    }
+
+    private fun unFollow(){
+        val unwrapContext = context ?: return
+        tabFollow?.changeText(unwrapContext.getString(R.string.follow))
+        tabFollow?.changeColor(R.color.color_main_orange)
     }
 
     private fun onTabChanged(index: Int){
@@ -139,6 +167,8 @@ class DetailGameFragment constructor(private val mGameId: Int) : DaggerNavigatio
     }
 
     private fun updateDetailGame(game: Game?){
+        mIsFollowing = game?.follow ?: false
+        onUpdateFollow()
         // header view
         val unwrapContext = context ?: return
         Glide.with(unwrapContext)
@@ -155,7 +185,9 @@ class DetailGameFragment constructor(private val mGameId: Int) : DaggerNavigatio
                 .put("follower", game?.follower?.toString() ?: "0")
                 .put("post", game?.post?.toString() ?: "0")
                 .format()
-
+        ratingBar?.rating = game?.mRating?.toFloat() ?: 0.0f
+        ratingTextView?.text = "${game?.mRating?.format(1) ?: "0"} /"
+        amountRateTextView?.text = game?.mNumRating?.toString() ?: "0"
         // tab thong tin
         tvNameGame?.text = infoOrDefault(game?.name)
         tvTypeGame?.text = infoOrDefault(game?.gameType?.name)

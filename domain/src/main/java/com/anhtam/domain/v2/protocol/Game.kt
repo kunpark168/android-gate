@@ -32,4 +32,6 @@ interface Game {
     var email: String?
     var phone: String?
     var group: String?
+    var mRating: Double?
+    var mNumRating: Int?
 }

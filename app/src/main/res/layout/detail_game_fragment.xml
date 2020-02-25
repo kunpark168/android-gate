@@ -24,6 +24,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="@dimen/layout_margin_80dp"
             tools:src="@drawable/img_holder_banner"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/layout_margin_80dp"
+            android:alpha="0.45"
+            android:background="@color/black"/>
 
         <FrameLayout
             android:id="@+id/avatarLayout"
@@ -64,7 +74,8 @@
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="?attr/ratingBarStyleSmall"
+            android:theme="@style/SmallRatingBar"
+            style="?android:attr/ratingBarStyleSmall"
             app:layout_constraintTop_toBottomOf="@id/nameTextView"
             app:layout_constraintStart_toStartOf="@id/nameTextView"
             android:layout_marginTop="@dimen/layout_margin_4dp"/>
@@ -89,7 +100,9 @@
             app:layout_constraintTop_toTopOf="@id/ratingBar"
             app:layout_constraintBottom_toBottomOf="@id/ratingBar"
             app:layout_constraintStart_toEndOf="@id/ratingTextView"
-            tools:text="22"/>
+            tools:text="22"
+            android:drawableStart="@drawable/ic_person_nav"
+            android:drawablePadding="@dimen/layout_padding_4dp"/>
 
         <TextView
             android:id="@+id/parameterTextView"

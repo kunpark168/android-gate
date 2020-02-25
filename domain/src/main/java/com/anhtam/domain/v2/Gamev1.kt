@@ -61,6 +61,10 @@ class Gamev1(
         @Json(name = "phone")
         override var phone: String? = null,
         @Json(name = "group")
-        override var group: String? = null
+        override var group: String? = null,
+        @Json(name = "rating")
+        override var mRating: Double? = null,
+        @Json(name = "num_rate")
+        override var mNumRating: Int? = null
 
 ): Game
