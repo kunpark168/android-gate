@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.discussion.game.thao_luan
+package com.anhtam.gate9.v2.game_detail.thao_luan
 
 import androidx.lifecycle.LiveData
 import com.anhtam.domain.v2.Post

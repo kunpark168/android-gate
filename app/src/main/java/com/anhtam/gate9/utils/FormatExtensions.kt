@@ -26,3 +26,5 @@ fun String.targetStyle(context: Context): String {
 fun Context.getColorCompat(colorId: Int): Int {
     return ContextCompat.getColor(this, colorId)
 }
+
+fun Double.format(digits: Int) = "%.${digits}f".format(this)

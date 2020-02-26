@@ -13,7 +13,6 @@ import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.auth.register.RegisterScreen
 import com.anhtam.gate9.v2.createimage.CreateImageScreen
 import com.anhtam.gate9.v2.createpost.CreatePostScreen
-import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.main.home.HomeFragment
 import com.anhtam.gate9.v2.notification.NotificationFragment
@@ -87,7 +86,6 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
         behindFragment?.onFragmentResult()
         when(behindFragment) {
             is UserDiscussionScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_blue)
-            is GameDiscussionScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_blue)
             is CreatePostScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_blue)
             is CreateImageScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_blue)
             is SplashScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_blue)

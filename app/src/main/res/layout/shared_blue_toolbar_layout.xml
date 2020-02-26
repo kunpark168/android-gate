@@ -1,5 +1,5 @@
-<androidx.appcompat.widget.Toolbar android:id="@+id/toolbar"
-    android:layout_gravity="top"
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:background="@color/colorPrimary"
     app:title=""
@@ -15,13 +15,11 @@
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent">
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/imgBack"
                     android:layout_marginStart="20dp"
                     android:src="@drawable/ic_back"
                     android:layout_width="7dp"
                     android:layout_height="match_parent" />
                 <TextView
-                    android:id="@+id/tvBack"
                     android:textSize="15sp"
                     android:textAllCaps="true"
                     android:fontFamily="@font/roboto_medium"

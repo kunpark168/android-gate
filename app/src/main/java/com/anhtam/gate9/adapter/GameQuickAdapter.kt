@@ -5,7 +5,7 @@ import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.utils.toImage
-import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
+import com.anhtam.gate9.v2.game_detail.DetailGameFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -23,7 +23,7 @@ class GameQuickAdapter @Inject constructor(
     init {
         setOnItemClickListener { _, _, position ->
             val id = data[position].wrap.gameId ?: return@setOnItemClickListener
-            navigation.addFragment(GameDiscussionScreen.newInstance(id))
+            navigation.addFragment(DetailGameFragment.newInstance(id))
         }
     }
 

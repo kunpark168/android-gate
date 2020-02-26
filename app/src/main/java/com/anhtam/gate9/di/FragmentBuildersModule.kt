@@ -21,8 +21,6 @@ import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
 import com.anhtam.gate9.v2.bxh.BXHModule
 import com.anhtam.gate9.v2.createimage.CreateImageScreen
 import com.anhtam.gate9.v2.createpost.CreatePostScreen
-import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
-import com.anhtam.gate9.v2.discussion.game.GameDiscussionModule
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionModule
 import com.anhtam.gate9.v2.gallery.GalleryScreen
@@ -45,6 +43,8 @@ import com.anhtam.gate9.v2.shared.muilti_gallery.MultiChooseImageScreen
 import com.anhtam.gate9.v2.splash.SplashScreen
 import com.anhtam.gate9.v2.follow.FollowScreen
 import com.anhtam.gate9.v2.mxh_gate.DuLieuModule
+import com.anhtam.gate9.v2.game_detail.DetailGameFragment
+import com.anhtam.gate9.v2.game_detail.DetailGameModule
 import com.anhtam.gate9.v2.report.game.ReportGameActivity
 import com.anhtam.gate9.v2.report.game.ReportGameModule
 import com.anhtam.gate9.v2.report.post.ReportPostActivity
@@ -161,9 +161,9 @@ abstract class FragmentBuildersModule {
 
 
     @ContributesAndroidInjector(
-            modules = [GameDiscussionModule::class]
+            modules = [DetailGameModule::class]
     )
-    abstract fun contributeGameDiscussionActivity(): GameDiscussionScreen
+    abstract fun contributeDetailGameFragment(): DetailGameFragment
 
     @ContributesAndroidInjector
     abstract fun contributeGalleryScreen(): GalleryScreen

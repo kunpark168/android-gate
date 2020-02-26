@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2
+package com.anhtam.gate9.v2.game_detail
 
 import androidx.lifecycle.*
 import com.anhtam.domain.v2.Gamev1
@@ -9,7 +9,7 @@ import com.anhtam.gate9.utils.AbsentLiveData
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 
-class ChiTietGameViewModel @Inject constructor(
+class DetailGameViewModel @Inject constructor(
         private val repos: SocialRepository) : ViewModel() {
 
     val mGameId: MutableLiveData<Int> = MutableLiveData()

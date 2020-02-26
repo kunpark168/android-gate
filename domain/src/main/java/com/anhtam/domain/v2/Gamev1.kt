@@ -53,5 +53,18 @@ class Gamev1(
         @Json(name = "post")
         override var post: Int? = null,
         @Json(name = "imgCover")
-        override var imgCover: String? = null
+        override var imgCover: String? = null,
+        @Json(name = "country")
+        override var country: String? = null,
+        @Json(name = "email")
+        override var email: String? = null,
+        @Json(name = "phone")
+        override var phone: String? = null,
+        @Json(name = "group")
+        override var group: String? = null,
+        @Json(name = "rating")
+        override var mRating: Double? = null,
+        @Json(name = "num_rate")
+        override var mNumRating: Int? = null
+
 ): Game

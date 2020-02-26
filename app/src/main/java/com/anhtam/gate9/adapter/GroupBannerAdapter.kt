@@ -1,13 +1,11 @@
 package com.anhtam.gate9.adapter
 
-import android.content.Context
 import com.anhtam.domain.v2.protocol.Game
-import com.anhtam.gate9.adapter.navigator.IBannerNavigator
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
-import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
 import com.anhtam.gate9.utils.ifNotNull
 import com.anhtam.gate9.utils.toImage
+import com.anhtam.gate9.v2.game_detail.DetailGameFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -23,7 +21,7 @@ class GroupBannerAdapter @Inject constructor(val navigation: Navigation?,
     init {
         setOnItemClickListener { _, _, position ->
             val id = data[position].gameId ?: return@setOnItemClickListener
-            navigation?.addFragment(GameDiscussionScreen.newInstance(id))
+            navigation?.addFragment(DetailGameFragment.newInstance(id))
         }
     }
 

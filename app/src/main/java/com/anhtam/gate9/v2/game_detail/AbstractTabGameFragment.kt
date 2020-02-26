@@ -1,5 +1,4 @@
-package com.anhtam.gate9.v2.discussion.game.thao_luan
-
+package com.anhtam.gate9.v2.game_detail
 
 import android.os.Bundle
 import android.view.View
@@ -10,19 +9,22 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anhtam.gate9.R
-import com.anhtam.gate9.adapter.v2.PostAdapter
 import com.anhtam.gate9.share.view.CustomLoadMoreView
-import com.anhtam.gate9.v2.ChiTietGameViewModel
+import com.anhtam.gate9.v2.newfeed.PagingViewModel
 import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.shared_only_recycler_view_layout.*
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 
-class ThaoLuanFragment : AbstractVisibleFragment(R.layout.shared_only_recycler_view_layout){
+abstract class AbstractTabGameFragment<D, A: BaseQuickAdapter<D, BaseViewHolder>, VM: PagingViewModel<D>> : AbstractVisibleFragment(R.layout.shared_only_recycler_view_layout) {
 
-    private val mChiTietViewModel: ChiTietGameViewModel by viewModels({requireParentFragment()},{vmFactory})
-    private val mViewModel: ThaoLuanViewModel by viewModels { vmFactory }
-    @Inject lateinit var mAdapter: PostAdapter
+    private val mDetailViewModel: DetailGameViewModel by viewModels({ requireParentFragment() }, { vmFactory })
+    abstract val mViewModel: VM
+    @Inject lateinit var mAdapter: A
+    abstract fun initViewModel(id: Int)
+    open fun setUpAdapter(){}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,18 +33,20 @@ class ThaoLuanFragment : AbstractVisibleFragment(R.layout.shared_only_recycler_v
         observer()
     }
 
-    private fun initView(){
+    private fun initView() {
         initRecyclerView()
     }
 
-    private fun initRecyclerView(){
+    private fun initRecyclerView() {
         mAdapter.setLoadMoreView(CustomLoadMoreView())
+        setUpAdapter()
         mAdapter.setOnLoadMoreListener({
             mViewModel.loadData(false)
         }, recyclerView)
         context?.let {
             val dividerItemDecoration = DividerItemDecoration(it, LinearLayout.VERTICAL)
-            val drawableDivider = ContextCompat.getDrawable(it, R.drawable.divider_item_decorator) ?: return
+            val drawableDivider = ContextCompat.getDrawable(it, R.drawable.divider_item_decorator)
+                    ?: return
             dividerItemDecoration.setDrawable(drawableDivider)
             recyclerView?.addItemDecoration(dividerItemDecoration)
 
@@ -51,7 +55,7 @@ class ThaoLuanFragment : AbstractVisibleFragment(R.layout.shared_only_recycler_v
         recyclerView?.layoutManager = LinearLayoutManager(context)
     }
 
-    private fun initEvent(){
+    private fun initEvent() {
         swipeRefreshLayout?.setOnRefreshListener {
             swipeRefreshLayout?.isRefreshing = false
             showProgress()
@@ -59,17 +63,17 @@ class ThaoLuanFragment : AbstractVisibleFragment(R.layout.shared_only_recycler_v
         }
     }
 
-    private fun observer(){
+    private fun observer() {
         observerGame()
         observerData()
     }
 
-    private fun observerGame(){
-        mChiTietViewModel.mGame.observe(viewLifecycleOwner, Observer {
-            when(it){
+    private fun observerGame() {
+        mDetailViewModel.mGame.observe(viewLifecycleOwner, Observer {
+            when (it) {
                 is Resource.Success -> {
                     val mId = it.data?.gameId ?: return@Observer
-                    mViewModel.initialize(mId)
+                    initViewModel(mId)
                     showProgress()
                     mViewModel.loadData(refresh = true)
                 }
@@ -103,9 +107,5 @@ class ThaoLuanFragment : AbstractVisibleFragment(R.layout.shared_only_recycler_v
                 else ->{}
             }
         })
-    }
-
-    companion object{
-        fun newInstance() = ThaoLuanFragment()
     }
 }

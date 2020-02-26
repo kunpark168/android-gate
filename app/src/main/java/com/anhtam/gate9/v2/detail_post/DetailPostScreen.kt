@@ -22,7 +22,7 @@ import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.reaction.ReactionScreen
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.auth.login.LoginScreen
-import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
+import com.anhtam.gate9.v2.game_detail.DetailGameFragment
 import com.anhtam.gate9.v2.report.post.ReportPostActivity
 import com.anhtam.gate9.v2.shared.AbstractGalleryFragment
 import com.anhtam.gate9.vo.Reaction
@@ -52,7 +52,7 @@ class DetailPostScreen private constructor(
 
     override fun toGameDiscussion() {
         val id = _post.game?.gameId ?: return
-        navigation?.addFragment(GameDiscussionScreen.newInstance(id))
+        navigation?.addFragment(DetailGameFragment.newInstance(id))
     }
 
     override fun toReact() {

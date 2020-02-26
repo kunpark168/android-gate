@@ -28,4 +28,10 @@ interface Game {
     var follow: Boolean?
     var post: Int?
     var imgCover: String?
+    var country: String?
+    var email: String?
+    var phone: String?
+    var group: String?
+    var mRating: Double?
+    var mNumRating: Int?
 }
