@@ -71,5 +71,11 @@ data class Userv1(
         @Json(name = "appellation")
         override var mAppellation: String? = null,
         @Json(name = "ranking")
-        override var mRanking: String? = null
+        override var mRanking: String? = null,
+        @Json(name = "avg_point")
+        override var mAvg: Double? ,
+        @Json(name = "num_rate")
+        override var mNumRating: Int?,
+        @Json(name = "num_game")
+        override var mNumGame: Int?
 ): User

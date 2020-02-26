@@ -89,8 +89,6 @@ class UserHeaderFragment(private val mType: Category, @LayoutRes layoutId: Int) 
                 .load(user.mAvatar?.toImage())
                 .into(imgAvatar)
         tvUserName?.text = user.mName
-        csRating?.setColor(true)
-        csRating?.init("4.3", "4356")
 
         val followString = Phrase.from(resources.getString(R.string.following_follower_publisher))
                 .put("following", user.mFlowing?.toString() ?: "0")
@@ -100,11 +98,17 @@ class UserHeaderFragment(private val mType: Category, @LayoutRes layoutId: Int) 
         tvGameCount?.text = followString
 
         tvSlogan?.text = user.mNote
-        imgGender?.visibility = View.GONE
 
         imgChart?.setOnClickListener {
             navigation?.addFragment(BXHScreen.newInstance(5))
         }
+        val avg = user.mAvg?.toFloat() ?: 0.0f
+        ratingBar?.rating = avg
+        ratingTextview?.text = Phrase.from(getString(R.string.splash_phrase))
+                .put("rating_avg", avg.toString())
+                .put("num_rating", user.mNumRating ?: 0)
+                .format()
+        numGameTextView?.text = (user.mNumGame ?: 0).toString()
     }
 
     companion object {
