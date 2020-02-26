@@ -101,11 +101,11 @@
         app:layout_constraintBottom_toBottomOf="@id/llAvatarGame"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <include
-        app:layout_constraintTop_toBottomOf="@id/llAvatarGame"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/share_divider_item_layout"
+        android:layout_height="4dp"
+        android:background="@color/colorDivider"
+        app:layout_constraintTop_toBottomOf="@id/iconBXH"
         android:layout_marginTop="@dimen/layout_margin_8dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

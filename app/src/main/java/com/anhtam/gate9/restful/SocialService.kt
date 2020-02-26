@@ -122,6 +122,9 @@ interface SocialService {
     @GET("user/userInfo")
     fun getOtherUserInfoById(@Query("userId") userId: Int): LiveData<ApiResponse<RestResponse<Userv1>>>
 
+    @GET("social/get-game-info")
+    fun getGameDetail(@Query("gameId") userId: Int): LiveData<ApiResponse<RestResponse<Gamev1>>>
+
     @GET("social/all-game")
     fun getMXHGame(@Query("tab") type: Int,
                    @Query("page") page:Int = 0,
@@ -178,4 +181,11 @@ interface SocialService {
     fun getRanking(@Query("roleId") roleId: Int,
                  @Query("page") page: Int,
                  @Query("limit") limit: Int = 10): LiveData<ApiResponse<RestResponse<List<Userv1>>>>
+
+    @GET("social/get-game-discuss")
+    fun getThaoLuanGame(
+            @Query("gameId") userId: Int,
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
+    ): LiveData<ApiResponse<RestResponse<List<Post>>>>
 }

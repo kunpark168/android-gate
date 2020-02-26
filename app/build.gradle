@@ -91,6 +91,7 @@ dependencies {
     implementation project(':network')
     implementation project(':reactLibs')
     implementation project(':domain')
+    implementation project(':wstompclient')
     // coroutines
     def coroutines_version = "1.2.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"

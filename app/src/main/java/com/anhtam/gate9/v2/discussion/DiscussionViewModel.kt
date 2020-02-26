@@ -23,6 +23,4 @@ class DiscussionViewModel @Inject constructor(
     }
 
     val _bottomStatus = MutableLiveData(false)
-
-    val mGame = MediatorLiveData<Game>()
 }

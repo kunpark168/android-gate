@@ -16,6 +16,7 @@ import com.anhtam.gate9.v2.member.all.MemberListModule
 import com.anhtam.gate9.v2.auth.register.RegisterScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.auth.login.LoginModule
+import com.anhtam.gate9.v2.auth.register.RegisterModule
 import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
 import com.anhtam.gate9.v2.bxh.BXHModule
 import com.anhtam.gate9.v2.createimage.CreateImageScreen
@@ -74,7 +75,9 @@ abstract class FragmentBuildersModule {
     )
     abstract fun contributeLoginScreen(): LoginScreen
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(
+            modules = [RegisterModule::class]
+    )
     abstract fun contributeRegisterScreen(): RegisterScreen
 
     @ContributesAndroidInjector(

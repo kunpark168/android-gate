@@ -197,7 +197,8 @@ class PostAdapter @Inject constructor(
     }
 
     private fun navigateToGameDiscussion(game: Game){
-        navigation.addFragment(GameDiscussionScreen.newInstance(game))
+        val id = game.gameId ?: return
+        navigation.addFragment(GameDiscussionScreen.newInstance(id))
     }
 
 
