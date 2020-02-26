@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_marginStart="@dimen/layout_margin_2dp"
     android:layout_marginEnd="@dimen/layout_margin_2dp"
@@ -54,33 +54,39 @@
             app:layout_constraintTop_toTopOf="@id/imgTinTuc" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imgAvatar"
+    <com.anhtam.gate9.share.view.RoundRectCornerImageView
+        android:id="@+id/imgGame"
         android:layout_width="@dimen/image_circle_medium"
         android:layout_height="@dimen/image_circle_medium"
-        android:src="@drawable/img_avatar_holder"
+        android:src="@drawable/img_holder_banner"
         app:layout_constraintStart_toStartOf="@id/bannerLayout"
         app:layout_constraintTop_toBottomOf="@id/bannerLayout"
         android:layout_marginTop="@dimen/layout_margin_8dp"/>
 
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/tvTitleGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lines="1"
         android:textColor="@color/black"
         android:text="@string/sample_title_game"
-        app:layout_constraintTop_toTopOf="@id/imgAvatar"
-        app:layout_constraintStart_toEndOf="@id/imgAvatar"
-        app:layout_constraintBottom_toTopOf="@id/tvCreateTime"
+        app:layout_constraintTop_toTopOf="@id/imgGame"
+        app:layout_constraintStart_toEndOf="@id/imgGame"
+        app:layout_constraintBottom_toTopOf="@id/tvTypeGame"
         android:layout_marginStart="@dimen/layout_margin_16dp"/>
     <TextView
-        android:id="@+id/tvCreateTime"
+        android:id="@+id/tvTypeGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lines="1"
-        android:text="3-6 19:23"
-        app:layout_constraintTop_toBottomOf="@id/tvName"
-        app:layout_constraintStart_toStartOf="@id/tvName"
-        app:layout_constraintBottom_toBottomOf="@id/imgAvatar"/>
+        tools:text="3-6 19:23"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleGame"
+        app:layout_constraintStart_toStartOf="@id/tvTitleGame"
+        app:layout_constraintBottom_toBottomOf="@id/imgGame"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="tvTypeGame,tvTitleGame,imgGame"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

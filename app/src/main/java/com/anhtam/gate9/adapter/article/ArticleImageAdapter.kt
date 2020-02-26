@@ -60,7 +60,7 @@ class ArticleImageAdapter @Inject constructor(
                         .into(imgAvatar)
             }
             holder.setText(R.id.tvName, game.name)
-                    .setText(R.id.tvCreateTime, game.gameType?.name)
+                    .setText(R.id.tvTime, game.gameType?.name)
         }
     }
 }

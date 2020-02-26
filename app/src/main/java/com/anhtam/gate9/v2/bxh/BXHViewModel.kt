@@ -14,7 +14,7 @@ import com.anhtam.gate9.v2.shared.PageViewModel
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 
-class ChartViewModel @Inject constructor(
+class BXHViewModel @Inject constructor(
         private var mRepository: SocialRepository
 ) : PagingViewModel<Userv1>(){
 
