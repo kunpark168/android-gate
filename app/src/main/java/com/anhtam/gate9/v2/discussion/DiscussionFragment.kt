@@ -35,8 +35,6 @@ abstract class DiscussionFragment : DaggerNavigationFragment(R.layout.shared_dis
         initEvents()
         observer()
     }
-
-    override fun statusColor() = android.R.color.transparent
     
     override fun menuRes() = R.menu.menu_chat_search_more
 

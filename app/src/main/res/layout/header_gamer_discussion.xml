@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="170dp">
+    android:layout_height="194dp">
 
     <ImageView
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:id="@+id/imgAvatar"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginTop="@dimen/dp20"
+            android:layout_marginTop="44dp"
             android:src="@drawable/img_avatar_holder"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

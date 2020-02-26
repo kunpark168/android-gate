@@ -35,8 +35,6 @@ class ChatFragment : DaggerNavigationFragment(R.layout.chat_fragment) {
         events()
     }
 
-    override fun statusColor() = R.color.color_main_blue
-
     private fun events() {
         iconBack?.setOnClickListener {
             navigation?.back()

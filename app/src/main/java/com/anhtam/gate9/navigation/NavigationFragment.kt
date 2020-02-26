@@ -1,9 +1,6 @@
 package com.anhtam.gate9.navigation
 
 import android.content.Context
-import androidx.fragment.app.Fragment
-import com.anhtam.gate9.navigation.statusbar.StatusBarOwner
-import com.anhtam.gate9.navigation.statusbar.StatusBarProvider
 import com.anhtam.gate9.v2.OnFragmentListener
 import dagger.android.support.DaggerFragment
 import java.lang.IllegalArgumentException

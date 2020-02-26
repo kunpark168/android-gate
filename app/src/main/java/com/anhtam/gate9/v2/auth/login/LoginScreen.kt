@@ -35,8 +35,6 @@ class LoginScreen(private val isDirect: Boolean) : DaggerNavigationFragment(R.la
         observers()
     }
 
-    override fun statusColor() = R.color.color_main_orange
-
     private fun observers(){
         mSessionManager.cachedAccessToken.observe(viewLifecycleOwner, Observer {
             when(it.status){
