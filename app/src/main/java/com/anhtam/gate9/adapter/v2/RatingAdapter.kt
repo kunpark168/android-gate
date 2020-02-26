@@ -1,9 +1,11 @@
 package com.anhtam.gate9.adapter.v2
 
 import android.text.Html
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatRatingBar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.vo.Rating
@@ -27,6 +29,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import org.w3c.dom.Text
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -37,8 +40,13 @@ class RatingAdapter @Inject constructor(
     : BaseMultiItemQuickAdapter<Rating, BaseViewHolder>(ArrayList()) {
 
     private var mUser: User? = null
+    private var mCategory: Int = 1
     fun setUser(user: User) {
         mUser = user
+    }
+
+    fun setCategory(category: Int) {
+        mCategory = category
     }
 
     init {
@@ -54,16 +62,11 @@ class RatingAdapter @Inject constructor(
 //                    }
                 }
                 R.id.userNameTextView, R.id.avatarImageView -> {
-                    val userId = mUser?.mId
-                            ?: return@setOnItemChildClickListener
+                    val userId = data[position].mCreatedUser?.mId?: return@setOnItemChildClickListener
                     navigateToMemberDiscussion(userId)
                 }
                 R.id.raterImageView, R.id.nameRaterTextView -> {
-                    val userId = if(mUser?.mId != data[position].mCreatedUser?.mId){
-                        data[position].mCreatedUser?.mId ?: return@setOnItemChildClickListener
-                    } else {
-                        data[position].mUser?.mId ?: return@setOnItemChildClickListener
-                    }
+                    val userId = data[position].mUser?.mId ?: return@setOnItemChildClickListener
                     navigateToMemberDiscussion(userId)
                 }
                 R.id.gameImageView, R.id.titleGameTextView -> {
@@ -116,16 +119,16 @@ class RatingAdapter @Inject constructor(
     }
 
     override fun convert(helper: BaseViewHolder?, item: Rating?) {
-        val unwrapPost = item ?: return
+        val ratingData = item ?: return
         val view = helper?.itemView ?: return
         // Set content of Post
-        helper.getView<TextView>(R.id.contentTextView)?.text = unwrapPost.mContent?.let { Html.fromHtml(it) }
-        helper.getView<TextView>(R.id.likeTextView)?.text = unwrapPost.mNumLiked
-        helper.getView<TextView>(R.id.dislikeTextView)?.text = unwrapPost.mNumDislike
+        helper.getView<TextView>(R.id.contentTextView)?.text = ratingData.mContent?.let { Html.fromHtml(it) }
+        helper.getView<TextView>(R.id.likeTextView)?.text = ratingData.mNumLiked
+        helper.getView<TextView>(R.id.dislikeTextView)?.text = ratingData.mNumDislike
         helper.getView<TextView>(R.id.commentTextView)?.text = "0"
-        helper.getView<TextView>(R.id.loveTextView)?.text = unwrapPost.mNumFavorite
-        helper.getView<TextView>(R.id.dateTextView)?.text = unwrapPost.mCreatedDate
-        helper.getView<AppCompatRatingBar>(R.id.ratingBar).rating = unwrapPost.mRating?.toFloat() ?: 0.0f
+        helper.getView<TextView>(R.id.loveTextView)?.text = ratingData.mNumFavorite
+        helper.getView<TextView>(R.id.dateTextView)?.text = ratingData.mCreatedDate
+        helper.getView<AppCompatRatingBar>(R.id.ratingBar).rating = ratingData.mRating?.toFloat() ?: 0.0f
         when (Reaction.react(0)) {
             Reaction.Like -> {
                 helper.getView<ImageView>(R.id.likeIcon)?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_main_blue))
@@ -148,7 +151,27 @@ class RatingAdapter @Inject constructor(
                 helper.getView<ImageView>(R.id.loveIcon)?.setColorFilter(ContextCompat.getColor(mContext, R.color.color_react_grey_dark))
             }
         }
-        initMe(helper)
+        when (mCategory) {
+            1 -> {
+                initView(ratingData.mCreatedUser, helper)
+                helper.getView<ConstraintLayout>(R.id.subLayout)?.visibility = View.GONE
+            }
+            2 -> {
+                initView(ratingData.mCreatedUser, helper)
+                initGame(ratingData.mGame, helper)
+                helper.addOnClickListener(R.id.gameImageView)
+                        .addOnClickListener(R.id.titleGameTextView)
+            }
+            3, 4 -> {
+                initView(ratingData.mCreatedUser, helper)
+                initSubView(ratingData.mUser, helper)
+                helper.getView<ConstraintLayout>(R.id.subLayout)?.visibility = View.VISIBLE
+                helper.addOnClickListener(R.id.raterImageView)
+                        .addOnClickListener(R.id.tvFollow)
+                        .addOnClickListener(R.id.nameRaterTextView)
+            }
+            else -> {}
+        }
 
         // initEvent
         helper.addOnClickListener(R.id.readMoreTextView)
@@ -156,38 +179,20 @@ class RatingAdapter @Inject constructor(
                 .addOnClickListener(R.id.commentImageView)
                 .addOnClickListener(R.id.moreImageView)
                 .addOnClickListener(R.id.userNameTextView)
-                .addOnClickListener(R.id.nameTextView)
-        when(unwrapPost.itemType){
-            1 -> {
-                helper.addOnClickListener(R.id.raterImageView)
-                        .addOnClickListener(R.id.tvFollow)
-                        .addOnClickListener(R.id.nameRaterTextView)
-                if (unwrapPost.mCreatedUser?.mId == mUser?.mId){
-                    initRater(unwrapPost.mUser, helper)
-                } else {
-                    initRater(unwrapPost.mCreatedUser, helper)
-                }
-            }
-            2 -> {
-                helper.addOnClickListener(R.id.gameImageView)
-                        .addOnClickListener(R.id.titleGameTextView)
-                initGame(unwrapPost.mGame, helper)
-            }
-            else -> {}
-        }
+                .addOnClickListener(R.id.avatarImageView)
     }
 
-    private fun initMe(helper: BaseViewHolder) {
-        helper.getView<TextView>(R.id.userNameTextView)?.text = mUser?.mName
+    private fun initView(user: User?, helper: BaseViewHolder) {
+        helper.getView<TextView>(R.id.userNameTextView)?.text = user?.mName
         helper.getView<ImageView>(R.id.avatarImageView)?.run{
-            Glide.with(mContext).load(mUser?.mAvatar?.toImage())
+            Glide.with(mContext).load(user?.mAvatar?.toImage())
                     .apply(avatarOptions)
                     .into(this)
         }
 
     }
 
-    private fun initRater(user: User?, helper: BaseViewHolder) {
+    private fun initSubView(user: User?, helper: BaseViewHolder) {
         helper.getView<ImageView>(R.id.raterImageView)
                 .run {
                     Glide.with(mContext)
