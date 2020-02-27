@@ -23,8 +23,6 @@ class SplashScreen : DaggerNavigationFragment(R.layout.splash_screen) {
         startAnimation()
     }
 
-    override fun statusColor() = R.color.white
-
     private fun startAnimation() {
         val animation = AnimationUtils.loadAnimation(context, R.anim.splash)
         imgLogo.startAnimation(animation)

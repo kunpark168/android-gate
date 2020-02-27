@@ -56,8 +56,6 @@ class RegisterScreen : DaggerNavigationFragment(R.layout.register_screen) {
 
     override fun menuRes() = R.menu.menu_chat_search_more
 
-    override fun statusColor() = R.color.color_main_orange
-
     private fun setColorText() {
         val styledText = "<font color='red'>Note: </font> Trong vào 48h, bạn cần vào Email đã đăng ký để kích hoạt tài khoản trước khi sử dụng"
         tvNote.setText(Html.fromHtml(styledText), TextView.BufferType.SPANNABLE)
