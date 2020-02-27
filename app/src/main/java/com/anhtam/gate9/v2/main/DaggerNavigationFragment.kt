@@ -7,12 +7,10 @@ import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.annotation.ColorRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.NavigationFragment
@@ -41,12 +39,8 @@ abstract class DaggerNavigationFragment constructor(
 
     @MenuRes
     open fun menuRes():  Int?  = null
-    @ColorRes
-    open fun statusColor(): Int = R.color.color_main_blue
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initStatus()
         initToolbar(view)
         observer()
     }
@@ -59,10 +53,6 @@ abstract class DaggerNavigationFragment constructor(
                 activity?.invalidateOptionsMenu()
             }
         })
-    }
-
-    private fun initStatus(){
-        requireActivity().window?.statusBarColor = ContextCompat.getColor(requireContext(), statusColor())
     }
 
     private fun initToolbar(view: View){

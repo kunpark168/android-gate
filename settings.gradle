@@ -1,1 +1,1 @@
-include ':app', ':network', ':reactLibs', ':domain'
+include ':app', ':network', ':reactLibs', ':domain', ':wstompclient'

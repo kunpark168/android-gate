@@ -318,4 +318,11 @@
     <string name="view_label">View</string>
     <string name="gallery">Gallery</string>
     <string name="nha_phat_hanh">Nhà Phat Hành</string>
+    <string name="splash_phrase">{rating_avg}/{num_rating}</string>
+    <string name="required_email_register">Please enter your email</string>
+    <string name="required_password_register">Please enter your password</string>
+    <string name="required_confirm_password_register">Please enter your confirm password</string>
+    <string name="required_display_name_register">Please enter your display name</string>
+    <string name="password_register_not_match">Password not match</string>
+    <string name="email_invalid">Email is invalid</string>
 </resources>

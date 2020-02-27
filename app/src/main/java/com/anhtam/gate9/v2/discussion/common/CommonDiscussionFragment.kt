@@ -30,7 +30,7 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
     private var mFirstLoad = true
     private var mHasUser = false
     @Inject lateinit var mAdapter: A
-    private var mCurrentCategory = 1
+    protected var mCurrentCategory = 1
     open var mLazyLoad = true
     open val mViewModel: V? = null
     open fun onResponseSuccess(data: RestResponse<*>?){}
@@ -185,9 +185,12 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
         })
     }
 
+    protected open fun onTabChanged(){}
+
     private fun newRequestType(position: Int) {
         val category = position + 1
         mCurrentCategory = category
+        onTabChanged()
         mAdapter.setNewData(null)
         if (mViewModel?.mCategory != category) {
             mViewModel?.loadData(category, refresh = true)

@@ -51,9 +51,14 @@ class RatingComponent @JvmOverloads constructor(
         val arg = sum / num
         for (index in progresses.indices) {
             params = progresses[index].layoutParams as? LayoutParams
-            params?.matchConstraintPercentWidth = percent[index].toFloat() * (index + 1) * 0.4f / sum.toFloat()
+            params?.matchConstraintPercentWidth = percent[index].toFloat() * (index + 1) * 0.4f / sum.toFloat() + 0.001f
             progresses[index].layoutParams = params
         }
+        tvOneStar?.text = percent[0].toInt().toString()
+        tvTwoStar?.text = percent[1].toInt().toString()
+        tvThreeStar?.text = percent[2].toInt().toString()
+        tvFourStar?.text = percent[3].toInt().toString()
+        tvFiveStar?.text = percent[4].toInt().toString()
         txtPoint?.text = String.format("%.1f", arg)
         ratingBar?.rating = arg.toFloat()
     }

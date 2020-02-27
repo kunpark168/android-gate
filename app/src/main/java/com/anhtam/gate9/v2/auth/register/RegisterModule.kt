@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.bxh
+package com.anhtam.gate9.v2.auth.register
 
 import androidx.lifecycle.ViewModel
 import com.anhtam.gate9.di.ViewModelKey
@@ -7,9 +7,9 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 @Module
-interface ChartModule {
+interface RegisterModule {
     @Binds
     @IntoMap
-    @ViewModelKey(ChartViewModel::class)
-    fun bindViewModel(chartViewModel: ChartViewModel): ViewModel
+    @ViewModelKey(RegisterViewModel::class)
+    fun bindViewModel(registerViewModel: RegisterViewModel): ViewModel
 }
