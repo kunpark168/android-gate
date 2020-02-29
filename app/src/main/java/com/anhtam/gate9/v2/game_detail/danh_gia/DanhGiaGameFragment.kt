@@ -13,6 +13,7 @@ class DanhGiaGameFragment : AbstractTabGameFragment<Rating, RatingGameAdapter, D
 
     override val mViewModel: DanhGiaViewModel by viewModels { vmFactory }
     private lateinit var mHeaderView: DanhGiaGameHeaderView
+
     override fun setUpAdapter() {
         super.setUpAdapter()
         mHeaderView = DanhGiaGameHeaderView(context)

@@ -325,4 +325,6 @@
     <string name="required_display_name_register">Please enter your display name</string>
     <string name="password_register_not_match">Password not match</string>
     <string name="email_invalid">Email is invalid</string>
+    <string name="bai_lien_quan">Bài Liên Quan</string>
+    <string name="cung_chuyen_muc">Cùng Chuyên Mục</string>
 </resources>
