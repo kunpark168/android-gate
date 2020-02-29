@@ -4,6 +4,8 @@ import com.squareup.moshi.Json
 open class Article(
     @Json(name = "article_id")
     var mArticleId: Int? = null,
+    @Json(name = "articleId")
+    var mId: Int? = null,
     @Json(name = "title")
     var mTitle: String? = null,
     @Json(name = "sapo")
@@ -23,5 +25,7 @@ open class Article(
     @Json(name = "number_comment")
     var mNumberComment: Int? = null,
     @Json(name = "game")
-    var mGame: Gamev1? = null
+    var mGame: Gamev1? = null,
+    @Json(name = "createdUser")
+    var mUser: Userv2? = null
 )

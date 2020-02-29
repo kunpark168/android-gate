@@ -141,4 +141,8 @@ class SocialRepository @Inject constructor(
     fun getGameRating(gameId: Int, page: Int, limit: Int = 5) = object: Lv2FetchResource<List<Rating>>(){
         override fun createCall() = service.getGameRating(gameId, page, limit)
     }.asLiveData()
+
+    fun getBaiViet(articleType: Int, page: Int, limit: Int = 5) = object: Lv2FetchResource<List<Article>>(){
+        override fun createCall() = service.getBaiViet(articleType, page, limit)
+    }.asLiveData()
 }

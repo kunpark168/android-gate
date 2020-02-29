@@ -51,8 +51,8 @@ class MXHGateScreen : DaggerNavigationFragment(R.layout.mxh_gate_screen) {
 
     private fun setUpViewPager() {
         val mFragments = arrayListOf<AbstractVisibleFragment>()
-        mFragments.add(MXHGateCamNangScreen(1))
-        mFragments.add(MXHGateCamNangScreen(2))
+        mFragments.add(MXHGateCamNangScreen(0))
+        mFragments.add(MXHGateCamNangScreen(3))
         mFragments.add(MXHGateVideoScreen())
         mFragments.add(MXHGateImageScreen())
         mAdapter = SharePageAdapter(childFragmentManager, mFragments)

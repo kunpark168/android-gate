@@ -14,6 +14,6 @@ class DuLieuViewModel @Inject constructor(
     fun setCategory(category: Int){
         mCategory = category
     }
-    override fun fetchData() = repos.getDataRelatedToUser(0, mCategory, mPage, 10)
+    override fun fetchData() = repos.getBaiViet(mCategory, mPage, 10)
 
 }
