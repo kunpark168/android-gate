@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.anhtam.gate9.R
+import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.navigation.HideKeyboardNavigation
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.navigation.NavigationDispatcher
 import com.anhtam.gate9.navigation.NavigationProvider
 import com.anhtam.gate9.v2.splash.SplashScreen
 import dagger.android.support.DaggerAppCompatActivity
+import timber.log.Timber
 
 
 class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
@@ -47,5 +49,11 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
         }
         val behindFragment = fragment as? OnFragmentListener
         behindFragment?.onFragmentResult()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        val code = intent?.getIntExtra(Config.NOTIFICATION_TYPE, -1)
+        Timber.d(code.toString())
     }
 }

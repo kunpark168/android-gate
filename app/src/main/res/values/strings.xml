@@ -327,4 +327,6 @@
     <string name="email_invalid">Email is invalid</string>
     <string name="bai_lien_quan">Bài Liên Quan</string>
     <string name="cung_chuyen_muc">Cùng Chuyên Mục</string>
+    <string name="chanel_id_notification">9Gate Chanel</string>
+    <string name="title_notification_comment">Bài viết của bạn có 1 comment </string>
 </resources>

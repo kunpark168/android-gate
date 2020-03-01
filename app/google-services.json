@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "56991795333",
+    "firebase_url": "https://gate-5d619.firebaseio.com",
+    "project_id": "gate-5d619",
+    "storage_bucket": "gate-5d619.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56991795333:android:c943b9035a70f8061641ec",
+        "android_client_info": {
+          "package_name": "com.anhtam.gate9"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56991795333-g205e2k13taeeb3mc6g00igb507egolh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0lKOKtu9sGdukMF_7AepR2OdgNWo_m70"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56991795333-g205e2k13taeeb3mc6g00igb507egolh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
