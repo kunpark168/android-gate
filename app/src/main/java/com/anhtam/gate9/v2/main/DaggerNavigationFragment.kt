@@ -15,13 +15,23 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
+import com.anhtam.gate9.config.Config
+import com.anhtam.gate9.fcm.FCMService
 import com.anhtam.gate9.navigation.NavigationFragment
 import com.anhtam.gate9.session.SessionManager
 import com.anhtam.gate9.utils.DialogProgressUtils
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.viewmodel.ViewModelProviderFactory
 import com.bumptech.glide.Glide
+import com.google.firebase.iid.FirebaseInstanceId
 import kotlinx.android.synthetic.main.layout_avatar_menu.view.*
+import of.bum.network.helper.Resource
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
@@ -53,10 +63,15 @@ abstract class DaggerNavigationFragment constructor(
 
     private fun observer(){
         mSessionManager.cachedUser.observe(viewLifecycleOwner, Observer {
-            if (it == null) return@Observer
-            mAvatar = it.data?.mAvatar ?: it.data?.mAvatar
-            mAvatar?.let {
-                activity?.invalidateOptionsMenu()
+            if(it is Resource.Success){
+                mAvatar = it.data?.mAvatar ?: it.data?.mAvatar
+                mAvatar?.let {
+                    activity?.invalidateOptionsMenu()
+                }
+
+                it.data?.mId?.let {
+                    updateToken(it)
+                }
             }
         })
     }
@@ -125,6 +140,27 @@ abstract class DaggerNavigationFragment constructor(
         if (view != null) {
             val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+    }
+
+    private fun updateToken(idUser: Int){
+        FirebaseInstanceId.getInstance().token?.let {
+            Retrofit.Builder()
+                    .baseUrl(Config.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                    .create(FCMService::class.java)
+                    .updateTokenFCM(idUser, it).enqueue(object : Callback<Map<String, Any>> {
+                        override fun onFailure(call: Call<Map<String, Any>>, t: Throwable) {
+                            Timber.d(if(t.message != null) t.message else "Error Server")
+
+                        }
+
+                        override fun onResponse(call: Call<Map<String, Any>>, response: Response<Map<String, Any>>) {
+                            Timber.d("Update FCM Token Successfully with token is :%s", it)
+                        }
+
+                    })
         }
     }
 }

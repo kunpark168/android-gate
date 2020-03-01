@@ -15,7 +15,6 @@ import javax.inject.Inject
 class AuthClient
 @Inject constructor(private val mAuthService: AuthService) {
 
-
     fun loginWithPassword(email: String, password: String) {
         _accessToken.value = AuthResource.loading(null)
         val param = createParams(email, password)

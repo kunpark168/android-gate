@@ -8,11 +8,20 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.fragment.app.viewModels
 import com.anhtam.gate9.R
+import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.v2.MainActivity
+import com.anhtam.gate9.v2.discussion.common.rating.RatingViewModel
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import timber.log.Timber
+import java.util.*
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
@@ -38,8 +47,31 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.
-        //TODO sendRegistrationToServer(token)
+        token?.let {
+            registerTokenWithServer(it)
+        }
+
     }
+
+    private fun registerTokenWithServer(token : String){
+        Retrofit.Builder()
+                .baseUrl(Config.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(FCMService::class.java)
+                .addTokenFCM(0, token).enqueue(object : Callback<Map<String, Any>>{
+                    override fun onFailure(call: Call<Map<String, Any>>, t: Throwable) {
+                        Timber.d(if(t.message != null) t.message else "Error Server")
+
+                    }
+
+                    override fun onResponse(call: Call<Map<String, Any>>, response: Response<Map<String, Any>>) {
+                        Timber.d("Add FCM Token Successfully with token is :%s", token)
+                    }
+
+                })
+    }
+
 
     private fun sendNotification(msg: String) {
         val intent = Intent(this, MainActivity::class.java)
