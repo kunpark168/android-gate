@@ -22,7 +22,6 @@ import com.anhtam.gate9.adapter.v2.PhotoAdapter
 import com.anhtam.gate9.adapter.v2.du_lieu.RelatedAdapter
 import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.utils.toImage
-import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.game_detail.DetailGameFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
