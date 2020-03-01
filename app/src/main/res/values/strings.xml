@@ -320,4 +320,5 @@
     <string name="nha_phat_hanh">Nhà Phat Hành</string>
     <string name="splash_phrase">{rating_avg}/{num_rating}</string>
     <string name="chanel_id_notification">9Gate Chanel</string>
+    <string name="title_notification_comment">Bài viết của bạn có 1 comment </string>
 </resources>

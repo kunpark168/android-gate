@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.anhtam.gate9.R
+import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.navigation.HideKeyboardNavigation
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.navigation.NavigationDispatcher
@@ -20,6 +21,7 @@ import com.anhtam.gate9.v2.notification.NotificationFragment
 import com.anhtam.gate9.v2.detail_post.DetailPostScreen
 import com.anhtam.gate9.v2.splash.SplashScreen
 import dagger.android.support.DaggerAppCompatActivity
+import timber.log.Timber
 
 
 class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
@@ -69,5 +71,11 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
             is LoginScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_orange)
             is RegisterScreen -> window?.statusBarColor = ContextCompat.getColor(this, R.color.color_main_orange)
         }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        val code = intent?.getIntExtra(Config.NOTIFICATION_TYPE, -1)
+        Timber.d(code.toString())
     }
 }

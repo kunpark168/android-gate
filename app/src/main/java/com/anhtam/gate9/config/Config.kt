@@ -16,4 +16,6 @@ object Config {
     const val RESULT_CODE_SELECT_MULTI = "SELECT_MULTI"
 
     const val DETAIL_POST_FRAGMENT_TAG = "DETAIL_POST_FRAGMENT_TAG"
+    const val NOTIFICATION_TYPE = "NOTIFICATION_TYPE"
+    const val COMMENT = "COMMENT"
 }
