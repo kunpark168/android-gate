@@ -194,7 +194,14 @@ class DetailGameFragment constructor(private val mGameId: Int) : DaggerNavigatio
         tvTypeGame?.text = infoOrDefault(game?.gameType?.name)
         tvNPH?.text = infoOrDefault(game?.mNPH?.mName)
         tvCountry?.text = infoOrDefault(game?.country)
-        tvStatus?.text = infoOrDefault(game?.mStatus?.toString())
+        val status = when(game?.mState){
+            1 -> "Open"
+            2 -> "Beta"
+            3 -> "Coming"
+            4 -> "Closed"
+            else -> ""
+        }
+        tvStatus?.text = infoOrDefault(status)
 
         tvPublishDate?.text = infoOrDefault(game?.createdDate)
         tvIntro?.text = infoOrDefault(game?.description)

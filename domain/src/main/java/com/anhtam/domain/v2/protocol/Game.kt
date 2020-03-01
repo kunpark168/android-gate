@@ -37,4 +37,5 @@ interface Game {
     var mNumRating: Int?
     var mNPH: Userv2?
     var mStatus: Int?
+    var mState: Int?
 }

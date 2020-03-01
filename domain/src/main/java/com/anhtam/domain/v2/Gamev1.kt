@@ -70,5 +70,7 @@ class Gamev1(
         @Json(name = "userNPH")
         override var mNPH: Userv2? = null,
         @Json(name = "status")
-        override var mStatus: Int? = null
+        override var mStatus: Int? = null,
+        @Json(name = "state")
+        override var mState: Int? = null
 ): Game
