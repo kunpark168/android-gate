@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.shared_only_recycler_view_layout.*
 import of.bum.network.helper.Resource
+import of.bum.network.helper.RestResponse
 import javax.inject.Inject
 
 abstract class AbstractTabGameFragment<D, A: BaseQuickAdapter<D, BaseViewHolder>, VM: PagingViewModel<D>> : AbstractVisibleFragment(R.layout.shared_only_recycler_view_layout) {
@@ -24,6 +25,7 @@ abstract class AbstractTabGameFragment<D, A: BaseQuickAdapter<D, BaseViewHolder>
     abstract val mViewModel: VM
     @Inject lateinit var mAdapter: A
     abstract fun initViewModel(id: Int)
+    open fun onResponseSuccess(response: RestResponse<*>?){}
     open fun setUpAdapter(){}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,11 +87,13 @@ abstract class AbstractTabGameFragment<D, A: BaseQuickAdapter<D, BaseViewHolder>
     }
 
     private fun observerData(){
-        mViewModel.data.observe(viewLifecycleOwner, Observer {
-            when(it){
+        mViewModel.data.observe(viewLifecycleOwner, Observer {resource ->
+            when(resource){
                 is Resource.Success ->{
                     hideProgress()
-                    val data = it.data
+                    val response = resource.mResponse?.body as? RestResponse<*>
+                    onResponseSuccess(response)
+                    val data = resource.data
                     if (data.isNullOrEmpty()) {
                         mAdapter.loadMoreEnd()
                     } else {

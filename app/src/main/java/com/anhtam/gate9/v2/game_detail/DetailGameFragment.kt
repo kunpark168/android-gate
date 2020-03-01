@@ -192,9 +192,9 @@ class DetailGameFragment constructor(private val mGameId: Int) : DaggerNavigatio
         // tab thong tin
         tvNameGame?.text = infoOrDefault(game?.name)
         tvTypeGame?.text = infoOrDefault(game?.gameType?.name)
-        tvNPH?.text = infoOrDefault("-")
+        tvNPH?.text = infoOrDefault(game?.mNPH?.mName)
         tvCountry?.text = infoOrDefault(game?.country)
-        tvStatus?.text = infoOrDefault("")
+        tvStatus?.text = infoOrDefault(game?.mStatus?.toString())
 
         tvPublishDate?.text = infoOrDefault(game?.createdDate)
         tvIntro?.text = infoOrDefault(game?.description)
