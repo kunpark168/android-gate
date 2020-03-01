@@ -145,6 +145,12 @@ class ChiTietBaiVietScreen(private val mId: Int,
                     .apply(avatarOptions)
                     .into(this)
         }
+        view?.findViewById<ImageView>(R.id.imgTinTuc)?.run {
+            Glide.with(this@ChiTietBaiVietScreen)
+                    .load(user?.mAvatar?.toImage())
+                    .apply(avatarOptions)
+                    .into(this)
+        }
         view?.findViewById<TextView>(R.id.tvUserName)?.text = user?.mName
         val follow = Phrase.from(getString(R.string.following_amount_and_follower_amount))
                 .put("following", user?.mFlowing?.toString() ?: "0")

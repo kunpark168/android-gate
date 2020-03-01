@@ -36,7 +36,8 @@
                     tools:spanCount="3"
                     tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     tools:src="@tools:sample/backgrounds/scenic"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="@dimen/layout_margin_8dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

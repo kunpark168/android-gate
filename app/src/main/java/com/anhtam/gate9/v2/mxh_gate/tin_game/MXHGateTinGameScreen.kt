@@ -73,7 +73,7 @@ open class MXHGateTinGameScreen<A: BaseQuickAdapter<Article, BaseViewHolder>> co
     }
 
     private fun preloadData(){
-        if (mTab != 1){
+        if (mTab != 0){
             lazyLoad()
         } else {
             loadData()
