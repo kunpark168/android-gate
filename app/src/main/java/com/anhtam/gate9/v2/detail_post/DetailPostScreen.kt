@@ -228,11 +228,11 @@ class DetailPostScreen private constructor(
                 .put("post", _post.game?.post?.toString() ?: "0")
                 .format()
         tvContentGame?.text = contentStr
-        if (false){
+        if (game.follow == true){
             // check follow here
-            setFollow()
-        } else {
             setFollowing()
+        } else {
+            setFollow()
         }
     }
 

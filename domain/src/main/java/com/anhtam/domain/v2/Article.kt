@@ -18,6 +18,8 @@ open class Article(
     var mDomain: String? = null,
     @Json(name = "category_name")
     var mCategoryName: String? = null,
+    @Json(name = "photos")
+    var mPhotos: String? = null,
     @Json(name = "category_id")
     var mCategoryId: String? = null,
     @Json(name = "link")
@@ -27,5 +29,7 @@ open class Article(
     @Json(name = "game")
     var mGame: Gamev1? = null,
     @Json(name = "createdUser")
-    var mUser: Userv2? = null
+    var mUser: Userv2? = null,
+    @Json(name = "content")
+    var mContent: String? = null
 )

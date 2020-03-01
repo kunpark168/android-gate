@@ -198,8 +198,14 @@ interface SocialService {
 
     @GET("social/get-list-article")
     fun getBaiViet(
-            @Query("articleType") userId: Int,
+            @Query("articleType") type: Int,
             @Query("page") page: Int,
             @Query("limit") limit: Int
     ): LiveData<ApiResponse<RestResponse<List<Article>>>>
+
+    @GET("social/get-detail-article")
+    fun getChiTietBaiViet(
+            @Query("articleId") id: Int,
+            @Query("articleType") type: Int
+    ): LiveData<ApiResponse<RestResponse<WrapArticle>>>
 }

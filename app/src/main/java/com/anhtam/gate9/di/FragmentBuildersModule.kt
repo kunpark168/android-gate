@@ -20,6 +20,7 @@ import com.anhtam.gate9.v2.auth.register.RegisterModule
 import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
 import com.anhtam.gate9.v2.bxh.BXHModule
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.ChiTietBaiVietScreen
+import com.anhtam.gate9.v2.chi_tiet_bai_viet.ChiTietBaiVietModule
 import com.anhtam.gate9.v2.createimage.CreateImageScreen
 import com.anhtam.gate9.v2.createpost.CreatePostScreen
 import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
@@ -199,7 +200,9 @@ abstract class FragmentBuildersModule {
     )
     abstract fun contributeReportPostActivity(): ReportPostActivity
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(
+            modules = [ChiTietBaiVietModule::class]
+    )
     abstract fun contributeChiTietBaiViet(): ChiTietBaiVietScreen
 
     @Binds
