@@ -15,13 +15,17 @@ class ChiTietBaiVietViewModel @Inject constructor(
         repos: SocialRepository
 ): ViewModel(){
 
-    val mId = MutableLiveData<Int>()
-
+    private val mId = MutableLiveData<Int>()
+    private var mTab: Int = 0
+    fun setId(id: Int, tab: Int){
+        mId.value = id
+        mTab = tab
+    }
     val mArticle: LiveData<Resource<WrapArticle>> = Transformations.switchMap(mId){id ->
         if (id == null || id <= 0) {
             AbsentLiveData.create()
         } else {
-            repos.getChiTietBaiViet(id, 0)
+            repos.getChiTietBaiViet(id, mTab)
         }
     }
 }

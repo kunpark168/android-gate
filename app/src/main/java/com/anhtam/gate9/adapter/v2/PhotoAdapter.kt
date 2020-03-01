@@ -39,7 +39,7 @@ class PhotoAdapter @Inject constructor(
      */
     fun setPhoto(photo: String, isComment: Boolean = false): Int {
         if (isComment) default = DEFAULT_MORE_COMMENT
-        val photos = photo.split(',').map { it.trim() }
+        val photos = photo.replace("\\","").replace("\"", "").split(',').map { it.trim() }
         if (photos[0].isEmpty()) return 1
         val entities = photos.map {
             PhotoEntity(

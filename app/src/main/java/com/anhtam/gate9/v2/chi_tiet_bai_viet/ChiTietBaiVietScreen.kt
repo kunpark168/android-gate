@@ -1,10 +1,12 @@
 package com.anhtam.gate9.v2.chi_tiet_bai_viet
 
 import android.os.Bundle
-import android.text.Html
 import android.view.View
+import android.webkit.WebView
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.LayoutRes
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -18,13 +20,18 @@ import com.anhtam.domain.v2.wrap.WrapArticle
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.PhotoAdapter
 import com.anhtam.gate9.adapter.v2.du_lieu.RelatedAdapter
+import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.utils.toImage
+import com.anhtam.gate9.v2.auth.login.LoginScreen
+import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
+import com.anhtam.gate9.v2.game_detail.DetailGameFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.squareup.phrase.Phrase
-import kotlinx.android.synthetic.main.chi_tiet_bai_viet_screen.*
 import of.bum.network.helper.Resource
+import org.w3c.dom.Text
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -51,24 +58,68 @@ class ChiTietBaiVietScreen(private val mId: Int,
     private var mWrapArticle: WrapArticle? = null
     private var mPhotoAdapter: PhotoAdapter? = null
 
+    override fun menuRes() = R.menu.menu_chat_search_more
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadData()
         initView()
         observer()
+        initEvents()
+    }
+
+    private fun initEvents() {
+        view?.findViewById<View>(R.id.imgAvatar)?.setOnClickListener { navigateToUser() }
+        view?.findViewById<View>(R.id.tvUserName)?.setOnClickListener { navigateToUser() }
+
+        view?.findViewById<View>(R.id.imgGame)?.setOnClickListener { navigateToGame() }
+        view?.findViewById<View>(R.id.imgNewGame)?.setOnClickListener { navigateToGame() }
+        view?.findViewById<View>(R.id.tvTitle)?.setOnClickListener { navigateToGame() }
+        view?.findViewById<TextView>(R.id.tvFollowGame)?.run {
+            setOnClickListener {
+                val id = mArticle?.mGame?.gameId ?: return@setOnClickListener
+                if (mSessionManager.checkLogin(isDirect = true)) {
+                    BackgroundTasks.postFollowGame(id)
+                    if (this.text == context.getString(R.string.follow)) {
+                        setFollowing()
+                    } else {
+                        setFollow()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun navigateToUser() {
+        val user = mArticle?.mUser ?: return
+        val id = user.mId ?: return
+        val role = when (user.mRoleId) {
+            5 -> Category.Publisher
+            else -> Category.Member
+        }
+        navigation?.addFragment(UserDiscussionScreen.newInstance(id, role))
+    }
+
+    private fun navigateToGame() {
+        val id = mArticle?.mGame?.gameId ?: return
+        navigation?.addFragment(DetailGameFragment?.newInstance(id))
     }
 
     private fun loadData() {
         showProgress()
-        mViewModel.mId.value = mId
+        mViewModel.setId(mId, mTab)
     }
 
     private fun initView() {
-        articleContentWebView?.settings?.javaScriptEnabled = true
-        concernRecyclerView?.adapter = mConcernAdapter
-        concernRecyclerView?.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        newRecyclerView?.adapter = mNewListAdapter
-        newRecyclerView?.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        view?.findViewById<WebView>(R.id.articleContentWebView)?.settings?.javaScriptEnabled = true
+        view?.findViewById<RecyclerView>(R.id.concernRecyclerView)?.apply {
+            adapter = mConcernAdapter
+            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        }
+        view?.findViewById<RecyclerView>(R.id.newRecyclerView)?.apply {
+            adapter = mNewListAdapter
+            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        }
     }
 
     private fun observer() {
@@ -89,16 +140,18 @@ class ChiTietBaiVietScreen(private val mId: Int,
     private fun updateUI() {
 
         val user: User? = mWrapArticle?.mArticle?.mUser
-        Glide.with(this)
-                .load(user?.mAvatar?.toImage())
-                .apply(avatarOptions)
-                .into(imgAvatar)
-        tvUserName?.text = user?.mName
+        view?.findViewById<ImageView>(R.id.imgAvatar)?.run {
+            Glide.with(this@ChiTietBaiVietScreen)
+                    .load(user?.mAvatar?.toImage())
+                    .apply(avatarOptions)
+                    .into(this)
+        }
+        view?.findViewById<TextView>(R.id.tvUserName)?.text = user?.mName
         val follow = Phrase.from(getString(R.string.following_amount_and_follower_amount))
                 .put("following", user?.mFlowing?.toString() ?: "0")
                 .put("follower", user?.mFlower?.toString() ?: "0")
                 .format()
-        tvFollowNumber.text = follow
+        view?.findViewById<TextView>(R.id.tvFollowNumber)?.text = follow
 
         view?.findViewById<ImageView>(R.id.articleAvatarImageView)?.run {
             Glide.with(this)
@@ -112,9 +165,9 @@ class ChiTietBaiVietScreen(private val mId: Int,
 
         val article = mWrapArticle?.mArticle
         val content = article?.mContent
-        articleContentWebView?.loadData(getHtmlData(content), "text/html", "UTF-8")
-        articleTitleTextView?.text = mArticle?.mTitle
-        articleCreateTimeTextView?.text = mArticle?.mCreatedTime
+        view?.findViewById<WebView>(R.id.articleContentWebView)?.loadData(getHtmlData(content), "text/html", "UTF-8")
+        view?.findViewById<TextView>(R.id.articleTitleTextView)?.text = mArticle?.mTitle
+        view?.findViewById<TextView>(R.id.articleCreateTimeTextView)?.text = mArticle?.mCreatedTime
 
         //
         val game: Game? = mWrapArticle?.mArticle?.mGame
@@ -126,8 +179,9 @@ class ChiTietBaiVietScreen(private val mId: Int,
     private fun initPhoto(rv: RecyclerView) {
         val unwrapNav = navigation ?: return
         mPhotoAdapter = PhotoAdapter(unwrapNav, bannerOptions)
+        mPhotoAdapter?.user = mArticle?.mUser ?: return
         rv.adapter = mPhotoAdapter
-        val photos = mArticle?.mPhotos ?: return
+        val photos = mArticle.mPhotos ?: return
 //        val isFormat = "[[.*]]".toRegex().matches(photos) TODO Regex
         val isFormat = (photos.startsWith('[') && photos.endsWith(']'))
         val stringConcat = if (!isFormat) {
@@ -140,17 +194,19 @@ class ChiTietBaiVietScreen(private val mId: Int,
     }
 
     private fun setFollow() {
-        tvFollowGame?.text = getString(R.string.follow)
-        tvFollowGame?.setBackgroundResource(R.drawable.bg_follow)
+        val tvFollow = view?.findViewById<TextView>(R.id.tvFollowGame)
+        tvFollow?.text = getString(R.string.follow)
+        tvFollow?.setBackgroundResource(R.drawable.bg_follow)
         val unwrapContext = context ?: return
-        tvFollowGame?.setTextColor(ContextCompat.getColor(unwrapContext, R.color.text_color_red_light))
+        tvFollow?.setTextColor(ContextCompat.getColor(unwrapContext, R.color.text_color_red_light))
     }
 
     private fun setFollowing() {
-        tvFollowGame?.text = getString(R.string.following)
-        tvFollowGame?.setBackgroundResource(R.drawable.bg_following)
+        val tvFollow = view?.findViewById<TextView>(R.id.tvFollowGame)
+        tvFollow?.text = getString(R.string.following)
+        tvFollow?.setBackgroundResource(R.drawable.bg_following)
         val unwrapContext = context ?: return
-        tvFollowGame?.setTextColor(ContextCompat.getColor(unwrapContext, R.color.text_color_blue))
+        tvFollow?.setTextColor(ContextCompat.getColor(unwrapContext, R.color.text_color_blue))
     }
 
     private fun getHtmlData(bodyHTML: String?): String {
@@ -161,6 +217,11 @@ class ChiTietBaiVietScreen(private val mId: Int,
 
     private fun initGame(game: Game?) {
         val unwrapContext = context ?: return
+        val csGame = view?.findViewById<ConstraintLayout>(R.id.csGame)
+        val imgGame = view?.findViewById<ImageView>(R.id.imgGame)
+        val imgNewGame = view?.findViewById<ImageView>(R.id.imgNewGame)
+        val tvTitle = view?.findViewById<TextView>(R.id.tvTitle)
+        val tvContentGame = view?.findViewById<TextView>(R.id.tvContentGame)
         if (game == null) {
             csGame?.visibility = View.GONE
             imgGame?.visibility = View.GONE
@@ -171,12 +232,12 @@ class ChiTietBaiVietScreen(private val mId: Int,
             Glide.with(unwrapContext)
                     .load(game.avatar?.toImage())
                     .apply(bannerOptions)
-                    .into(imgGame)
+                    .into(imgGame!!)
 
             Glide.with(unwrapContext)
                     .load(game.avatar?.toImage())
                     .apply(bannerOptions)
-                    .into(imgNewGame)
+                    .into(imgNewGame!!)
 
             tvTitle?.text = game.name
             val contentStr = Phrase.from(getString(R.string.follower_amount_and_post_amount))
