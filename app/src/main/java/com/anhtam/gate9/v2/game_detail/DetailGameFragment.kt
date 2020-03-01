@@ -15,6 +15,7 @@ import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.game_detail.danh_gia.DanhGiaGameFragment
 import com.anhtam.gate9.v2.game_detail.thao_luan.ThaoLuanFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.main.home.HomeFragment
 import com.anhtam.gate9.v2.report.game.ReportGameActivity
 import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import com.bumptech.glide.Glide
@@ -99,7 +100,7 @@ class DetailGameFragment constructor(private val mGameId: Int) : DaggerNavigatio
             }
         }
         tabNewFeed?.setOnClickListener {
-
+            navigation?.newRootFragment(HomeFragment.newInstance())
         }
     }
 

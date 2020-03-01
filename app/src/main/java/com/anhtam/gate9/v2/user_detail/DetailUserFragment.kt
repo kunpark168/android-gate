@@ -19,6 +19,7 @@ import com.anhtam.gate9.v2.discussion.common.game.GGameFragment
 import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.main.home.HomeFragment
 import com.anhtam.gate9.v2.report.user.ReportUserActivity
 import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import com.anhtam.gate9.vo.model.Category
@@ -101,11 +102,11 @@ class DetailUserFragment(private val mId: Int) : DaggerNavigationFragment(R.layo
             if (mSessionManager.checkLogin(isDirect = true)){
                 mIsFollowing = !mIsFollowing
                 onUpdateFollow()
-                BackgroundTasks.postUserFollow(mId, 5)
+                BackgroundTasks.postUserFollow(mId, 4)
             }
         }
         tabNewFeed?.setOnClickListener {
-
+            navigation?.newRootFragment(HomeFragment.newInstance())
         }
     }
 
@@ -173,28 +174,8 @@ class DetailUserFragment(private val mId: Int) : DaggerNavigationFragment(R.layo
     }
 
     private fun updateDetailNPH(user: User?){
-//        mIsFollowing = game?.follow ?: false
-//        onUpdateFollow()
-//        // header view
-//        val unwrapContext = context ?: return
-//        Glide.with(unwrapContext)
-//                .load(game?.imgCover?.toImage())
-//                .apply(bannerOption)
-//                .into(coverImageView)
-//
-//        Glide.with(unwrapContext)
-//                .load(game?.avatar?.toImage())
-//                .apply(bannerOption)
-//                .into(avatarImageView)
-//        nameTextView?.text = game?.name
-//        parameterTextView?.text = Phrase.from(getString(R.string.follower_amount_and_post_amount))
-//                .put("follower", game?.follower?.toString() ?: "0")
-//                .put("post", game?.post?.toString() ?: "0")
-//                .format()
-//        ratingBar?.rating = game?.mRating?.toFloat() ?: 0.0f
-//        ratingTextView?.text = "${game?.mRating?.format(1) ?: "0"} /"
-//        amountRateTextView?.text = game?.mNumRating?.toString() ?: "0"
-
+        mIsFollowing = user?.mIsFollowing ?: false
+        onUpdateFollow()
         //header
         Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder))
                 .load(user?.mAvatar?.toImage())
