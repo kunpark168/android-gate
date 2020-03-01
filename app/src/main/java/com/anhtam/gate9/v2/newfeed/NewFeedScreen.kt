@@ -15,12 +15,12 @@ import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.BackgroundViewModel
-import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
-import com.anhtam.gate9.v2.notification.NotificationFragment
 import com.anhtam.gate9.v2.member.MemberFragment
 import com.anhtam.gate9.v2.messenger.ChannelFragment
-import com.anhtam.gate9.vo.model.Category
+import com.anhtam.gate9.v2.notification.NotificationFragment
+import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
+import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.new_feed_screen.*
@@ -158,8 +158,14 @@ class NewFeedScreen : DaggerNavigationFragment(R.layout.new_feed_screen) {
         }
         icGroup?.setOnClickListener { navigation?.addFragment(MemberFragment.newInstance()) }
         imgAvatar?.setOnClickListener {
-            val idUser: Int = mSessionManager.cachedUser.value?.data?.mId ?: return@setOnClickListener
-            navigation?.addFragment(UserDiscussionScreen.newInstance(idUser, Category.Member))
+            val user = mSessionManager.cachedUser.value?.data ?: return@setOnClickListener
+            val roleId = user.mRoleId ?: return@setOnClickListener
+            val id = user.mId ?: return@setOnClickListener
+            if (roleId != 5){
+                navigation?.addFragment(DetailUserFragment.newInstance(id))
+            } else {
+                navigation?.addFragment(DetailNPHFragment.newInstance(id))
+            }
         }
     }
 }

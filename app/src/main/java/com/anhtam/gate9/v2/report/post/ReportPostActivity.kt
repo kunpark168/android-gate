@@ -1,14 +1,11 @@
 package com.anhtam.gate9.v2.report.post
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import com.anhtam.gate9.R
-import com.anhtam.gate9.v2.report.game.ReportGameType
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.report.game.ReportGameType
 import kotlinx.android.synthetic.main.activity_report_post.*
 
 class ReportPostActivity : DaggerNavigationFragment(R.layout.activity_report_post) {

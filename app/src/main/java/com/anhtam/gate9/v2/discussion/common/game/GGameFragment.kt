@@ -2,8 +2,8 @@ package com.anhtam.gate9.v2.discussion.common.game
 
 import androidx.fragment.app.viewModels
 import com.anhtam.domain.v2.wrap.WrapGame
-import com.anhtam.gate9.adapter.GameQuickAdapter
 import com.anhtam.gate9.R
+import com.anhtam.gate9.adapter.GameQuickAdapter
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
 
 

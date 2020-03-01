@@ -60,39 +60,41 @@
         android:background="@color/colorDivider"
         app:layout_constraintTop_toBottomOf="@id/tvTinTuc"
         android:layout_marginTop="@dimen/layout_margin_8dp"/>
-    <com.anhtam.gate9.share.view.RoundRectCornerImageView
-        android:id="@+id/imgGame"
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgUser"
         android:layout_width="@dimen/image_circle_medium"
         android:layout_height="@dimen/image_circle_medium"
-        android:src="@drawable/img_holder_banner"
-        app:layout_constraintStart_toStartOf="@id/bannerLayout"
+        android:src="@drawable/img_avatar_holder"
+        app:layout_constraintStart_toStartOf="@id/divider"
         app:layout_constraintTop_toBottomOf="@id/divider"
         android:layout_marginTop="@dimen/layout_margin_8dp"/>
 
     <TextView
-        android:id="@+id/tvTitleGame"
+        android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lines="1"
         android:textColor="@color/black"
         android:text="@string/sample_title_game"
-        app:layout_constraintTop_toTopOf="@id/imgGame"
-        app:layout_constraintStart_toEndOf="@id/imgGame"
-        app:layout_constraintBottom_toTopOf="@id/tvTypeGame"
+        app:layout_constraintTop_toTopOf="@id/imgUser"
+        app:layout_constraintStart_toEndOf="@id/imgUser"
+        app:layout_constraintBottom_toTopOf="@id/tvTime"
         android:layout_marginStart="@dimen/layout_margin_16dp"/>
     <TextView
-        android:id="@+id/tvTypeGame"
+        android:id="@+id/tvTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:lines="1"
-        tools:text="3-6 19:23"
-        app:layout_constraintTop_toBottomOf="@id/tvTitleGame"
-        app:layout_constraintStart_toStartOf="@id/tvTitleGame"
-        app:layout_constraintBottom_toBottomOf="@id/imgGame"/>
+        android:text="3-6 19:23"
+        app:layout_constraintTop_toBottomOf="@id/tvName"
+        app:layout_constraintStart_toStartOf="@id/tvName"
+        app:layout_constraintBottom_toBottomOf="@id/imgUser"/>
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="tvTitleGame,tvTypeGame,imgGame,divider"/>
+        app:constraint_referenced_ids="tvName,tvTime,imgUser"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,8 @@
         <item name="android:fontFamily">@font/roboto_font_family</item>
         <item name="actionOverflowButtonStyle">@style/OverflowToolbar</item>
         <item name="android:actionOverflowButtonStyle">@style/OverflowToolbar</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <!--Splash Style-->
@@ -41,6 +43,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
     
     <style name="BottomNavCustom" parent="Widget.Design.BottomNavigationView">

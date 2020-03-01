@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.anhtam.domain.Game
 import com.anhtam.gate9.R
-import com.anhtam.gate9.v2.search.DataSource
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.search.DataSource
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import kotlinx.android.synthetic.main.fragment_temp_search.*

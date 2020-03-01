@@ -6,11 +6,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anhtam.gate9.R
-import com.anhtam.gate9.share.view.CustomLoadMoreView
-import com.anhtam.gate9.v2.member.MemberDefaultViewModel
 import com.anhtam.gate9.adapter.AlphabetAdapter
 import com.anhtam.gate9.adapter.v2.MemberAdapter
+import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.member.MemberDefaultViewModel
 import com.anhtam.gate9.vo.EUser
 import kotlinx.android.synthetic.main.member_list_fragment.*
 import of.bum.network.helper.Resource

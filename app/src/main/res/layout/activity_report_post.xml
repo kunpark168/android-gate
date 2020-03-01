@@ -11,7 +11,7 @@
     android:focusable="true">
 
     <include
-        layout="@layout/shared_toolbar_with_back_layout"/>
+        layout="@layout/shared_blue_toolbar_layout"/>
 
     <ScrollView
         android:fillViewport="true"

@@ -1,6 +1,7 @@
 package com.anhtam.domain.v2.protocol
 
 import com.anhtam.domain.v2.Type
+import com.anhtam.domain.v2.Userv2
 
 interface Game {
     var gameId: Int?
@@ -28,4 +29,13 @@ interface Game {
     var follow: Boolean?
     var post: Int?
     var imgCover: String?
+    var country: String?
+    var email: String?
+    var phone: String?
+    var group: String?
+    var mRating: Double?
+    var mNumRating: Int?
+    var mNPH: Userv2?
+    var mStatus: Int?
+    var mState: Int?
 }

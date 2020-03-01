@@ -7,7 +7,8 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.utils.toImage
-import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
+import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
+import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -32,7 +33,14 @@ class MemberAdapter @Inject constructor(
             }
             when(view.id){
                 R.id.nameTextView, R.id.avatarImageView -> {
-                    navigation.addFragment(UserDiscussionScreen.newInstance(idUser, role))
+                    val user = data[position] ?: return@setOnItemChildClickListener
+                    val roleId = user.mRoleId ?: return@setOnItemChildClickListener
+                    val id = user.mId ?: return@setOnItemChildClickListener
+                    if (roleId != 5){
+                        navigation.addFragment(DetailUserFragment.newInstance(id))
+                    } else {
+                        navigation.addFragment(DetailNPHFragment.newInstance(id))
+                    }
                 }
                 R.id.followButton -> {
                     BackgroundTasks.postUserFollow(idUser, role.id)

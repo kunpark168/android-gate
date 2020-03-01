@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -34,8 +32,6 @@ class LoginScreen(private val isDirect: Boolean) : DaggerNavigationFragment(R.la
         events()
         observers()
     }
-
-    override fun statusColor() = R.color.color_main_orange
 
     private fun observers(){
         mSessionManager.cachedAccessToken.observe(viewLifecycleOwner, Observer {

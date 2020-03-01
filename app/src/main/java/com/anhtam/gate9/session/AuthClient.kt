@@ -1,6 +1,5 @@
 package com.anhtam.gate9.session
 
-import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.anhtam.gate9.App

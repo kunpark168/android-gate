@@ -1,7 +1,5 @@
 package com.anhtam.gate9.vo
 
-import java.lang.IllegalArgumentException
-
 sealed class Reaction {
     object Love: Reaction()
     object Like: Reaction()

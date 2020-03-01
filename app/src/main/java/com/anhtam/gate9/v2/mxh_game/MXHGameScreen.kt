@@ -1,8 +1,7 @@
 package com.anhtam.gate9.v2.mxh_game
 
 import android.os.Bundle
-import android.view.*
-import androidx.core.content.ContextCompat
+import android.view.View
 import androidx.viewpager.widget.ViewPager
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.SharePageAdapter

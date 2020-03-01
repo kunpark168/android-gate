@@ -1,7 +1,7 @@
 package com.anhtam.gate9.v2.mxh_gate.tin_game
 
 import android.os.Bundle
-import android.view.*
+import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -73,7 +73,7 @@ open class MXHGateTinGameScreen<A: BaseQuickAdapter<Article, BaseViewHolder>> co
     }
 
     private fun preloadData(){
-        if (mTab != 1){
+        if (mTab != 0){
             lazyLoad()
         } else {
             loadData()

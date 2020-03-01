@@ -2,8 +2,8 @@ package com.anhtam.gate9.utils
 
 import android.content.Context
 import androidx.annotation.ColorRes
-import com.anhtam.gate9.R
 import androidx.core.content.ContextCompat
+import com.anhtam.gate9.R
 
 
 fun Context.getStringColor(@ColorRes color: Int): String {
@@ -26,3 +26,5 @@ fun String.targetStyle(context: Context): String {
 fun Context.getColorCompat(colorId: Int): Int {
     return ContextCompat.getColor(this, colorId)
 }
+
+fun Double.format(digits: Int) = "%.${digits}f".format(this)

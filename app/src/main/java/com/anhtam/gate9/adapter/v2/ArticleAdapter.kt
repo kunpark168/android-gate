@@ -1,7 +1,6 @@
 package com.anhtam.gate9.adapter.v2
 
 import android.view.View
-import android.widget.ImageView
 import com.anhtam.domain.v2.Article
 import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.gate9.R
@@ -20,7 +19,7 @@ class ArticleAdapter @Inject constructor(
     override fun convert(helper: BaseViewHolder?, item: Article?) {val view = helper?.itemView ?: return
         val article = item ?: return
         view.tvTinTuc?.text = article.mTitle
-        view.tvTime?.text = "${article.mCreatedTime} ${article.mCategoryName}"
+        view.tvTime?.text = "${article.mCreatedTime ?: ""} ${article.mCategoryName ?: ""}"
         Glide.with(mContext)
                 .load(article.mAvatar?.toImage())
                 .into(view.imgTinTuc)

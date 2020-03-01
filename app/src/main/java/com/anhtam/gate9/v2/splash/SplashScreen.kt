@@ -1,9 +1,7 @@
 package com.anhtam.gate9.v2.splash
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import com.anhtam.gate9.R
@@ -22,8 +20,6 @@ class SplashScreen : DaggerNavigationFragment(R.layout.splash_screen) {
         mSessionManager.initialize()
         startAnimation()
     }
-
-    override fun statusColor() = R.color.white
 
     private fun startAnimation() {
         val animation = AnimationUtils.loadAnimation(context, R.anim.splash)

@@ -2,15 +2,12 @@ package com.anhtam.gate9.v2.notification
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.anhtam.gate9.adapter.NotificationAdapter
-
 import com.anhtam.gate9.R
+import com.anhtam.gate9.adapter.NotificationAdapter
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_all_notification.*

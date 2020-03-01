@@ -1,12 +1,12 @@
 package com.anhtam.gate9.v2.discussion.common.rating
 
 import androidx.fragment.app.viewModels
-import com.anhtam.gate9.vo.Rating
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.RatingAdapter
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
 import com.anhtam.gate9.v2.shared.RatingComponent
+import com.anhtam.gate9.vo.Rating
 import com.anhtam.gate9.vo.model.Category
 import of.bum.network.helper.RestResponse
 

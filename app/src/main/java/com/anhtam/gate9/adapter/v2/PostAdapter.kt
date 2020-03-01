@@ -16,13 +16,13 @@ import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.utils.convertInt
-import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
-import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.auth.login.LoginScreen
-import com.anhtam.gate9.v2.detail_post.DetailPostScreen
+import com.anhtam.gate9.v2.game_detail.DetailGameFragment
+import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
+import com.anhtam.gate9.v2.post_detail.DetailPostScreen
 import com.anhtam.gate9.v2.report.post.ReportPostActivity
+import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 import com.anhtam.gate9.vo.Reaction
-import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -49,12 +49,7 @@ class PostAdapter @Inject constructor(
                 }
                 R.id.userNameTextView, R.id.avatarImageView -> {
                     val user = data[position].user ?: return@setOnItemChildClickListener
-                    val id = user.mId ?: return@setOnItemChildClickListener
-                    val role = when(user.mRoleId){
-                        5 -> Category.Publisher
-                        else -> Category.Member
-                    }
-                    navigateToMemberDiscussion(id, role)
+                    navigateToMemberDiscussion(user)
                 }
                 R.id.gameImageView, R.id.titleGameTextView -> {
                     val game = data[position].game ?: return@setOnItemChildClickListener
@@ -188,8 +183,14 @@ class PostAdapter @Inject constructor(
         return accessToken.isNotEmpty()
     }
 
-    private fun navigateToMemberDiscussion(userId: Int, role: Category) {
-        navigation.addFragment(UserDiscussionScreen.newInstance(userId, role))
+    private fun navigateToMemberDiscussion(user: User) {
+        val roleId = user.mRoleId ?: return
+        val id = user.mId ?: return
+        if (roleId != 5){
+            navigation.addFragment(DetailUserFragment.newInstance(id))
+        } else {
+            navigation.addFragment(DetailNPHFragment.newInstance(id))
+        }
     }
 
     private fun navigateToPostDetail(post: Post, listener: (Reaction)->Unit) {
@@ -198,7 +199,7 @@ class PostAdapter @Inject constructor(
 
     private fun navigateToGameDiscussion(game: Game){
         val id = game.gameId ?: return
-        navigation.addFragment(GameDiscussionScreen.newInstance(id))
+        navigation.addFragment(DetailGameFragment.newInstance(id))
     }
 
 

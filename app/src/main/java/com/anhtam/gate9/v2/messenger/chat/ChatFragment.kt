@@ -1,18 +1,15 @@
 package com.anhtam.gate9.v2.messenger.chat
 
 import android.os.Bundle
-import android.view.*
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.chat.Message
 import com.anhtam.gate9.adapter.chat.MessengerAdapter
-import com.anhtam.gate9.v2.search.DataSource
-import com.anhtam.gate9.v2.lib.loadImage
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.search.DataSource
 import kotlinx.android.synthetic.main.chat_fragment.*
-import of.bum.network.helper.Resource
 
 class ChatFragment : DaggerNavigationFragment(R.layout.chat_fragment) {
 
@@ -34,8 +31,6 @@ class ChatFragment : DaggerNavigationFragment(R.layout.chat_fragment) {
         viewModel.userId.value = userId
         events()
     }
-
-    override fun statusColor() = R.color.color_main_blue
 
     private fun events() {
         iconBack?.setOnClickListener {

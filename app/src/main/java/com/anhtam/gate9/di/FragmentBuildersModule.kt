@@ -1,56 +1,60 @@
 package com.anhtam.gate9.di
 
 import androidx.lifecycle.ViewModel
-import com.anhtam.gate9.v2.reaction.ReactionScreen
-import com.anhtam.gate9.v2.search.SearchModule
-import com.anhtam.gate9.v2.search.SearchScreen
+import com.anhtam.gate9.v2.auth.login.LoginModule
+import com.anhtam.gate9.v2.auth.login.LoginScreen
+import com.anhtam.gate9.v2.auth.register.RegisterModule
+import com.anhtam.gate9.v2.auth.register.RegisterScreen
+import com.anhtam.gate9.v2.bxh.BXHModule
+import com.anhtam.gate9.v2.bxh.BXHScreen
+import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
 import com.anhtam.gate9.v2.categories.CategoryModule
 import com.anhtam.gate9.v2.categories.FeatureScreen
-import com.anhtam.gate9.v2.bxh.BXHScreen
-import com.anhtam.gate9.v2.notification.NotificationFragment
-import com.anhtam.gate9.v2.notification.NotificationModule
+import com.anhtam.gate9.v2.chi_tiet_bai_viet.ChiTietBaiVietModule
+import com.anhtam.gate9.v2.chi_tiet_bai_viet.ChiTietBaiVietScreen
+import com.anhtam.gate9.v2.createimage.CreateImageScreen
+import com.anhtam.gate9.v2.createpost.CreatePostScreen
+import com.anhtam.gate9.v2.discussion.UserDiscussionModule
+import com.anhtam.gate9.v2.follow.FollowModule
+import com.anhtam.gate9.v2.follow.FollowScreen
+import com.anhtam.gate9.v2.gallery.GalleryScreen
+import com.anhtam.gate9.v2.game_detail.DetailGameFragment
+import com.anhtam.gate9.v2.game_detail.DetailGameModule
+import com.anhtam.gate9.v2.main.home.HomeFragment
+import com.anhtam.gate9.v2.main.home.HomeModule
 import com.anhtam.gate9.v2.member.MemberFragment
 import com.anhtam.gate9.v2.member.MemberModule
 import com.anhtam.gate9.v2.member.all.MemberListFragment
 import com.anhtam.gate9.v2.member.all.MemberListModule
-import com.anhtam.gate9.v2.auth.register.RegisterScreen
-import com.anhtam.gate9.v2.auth.login.LoginScreen
-import com.anhtam.gate9.v2.auth.login.LoginModule
-import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
-import com.anhtam.gate9.v2.bxh.BXHModule
-import com.anhtam.gate9.v2.createimage.CreateImageScreen
-import com.anhtam.gate9.v2.createpost.CreatePostScreen
-import com.anhtam.gate9.v2.discussion.game.GameDiscussionScreen
-import com.anhtam.gate9.v2.discussion.game.GameDiscussionModule
-import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
-import com.anhtam.gate9.v2.discussion.user.UserDiscussionModule
-import com.anhtam.gate9.v2.gallery.GalleryScreen
-import com.anhtam.gate9.v2.mxh_game.MXHGameScreen
-import com.anhtam.gate9.v2.main.home.HomeFragment
-import com.anhtam.gate9.v2.main.home.HomeModule
 import com.anhtam.gate9.v2.messenger.ChannelFragment
-import com.anhtam.gate9.v2.messenger.chat.ChatFragment
-import com.anhtam.gate9.v2.messenger.inbox.InboxFragment
 import com.anhtam.gate9.v2.messenger.ChannelModule
+import com.anhtam.gate9.v2.messenger.chat.ChatFragment
 import com.anhtam.gate9.v2.messenger.chat.ChatModule
+import com.anhtam.gate9.v2.messenger.inbox.InboxFragment
 import com.anhtam.gate9.v2.mxh_game.MXHGameModule
+import com.anhtam.gate9.v2.mxh_game.MXHGameScreen
+import com.anhtam.gate9.v2.mxh_gate.DuLieuModule
 import com.anhtam.gate9.v2.mxh_gate.MXHGateScreen
 import com.anhtam.gate9.v2.newfeed.NewFeedViewModel
-import com.anhtam.gate9.v2.detail_post.DetailPostModule
-import com.anhtam.gate9.v2.detail_post.DetailPostScreen
-import com.anhtam.gate9.v2.follow.FollowModule
+import com.anhtam.gate9.v2.notification.NotificationFragment
+import com.anhtam.gate9.v2.notification.NotificationModule
+import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
+import com.anhtam.gate9.v2.post_detail.DetailPostModule
+import com.anhtam.gate9.v2.post_detail.DetailPostScreen
 import com.anhtam.gate9.v2.reaction.ReactionModule
-import com.anhtam.gate9.v2.shared.muilti_gallery.MultiChooseImageScreen
-import com.anhtam.gate9.v2.splash.SplashScreen
-import com.anhtam.gate9.v2.follow.FollowScreen
-import com.anhtam.gate9.v2.mxh_gate.DuLieuModule
+import com.anhtam.gate9.v2.reaction.ReactionScreen
 import com.anhtam.gate9.v2.report.game.ReportGameActivity
 import com.anhtam.gate9.v2.report.game.ReportGameModule
 import com.anhtam.gate9.v2.report.post.ReportPostActivity
 import com.anhtam.gate9.v2.report.post.ReportPostModule
 import com.anhtam.gate9.v2.report.user.ReportUserActivity
 import com.anhtam.gate9.v2.report.user.ReportUserModule
+import com.anhtam.gate9.v2.search.SearchModule
+import com.anhtam.gate9.v2.search.SearchScreen
 import com.anhtam.gate9.v2.shared.muilti_gallery.GalleryModule
+import com.anhtam.gate9.v2.shared.muilti_gallery.MultiChooseImageScreen
+import com.anhtam.gate9.v2.splash.SplashScreen
+import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -74,7 +78,9 @@ abstract class FragmentBuildersModule {
     )
     abstract fun contributeLoginScreen(): LoginScreen
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(
+            modules = [RegisterModule::class]
+    )
     abstract fun contributeRegisterScreen(): RegisterScreen
 
     @ContributesAndroidInjector(
@@ -154,13 +160,17 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector(
             modules = [UserDiscussionModule::class])
-    abstract fun contributeGamerDiscussionActivity(): UserDiscussionScreen
+    abstract fun contributeDetailUserActivity(): DetailUserFragment
+
+    @ContributesAndroidInjector(
+            modules = [UserDiscussionModule::class])
+    abstract fun contributeDetailNPHActivity(): DetailNPHFragment
 
 
     @ContributesAndroidInjector(
-            modules = [GameDiscussionModule::class]
+            modules = [DetailGameModule::class]
     )
-    abstract fun contributeGameDiscussionActivity(): GameDiscussionScreen
+    abstract fun contributeDetailGameFragment(): DetailGameFragment
 
     @ContributesAndroidInjector
     abstract fun contributeGalleryScreen(): GalleryScreen
@@ -194,6 +204,11 @@ abstract class FragmentBuildersModule {
             modules = [ReportPostModule::class]
     )
     abstract fun contributeReportPostActivity(): ReportPostActivity
+
+    @ContributesAndroidInjector(
+            modules = [ChiTietBaiVietModule::class]
+    )
+    abstract fun contributeChiTietBaiViet(): ChiTietBaiVietScreen
 
     @Binds
     @IntoMap

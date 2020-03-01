@@ -1,10 +1,7 @@
 package com.anhtam.gate9.v2.createimage
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.create_image_screen.*

@@ -1,23 +1,21 @@
 package com.anhtam.gate9.v2.main.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.navigation.FragmentResultListener
-import com.anhtam.gate9.v2.createimage.CreateImageScreen
-import com.anhtam.gate9.v2.createpost.CreatePostScreen
-import com.anhtam.gate9.v2.main.DaggerNavigationFragment
-import com.anhtam.gate9.v2.newfeed.NewFeedScreen
-import com.anhtam.gate9.v2.follow.FollowScreen
-import kotlinx.android.synthetic.main.main_fragment.*
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
+import com.anhtam.gate9.v2.createimage.CreateImageScreen
+import com.anhtam.gate9.v2.createpost.CreatePostScreen
+import com.anhtam.gate9.v2.follow.FollowScreen
+import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.mxh_gate.MXHGateScreen
+import com.anhtam.gate9.v2.newfeed.NewFeedScreen
+import kotlinx.android.synthetic.main.main_fragment.*
 
 
 class HomeFragment : DaggerNavigationFragment(R.layout.main_fragment), FragmentResultListener {

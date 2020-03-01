@@ -6,11 +6,8 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.anhtam.gate9.R
 import com.anhtam.gate9.vo.model.Category
-import kotlinx.android.synthetic.main.layout_rating.view.*
 import kotlinx.android.synthetic.main.rating_view_header.view.*
 import kotlinx.android.synthetic.main.rating_view_header01.view.*
-import java.math.RoundingMode
-import java.text.DecimalFormat
 
 class RatingComponent @JvmOverloads constructor(
         context: Context?,

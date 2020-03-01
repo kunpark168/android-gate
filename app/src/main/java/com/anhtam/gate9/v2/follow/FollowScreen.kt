@@ -2,16 +2,12 @@ package com.anhtam.gate9.v2.follow
 
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.utils.autoCleared
-import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import kotlinx.android.synthetic.main.follow_screen.*

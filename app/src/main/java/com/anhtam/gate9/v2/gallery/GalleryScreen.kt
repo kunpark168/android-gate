@@ -37,8 +37,6 @@ class GalleryScreen private constructor(
         init()
     }
 
-    override fun statusColor() = R.color.black
-
     private fun init(){
         mAdapter = GalleryAdapter()
         viewPager.adapter = mAdapter

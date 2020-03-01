@@ -1,12 +1,7 @@
 package com.anhtam.gate9.v2.newfeed
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.ViewModel
 import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.repository.SocialRepository
-import com.anhtam.gate9.v2.discussion.common.CommonDiscussionViewModel
-import of.bum.network.helper.Resource
 import javax.inject.Inject
 
 /*

@@ -1,13 +1,13 @@
 package com.anhtam.gate9.adapter
 
-import com.anhtam.gate9.adapter.diff.NotificationDiffCallback
 import com.anhtam.domain.Notification
 import com.anhtam.gate9.R
-import com.anhtam.reactlibs.adapter.AmazingAdapter
-import com.anhtam.reactlibs.adapter.ViewTypeHolder
+import com.anhtam.gate9.adapter.diff.NotificationDiffCallback
 import com.anhtam.gate9.utils.setHtml
 import com.anhtam.gate9.utils.targetStyle
 import com.anhtam.gate9.utils.userStyle
+import com.anhtam.reactlibs.adapter.AmazingAdapter
+import com.anhtam.reactlibs.adapter.ViewTypeHolder
 import com.bumptech.glide.RequestManager
 import kotlinx.android.synthetic.main.item_notification_layout.view.*
 

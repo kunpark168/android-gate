@@ -1,7 +1,7 @@
 package com.anhtam.gate9.v2.shared.muilti_gallery
 
 import android.os.Bundle
-import android.view.*
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
