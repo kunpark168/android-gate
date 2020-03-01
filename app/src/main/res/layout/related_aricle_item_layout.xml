@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="200dp"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_marginStart="@dimen/layout_margin_2dp"
+    android:layout_marginEnd="@dimen/layout_margin_2dp"
+    android:padding="@dimen/layout_margin_4dp">
+
+    <ImageView
+        android:id="@+id/imgTinTuc"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_holder_banner"
+        app:layout_constraintDimensionRatio="15:8"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvTinTuc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:text="@string/sample_title_news"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/layout_margin_8dp"
+        android:lines="2"
+        app:layout_constraintTop_toBottomOf="@id/imgTinTuc"/>
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:text="3-6 19:23"
+        app:layout_constraintTop_toBottomOf="@id/tvTinTuc"
+        app:layout_constraintStart_toStartOf="@id/tvTinTuc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/layout_margin_4dp"
+        android:layout_marginBottom="@dimen/layout_margin_4dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
