@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.detail_post
+package com.anhtam.gate9.v2.post_detail
 
 interface INavigator {
     fun toLogin()

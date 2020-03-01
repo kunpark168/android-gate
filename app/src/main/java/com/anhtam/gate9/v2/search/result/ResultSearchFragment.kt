@@ -1,16 +1,13 @@
 package com.anhtam.gate9.v2.search.result
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import com.anhtam.gate9.components.custom.BadgeTabItem
 import com.anhtam.gate9.R
-import com.anhtam.gate9.v2.search.SearchViewModel
+import com.anhtam.gate9.components.custom.BadgeTabItem
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.search.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_result_search.*
 
 /**

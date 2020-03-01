@@ -1,16 +1,17 @@
 package com.anhtam.gate9.repository
 
 import androidx.lifecycle.LiveData
-import com.anhtam.domain.v2.Banner
 import com.anhtam.domain.Base
 import com.anhtam.domain.v2.*
 import com.anhtam.domain.v2.wrap.WrapArticle
 import com.anhtam.domain.v2.wrap.WrapComments
 import com.anhtam.domain.v2.wrap.WrapGame
-import of.bum.network.FetchBoundResource
-import of.bum.network.helper.*
 import com.anhtam.gate9.restful.SocialService
 import com.anhtam.gate9.vo.Rating
+import of.bum.network.FetchBoundResource
+import of.bum.network.helper.Lv1FetchResource
+import of.bum.network.helper.Lv2FetchResource
+import of.bum.network.helper.Resource
 import okhttp3.MultipartBody
 import javax.inject.Inject
 import javax.inject.Singleton

@@ -1,7 +1,7 @@
 package com.anhtam.gate9.v2.ca_nhan
 
 import android.os.Bundle
-import android.view.*
+import android.view.View
 import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config

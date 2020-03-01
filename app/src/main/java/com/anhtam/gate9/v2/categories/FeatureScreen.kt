@@ -1,19 +1,17 @@
 package com.anhtam.gate9.v2.categories
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.viewpager.widget.ViewPager
 import com.anhtam.gate9.R
-import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
+import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 import com.anhtam.gate9.viewmodel.ViewModelProviderFactory
-import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.feature_screen.*
 import java.util.*
@@ -101,8 +99,15 @@ class FeatureScreen : DaggerNavigationFragment(R.layout.feature_screen) {
 //        llEvent.debounceClick { vpCategory.currentItem = TypeGameTab.FOLLOWING.tab } TODO v2
         tvBackCategory.debounceClick { navigation?.back() }
 
-        imgAvatar.debounceClick {
-            navigation?.addFragment(UserDiscussionScreen.newInstance(idUser?.toInt()?:0, Category.Member))
+        imgAvatar.setOnClickListener {
+            val user = mSessionManager.cachedUser.value?.data ?: return@setOnClickListener
+            val roleId = user.mRoleId ?: return@setOnClickListener
+            val id = user.mId ?: return@setOnClickListener
+            if (roleId != 5){
+                navigation?.addFragment(DetailUserFragment.newInstance(id))
+            } else {
+                navigation?.addFragment(DetailNPHFragment.newInstance(id))
+            }
         }
     }
 

@@ -7,12 +7,12 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.anhtam.gate9.adapter.BannerGameAdapter
 import com.anhtam.domain.Game
 import com.anhtam.gate9.R
-import com.anhtam.gate9.v2.search.DataSource
+import com.anhtam.gate9.adapter.BannerGameAdapter
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.search.DataSource
 import com.beloo.widget.chipslayoutmanager.ChipsLayoutManager
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter

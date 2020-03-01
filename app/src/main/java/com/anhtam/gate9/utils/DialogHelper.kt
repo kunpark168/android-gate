@@ -1,8 +1,5 @@
 package com.anhtam.gate9.utils
 
-import android.app.Dialog
-import android.content.Context
-
 class DialogHelper {
   /*  fun showDialog(type: DialogType): Dialog {
         when(type){

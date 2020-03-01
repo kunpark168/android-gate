@@ -1,9 +1,10 @@
 package com.anhtam.gate9.v2.game_detail
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import com.anhtam.domain.v2.Gamev1
-import com.anhtam.domain.v2.Userv1
-import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.gate9.repository.SocialRepository
 import com.anhtam.gate9.utils.AbsentLiveData
 import of.bum.network.helper.Resource

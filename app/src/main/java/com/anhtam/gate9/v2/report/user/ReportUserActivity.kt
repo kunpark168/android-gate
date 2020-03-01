@@ -3,9 +3,9 @@ package com.anhtam.gate9.v2.report.user
 import android.os.Bundle
 import android.view.View
 import com.anhtam.gate9.R
-import com.anhtam.gate9.v2.report.game.ReportGameType
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.report.game.ReportGameType
 import kotlinx.android.synthetic.main.activity_report_game.*
 
 class ReportUserActivity : DaggerNavigationFragment(R.layout.activity_report_user) {

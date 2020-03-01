@@ -8,7 +8,6 @@ import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.anhtam.domain.v2.Post
-import com.anhtam.gate9.vo.Rating
 import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
@@ -19,17 +18,18 @@ import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.auth.login.LoginScreen
-import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
-import com.anhtam.gate9.v2.detail_post.DetailPostScreen
 import com.anhtam.gate9.v2.game_detail.DetailGameFragment
+import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
+import com.anhtam.gate9.v2.post_detail.DetailPostScreen
 import com.anhtam.gate9.v2.report.post.ReportPostActivity
+import com.anhtam.gate9.v2.user_detail.DetailUserFragment
+import com.anhtam.gate9.vo.Rating
 import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import org.w3c.dom.Text
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -62,12 +62,12 @@ class RatingAdapter @Inject constructor(
 //                    }
                 }
                 R.id.userNameTextView, R.id.avatarImageView -> {
-                    val userId = data[position].mCreatedUser?.mId?: return@setOnItemChildClickListener
-                    navigateToMemberDiscussion(userId)
+                    val user = data[position].mCreatedUser ?: return@setOnItemChildClickListener
+                    navigateToMemberDiscussion(user)
                 }
                 R.id.raterImageView, R.id.nameRaterTextView -> {
-                    val userId = data[position].mUser?.mId ?: return@setOnItemChildClickListener
-                    navigateToMemberDiscussion(userId)
+                    val user = data[position].mUser ?: return@setOnItemChildClickListener
+                    navigateToMemberDiscussion(user)
                 }
                 R.id.gameImageView, R.id.titleGameTextView -> {
                     navigateToGameDiscussion(data[position].mGame ?: return@setOnItemChildClickListener)
@@ -248,8 +248,14 @@ class RatingAdapter @Inject constructor(
         return accessToken.isNotEmpty()
     }
 
-    private fun navigateToMemberDiscussion(userId: Int) {
-        navigation.addFragment(UserDiscussionScreen.newInstance(userId, Category.Member))
+    private fun navigateToMemberDiscussion(user: User) {
+        val roleId = user.mRoleId ?: return
+        val id = user.mId ?: return
+        if (roleId != 5){
+            navigation.addFragment(DetailUserFragment.newInstance(id))
+        } else {
+            navigation.addFragment(DetailNPHFragment.newInstance(id))
+        }
     }
 
     private fun navigateToPostDetail(post: Post, listener: (Reaction) -> Unit) {

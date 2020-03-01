@@ -1,18 +1,14 @@
 package com.anhtam.gate9.v2.mxh_gate
 
 import android.os.Bundle
-import android.view.*
+import android.view.View
 import androidx.viewpager.widget.ViewPager
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.SharePageAdapter
-import com.anhtam.gate9.adapter.v2.ArticleAdapter
-import com.anhtam.gate9.adapter.v2.du_lieu.HinhAnhAdapter
-import com.anhtam.gate9.adapter.v2.du_lieu.VideoAdapter
 import com.anhtam.gate9.utils.autoCleared
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.mxh_gate.anh.MXHGateImageScreen
 import com.anhtam.gate9.v2.mxh_gate.cam_nang.MXHGateCamNangScreen
-import com.anhtam.gate9.v2.mxh_gate.tin_game.MXHGateTinGameScreen
 import com.anhtam.gate9.v2.mxh_gate.video.MXHGateVideoScreen
 import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import kotlinx.android.synthetic.main.mxh_gate_screen.*

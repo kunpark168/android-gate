@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.share.view.CustomLoadMoreView
-import com.anhtam.gate9.v2.discussion.DiscussionViewModel
 import com.anhtam.gate9.utils.getColorCompat
+import com.anhtam.gate9.v2.discussion.DiscussionViewModel
 import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder

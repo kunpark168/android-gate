@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.anhtam.domain.v2.Article
 import com.anhtam.domain.v2.wrap.WrapArticle
 import com.anhtam.gate9.repository.SocialRepository
 import com.anhtam.gate9.utils.AbsentLiveData

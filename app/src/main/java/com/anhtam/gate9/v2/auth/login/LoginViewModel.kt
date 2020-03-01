@@ -1,12 +1,7 @@
 package com.anhtam.gate9.v2.auth.login
 
 import androidx.lifecycle.ViewModel
-import com.anhtam.gate9.session.AuthCallBack
-import com.anhtam.gate9.session.AuthClient
-import com.anhtam.gate9.session.AuthResource
 import com.anhtam.gate9.session.SessionManager
-import com.anhtam.gate9.storage.StorageManager
-import timber.log.Timber
 import javax.inject.Inject
 
 

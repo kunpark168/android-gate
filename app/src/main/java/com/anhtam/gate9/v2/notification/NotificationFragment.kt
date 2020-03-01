@@ -1,16 +1,14 @@
 package com.anhtam.gate9.v2.notification
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-import com.anhtam.gate9.adapter.SharePageAdapter
-import com.anhtam.gate9.v2.shared.NotificationTabItem
 import com.anhtam.gate9.R
+import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.shared.NotificationTabItem
 import kotlinx.android.synthetic.main.notification_activity.*
 
 class NotificationFragment : DaggerNavigationFragment(R.layout.notification_activity) {

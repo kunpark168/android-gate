@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.detail_post
+package com.anhtam.gate9.v2.post_detail
 
 import androidx.lifecycle.ViewModel
 import com.anhtam.gate9.di.ViewModelKey

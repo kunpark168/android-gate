@@ -1,6 +1,5 @@
 package com.anhtam.gate9.v2.auth.register
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Html
 import android.view.View
@@ -9,15 +8,12 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
-import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.utils.DialogProgressUtils
 import com.anhtam.gate9.utils.checkValidationRegistration
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
-import com.anhtam.gate9.v2.main.home.HomeFragment
 import kotlinx.android.synthetic.main.register_screen.*
 import of.bum.network.helper.Resource
-import javax.inject.Inject
 
 
 class RegisterScreen : DaggerNavigationFragment(R.layout.register_screen) {

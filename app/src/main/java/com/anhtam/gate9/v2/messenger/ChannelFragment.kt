@@ -3,8 +3,7 @@ package com.anhtam.gate9.v2.messenger
 import android.app.DatePickerDialog
 import android.os.Build
 import android.os.Bundle
-import android.view.*
-import androidx.core.content.ContextCompat
+import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.chat.Channel
 import com.anhtam.gate9.adapter.chat.ChannelAdapter
-import com.anhtam.gate9.v2.lib.loadImage
 import com.anhtam.gate9.v2.lib.then
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.messenger.chat.ChatFragment

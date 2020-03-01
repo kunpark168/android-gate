@@ -1,14 +1,14 @@
 package com.anhtam.gate9.v2.search
 
 import android.os.Bundle
-import android.view.*
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import com.anhtam.gate9.R
+import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.search.chart.ChartSearchFragment
 import com.anhtam.gate9.v2.search.result.ResultSearchFragment
 import com.anhtam.gate9.v2.search.temp.TempSearchFragment
-import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.search_screen.*
 
 

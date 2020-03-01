@@ -1,11 +1,11 @@
 package com.anhtam.gate9.restful
 
 import androidx.lifecycle.LiveData
-import com.anhtam.domain.v2.Banner
 import com.anhtam.domain.Base
-import com.anhtam.domain.v2.Gamev1
 import com.anhtam.domain.v2.*
-import com.anhtam.domain.v2.wrap.*
+import com.anhtam.domain.v2.wrap.WrapArticle
+import com.anhtam.domain.v2.wrap.WrapComments
+import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.gate9.vo.Rating
 import of.bum.network.helper.ApiResponse
 import of.bum.network.helper.RestResponse

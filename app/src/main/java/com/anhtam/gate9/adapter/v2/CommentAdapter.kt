@@ -12,18 +12,17 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.utils.toImage
-import com.anhtam.gate9.v2.detail_post.DetailPostScreen
-import com.anhtam.gate9.v2.detail_post.ShowMoreFooterView
-import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
+import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
+import com.anhtam.gate9.v2.post_detail.DetailPostScreen
+import com.anhtam.gate9.v2.post_detail.ShowMoreFooterView
 import com.anhtam.gate9.v2.report.post.ReportPostActivity
-import com.anhtam.gate9.vo.model.Category
+import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.comment_item_layout.view.*
-import java.lang.NumberFormatException
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -49,8 +48,8 @@ class CommentAdapter @Inject constructor(
                     toDetailComment(data[position])
                 }
                 R.id.userNameTextView, R.id.avatarImageView -> {
-                    val userId = data[position].user?.mId ?: 0
-                    toUserDiscussion(userId)
+                    val user = data[position].user ?: return@setOnItemChildClickListener
+                    toUserDiscussion(user)
                 }
                 R.id.moreImageView ->{
                     showMoreDialog(data[position])
@@ -91,7 +90,7 @@ class CommentAdapter @Inject constructor(
             if(totalReply > DEFAULT_DISPLAY_CHILD_NUM) {
                 val footer = ShowMoreFooterView(mContext)
                 footer.setOnClickListener {
-                    toUserDiscussion(user.mId ?: 0)
+                    toUserDiscussion(user ?: return@setOnClickListener)
                 }
                 childAdapter.addFooterView(footer)
                 val remain = totalReply - DEFAULT_DISPLAY_CHILD_NUM
@@ -143,8 +142,14 @@ class CommentAdapter @Inject constructor(
         navigation.addFragment(DetailPostScreen.newInstance(comment, DetailPostScreen.Detail.COMMENT))
     }
 
-    private fun toUserDiscussion(userId: Int){
-        navigation.addFragment(UserDiscussionScreen.newInstance(userId, Category.Member))
+    private fun toUserDiscussion(user: User){
+        val roleId = user.mRoleId ?: return
+        val id = user.mId ?: return
+        if (roleId != 5){
+            navigation.addFragment(DetailUserFragment.newInstance(id))
+        } else {
+            navigation.addFragment(DetailNPHFragment.newInstance(id))
+        }
     }
 
     private fun initPhoto(photo: String?, rv: RecyclerView, user: User){

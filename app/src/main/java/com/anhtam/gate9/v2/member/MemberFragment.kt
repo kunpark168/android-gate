@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.R
-import com.anhtam.gate9.v2.bxh.BXHScreen
-import com.anhtam.gate9.v2.member.all.MemberListFragment
+import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.utils.customOnClickHolder
+import com.anhtam.gate9.v2.bxh.BXHScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.member.all.MemberListFragment
 import com.anhtam.gate9.vo.EUser
 import kotlinx.android.synthetic.main.member_fragment.*
 

@@ -1,10 +1,11 @@
-package com.anhtam.gate9.v2.detail_post
+package com.anhtam.gate9.v2.post_detail
 
 import android.os.Bundle
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
-import android.view.*
+import android.view.MenuItem
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -18,15 +19,15 @@ import com.anhtam.gate9.adapter.v2.PhotoAdapter
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.share.view.donate.DonateDialog
 import com.anhtam.gate9.utils.convertInt
-import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
-import com.anhtam.gate9.v2.reaction.ReactionScreen
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.game_detail.DetailGameFragment
+import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
+import com.anhtam.gate9.v2.reaction.ReactionScreen
 import com.anhtam.gate9.v2.report.post.ReportPostActivity
 import com.anhtam.gate9.v2.shared.AbstractGalleryFragment
+import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 import com.anhtam.gate9.vo.Reaction
-import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.squareup.phrase.Phrase
@@ -47,7 +48,14 @@ class DetailPostScreen private constructor(
     }
 
     override fun toUserDiscussion() {
-        navigation?.addFragment(UserDiscussionScreen.newInstance(viewModel._userId, Category.Member))
+        val user = _post.user ?: return
+        val roleId = user.mRoleId ?: return
+        val id = user.mId ?: return
+        if (roleId != 5){
+            navigation?.addFragment(DetailUserFragment.newInstance(id))
+        } else {
+            navigation?.addFragment(DetailNPHFragment.newInstance(id))
+        }
     }
 
     override fun toGameDiscussion() {

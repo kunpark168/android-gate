@@ -3,7 +3,6 @@ package com.anhtam.gate9.navigation
 import android.content.Context
 import com.anhtam.gate9.v2.OnFragmentListener
 import dagger.android.support.DaggerFragment
-import java.lang.IllegalArgumentException
 
 open class NavigationFragment : DaggerFragment(), OnFragmentListener {
 

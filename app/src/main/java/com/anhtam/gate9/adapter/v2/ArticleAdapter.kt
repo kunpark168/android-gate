@@ -1,7 +1,6 @@
 package com.anhtam.gate9.adapter.v2
 
 import android.view.View
-import android.widget.ImageView
 import com.anhtam.domain.v2.Article
 import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.gate9.R

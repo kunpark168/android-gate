@@ -1,7 +1,7 @@
 package com.anhtam.gate9.v2.mxh_gate.tin_game
 
 import android.os.Bundle
-import android.view.*
+import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels

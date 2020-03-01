@@ -2,12 +2,12 @@ package com.anhtam.gate9.v2.reaction
 
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.view.*
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
-import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.R
+import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.utils.debounceClick
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.reaction_screen.*

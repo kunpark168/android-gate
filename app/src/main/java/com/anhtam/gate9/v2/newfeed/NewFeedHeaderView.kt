@@ -1,7 +1,6 @@
 package com.anhtam.gate9.v2.newfeed
 
 import android.content.Context
-import android.os.Bundle
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +18,6 @@ import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.categories.CategoryTab
 import com.anhtam.gate9.v2.categories.FeatureScreen
 import com.anhtam.gate9.v2.mxh_game.MXHGameScreen
-import com.anhtam.gate9.v2.search.SearchScreen
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.new_feed_header_view.view.*

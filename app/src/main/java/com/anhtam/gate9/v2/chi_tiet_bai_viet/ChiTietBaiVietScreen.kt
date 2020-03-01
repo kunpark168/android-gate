@@ -22,15 +22,14 @@ import com.anhtam.gate9.adapter.v2.PhotoAdapter
 import com.anhtam.gate9.adapter.v2.du_lieu.RelatedAdapter
 import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.utils.toImage
-import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
 import com.anhtam.gate9.v2.game_detail.DetailGameFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
-import com.anhtam.gate9.vo.model.Category
+import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
+import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.squareup.phrase.Phrase
 import of.bum.network.helper.Resource
-import org.w3c.dom.Text
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -91,17 +90,18 @@ class ChiTietBaiVietScreen(private val mId: Int,
 
     private fun navigateToUser() {
         val user = mArticle?.mUser ?: return
+        val roleId = user.mRoleId ?: return
         val id = user.mId ?: return
-        val role = when (user.mRoleId) {
-            5 -> Category.Publisher
-            else -> Category.Member
+        if (roleId != 5){
+            navigation?.addFragment(DetailUserFragment.newInstance(id))
+        } else {
+            navigation?.addFragment(DetailNPHFragment.newInstance(id))
         }
-        navigation?.addFragment(UserDiscussionScreen.newInstance(id, role))
     }
 
     private fun navigateToGame() {
         val id = mArticle?.mGame?.gameId ?: return
-        navigation?.addFragment(DetailGameFragment?.newInstance(id))
+        navigation?.addFragment(DetailGameFragment.newInstance(id))
     }
 
     private fun loadData() {

@@ -2,14 +2,15 @@ package com.anhtam.gate9.adapter.v2
 
 import android.text.Html
 import com.anhtam.domain.v2.Post
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.utils.toImage
-import com.anhtam.gate9.v2.detail_post.DetailPostScreen
-import com.anhtam.gate9.v2.discussion.user.UserDiscussionScreen
+import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
+import com.anhtam.gate9.v2.post_detail.DetailPostScreen
 import com.anhtam.gate9.v2.report.post.ReportPostActivity
-import com.anhtam.gate9.vo.model.Category
+import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -28,8 +29,8 @@ class ChildCommentAdapter @Inject constructor(
             when(view.id){
                 R.id.contentTextView, R.id.commentImageView -> toDetailComment(data[position])
                 R.id.userNameTextView, R.id.avatarImageView -> {
-                    val userId = data[position].user?.mId ?: 0
-                    toUserDiscussion(userId)
+                    val user = data[position].user ?: return@setOnItemChildClickListener
+                    toUserDiscussion(user)
                 }
                 R.id.moreImageView ->{
                     showMoreDialog(data[position])
@@ -82,7 +83,13 @@ class ChildCommentAdapter @Inject constructor(
         navigation.addFragment(DetailPostScreen.newInstance(comment, DetailPostScreen.Detail.COMMENT))
     }
 
-    private fun toUserDiscussion(userId: Int){
-        navigation.addFragment(UserDiscussionScreen.newInstance(userId, Category.Member))
+    private fun toUserDiscussion(user: User){
+        val roleId = user.mRoleId ?: return
+        val id = user.mId ?: return
+        if (roleId != 5){
+            navigation.addFragment(DetailUserFragment.newInstance(id))
+        } else {
+            navigation.addFragment(DetailNPHFragment.newInstance(id))
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.anhtam.gate9.v2.detail_post
+package com.anhtam.gate9.v2.post_detail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -7,12 +7,12 @@ import com.anhtam.domain.Base
 import com.anhtam.domain.v2.Post
 import com.anhtam.domain.v2.wrap.WrapComments
 import com.anhtam.gate9.repository.SocialRepository
+import com.anhtam.gate9.restful.SocialService
 import com.anhtam.gate9.session.SessionManager
 import com.anhtam.gate9.vo.IllegalReturn
 import com.anhtam.gate9.vo.Reaction
 import of.bum.network.FetchBoundResource
 import of.bum.network.helper.Resource
-import com.anhtam.gate9.restful.SocialService
 import java.lang.ref.WeakReference
 import javax.inject.Inject
 import kotlin.properties.Delegates

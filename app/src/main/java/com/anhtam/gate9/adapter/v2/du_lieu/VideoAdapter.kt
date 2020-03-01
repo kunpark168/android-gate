@@ -2,7 +2,6 @@ package com.anhtam.gate9.adapter.v2.du_lieu
 
 import android.view.View
 import com.anhtam.domain.v2.Article
-import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.utils.toImage

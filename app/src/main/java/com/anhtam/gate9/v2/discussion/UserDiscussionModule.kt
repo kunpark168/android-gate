@@ -1,14 +1,12 @@
-package com.anhtam.gate9.v2.discussion.user
+package com.anhtam.gate9.v2.discussion
 
 import androidx.lifecycle.ViewModel
 import com.anhtam.gate9.di.ViewModelKey
 import com.anhtam.gate9.v2.discussion.DiscussionViewModel
-import com.anhtam.gate9.v2.discussion.common.info.UserInfoFragment
 import com.anhtam.gate9.v2.discussion.common.data.DataFragment
 import com.anhtam.gate9.v2.discussion.common.data.DataModule
 import com.anhtam.gate9.v2.discussion.common.game.GGameFragment
 import com.anhtam.gate9.v2.discussion.common.game.GGameModule
-import com.anhtam.gate9.v2.discussion.common.info.NPHInfoFragment
 import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedFragment
 import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedModule
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
@@ -21,23 +19,11 @@ import dagger.multibindings.IntoMap
 @Module
 abstract class UserDiscussionModule {
 
-    /*
-     * Social Discussion
-     */
-    @ContributesAndroidInjector
-    abstract fun contributeHeaderFragment(): UserHeaderFragment
 
     @ContributesAndroidInjector(
             modules = [RatingModule::class]
     )
     abstract fun contributeRatingFragment(): RatingFragment
-
-    @ContributesAndroidInjector
-    abstract fun contributeUserInfoFragment(): UserInfoFragment
-
-
-    @ContributesAndroidInjector
-    abstract fun contributeNPHInfoFragment(): NPHInfoFragment
 
     @ContributesAndroidInjector(
             modules = [DataModule::class]

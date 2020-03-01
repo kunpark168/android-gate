@@ -20,7 +20,6 @@ import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.viewmodel.ViewModelProviderFactory
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.layout_avatar_menu.view.*
-import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 abstract class DaggerNavigationFragment constructor(
