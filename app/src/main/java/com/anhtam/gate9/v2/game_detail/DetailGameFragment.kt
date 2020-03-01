@@ -12,6 +12,7 @@ import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.utils.format
 import com.anhtam.gate9.utils.toImage
+import com.anhtam.gate9.v2.createpost.CreatePostScreen
 import com.anhtam.gate9.v2.game_detail.danh_gia.DanhGiaGameFragment
 import com.anhtam.gate9.v2.game_detail.thao_luan.ThaoLuanFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
@@ -38,6 +39,7 @@ class DetailGameFragment constructor(private val mGameId: Int) : DaggerNavigatio
     private var mCurrent: Int = 0
     @Inject @field:Named("banner") lateinit var bannerOption: RequestOptions
     private var mIsFollowing: Boolean = false
+    private var mGame: Game? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -102,6 +104,10 @@ class DetailGameFragment constructor(private val mGameId: Int) : DaggerNavigatio
         tabNewFeed?.setOnClickListener {
             navigation?.newRootFragment(HomeFragment.newInstance())
         }
+
+        tabMessage?.setOnClickListener {
+            navigation?.addFragment(CreatePostScreen.newInstance(mGame))
+        }
     }
 
     private fun onUpdateFollow(){
@@ -158,6 +164,7 @@ class DetailGameFragment constructor(private val mGameId: Int) : DaggerNavigatio
             when(it){
                 is Resource.Success -> {
                     updateDetailGame(it.data)
+                    mGame = it.data
                 }
                 is Resource.Error -> {
                     updateDetailGame(null)
