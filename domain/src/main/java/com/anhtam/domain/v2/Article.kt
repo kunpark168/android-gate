@@ -14,6 +14,8 @@ open class Article(
     var mAvatar: String? = null,
     @Json(name = "created_time")
     var mCreatedTime: String? = null,
+    @Json(name = "createdDate")
+    var mCreatedDate: String? = null,
     @Json(name = "domain")
     var mDomain: String? = null,
     @Json(name = "category_name")
@@ -31,5 +33,16 @@ open class Article(
     @Json(name = "createdUser")
     var mUser: Userv2? = null,
     @Json(name = "content")
-    var mContent: String? = null
+    var mContent: String? = null,
+    @Json(name = "category")
+    var mCategory: ArticleCategory? = null
+)
+
+data class ArticleCategory(
+        @Json(name = "categoryId")
+        var mCategoryId: Int? = null,
+        @Json(name = "categoryName")
+        var mCategoryName: String? = null,
+        @Json(name = "categoryPath")
+        var mCategoryPath: String? = null
 )

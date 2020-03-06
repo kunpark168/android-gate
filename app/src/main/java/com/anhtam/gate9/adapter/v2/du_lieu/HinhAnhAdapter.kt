@@ -22,6 +22,7 @@ class HinhAnhAdapter@Inject constructor(
         val article = item ?: return
         val view = helper?.itemView ?: return
         view.tvTinTuc?.text = article.mTitle
+        view.tvTime?.text = article.mCreatedDate
         Glide.with(mContext)
                 .load(article.mAvatar?.toImage())
                 .into(view.imgTinTuc)
