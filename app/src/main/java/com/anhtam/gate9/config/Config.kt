@@ -18,4 +18,5 @@ object Config {
     const val DETAIL_POST_FRAGMENT_TAG = "DETAIL_POST_FRAGMENT_TAG"
     const val NOTIFICATION_TYPE = "NOTIFICATION_TYPE"
     const val COMMENT = "COMMENT"
+    const val COMMENT_ID = "COMMENT_ID"
 }
