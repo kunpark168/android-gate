@@ -80,7 +80,8 @@ class ChildCommentAdapter @Inject constructor(
     }
 
     private fun toDetailComment(comment: Post){
-        navigation.addFragment(DetailPostScreen.newInstance(comment, DetailPostScreen.Detail.COMMENT))
+        val id = comment.commentId ?: return
+        navigation.addFragment(DetailPostScreen.newInstance(id, DetailPostScreen.Detail.COMMENT))
     }
 
     private fun toUserDiscussion(user: User){

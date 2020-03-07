@@ -39,7 +39,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class DetailPostScreen private constructor(
-        private val _post: Post,
+        private val postId: Long,
         private val _type: Detail,
         private val mListener: ((Reaction)-> Unit)?
 ): AbstractGalleryFragment(R.layout.detail_post_screen), INavigator{
@@ -49,7 +49,7 @@ class DetailPostScreen private constructor(
     }
 
     override fun toUserDiscussion() {
-        val user = _post.user ?: return
+        val user = mPost?.user ?: return
         val roleId = user.mRoleId ?: return
         val id = user.mId ?: return
         if (roleId != 5){
@@ -60,17 +60,17 @@ class DetailPostScreen private constructor(
     }
 
     override fun toGameDiscussion() {
-        val id = _post.game?.gameId ?: return
+        val id = mPost?.game?.gameId ?: return
         navigation?.addFragment(DetailGameFragment.newInstance(id))
     }
 
     override fun toReact() {
-        val commentId = _post.commentId?.toInt() ?: return
+        val commentId = mPost?.commentId?.toInt() ?: return
         navigation?.addFragment(ReactionScreen.newInstance(commentId))
     }
 
     companion object{
-        fun newInstance(post: Post, type: Detail, listener: ((Reaction)->Unit)? = null) = DetailPostScreen(post, type, listener)
+        fun newInstance(id: Long, type: Detail, listener: ((Reaction)->Unit)? = null) = DetailPostScreen(id, type, listener)
     }
 
     private val viewModel: DetailPostViewModel by viewModels { vmFactory }
@@ -103,7 +103,7 @@ class DetailPostScreen private constructor(
 
     private fun init() {
         mIsRefresh = true
-        viewModel.initialize(_post, this)
+        viewModel.initialize(postId)
         viewModel.getChildComment()
         initView()
         initEvents()
@@ -111,7 +111,7 @@ class DetailPostScreen private constructor(
     }
 
     private fun initView(){
-        mIsFollowing = _post.game?.follow ?: false
+        mIsFollowing = mPost?.game?.follow ?: false
         onUpdateFollow()
         csOriPost?.visibility = if (_type ==  Detail.COMMENT) View.VISIBLE else View.GONE
         initRvPhoto()
@@ -144,7 +144,7 @@ class DetailPostScreen private constructor(
         rvPhotos?.layoutManager = LinearLayoutManager(context)
         rvPhotos?.adapter = mPhotoAdapter
         rvPhotos?.isNestedScrollingEnabled = false
-        mPhotoAdapter.user = _post.user ?: return
+        mPhotoAdapter.user = mPost?.user ?: return
     }
 
     private fun initRvComment() {
@@ -166,7 +166,7 @@ class DetailPostScreen private constructor(
                 is Resource.Success -> {
                     hideProgress()
                     if (mIsRefresh) {
-                        mPost = resource.data?.mDetails ?: _post
+                        mPost = resource.data?.mDetails
                         mIsRefresh = false
                         updateUI()
                     }
@@ -245,8 +245,8 @@ class DetailPostScreen private constructor(
 
         tvTitle?.text = game.name
         val contentStr = Phrase.from(getString(R.string.follower_amount_and_post_amount))
-                .put("follower", _post.game?.follower?.toString() ?: "0")
-                .put("post", _post.game?.post?.toString() ?: "0")
+                .put("follower", mPost?.game?.follower?.toString() ?: "0")
+                .put("post", mPost?.game?.post?.toString() ?: "0")
                 .format()
         tvContentGame?.text = contentStr
         if (game.follow == true){
@@ -292,7 +292,7 @@ class DetailPostScreen private constructor(
         }
 
         tvFollowGame?.setOnClickListener {
-            val id = _post.game?.gameId ?: return@setOnClickListener
+            val id = mPost?.game?.gameId ?: return@setOnClickListener
             if (mSessionManager.checkLogin(isDirect = true)){
                 mIsFollowing = !mIsFollowing
                 onUpdateFollow()

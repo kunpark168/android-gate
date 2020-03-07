@@ -23,31 +23,17 @@ class DetailPostViewModel @Inject constructor(
         val mSessionManager: SessionManager
 ) : ViewModel() {
 
-    var _userId: Int by Delegates.notNull()
-    var _gameId: Int by Delegates.notNull()
-    private var _commentId: Int by Delegates.notNull()
-    private lateinit var navigation: WeakReference<INavigator>
+    private var _commentId: Int  = 0
 
     var mPage = 0
     private val mComments = MediatorLiveData<Resource<WrapComments>>()
     val comments: LiveData<Resource<WrapComments>>
         get() = mComments
 
-    fun initialize(post: Post, navigator: INavigator){
-        val value = try {
-            post.like?.toInt() ?: 0
-        } catch (e: NumberFormatException){
-            throw IllegalReturn()
-        }
-        navigation = WeakReference(navigator)
-        _userId = post.user?.mId ?: throw IllegalReturn()
-        _gameId = try {
-            post.game?.gameId ?: 0
-        } catch (e: NumberFormatException){
-            throw IllegalReturn()
-        }
-        _commentId = post.commentId?.toInt() ?: throw IllegalReturn()
+    fun initialize(id: Long) {
+        _commentId = id.toInt()
     }
+
 
     fun getChildComment(){
         mPage = 0
@@ -56,8 +42,6 @@ class DetailPostViewModel @Inject constructor(
             mComments.value = it
         }
     }
-
-    fun postViewForum() = repository.postViewForum(_commentId)
 
 
     fun postComment(content: String? = null, imageUrl: String? = "") = object: FetchBoundResource<Base>(){
@@ -79,9 +63,5 @@ class DetailPostViewModel @Inject constructor(
         }
         params["userId"] = mSessionManager.cachedUser.value?.data?.mId ?: 0
         return repository.react(params)
-    }
-
-    fun sharePost(){
-
     }
 }

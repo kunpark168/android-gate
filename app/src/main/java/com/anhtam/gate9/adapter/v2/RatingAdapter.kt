@@ -259,7 +259,8 @@ class RatingAdapter @Inject constructor(
     }
 
     private fun navigateToPostDetail(post: Post, listener: (Reaction) -> Unit) {
-        navigation.addFragment(DetailPostScreen.newInstance(post, DetailPostScreen.Detail.POST, listener), tag = Config.DETAIL_POST_FRAGMENT_TAG)
+        val id = post.commentId ?: return
+        navigation.addFragment(DetailPostScreen.newInstance(id, DetailPostScreen.Detail.POST, listener), tag = Config.DETAIL_POST_FRAGMENT_TAG)
     }
 
     private fun navigateToGameDiscussion(game: Game) {
