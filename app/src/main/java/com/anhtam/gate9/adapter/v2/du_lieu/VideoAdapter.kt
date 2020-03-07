@@ -38,7 +38,6 @@ class VideoAdapter@Inject constructor(
                     .apply(avatarOptions)
                     .into(view.imgUser)
             view.tvName?.text = user.mName
-            view.tvTime?.text = user.mCreatedDate
         }
     }
 }

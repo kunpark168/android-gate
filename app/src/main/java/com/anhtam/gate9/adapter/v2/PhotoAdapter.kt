@@ -41,6 +41,7 @@ class PhotoAdapter @Inject constructor(
         if (isComment) default = DEFAULT_MORE_COMMENT
         val photos = photo.replace("\\","").replace("\"", "").split(',').map { it.trim() }
         if (photos[0].isEmpty()) return 1
+
         val entities = photos.map {
             PhotoEntity(
                     when(photos.size) {

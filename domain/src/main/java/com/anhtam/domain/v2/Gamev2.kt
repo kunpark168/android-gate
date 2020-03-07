@@ -44,9 +44,9 @@ class Gamev2(
         override var homepage: String? = null,
         @Json(name = "photos")
         override var photos: String? = null,
-        @Json(name = "num_follower")
+        @Json(name = "numFollower")
         override var follower: Int? = null,
-        @Json(name = "num_following")
+        @Json(name = "numFollowing")
         override var following: Int? = null,
         @Json(name = "follow")
         override var follow: Boolean? = null,
