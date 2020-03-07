@@ -8,7 +8,7 @@
         <item name="android:fontFamily">@font/roboto_font_family</item>
         <item name="actionOverflowButtonStyle">@style/OverflowToolbar</item>
         <item name="android:actionOverflowButtonStyle">@style/OverflowToolbar</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 

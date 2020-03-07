@@ -19,7 +19,7 @@ class ArticleAdapter @Inject constructor(
     override fun convert(helper: BaseViewHolder?, item: Article?) {val view = helper?.itemView ?: return
         val article = item ?: return
         view.tvTinTuc?.text = article.mTitle
-        view.tvTime?.text = "${article.mCreatedTime ?: ""} ${article.mCategoryName ?: ""}"
+        view.tvTime?.text = "${article.mCreatedDate ?: ""} ${article.mCategory?.mCategoryName ?: ""}"
         Glide.with(mContext)
                 .load(article.mAvatar?.toImage())
                 .into(view.imgTinTuc)

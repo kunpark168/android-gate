@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.domain.v2.Gamev1
+import com.anhtam.domain.v2.Gamev2
 import com.anhtam.domain.v2.Post
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
@@ -37,7 +38,7 @@ class CommentAdapter @Inject constructor(
         private const val DEFAULT_DISPLAY_CHILD_NUM = 2
     }
 
-    private var mGame: Gamev1? = null
+    private var mGame: Gamev2? = null
 
     init {
         setOnItemChildClickListener { _, view, position ->
@@ -58,7 +59,7 @@ class CommentAdapter @Inject constructor(
         }
     }
 
-    fun initialize(game: Gamev1?){
+    fun initialize(game: Gamev2?){
         mGame = game
     }
     override fun convert(helper: BaseViewHolder?, item: Post?) {

@@ -1,14 +1,19 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/status_bar_height"
+        android:background="@color/status_color_blue"/>
 
     <!--Header-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/csHeader"
-        android:fitsSystemWindows="true"
-        app:layout_constraintTop_toTopOf="parent"
         android:background="@color/colorHome"
         android:layout_width="match_parent"
         android:layout_height="50dp">
@@ -73,8 +78,7 @@
         android:id="@+id/csTab2"
         android:layout_width="match_parent"
         android:layout_height="46dp"
-        android:background="@color/colorWhite"
-        app:layout_constraintTop_toBottomOf="@+id/csHeader">
+        android:background="@color/colorWhite">
 
         <!--Video-->
         <LinearLayout
@@ -252,9 +256,7 @@
     <!--ViewPager-->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vpCategory"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/csTabLine"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="match_parent">
     </androidx.viewpager.widget.ViewPager>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

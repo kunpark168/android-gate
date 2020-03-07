@@ -227,7 +227,7 @@ class ChiTietBaiVietScreen(private val mId: Int,
         val imgNewGame = view?.findViewById<ImageView>(R.id.imgNewGame)
         val tvTitle = view?.findViewById<TextView>(R.id.tvTitle)
         val tvContentGame = view?.findViewById<TextView>(R.id.tvContentGame)
-        if (game == null) {
+        if (game == null || game.gameId == 0) {
             csGame?.visibility = View.GONE
             imgGame?.visibility = View.GONE
         } else {

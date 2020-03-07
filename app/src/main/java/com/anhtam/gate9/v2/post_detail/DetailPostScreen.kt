@@ -17,6 +17,7 @@ import com.anhtam.gate9.adapter.v2.ChooseGalleryAdapter
 import com.anhtam.gate9.adapter.v2.CommentAdapter
 import com.anhtam.gate9.adapter.v2.PhotoAdapter
 import com.anhtam.gate9.config.Config
+import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.share.view.donate.DonateDialog
 import com.anhtam.gate9.utils.convertInt
 import com.anhtam.gate9.utils.toImage
@@ -75,6 +76,7 @@ class DetailPostScreen private constructor(
     private val viewModel: DetailPostViewModel by viewModels { vmFactory }
     private var mIsRefresh = false
     private var mPost: Post? = null
+    private var mIsFollowing = false
 
     @field:Named("avatar") @Inject lateinit var avatarOptions: RequestOptions
     @field:Named("banner") @Inject lateinit var bannerOptions: RequestOptions
@@ -109,10 +111,21 @@ class DetailPostScreen private constructor(
     }
 
     private fun initView(){
+        mIsFollowing = _post.game?.follow ?: false
+        onUpdateFollow()
         csOriPost?.visibility = if (_type ==  Detail.COMMENT) View.VISIBLE else View.GONE
         initRvPhoto()
         initRvComment()
         initGalleryRv()
+    }
+
+    private fun onUpdateFollow(){
+        if (mIsFollowing){
+            // check follow here
+            setFollow()
+        } else {
+            setFollowing()
+        }
     }
 
     private fun initGalleryRv(){
@@ -279,10 +292,11 @@ class DetailPostScreen private constructor(
         }
 
         tvFollowGame?.setOnClickListener {
-            if(tvFollowGame?.text == getString(R.string.follow)) {
-                setFollowing()
-            } else {
-                setFollow()
+            val id = _post.game?.gameId ?: return@setOnClickListener
+            if (mSessionManager.checkLogin(isDirect = true)){
+                mIsFollowing = !mIsFollowing
+                onUpdateFollow()
+                BackgroundTasks.postFollowGame(id)
             }
         }
 
