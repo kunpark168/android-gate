@@ -1,7 +1,7 @@
 package com.anhtam.domain.v2
+
 import com.anhtam.domain.Base
 import com.squareup.moshi.Json
-
 
 data class Post(
     @Json(name = "comment_id")
@@ -31,7 +31,7 @@ data class Post(
     @Json(name = "point")
     var point: Int?,
     @Json(name = "game")
-    var game: Gamev1? = null,
+    var game: Gamev2? = null,
     @Json(name = "child")
     var child: List<Post>? = null
 ) : Base()

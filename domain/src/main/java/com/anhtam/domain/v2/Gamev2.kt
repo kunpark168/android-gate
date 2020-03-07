@@ -1,11 +1,10 @@
 package com.anhtam.domain.v2
 
 import com.anhtam.domain.v2.protocol.Game
-import com.anhtam.domain.v2.protocol.User
 import com.squareup.moshi.Json
 
-class Gamev1(
-        @Json(name = "game_id")
+class Gamev2(
+        @Json(name = "gameId")
         override var gameId: Int? = null,
         @Json(name = "name")
         override var name: String? = null,
@@ -49,7 +48,7 @@ class Gamev1(
         override var follower: Int? = null,
         @Json(name = "num_following")
         override var following: Int? = null,
-        @Json(name = "following")
+        @Json(name = "follow")
         override var follow: Boolean? = null,
         @Json(name = "post")
         override var post: Int? = null,
