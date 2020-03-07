@@ -10,7 +10,6 @@ import android.os.Build
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.fragment.app.viewModels
-import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.v2.MainActivity
@@ -93,9 +92,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         when (NotificationType.getNotificationType(unwrappedCode)) {
             NotificationType.COMMENT -> {
-                val unwrappedPost = Gson().fromJson(body, Post::class.java)
+                val unwrappedPost = Gson().fromJson(body, PostPN::class.java)
                 intent.putExtra(Config.NOTIFICATION_TYPE, unwrappedCode)
-                intent.putExtra(Config.COMMENT, unwrappedPost)
+                intent.putExtra(Config.COMMENT_ID, unwrappedPost.comment_id)
             }
 
             NotificationType.CHAT -> {
@@ -130,6 +129,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(chanel)
         }
 
-        notificationManager.notify(0, notificationBuilder.build())
+        notificationManager.notify(System.currentTimeMillis().toInt(), notificationBuilder.build())
     }
+}
+
+class PostPN {
+     val comment_id: Long?= null
 }

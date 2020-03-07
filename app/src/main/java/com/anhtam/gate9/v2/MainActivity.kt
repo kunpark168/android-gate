@@ -28,8 +28,8 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
 
     private val mNavigation: Navigation by lazy {
         HideKeyboardNavigation(
-            NavigationDispatcher(this,
-                    R.id.container)
+                NavigationDispatcher(this,
+                        R.id.container)
         )
     }
 
@@ -45,13 +45,20 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
         val visibleFragment = supportFragmentManager.fragments.lastOrNull() as? OnFragmentListener
         visibleFragment?.onBack()
         super.onBackPressed()
-        val fragment = if(supportFragmentManager.fragments.size == 2) {
+        val fragment = if (supportFragmentManager.fragments.size == 2) {
             supportFragmentManager.fragments.firstOrNull()
         } else {
             supportFragmentManager.fragments.lastOrNull()
         }
         val behindFragment = fragment as? OnFragmentListener
         behindFragment?.onFragmentResult()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        intent?.let {
+            handleOnClickPushNotification(it)
+        }
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -63,11 +70,13 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
     }
 
     private fun handleOnClickPushNotification(intent: Intent?) {
-        val code = intent?.getIntExtra(Config.NOTIFICATION_TYPE, -1)?: -1
-        when (NotificationType.getNotificationType(code)){
+        val code = intent?.getIntExtra(Config.NOTIFICATION_TYPE, -1) ?: -1
+        when (NotificationType.getNotificationType(code)) {
             NotificationType.COMMENT -> {
-                val post = intent?.getSerializableExtra(Config.COMMENT) as? Post ?: return
-                mNavigation.addFragment(DetailPostScreen.newInstance(post, DetailPostScreen.Detail.POST, null))
+                val postId = intent?.getLongExtra(Config.COMMENT_ID, -1)
+                if(postId != null && postId > -1)
+                    mNavigation.addFragment(DetailPostScreen.newInstance(postId, DetailPostScreen.Detail.POST, null))
+
             }
         }
     }
