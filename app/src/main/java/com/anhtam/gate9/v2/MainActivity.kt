@@ -3,12 +3,15 @@ package com.anhtam.gate9.v2
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
+import com.anhtam.gate9.fcm.NotificationType
 import com.anhtam.gate9.navigation.HideKeyboardNavigation
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.navigation.NavigationDispatcher
 import com.anhtam.gate9.navigation.NavigationProvider
+import com.anhtam.gate9.v2.post_detail.DetailPostScreen
 import com.anhtam.gate9.v2.splash.SplashScreen
 import dagger.android.support.DaggerAppCompatActivity
 import timber.log.Timber
@@ -53,7 +56,19 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        val code = intent?.getIntExtra(Config.NOTIFICATION_TYPE, -1)
-        Timber.d(code.toString())
+
+        intent?.let {
+            handleOnClickPushNotification(it)
+        }
+    }
+
+    private fun handleOnClickPushNotification(intent: Intent?) {
+        val code = intent?.getIntExtra(Config.NOTIFICATION_TYPE, -1)?: -1
+        when (NotificationType.getNotificationType(code)){
+            NotificationType.COMMENT -> {
+                val post = intent?.getSerializableExtra(Config.COMMENT) as? Post ?: return
+                mNavigation.addFragment(DetailPostScreen.newInstance(post, DetailPostScreen.Detail.POST, null))
+            }
+        }
     }
 }

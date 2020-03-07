@@ -17,6 +17,7 @@ import com.anhtam.gate9.v2.MainActivity
 import com.anhtam.gate9.v2.discussion.common.rating.RatingViewModel
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.google.gson.Gson
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -79,17 +80,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
 
-    private fun sendNotification(data: Map<String, String>) {
-        val code = data["code"] as? Int ?: -1
+    private fun sendNotification(data: Map<String, String?>) {
+        val code = data["code"]
         val body = data["body"]?: return
         val jsonObject = JSONObject(body)
         val content = jsonObject.get("content") ?: "Empty Content!"
 
-        val bundle = Bundle()
-        when (NotificationType.getNotificationType(code)) {
+        val unwrappedCode = code?.toInt()?: -1
+
+        val intent = Intent(this, MainActivity::class.java)
+
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        when (NotificationType.getNotificationType(unwrappedCode)) {
             NotificationType.COMMENT -> {
-                bundle.putInt(Config.NOTIFICATION_TYPE, code)
-                bundle.putSerializable(Config.COMMENT, body as Post)
+                val unwrappedPost = Gson().fromJson(body, Post::class.java)
+                intent.putExtra(Config.NOTIFICATION_TYPE, unwrappedCode)
+                intent.putExtra(Config.COMMENT, unwrappedPost)
             }
 
             NotificationType.CHAT -> {
@@ -104,8 +110,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 //TODO Handle send data Rating
             }
         }
-        val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         val chanelId = getString(R.string.chanel_id_notification)
         val notificationBuilder = NotificationCompat.Builder(this, chanelId)
