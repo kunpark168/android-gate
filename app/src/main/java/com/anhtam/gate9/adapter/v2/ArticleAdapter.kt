@@ -16,6 +16,7 @@ import javax.inject.Named
 class ArticleAdapter @Inject constructor(
         @Named("banner") val bannerOptions: RequestOptions
 ): BaseQuickAdapter<Article, BaseViewHolder>(R.layout.mxh_gate_tin_game_item_layout){
+
     override fun convert(helper: BaseViewHolder?, item: Article?) {val view = helper?.itemView ?: return
         val article = item ?: return
         view.tvTinTuc?.text = article.mTitle
@@ -35,8 +36,12 @@ class ArticleAdapter @Inject constructor(
                     .into(view.imgGame)
             view.tvTitleGame?.text = game.name
             view.tvTypeGame?.text = game.gameType?.name
-            helper.setText(R.id.tvTitleGame, game.name)
-                    .setText(R.id.tvTypeGame, game.gameType?.name)
+
+            helper.addOnClickListener(R.id.tvTitleGame)
+                    .addOnClickListener(R.id.imgGame)
+                    .addOnClickListener(R.id.tvTinTuc)
+                    .addOnClickListener(R.id.imgTinTuc)
+
         }
     }
 }

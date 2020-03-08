@@ -39,5 +39,9 @@ class VideoAdapter@Inject constructor(
                     .into(view.imgUser)
             view.tvName?.text = user.mName
         }
+        helper.addOnClickListener(R.id.tvName)
+                .addOnClickListener(R.id.imgUser)
+                .addOnClickListener(R.id.tvTinTuc)
+                .addOnClickListener(R.id.imgTinTuc)
     }
 }

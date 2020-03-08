@@ -29,7 +29,7 @@ open class Article(
     @Json(name = "number_comment")
     var mNumberComment: Int? = null,
     @Json(name = "game")
-    var mGame: Gamev1? = null,
+    var mGame: Gamev2? = null,
     @Json(name = "createdUser")
     var mUser: Userv2? = null,
     @Json(name = "content")
