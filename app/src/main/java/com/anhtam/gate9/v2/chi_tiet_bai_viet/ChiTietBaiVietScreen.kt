@@ -13,17 +13,21 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.anhtam.domain.v2.Article
 import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.domain.v2.wrap.WrapArticle
 import com.anhtam.gate9.R
+import com.anhtam.gate9.adapter.GroupBannerAdapter
 import com.anhtam.gate9.adapter.v2.PhotoAdapter
 import com.anhtam.gate9.adapter.v2.du_lieu.RelatedAdapter
 import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.utils.toImage
+import com.anhtam.gate9.v2.BackgroundViewModel
 import com.anhtam.gate9.v2.game_detail.DetailGameFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
+import com.anhtam.gate9.v2.newfeed.SliderAdapter
 import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
 import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 import com.bumptech.glide.Glide
@@ -43,18 +47,14 @@ class ChiTietBaiVietScreen(private val mId: Int,
     }
 
     private val mViewModel: ChiTietBaiVietViewModel by viewModels { vmFactory }
-    @Inject
-    @field:Named("banner")
-    lateinit var bannerOptions: RequestOptions
-    @Inject
-    @field:Named("avatar")
-    lateinit var avatarOptions: RequestOptions
-    @Inject
-    lateinit var mConcernAdapter: RelatedAdapter
-    @Inject
-    lateinit var mNewListAdapter: RelatedAdapter
+    @Inject @field:Named("banner") lateinit var bannerOptions: RequestOptions
+    @Inject @field:Named("avatar") lateinit var avatarOptions: RequestOptions
+    @Inject lateinit var mConcernAdapter: RelatedAdapter
+    @Inject lateinit var mNewListAdapter: RelatedAdapter
+    private var mBannerAdapter: SliderAdapter? = null
     private var mWrapArticle: WrapArticle? = null
     private var mPhotoAdapter: PhotoAdapter? = null
+    private val mTopViewModel: BackgroundViewModel by viewModels({requireActivity()}, {vmFactory})
 
     override fun menuRes() = R.menu.menu_chat_search_more
 
@@ -112,13 +112,42 @@ class ChiTietBaiVietScreen(private val mId: Int,
     private fun initView() {
         view?.findViewById<WebView>(R.id.articleContentWebView)?.settings?.javaScriptEnabled = true
         view?.findViewById<RecyclerView>(R.id.concernRecyclerView)?.apply {
+            mConcernAdapter.setOnItemClickListener { _, _, position ->
+                val article = mConcernAdapter.getItem(position)
+                val id = article?.mId ?: return@setOnItemClickListener
+                val type = article.mArticleType ?: return@setOnItemClickListener
+                val layout = when(type) {
+                    0, 3 -> R.layout.chi_tiet_bai_viet_screen
+                    2 -> R.layout.chi_tiet_video_screen
+                    4 -> R.layout.chi_tiet_anh_screen
+                    else -> return@setOnItemClickListener
+                }
+                navigation?.addFragment(newInstance(id, article, layout, type))
+            }
             adapter = mConcernAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         }
         view?.findViewById<RecyclerView>(R.id.newRecyclerView)?.apply {
+            mNewListAdapter.setOnItemClickListener { _, _, position ->
+                val article = mNewListAdapter.getItem(position)
+                val id = article?.mId ?: return@setOnItemClickListener
+                val type = article.mArticleType ?: return@setOnItemClickListener
+                val layout = when(type) {
+                    0, 3 -> R.layout.chi_tiet_bai_viet_screen
+                    2 -> R.layout.chi_tiet_video_screen
+                    4 -> R.layout.chi_tiet_anh_screen
+                    else -> return@setOnItemClickListener
+                }
+                navigation?.addFragment(newInstance(id, article, layout, type))
+            }
             adapter = mNewListAdapter
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         }
+
+
+        val unwrapContext = context ?: return
+        mBannerAdapter = SliderAdapter(unwrapContext, bannerOptions)
+        view?.findViewById<ViewPager>(R.id.slider)?.adapter = mBannerAdapter
     }
 
     private fun observer() {
@@ -134,6 +163,11 @@ class ChiTietBaiVietScreen(private val mId: Int,
                 }
             }
         })
+        mTopViewModel.banners.observe(viewLifecycleOwner, Observer {resource ->
+            if (resource is Resource.Success) {
+                mBannerAdapter?.setData(resource.data?.map { it.url ?: "" } ?: mutableListOf())
+            }
+        })
     }
 
     private fun updateUI() {
@@ -145,12 +179,12 @@ class ChiTietBaiVietScreen(private val mId: Int,
                     .apply(avatarOptions)
                     .into(this)
         }
-        view?.findViewById<ImageView>(R.id.imgTinTuc)?.run {
-            Glide.with(this@ChiTietBaiVietScreen)
-                    .load(user?.mAvatar?.toImage())
-                    .apply(avatarOptions)
-                    .into(this)
-        }
+//        view?.findViewById<ImageView>(R.id.imgTinTuc)?.run {
+//            Glide.with(this@ChiTietBaiVietScreen)
+//                    .load(user?.mAvatar?.toImage())
+//                    .apply(avatarOptions)
+//                    .into(this)
+//        }
         view?.findViewById<TextView>(R.id.tvUserName)?.text = user?.mName
         val follow = Phrase.from(getString(R.string.following_amount_and_follower_amount))
                 .put("following", user?.mFlowing?.toString() ?: "0")
@@ -158,12 +192,12 @@ class ChiTietBaiVietScreen(private val mId: Int,
                 .format()
         view?.findViewById<TextView>(R.id.tvFollowNumber)?.text = follow
 
-        view?.findViewById<ImageView>(R.id.articleAvatarImageView)?.run {
-            Glide.with(this)
-                    .load(mArticle?.mAvatar)
-                    .apply(bannerOptions)
-                    .into(this)
-        }
+//        view?.findViewById<ImageView>(R.id.articleAvatarImageView)?.run {
+//            Glide.with(this)
+//                    .load(mArticle?.mAvatar)
+//                    .apply(bannerOptions)
+//                    .into(this)
+//        }
         view?.findViewById<RecyclerView>(R.id.rvPhotos)?.run {
             initPhoto(this)
         }
@@ -172,8 +206,8 @@ class ChiTietBaiVietScreen(private val mId: Int,
         val content = article?.mContent
         view?.findViewById<WebView>(R.id.articleContentWebView)?.loadData(getHtmlData(content), "text/html", "UTF-8")
         view?.findViewById<TextView>(R.id.articleTitleTextView)?.text = mArticle?.mTitle
-        view?.findViewById<TextView>(R.id.articleCreateTimeTextView)?.text = mArticle?.mCreatedTime
-
+        view?.findViewById<TextView>(R.id.articleCreateTimeTextView)?.text = mArticle?.mCreatedDate
+        view?.findViewById<TextView>(R.id.articleTypeTextView)?.text = mArticle?.mCategory?.mCategoryName
         //
         val game: Game? = mWrapArticle?.mArticle?.mGame
         initGame(game)

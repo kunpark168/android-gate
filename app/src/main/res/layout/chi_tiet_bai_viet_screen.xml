@@ -89,15 +89,14 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/articleAvatarImageView"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+                <!--Banner-->
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/slider"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    app:layout_constraintDimensionRatio="16:9"
-                    android:scaleType="centerCrop"
-                    tools:src="@tools:sample/backgrounds/scenic"
+                    app:layout_constraintDimensionRatio="h,3:1.2"
                     app:layout_constraintTop_toTopOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
