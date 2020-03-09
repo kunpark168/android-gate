@@ -6,6 +6,7 @@ import com.anhtam.domain.v2.*
 import com.anhtam.domain.v2.wrap.WrapArticle
 import com.anhtam.domain.v2.wrap.WrapComments
 import com.anhtam.domain.v2.wrap.WrapGame
+import com.anhtam.domain.v2.wrap.WrapThaoLuan
 import com.anhtam.gate9.vo.Rating
 import of.bum.network.helper.ApiResponse
 import of.bum.network.helper.RestResponse
@@ -124,7 +125,7 @@ interface SocialService {
     fun getOtherUserInfoById(@Query("userId") userId: Int): LiveData<ApiResponse<RestResponse<Userv1>>>
 
     @GET("social/get-game-info")
-    fun getGameDetail(@Query("gameId") userId: Int): LiveData<ApiResponse<RestResponse<Gamev1>>>
+    fun getGameDetail(@Query("gameId") userId: Int): LiveData<ApiResponse<RestResponse<Gamev2>>>
 
     @GET("social/all-game")
     fun getMXHGame(@Query("tab") type: Int,
@@ -188,7 +189,7 @@ interface SocialService {
             @Query("gameId") userId: Int,
             @Query("page") page: Int,
             @Query("limit") limit: Int
-    ): LiveData<ApiResponse<RestResponse<List<Post>>>>
+    ): LiveData<ApiResponse<RestResponse<WrapThaoLuan>>>
 
     @GET("social/get-game-rate")
     fun getGameRating(

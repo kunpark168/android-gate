@@ -85,7 +85,7 @@ class ThaoLuanFragment : AbstractVisibleFragment(R.layout.shared_only_recycler_v
             when(it){
                 is Resource.Success ->{
                     hideProgress()
-                    val data = it.data
+                    val data = it.data?.mList
                     if (data.isNullOrEmpty()) {
                         mAdapter.loadMoreEnd()
                     } else {

@@ -6,6 +6,7 @@ import com.anhtam.domain.v2.*
 import com.anhtam.domain.v2.wrap.WrapArticle
 import com.anhtam.domain.v2.wrap.WrapComments
 import com.anhtam.domain.v2.wrap.WrapGame
+import com.anhtam.domain.v2.wrap.WrapThaoLuan
 import com.anhtam.gate9.restful.SocialService
 import com.anhtam.gate9.vo.Rating
 import of.bum.network.FetchBoundResource
@@ -132,11 +133,11 @@ class SocialRepository @Inject constructor(
         override fun createCall() = service.getUserRating(userId, tab, page, limit)
     }.asLiveData()
 
-    fun getGameDetail(userId: Int) = object: Lv2FetchResource<Gamev1>(){
+    fun getGameDetail(userId: Int) = object: Lv2FetchResource<Gamev2>(){
         override fun createCall() = service.getGameDetail(userId)
     }.asLiveData()
 
-    fun getThaoLuanGame(gameId: Int, page: Int, limit: Int = 5) = object: Lv2FetchResource<List<Post>>(){
+    fun getThaoLuanGame(gameId: Int, page: Int, limit: Int = 5) = object: Lv2FetchResource<WrapThaoLuan>(){
         override fun createCall() = service.getThaoLuanGame(gameId, page, limit)
     }.asLiveData()
 

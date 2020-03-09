@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.anhtam.domain.v2.Gamev1
+import com.anhtam.domain.v2.Gamev2
 import com.anhtam.gate9.repository.SocialRepository
 import com.anhtam.gate9.utils.AbsentLiveData
 import of.bum.network.helper.Resource
@@ -15,13 +16,11 @@ class DetailGameViewModel @Inject constructor(
 
     val mGameId: MutableLiveData<Int> = MutableLiveData()
 
-    val mGame: LiveData<Resource<Gamev1>> = Transformations.switchMap(mGameId) {
+    val mGame: LiveData<Resource<Gamev2>> = Transformations.switchMap(mGameId) {
         if (it == null) {
             AbsentLiveData.create()
         } else {
             repos.getGameDetail(it)
         }
     }
-
-    val _bottomStatus = MutableLiveData(false)
 }
