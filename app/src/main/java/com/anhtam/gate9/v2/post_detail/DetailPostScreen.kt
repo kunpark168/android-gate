@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anhtam.domain.v2.Post
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.ChooseGalleryAdapter
 import com.anhtam.gate9.adapter.v2.CommentAdapter
@@ -66,7 +67,8 @@ class DetailPostScreen private constructor(
 
     override fun toReact() {
         val commentId = mPost?.commentId?.toInt() ?: return
-        navigation?.addFragment(ReactionScreen.newInstance(commentId))
+        val user: User  = mPost?.user ?: return
+        navigation?.addFragment(ReactionScreen.newInstance(commentId, user))
     }
 
     companion object{

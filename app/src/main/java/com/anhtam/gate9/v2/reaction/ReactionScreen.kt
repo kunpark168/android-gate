@@ -6,6 +6,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.utils.debounceClick
@@ -14,7 +15,8 @@ import kotlinx.android.synthetic.main.reaction_screen.*
 import java.util.*
 
 class ReactionScreen private constructor(
-        private val mCommentId: Int
+        private val mCommentId: Int,
+        private val mUser: User
 ): DaggerNavigationFragment(R.layout.reaction_screen) {
 
     companion object {
@@ -22,12 +24,11 @@ class ReactionScreen private constructor(
         private const val CODE_DISLIKE = 2
         private const val CODE_LOVE = 3
         private const val CODE_COMMENT = 4
-        private const val CODE_VIEW = 5
-        fun newInstance(commentId: Int) = ReactionScreen(commentId)
+        const val CODE_VIEW = 5
+        fun newInstance(commentId: Int, user: User) = ReactionScreen(commentId, user)
     }
 
     private lateinit var mAdapter: SharePageAdapter
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewPager()
@@ -40,11 +41,11 @@ class ReactionScreen private constructor(
         val context = context ?: return
         imgShare?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
         val fragments = ArrayList<Fragment>()
-        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_VIEW))
-        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_LOVE))
-        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_LIKE))
-        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_DISLIKE))
-        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_COMMENT))
+        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_VIEW, mUser))
+        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_LOVE, mUser))
+        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_LIKE, mUser))
+        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_DISLIKE, mUser))
+        fragments.add(ReactionFragment.newInstance(mCommentId, CODE_COMMENT, mUser))
         mAdapter = SharePageAdapter(childFragmentManager, fragments)
         vpReaction.adapter = mAdapter
         vpReaction.offscreenPageLimit = 5

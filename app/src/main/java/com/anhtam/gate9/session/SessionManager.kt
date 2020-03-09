@@ -5,18 +5,13 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.anhtam.domain.v2.Userv1
-import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.di.scope.MainScope
-import com.anhtam.gate9.fcm.FCMService
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.repository.SocialRepository
 import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.utils.AbsentLiveData
 import com.anhtam.gate9.v2.auth.login.LoginScreen
-import com.google.firebase.iid.FirebaseInstanceId
 import of.bum.network.helper.Resource
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 /*
