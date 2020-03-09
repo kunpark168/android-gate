@@ -35,7 +35,7 @@ interface SocialService {
     fun getBanners(): LiveData<ApiResponse<RestResponse<List<Banner>>>>
 
     @GET("social/get-game-nominate")
-    fun getGameNominate(): LiveData<ApiResponse<RestResponse<List<Gamev1>>>>
+    fun getGameNominate(): LiveData<ApiResponse<RestResponse<List<Gamev2>>>>
 
     @GET("social/get-post-detail")
     fun getDetailPosts(@Query("postId") postId: Long,

@@ -85,7 +85,7 @@ class SocialRepository @Inject constructor(
         override fun createCall() = service.getBanners()
     }.asLiveData()
 
-    fun getGameNominate() = object : FetchBoundResource<List<Gamev1>>(){
+    fun getGameNominate() = object : FetchBoundResource<List<Gamev2>>(){
         override fun createCall() = service.getGameNominate()
     }.asLiveData()
 

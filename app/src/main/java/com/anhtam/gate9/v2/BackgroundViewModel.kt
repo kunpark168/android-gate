@@ -5,6 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.anhtam.domain.v2.Banner
 import com.anhtam.domain.v2.Gamev1
+import com.anhtam.domain.v2.Gamev2
 import com.anhtam.gate9.repository.SocialRepository
 import of.bum.network.helper.Resource
 import javax.inject.Inject
@@ -18,8 +19,8 @@ class BackgroundViewModel @Inject constructor(
     val banners: LiveData<Resource<List<Banner>>>
         get() = _banners
 
-    private val _games = MediatorLiveData<Resource<List<Gamev1>>>()
-    val games: LiveData<Resource<List<Gamev1>>>
+    private val _games = MediatorLiveData<Resource<List<Gamev2>>>()
+    val games: LiveData<Resource<List<Gamev2>>>
         get() = _games
 
     init {
