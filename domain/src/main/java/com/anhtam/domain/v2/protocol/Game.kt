@@ -2,6 +2,7 @@ package com.anhtam.domain.v2.protocol
 
 import com.anhtam.domain.v2.Type
 import com.anhtam.domain.v2.Userv2
+import com.squareup.moshi.Json
 
 interface Game {
     var gameId: Int?
@@ -29,7 +30,6 @@ interface Game {
     var follow: Boolean?
     var post: Int?
     var imgCover: String?
-    var country: String?
     var email: String?
     var phone: String?
     var group: String?
@@ -38,4 +38,17 @@ interface Game {
     var mNPH: Userv2?
     var mStatus: Int?
     var mState: Int?
+    var googlePlay: String?
+    var appleStore: String?
+    var releasedDate: String?
+    var country: Country?
 }
+
+class Country(
+        @Json(name = "categoryId")
+        var mId: Int?,
+        @Json(name = "categoryName")
+        var mName: String?,
+        @Json(name = "categoryPath")
+        var mCode: String?
+)

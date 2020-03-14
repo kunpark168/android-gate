@@ -1,5 +1,6 @@
 package com.anhtam.domain.v2
 
+import com.anhtam.domain.v2.protocol.Country
 import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.domain.v2.protocol.User
 import com.squareup.moshi.Json
@@ -55,8 +56,8 @@ class Gamev1(
         override var post: Int? = null,
         @Json(name = "imgCover")
         override var imgCover: String? = null,
-        @Json(name = "country")
-        override var country: String? = null,
+        @Json(name = "category")
+        override var country: Country? = null,
         @Json(name = "email")
         override var email: String? = null,
         @Json(name = "phone")
@@ -72,5 +73,11 @@ class Gamev1(
         @Json(name = "status")
         override var mStatus: Int? = null,
         @Json(name = "state")
-        override var mState: Int? = null
+        override var mState: Int? = null,
+        @Json(name = "releasedDate")
+        override var releasedDate: String? = null,
+        @Json(name = "apple_store")
+        override var appleStore: String? = null,
+        @Json(name = "google_play")
+        override var googlePlay: String? = null
 ): Game

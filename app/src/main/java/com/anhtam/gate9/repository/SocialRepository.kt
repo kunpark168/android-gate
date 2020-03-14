@@ -61,7 +61,7 @@ class SocialRepository @Inject constructor(
         override fun createCall() = service.getOtherUserInfoById(userId)
     }.asLiveData()
 
-    fun getGamesByTab(pageNumber: Int, tab: Int) = object: FetchBoundResource<List<Gamev1>>() {
+    fun getGamesByTab(pageNumber: Int, tab: Int) = object: FetchBoundResource<List<Gamev2>>() {
         override fun createCall() = service.getMXHGame(tab, pageNumber)
     }.asLiveData()
 

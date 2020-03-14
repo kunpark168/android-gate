@@ -1,5 +1,6 @@
 package com.anhtam.domain.v2
 
+import com.anhtam.domain.v2.protocol.Country
 import com.anhtam.domain.v2.protocol.Game
 import com.squareup.moshi.Json
 
@@ -16,19 +17,19 @@ class Gamev2(
         override var description: String? = null,
         @Json(name = "point")
         override var point: String? = null,
-        @Json(name = "created_date")
+        @Json(name = "createdDate")
         override var createdDate: String? = null,
-        @Json(name = "created_user_id")
+        @Json(name = "createdUserId")
         override var createdUserId: Int? = null,
-        @Json(name = "he_dieu_hanh")
+        @Json(name = "heDieuHanh")
         override var heDieuHanh: String? = null,
-        @Json(name = "num_viewed")
+        @Json(name = "numViewed")
         override var numViewed: String? = null,
-        @Json(name = "num_downloaded")
+        @Json(name = "numDownloaded")
         override var numDownloaded: String? = null,
-        @Json(name = "num_liked")
+        @Json(name = "numLiked")
         override var numLiked: String? = null,
-        @Json(name = "num_disliked")
+        @Json(name = "numDisliked")
         override var numDisliked: String? = null,
         @Json(name = "capacity")
         override var capacity: String? = null,
@@ -38,24 +39,26 @@ class Gamev2(
         override var gameType: Type? = null,
         @Json(name = "game_types")
         override var gameTypeStr: String? = null,
-        @Json(name = "fan_page")
+        @Json(name = "fanPage")
         override var fanPage: String? = null,
         @Json(name = "homepage")
         override var homepage: String? = null,
+        @Json(name = "googlePlay")
+        override var googlePlay: String? = null,
+        @Json(name = "appleStore")
+        override var appleStore: String? = null,
         @Json(name = "photos")
         override var photos: String? = null,
         @Json(name = "numFollower")
         override var follower: Int? = null,
         @Json(name = "numFollowing")
         override var following: Int? = null,
-        @Json(name = "follow")
+        @Json(name = "following")
         override var follow: Boolean? = null,
-        @Json(name = "post")
+        @Json(name = "numPost")
         override var post: Int? = null,
         @Json(name = "imgCover")
         override var imgCover: String? = null,
-        @Json(name = "country")
-        override var country: String? = null,
         @Json(name = "email")
         override var email: String? = null,
         @Json(name = "phone")
@@ -71,5 +74,9 @@ class Gamev2(
         @Json(name = "status")
         override var mStatus: Int? = null,
         @Json(name = "state")
-        override var mState: Int? = null
+        override var mState: Int? = null,
+        @Json(name = "category")
+        override var country: Country? = null,
+        @Json(name = "releasedDate")
+        override var releasedDate: String? = null
 ): Game

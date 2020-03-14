@@ -130,7 +130,7 @@ interface SocialService {
     @GET("social/all-game")
     fun getMXHGame(@Query("tab") type: Int,
                    @Query("page") page:Int = 0,
-                   @Query("limit") limit: Int = 15) : LiveData<ApiResponse<RestResponse<List<Gamev1>>>>
+                   @Query("limit") limit: Int = 15) : LiveData<ApiResponse<RestResponse<List<Gamev2>>>>
 
     @POST("social/post-like")
     fun react(@Body params: Map<String, Int>): LiveData<ApiResponse<RestResponse<Base>>>
