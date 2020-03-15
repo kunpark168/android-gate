@@ -16,7 +16,7 @@
             android:id="@+id/imgShare"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:src="@drawable/ic_share_post"
+            android:src="@drawable/ic_view_detail"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp40" />
         <TextView

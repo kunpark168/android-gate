@@ -30,6 +30,7 @@ import com.anhtam.gate9.v2.report.post.ReportPostActivity
 import com.anhtam.gate9.v2.shared.AbstractGalleryFragment
 import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 import com.anhtam.gate9.vo.Reaction
+import com.anhtam.gate9.vo.Reactions
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.squareup.phrase.Phrase
@@ -68,7 +69,13 @@ class DetailPostScreen private constructor(
     override fun toReact() {
         val commentId = mPost?.commentId?.toInt() ?: return
         val user: User  = mPost?.user ?: return
-        navigation?.addFragment(ReactionScreen.newInstance(commentId, user))
+        val like = mPost?.totalLike ?: 0
+        val dislike = mPost?.totalDislike ?: 0
+        val love = mPost?.totalLove ?: 0
+        val comment = mPost?.totalReply ?: 0
+        val view = mPost?.totalView ?: 0
+        val mReactions = Reactions(view, like, dislike, love, comment)
+        navigation?.addFragment(ReactionScreen.newInstance(commentId, user, mReactions))
     }
 
     companion object{
@@ -224,7 +231,7 @@ class DetailPostScreen private constructor(
         val love = unwrapPost.totalLove ?: 0
         val comment = unwrapPost.totalReply ?: 0
         val view = unwrapPost.totalView ?: 0
-        reactionView?.initialize(like, dislike, love, Reaction.react(react), view, comment)
+        reactionView?.initialize(like, dislike, love, Reaction.react(react), view + 1, comment)
 
         // Set photo
         // photos

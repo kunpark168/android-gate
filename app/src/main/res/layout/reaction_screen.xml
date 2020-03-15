@@ -68,13 +68,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <ImageView
-                android:id="@+id/imgShare"
+                android:id="@+id/viewIcon"
                 app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/ic_share_post"
+                android:src="@drawable/viewed"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp40" />
             <TextView
-                app:layout_constraintTop_toBottomOf="@+id/imgShare"
+                android:id="@+id/viewTextView"
+                app:layout_constraintTop_toBottomOf="@+id/viewIcon"
                 android:gravity="center"
                 android:textSize="@dimen/sp11"
                 android:textStyle="bold"
@@ -92,13 +93,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <ImageView
-                android:id="@+id/imgFavorite"
+                android:id="@+id/favoriteIcon"
                 app:layout_constraintTop_toTopOf="parent"
                 android:src="@drawable/ic_reaction_love"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp40" />
             <TextView
-                app:layout_constraintTop_toBottomOf="@+id/imgFavorite"
+                android:id="@+id/favoriteTextView"
+                app:layout_constraintTop_toBottomOf="@+id/favoriteIcon"
                 android:gravity="center"
                 android:textSize="@dimen/sp_10"
                 android:textColor="@color/black"
@@ -116,13 +118,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <ImageView
-                android:id="@+id/imgLike"
+                android:id="@+id/likeIcon"
                 app:layout_constraintTop_toTopOf="parent"
                 android:src="@drawable/ic_like_post"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp40" />
             <TextView
-                app:layout_constraintTop_toBottomOf="@+id/imgLike"
+                android:id="@+id/likeTextView"
+                app:layout_constraintTop_toBottomOf="@+id/likeIcon"
                 android:gravity="center"
                 android:textSize="@dimen/sp_10"
                 android:textColor="@color/black"
@@ -141,13 +144,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <ImageView
-                android:id="@+id/imgDislike"
+                android:id="@+id/dislikeIcon"
                 app:layout_constraintTop_toTopOf="parent"
                 android:src="@drawable/ic_dislike_post"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp40" />
             <TextView
-                app:layout_constraintTop_toBottomOf="@+id/imgDislike"
+                android:id="@+id/dislikeTextView"
+                app:layout_constraintTop_toBottomOf="@+id/dislikeIcon"
                 android:gravity="center"
                 android:textSize="@dimen/sp_10"
                 android:textColor="@color/black"
@@ -166,13 +170,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <ImageView
-                android:id="@+id/imgComment"
+                android:id="@+id/commentIcon"
                 app:layout_constraintTop_toTopOf="parent"
                 android:src="@drawable/ic_chat_gray"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp40" />
             <TextView
-                app:layout_constraintTop_toBottomOf="@+id/imgComment"
+                android:id="@+id/commentTextView"
+                app:layout_constraintTop_toBottomOf="@+id/commentIcon"
                 android:gravity="center"
                 android:textSize="@dimen/sp_10"
                 android:textColor="@color/black"
