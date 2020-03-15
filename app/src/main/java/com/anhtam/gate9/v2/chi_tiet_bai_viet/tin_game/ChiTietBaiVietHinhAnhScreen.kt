@@ -11,6 +11,7 @@ import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.PhotoAdapter
+import com.anhtam.gate9.share.view.donate.DonateDialog
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.ChiTietBaiVietScreen
 import com.anhtam.gate9.v2.game_detail.download.DownloadGameFragment
@@ -50,6 +51,10 @@ class ChiTietBaiVietHinhAnhScreen private constructor(
         tvTitle?.setOnClickListener { navigateToGame() }
         tvDownload?.setOnClickListener {
             navigation?.addFragment(DownloadGameFragment.newInstance(mArticle?.mGame ?: return@setOnClickListener))
+        }
+        btnDonate?.setOnClickListener {
+            val unwrapContext = context ?: return@setOnClickListener
+            DonateDialog(unwrapContext).show()
         }
     }
 

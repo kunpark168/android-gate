@@ -98,7 +98,8 @@ class NewFeedScreen : DaggerNavigationFragment(R.layout.new_feed_screen) {
                 is Resource.Loading, is Resource.Error -> ""
                 is Resource.Success -> it.data?.mAvatar
             }
-            avatar?.run {
+            if (avatar.isNullOrEmpty()) return@Observer
+            avatar.run {
                 Glide.with(this@NewFeedScreen)
                         .load(avatar.toImage())
                         .apply {avatarOptions}

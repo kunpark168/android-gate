@@ -24,6 +24,7 @@ import com.anhtam.gate9.v2.follow.FollowScreen
 import com.anhtam.gate9.v2.gallery.GalleryScreen
 import com.anhtam.gate9.v2.game_detail.DetailGameFragment
 import com.anhtam.gate9.v2.game_detail.DetailGameModule
+import com.anhtam.gate9.v2.game_detail.download.DownloadGameFragment
 import com.anhtam.gate9.v2.main.home.HomeFragment
 import com.anhtam.gate9.v2.main.home.HomeModule
 import com.anhtam.gate9.v2.member.MemberFragment
@@ -226,6 +227,10 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeUploadRating(): RatingFragment
+
+
+    @ContributesAndroidInjector
+    abstract fun contributeDownloadGame(): DownloadGameFragment
 
     @Binds
     @IntoMap
