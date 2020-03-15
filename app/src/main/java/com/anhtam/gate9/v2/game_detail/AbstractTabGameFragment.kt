@@ -27,6 +27,7 @@ abstract class AbstractTabGameFragment<D, A: BaseQuickAdapter<D, BaseViewHolder>
     abstract fun initViewModel(id: Int)
     open fun onResponseSuccess(response: RestResponse<*>?){}
     open fun setUpAdapter(){}
+    protected var mGameId: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,8 +75,8 @@ abstract class AbstractTabGameFragment<D, A: BaseQuickAdapter<D, BaseViewHolder>
         mDetailViewModel.mGame.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
-                    val mId = it.data?.gameId ?: return@Observer
-                    initViewModel(mId)
+                    mGameId = it.data?.gameId ?: return@Observer
+                    initViewModel(mGameId)
                     showProgress()
                     mViewModel.loadData(refresh = true)
                 }

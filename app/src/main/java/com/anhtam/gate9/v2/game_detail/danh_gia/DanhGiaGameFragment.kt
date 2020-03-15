@@ -1,20 +1,27 @@
 package com.anhtam.gate9.v2.game_detail.danh_gia
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import com.anhtam.gate9.adapter.v2.RatingGameAdapter
+import com.anhtam.gate9.navigation.FragmentResultListener
+import com.anhtam.gate9.v2.danh_gia.RatingFragment
 import com.anhtam.gate9.v2.game_detail.AbstractTabGameFragment
-import com.anhtam.gate9.v2.shared.RatingComponent
 import com.anhtam.gate9.vo.Rating
 import com.anhtam.gate9.vo.model.Category
 import kotlinx.android.synthetic.main.danh_gia_game_header_view.view.*
 import of.bum.network.helper.RestResponse
 
-class DanhGiaGameFragment : AbstractTabGameFragment<Rating, RatingGameAdapter, DanhGiaViewModel>(){
+class DanhGiaGameFragment : AbstractTabGameFragment<Rating, RatingGameAdapter, DanhGiaViewModel>(), FragmentResultListener{
+    override fun onFragmentResult(args: Bundle) {
+        mViewModel.loadData(refresh = true)
+    }
 
 
     override fun initViewModel(id: Int) {
         mViewModel.initialize(id)
     }
+
+
 
     override val mViewModel: DanhGiaViewModel by viewModels { vmFactory }
     private lateinit var mHeaderView: DanhGiaGameHeaderView
@@ -22,6 +29,9 @@ class DanhGiaGameFragment : AbstractTabGameFragment<Rating, RatingGameAdapter, D
     override fun setUpAdapter() {
         super.setUpAdapter()
         mHeaderView = DanhGiaGameHeaderView(context)
+        mHeaderView.navigateToRatingFragment{
+            navigation?.addFragment(RatingFragment.newInstance(mGameId, isUser = false, rating = it ))
+        }
         mAdapter.addHeaderView(mHeaderView)
     }
 

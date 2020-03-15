@@ -160,7 +160,7 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
     }
 
 
-    private fun loadData(){
+    protected fun loadData(){
         showProgress()
         mViewModel?.loadData(mCurrentCategory, refresh = true)
     }

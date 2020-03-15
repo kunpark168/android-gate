@@ -17,6 +17,7 @@ import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietTinGameScree
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietVideoScreen
 import com.anhtam.gate9.v2.createimage.CreateImageScreen
 import com.anhtam.gate9.v2.createpost.CreatePostScreen
+import com.anhtam.gate9.v2.danh_gia.RatingFragment
 import com.anhtam.gate9.v2.discussion.UserDiscussionModule
 import com.anhtam.gate9.v2.follow.FollowModule
 import com.anhtam.gate9.v2.follow.FollowScreen
@@ -222,6 +223,9 @@ abstract class FragmentBuildersModule {
             modules = [ChiTietBaiVietModule::class]
     )
     abstract fun contributeChiTietBaiVietVideo(): ChiTietBaiVietVideoScreen
+
+    @ContributesAndroidInjector
+    abstract fun contributeUploadRating(): RatingFragment
 
     @Binds
     @IntoMap

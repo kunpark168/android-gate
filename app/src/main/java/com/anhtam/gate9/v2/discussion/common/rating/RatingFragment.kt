@@ -1,16 +1,22 @@
 package com.anhtam.gate9.v2.discussion.common.rating
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.RatingAdapter
+import com.anhtam.gate9.navigation.FragmentResultListener
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
 import com.anhtam.gate9.v2.shared.RatingComponent
 import com.anhtam.gate9.vo.Rating
 import com.anhtam.gate9.vo.model.Category
 import of.bum.network.helper.RestResponse
 
-class RatingFragment: CommonDiscussionFragment<Rating, RatingAdapter, RatingViewModel>() {
+class RatingFragment: CommonDiscussionFragment<Rating, RatingAdapter, RatingViewModel>(),FragmentResultListener {
+
+    override fun onFragmentResult(args: Bundle) {
+        loadData()
+    }
 
     private var mUserId: Int = 0
     private var mType = Category.Member
@@ -20,11 +26,13 @@ class RatingFragment: CommonDiscussionFragment<Rating, RatingAdapter, RatingView
     override val mViewModel: RatingViewModel by viewModels { vmFactory }
     private var mRatingView: RatingComponent? = null
     override fun inflateLayout() = R.layout.fragment_rating
+    private var mUser: User? = null
 
 
     override fun onLoadUser(user: User) {
         super.onLoadUser(user)
         mAdapter.setUser(user)
+        mUser = user
     }
 
     override fun onTabChanged() {
@@ -37,6 +45,9 @@ class RatingFragment: CommonDiscussionFragment<Rating, RatingAdapter, RatingView
         super.initView()
         mRatingView = RatingComponent(context)
         mAdapter.setHeaderView(mRatingView)
+        mRatingView?.onRatingButtonClicked() {
+            navigation?.addFragment(com.anhtam.gate9.v2.danh_gia.RatingFragment.newInstance(mUserId, isUser = true, rating = it))
+        }
     }
 
     override fun onResponseSuccess(data: RestResponse<*>?) {

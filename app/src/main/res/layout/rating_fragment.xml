@@ -63,70 +63,37 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="#fff">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/gameLayout"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp75"
-                android:background="@color/colorWhite"
-                android:visibility="gone"
-                tools:visibility="visible">
-
-                <com.anhtam.gate9.share.view.RoundRectCornerImageView
-                    android:id="@+id/imgNewGame"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="@dimen/dp20"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/img_holder_banner" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="@dimen/dp20"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/imgNewGame"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <TextView
-                        android:id="@+id/tvTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/roboto_bold"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/black"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tvContentGame"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/colorText"
-                        android:textSize="12sp" />
-                </LinearLayout>
-
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingTop="@dimen/padding_16dp"
+                android:paddingBottom="@dimen/padding_16dp">
                 <TextView
-                    android:id="@+id/tvFollowGame"
-                    android:layout_width="80dp"
-                    android:layout_height="25dp"
-                    android:layout_marginEnd="@dimen/dp20"
-                    android:background="@drawable/bg_follow"
-                    android:fontFamily="@font/roboto_light"
-                    android:gravity="center"
-                    android:textColor="@color/colorError"
-                    android:textSize="12sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:id="@+id/tvStatusRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Poor"
+                    android:background="@drawable/bg_5dp_radius_color_accent"
+                    android:textColor="@color/colorAccent"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"/>
+
+                <RatingBar
+                    android:id="@+id/rtReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="?attr/ratingBarStyleSmall"
+                    android:scaleY="1.3"
+                    android:scaleX="1.3"
+                    android:stepSize="0.5"
+                    android:numStars="5"
+                    android:isIndicator="false"
+                    android:layout_marginStart="24dp" />
+
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/edtPostContent"
@@ -136,7 +103,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:hint="@string/write_what_you_think"
+                android:hint="Viết đánh giá..."
                 android:inputType="text|textCapSentences|textMultiLine"
                 android:overScrollMode="always"
                 android:padding="12dp"

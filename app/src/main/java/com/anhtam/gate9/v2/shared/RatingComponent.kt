@@ -19,6 +19,7 @@ class RatingComponent @JvmOverloads constructor(
         arrayOf(oneStarProgress, twoStarProgress, threeStarProgress, fourStarProgress, fiveStarProgress)
     }
 
+    private var mListener: ((Float)->Unit)? = null
 
     init {
         View.inflate(context, R.layout.rating_view_header, this)
@@ -32,6 +33,16 @@ class RatingComponent @JvmOverloads constructor(
                 }
             }
         }
+        ratingButton?.setOnClickListener {
+            mListener?.invoke(0.0f)
+        }
+        rtReview?.setOnRatingBarChangeListener { _, rating, _ ->
+            mListener?.invoke(rating)
+        }
+    }
+
+    fun onRatingButtonClicked(listener: (Float)-> Unit) {
+        mListener = listener
     }
 
     fun initView(percent: Array<Double>) {
