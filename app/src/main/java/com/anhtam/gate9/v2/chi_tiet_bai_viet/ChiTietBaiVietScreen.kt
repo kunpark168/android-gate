@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -23,6 +24,7 @@ import com.anhtam.gate9.adapter.GroupBannerAdapter
 import com.anhtam.gate9.adapter.v2.PhotoAdapter
 import com.anhtam.gate9.adapter.v2.du_lieu.RelatedAdapter
 import com.anhtam.gate9.restful.BackgroundTasks
+import com.anhtam.gate9.utils.format
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.BackgroundViewModel
 import com.anhtam.gate9.v2.game_detail.DetailGameFragment
@@ -37,58 +39,29 @@ import of.bum.network.helper.Resource
 import javax.inject.Inject
 import javax.inject.Named
 
-class ChiTietBaiVietScreen(private val mId: Int,
+abstract class ChiTietBaiVietScreen(private val mId: Int,
                            private val mArticle: Article?,
                            @LayoutRes private val layoutRes: Int,
                            private val mTab: Int) : DaggerNavigationFragment(layoutRes) {
-
-    companion object {
-        fun newInstance(id: Int, article: Article?, layoutRes: Int, tab: Int) = ChiTietBaiVietScreen(id, article, layoutRes, tab)
-    }
 
     private val mViewModel: ChiTietBaiVietViewModel by viewModels { vmFactory }
     @Inject @field:Named("banner") lateinit var bannerOptions: RequestOptions
     @Inject @field:Named("avatar") lateinit var avatarOptions: RequestOptions
     @Inject lateinit var mConcernAdapter: RelatedAdapter
     @Inject lateinit var mNewListAdapter: RelatedAdapter
-    private var mBannerAdapter: SliderAdapter? = null
-    private var mWrapArticle: WrapArticle? = null
-    private var mPhotoAdapter: PhotoAdapter? = null
-    private val mTopViewModel: BackgroundViewModel by viewModels({requireActivity()}, {vmFactory})
+    protected var mWrapArticle: WrapArticle? = null
 
+    abstract fun updateUI()
     override fun menuRes() = R.menu.menu_chat_search_more
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadData()
-        initView()
         observer()
-        initEvents()
     }
 
-    private fun initEvents() {
-        view?.findViewById<View>(R.id.imgAvatar)?.setOnClickListener { navigateToUser() }
-        view?.findViewById<View>(R.id.tvUserName)?.setOnClickListener { navigateToUser() }
 
-        view?.findViewById<View>(R.id.imgGame)?.setOnClickListener { navigateToGame() }
-        view?.findViewById<View>(R.id.imgNewGame)?.setOnClickListener { navigateToGame() }
-        view?.findViewById<View>(R.id.tvTitle)?.setOnClickListener { navigateToGame() }
-        view?.findViewById<TextView>(R.id.tvFollowGame)?.run {
-            setOnClickListener {
-                val id = mArticle?.mGame?.gameId ?: return@setOnClickListener
-                if (mSessionManager.checkLogin(isDirect = true)) {
-                    BackgroundTasks.postFollowGame(id)
-                    if (this.text == context.getString(R.string.follow)) {
-                        setFollowing()
-                    } else {
-                        setFollow()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun navigateToUser() {
+    protected fun navigateToUser() {
         val user = mArticle?.mUser ?: return
         val roleId = user.mRoleId ?: return
         val id = user.mId ?: return
@@ -99,7 +72,7 @@ class ChiTietBaiVietScreen(private val mId: Int,
         }
     }
 
-    private fun navigateToGame() {
+    protected fun navigateToGame() {
         val id = mArticle?.mGame?.gameId ?: return
         navigation?.addFragment(DetailGameFragment.newInstance(id))
     }
@@ -107,47 +80,6 @@ class ChiTietBaiVietScreen(private val mId: Int,
     private fun loadData() {
         showProgress()
         mViewModel.setId(mId, mTab)
-    }
-
-    private fun initView() {
-        view?.findViewById<WebView>(R.id.articleContentWebView)?.settings?.javaScriptEnabled = true
-        view?.findViewById<RecyclerView>(R.id.concernRecyclerView)?.apply {
-            mConcernAdapter.setOnItemClickListener { _, _, position ->
-                val article = mConcernAdapter.getItem(position)
-                val id = article?.mId ?: return@setOnItemClickListener
-                val type = article.mArticleType ?: return@setOnItemClickListener
-                val layout = when(type) {
-                    0, 3 -> R.layout.chi_tiet_bai_viet_screen
-                    2 -> R.layout.chi_tiet_video_screen
-                    4 -> R.layout.chi_tiet_anh_screen
-                    else -> return@setOnItemClickListener
-                }
-                navigation?.addFragment(newInstance(id, article, layout, type))
-            }
-            adapter = mConcernAdapter
-            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        }
-        view?.findViewById<RecyclerView>(R.id.newRecyclerView)?.apply {
-            mNewListAdapter.setOnItemClickListener { _, _, position ->
-                val article = mNewListAdapter.getItem(position)
-                val id = article?.mId ?: return@setOnItemClickListener
-                val type = article.mArticleType ?: return@setOnItemClickListener
-                val layout = when(type) {
-                    0, 3 -> R.layout.chi_tiet_bai_viet_screen
-                    2 -> R.layout.chi_tiet_video_screen
-                    4 -> R.layout.chi_tiet_anh_screen
-                    else -> return@setOnItemClickListener
-                }
-                navigation?.addFragment(newInstance(id, article, layout, type))
-            }
-            adapter = mNewListAdapter
-            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        }
-
-
-        val unwrapContext = context ?: return
-        mBannerAdapter = SliderAdapter(unwrapContext, bannerOptions)
-        view?.findViewById<ViewPager>(R.id.slider)?.adapter = mBannerAdapter
     }
 
     private fun observer() {
@@ -163,104 +95,24 @@ class ChiTietBaiVietScreen(private val mId: Int,
                 }
             }
         })
-        mTopViewModel.banners.observe(viewLifecycleOwner, Observer {resource ->
-            if (resource is Resource.Success) {
-                mBannerAdapter?.setData(resource.data?.map { it.url ?: "" } ?: mutableListOf())
-            }
-        })
     }
 
-    private fun updateUI() {
-
-        val user: User? = mWrapArticle?.mArticle?.mUser
-        view?.findViewById<ImageView>(R.id.imgAvatar)?.run {
-            Glide.with(this@ChiTietBaiVietScreen)
-                    .load(user?.mAvatar?.toImage())
-                    .apply(avatarOptions)
-                    .into(this)
-        }
-//        view?.findViewById<ImageView>(R.id.imgTinTuc)?.run {
-//            Glide.with(this@ChiTietBaiVietScreen)
-//                    .load(user?.mAvatar?.toImage())
-//                    .apply(avatarOptions)
-//                    .into(this)
-//        }
-        view?.findViewById<TextView>(R.id.tvUserName)?.text = user?.mName
-        val follow = Phrase.from(getString(R.string.following_amount_and_follower_amount))
-                .put("following", user?.mFlowing?.toString() ?: "0")
-                .put("follower", user?.mFlower?.toString() ?: "0")
-                .format()
-        view?.findViewById<TextView>(R.id.tvFollowNumber)?.text = follow
-
-//        view?.findViewById<ImageView>(R.id.articleAvatarImageView)?.run {
-//            Glide.with(this)
-//                    .load(mArticle?.mAvatar)
-//                    .apply(bannerOptions)
-//                    .into(this)
-//        }
-        view?.findViewById<RecyclerView>(R.id.rvPhotos)?.run {
-            initPhoto(this)
-        }
-
-        val article = mWrapArticle?.mArticle
-        val content = article?.mContent
-        view?.findViewById<WebView>(R.id.articleContentWebView)?.loadData(getHtmlData(content), "text/html", "UTF-8")
-        view?.findViewById<TextView>(R.id.articleTitleTextView)?.text = mArticle?.mTitle
-        view?.findViewById<TextView>(R.id.articleCreateTimeTextView)?.text = mArticle?.mCreatedDate
-        view?.findViewById<TextView>(R.id.articleTypeTextView)?.text = mArticle?.mCategory?.mCategoryName
-        //
-        val game: Game? = mWrapArticle?.mArticle?.mGame
-        initGame(game)
-        mConcernAdapter.setNewData(mWrapArticle?.mConcernList)
-        mNewListAdapter.setNewData(mWrapArticle?.mNewList)
-    }
-
-    private fun initPhoto(rv: RecyclerView) {
-        val unwrapNav = navigation ?: return
-        mPhotoAdapter = PhotoAdapter(unwrapNav, bannerOptions)
-        mPhotoAdapter?.user = mArticle?.mUser ?: return
-        rv.adapter = mPhotoAdapter
-        val photos = mArticle.mPhotos ?: return
-//        val isFormat = "[[.*]]".toRegex().matches(photos) TODO Regex
-        val isFormat = (photos.startsWith('[') && photos.endsWith(']'))
-        val stringConcat = if (!isFormat) {
-            photos
-        } else {
-            photos.substring(1, photos.length - 1)
-        }
-        val spanCount = mPhotoAdapter!!.setPhoto(stringConcat)
-        rv.layoutManager = GridLayoutManager(context, spanCount)
-    }
-
-    private fun setFollow() {
-        val tvFollow = view?.findViewById<TextView>(R.id.tvFollowGame)
-        tvFollow?.text = getString(R.string.follow)
-        tvFollow?.setBackgroundResource(R.drawable.bg_follow)
-        val unwrapContext = context ?: return
-        tvFollow?.setTextColor(ContextCompat.getColor(unwrapContext, R.color.text_color_red_light))
-    }
-
-    private fun setFollowing() {
-        val tvFollow = view?.findViewById<TextView>(R.id.tvFollowGame)
-        tvFollow?.text = getString(R.string.following)
-        tvFollow?.setBackgroundResource(R.drawable.bg_following)
-        val unwrapContext = context ?: return
-        tvFollow?.setTextColor(ContextCompat.getColor(unwrapContext, R.color.text_color_blue))
-    }
-
-    private fun getHtmlData(bodyHTML: String?): String {
+    protected fun getHtmlData(bodyHTML: String?): String {
         val head = "<head><style>img{max-width: 100%; width:auto; height: auto;}iframe{max-width: 100%; width:auto; height: auto;}</style></head>"
         return "<html>$head<body>$bodyHTML</body></html>"
     }
 
 
-    private fun initGame(game: Game?) {
+    protected fun initGame(game: Game?) {
         val unwrapContext = context ?: return
         val csGame = view?.findViewById<ConstraintLayout>(R.id.csGame)
         val imgGame = view?.findViewById<ImageView>(R.id.imgGame)
         val imgNewGame = view?.findViewById<ImageView>(R.id.imgNewGame)
         val tvTitle = view?.findViewById<TextView>(R.id.tvTitle)
-        val tvContentGame = view?.findViewById<TextView>(R.id.tvContentGame)
+        val parameterTextView = view?.findViewById<TextView>(R.id.parameterTextView)
+        val ratingTextView = view?.findViewById<TextView>(R.id.ratingTextView)
+        val amountRateTextView = view?.findViewById<TextView>(R.id.amountRateTextView)
+        val ratingBar = view?.findViewById<RatingBar>(R.id.ratingBar)
         if (game == null || game.gameId == 0) {
             csGame?.visibility = View.GONE
             imgGame?.visibility = View.GONE
@@ -279,17 +131,13 @@ class ChiTietBaiVietScreen(private val mId: Int,
                     .into(imgNewGame!!)
 
             tvTitle?.text = game.name
-            val contentStr = Phrase.from(getString(R.string.follower_amount_and_post_amount))
+            parameterTextView?.text = Phrase.from(getString(R.string.follower_amount_and_post_amount))
                     .put("follower", game.follower?.toString() ?: "0")
                     .put("post", game.post?.toString() ?: "0")
                     .format()
-            tvContentGame?.text = contentStr
-            if (game.follow == true) {
-                // check follow here
-                setFollowing()
-            } else {
-                setFollow()
-            }
+            ratingBar?.rating = game.mAvgRate?.toFloat() ?: 0.0f
+            ratingTextView?.text = "${game.mAvgRate?.format(1) ?: "0"} /"
+            amountRateTextView?.text = game.mNumRating?.toString() ?: "0"
         }
     }
 }

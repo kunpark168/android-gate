@@ -67,6 +67,8 @@ class Gamev2(
         override var group: String? = null,
         @Json(name = "rating")
         override var mRating: Double? = null,
+        @Json(name = "avgRate")
+        override var mAvgRate: Double? = null,
         @Json(name = "numRate")
         override var mNumRating: Int? = null,
         @Json(name = "userNPH")

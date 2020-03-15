@@ -27,6 +27,7 @@ class PhotoAdapter @Inject constructor(
     
     lateinit var user: User
     private var default = DEFAULT_MORE
+    private var mPhoto: List<String>? = null
     
     init {
         addItemType(PhotoEntity.GRID_1, R.layout.photo_1_item_layout)
@@ -51,6 +52,7 @@ class PhotoAdapter @Inject constructor(
                     }, it
             )
         }
+        mPhoto = photos
         setSpanSizeLookup{_, pos -> data[pos].getSpanSize()}
         if (entities.size > default) {
             val morePhotoList = arrayListOf<PhotoEntity>()
@@ -100,7 +102,8 @@ class PhotoAdapter @Inject constructor(
     }
     
     private fun openGalleryScreen(){
-        navigation.addFragment(GalleryScreen.newInstance(data.map { it.photo }, user))
+        val unwrapPhoto = mPhoto ?: return
+        navigation.addFragment(GalleryScreen.newInstance(unwrapPhoto, user))
     }
 }
 

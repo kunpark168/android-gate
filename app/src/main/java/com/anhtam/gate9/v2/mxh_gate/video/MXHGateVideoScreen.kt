@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.du_lieu.VideoAdapter
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.ChiTietBaiVietScreen
+import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietVideoScreen
 import com.anhtam.gate9.v2.mxh_gate.tin_game.MXHGateTinGameScreen
 import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
 import com.anhtam.gate9.v2.user_detail.DetailUserFragment
@@ -31,7 +32,7 @@ class MXHGateVideoScreen: MXHGateTinGameScreen<VideoAdapter>(2){
                 R.id.imgTinTuc, R.id.tvTinTuc -> {
                     val id = mAdapter.getItem(position)?.mId ?: return@setOnItemClickListener
                     val article = mAdapter.getItem(position)
-                    navigation?.addFragment(ChiTietBaiVietScreen.newInstance(id, article, R.layout.chi_tiet_bai_viet_screen, mTab))
+                    navigation?.addFragment(ChiTietBaiVietVideoScreen.newInstance(id, article, mTab))
                 }
                 else -> {
                 }

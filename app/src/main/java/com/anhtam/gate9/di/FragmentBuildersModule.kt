@@ -12,6 +12,9 @@ import com.anhtam.gate9.v2.categories.CategoryModule
 import com.anhtam.gate9.v2.categories.FeatureScreen
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.ChiTietBaiVietModule
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.ChiTietBaiVietScreen
+import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietHinhAnhScreen
+import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietTinGameScreen
+import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietVideoScreen
 import com.anhtam.gate9.v2.createimage.CreateImageScreen
 import com.anhtam.gate9.v2.createpost.CreatePostScreen
 import com.anhtam.gate9.v2.discussion.UserDiscussionModule
@@ -208,7 +211,17 @@ abstract class FragmentBuildersModule {
     @ContributesAndroidInjector(
             modules = [ChiTietBaiVietModule::class]
     )
-    abstract fun contributeChiTietBaiViet(): ChiTietBaiVietScreen
+    abstract fun contributeChiTietBaiVietTin(): ChiTietBaiVietTinGameScreen
+
+    @ContributesAndroidInjector(
+            modules = [ChiTietBaiVietModule::class]
+    )
+    abstract fun contributeChiTietBaiVietAnh(): ChiTietBaiVietHinhAnhScreen
+
+    @ContributesAndroidInjector(
+            modules = [ChiTietBaiVietModule::class]
+    )
+    abstract fun contributeChiTietBaiVietVideo(): ChiTietBaiVietVideoScreen
 
     @Binds
     @IntoMap

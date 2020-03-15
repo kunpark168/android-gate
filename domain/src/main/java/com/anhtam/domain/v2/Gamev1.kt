@@ -76,6 +76,8 @@ class Gamev1(
         override var mState: Int? = null,
         @Json(name = "releasedDate")
         override var releasedDate: String? = null,
+        @Json(name = "avgRate")
+        override var mAvgRate: Double? = null,
         @Json(name = "apple_store")
         override var appleStore: String? = null,
         @Json(name = "google_play")

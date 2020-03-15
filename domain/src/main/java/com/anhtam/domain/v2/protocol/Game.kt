@@ -42,6 +42,7 @@ interface Game {
     var appleStore: String?
     var releasedDate: String?
     var country: Country?
+    var mAvgRate: Double?
 }
 
 class Country(

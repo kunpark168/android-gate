@@ -12,6 +12,9 @@
         android:layout_height="@dimen/status_bar_height"
         android:background="@color/status_color_orange"/>
 
+    <include
+        layout="@layout/shared_orange_toolbar_layout"/>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,9 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
-            <include
-                layout="@layout/shared_orange_toolbar_layout"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -139,11 +139,13 @@
                     android:layout_marginEnd="@dimen/layout_margin_16dp"/>
             </LinearLayout>
 
-            <WebView
-                android:id="@+id/articleContentWebView"
+            <TextView
+                android:id="@+id/articleSapoTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/layout_margin_8dp"/>
+                android:layout_marginTop="@dimen/layout_margin_8dp"
+                android:layout_marginStart="@dimen/layout_margin_16dp"
+                android:layout_marginEnd="@dimen/layout_margin_16dp"/>
 
             <!--Action-->
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -246,19 +248,49 @@
                         android:textSize="13sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/tvContentGame"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/roboto_regular"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/colorText"
-                        android:textSize="12sp" />
+                        android:layout_weight="1">
+
+
+                        <androidx.appcompat.widget.AppCompatRatingBar
+                            android:id="@+id/ratingBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:theme="@style/SmallRatingBar"
+                            style="?android:attr/ratingBarStyleSmall"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginTop="@dimen/layout_margin_4dp"/>
+
+                        <TextView
+                            android:id="@+id/ratingTextView"
+                            android:layout_marginStart="3dp"
+                            android:textSize="@dimen/text_size_12sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="@id/ratingBar"
+                            app:layout_constraintBottom_toBottomOf="@id/ratingBar"
+                            app:layout_constraintStart_toEndOf="@id/ratingBar"
+                            tools:text="7.2"/>
+
+                        <TextView
+                            android:id="@+id/amountRateTextView"
+                            android:layout_marginStart="8dp"
+                            android:textSize="@dimen/text_size_12sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="@id/ratingBar"
+                            app:layout_constraintBottom_toBottomOf="@id/ratingBar"
+                            app:layout_constraintStart_toEndOf="@id/ratingTextView"
+                            tools:text="22"
+                            android:drawableStart="@drawable/ic_person_nav"
+                            android:drawablePadding="@dimen/layout_padding_4dp"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tvFollowGame"
                     android:layout_width="80dp"
                     android:layout_height="25dp"
                     android:layout_marginEnd="@dimen/dp20"
@@ -267,6 +299,7 @@
                     android:gravity="center"
                     android:textColor="@color/colorError"
                     android:textSize="12sp"
+                    android:text="@string/download"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

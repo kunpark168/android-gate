@@ -8,7 +8,9 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.anhtam.gate9.R
 import com.anhtam.gate9.session.SessionManager
+import com.anhtam.gate9.v2.lib.loadImage
 import com.anhtam.gate9.vo.Reaction
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.reaction_view.view.*
 
 class ReactionView @JvmOverloads constructor(context: Context?,
@@ -53,15 +55,15 @@ class ReactionView @JvmOverloads constructor(context: Context?,
                 // set new reaction
                 when(value){
                     Reaction.Like -> {
-                        imgLike?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                        Glide.with(context).load(R.drawable.btnlike).into(imgLike)
                         mLike++
                     }
                     Reaction.Dislike ->{
-                        imgDislike?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                        Glide.with(context).load(R.drawable.dislike_selected).into(imgDislike)
                         mDislike++
                     }
                     Reaction.Love -> {
-                        imgFavorite?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                        Glide.with(context).load(R.drawable.loved).into(imgFavorite)
                         mLove++
                     }
                 }
@@ -71,15 +73,15 @@ class ReactionView @JvmOverloads constructor(context: Context?,
                 // clear reaction
                 when(previousState){
                     Reaction.Like -> {
-                        imgLike?.setColorFilter(ContextCompat.getColor(context, R.color.color_react_grey), PorterDuff.Mode.MULTIPLY)
+                        Glide.with(context).load(R.drawable.ic_like_post).into(imgLike)
                         mLike--
                     }
                     Reaction.Dislike ->{
-                        imgDislike?.setColorFilter(ContextCompat.getColor(context, R.color.color_react_grey), PorterDuff.Mode.MULTIPLY)
+                        Glide.with(context).load(R.drawable.ic_dislike_post).into(imgDislike)
                         mDislike--
                     }
                     Reaction.Love -> {
-                        imgFavorite?.setColorFilter(ContextCompat.getColor(context, R.color.color_react_grey), PorterDuff.Mode.MULTIPLY)
+                        Glide.with(context).load(R.drawable.ic_reaction_love).into(imgFavorite)
                         mLove--
                     }
                 }
@@ -89,30 +91,30 @@ class ReactionView @JvmOverloads constructor(context: Context?,
                 // clear reaction
                 when(previousState){
                     Reaction.Like -> {
-                        imgLike?.setColorFilter(ContextCompat.getColor(context, R.color.color_react_grey), PorterDuff.Mode.MULTIPLY)
+                        Glide.with(context).load(R.drawable.ic_like_post).into(imgLike)
                         mLike--
                     }
                     Reaction.Dislike ->{
-                        imgDislike?.setColorFilter(ContextCompat.getColor(context, R.color.color_react_grey), PorterDuff.Mode.MULTIPLY)
+                        Glide.with(context).load(R.drawable.ic_dislike_post).into(imgDislike)
                         mDislike--
                     }
                     Reaction.Love -> {
-                        imgFavorite?.setColorFilter(ContextCompat.getColor(context, R.color.color_react_grey), PorterDuff.Mode.MULTIPLY)
+                        Glide.with(context).load(R.drawable.ic_reaction_love).into(imgFavorite)
                         mLove--
                     }
                 }
                 // set new reaction
                 when(value){
                     Reaction.Like -> {
-                        imgLike?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                        Glide.with(context).load(R.drawable.btnlike).into(imgLike)
                         mLike++
                     }
                     Reaction.Dislike ->{
-                        imgDislike?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                        Glide.with(context).load(R.drawable.dislike_selected).into(imgDislike)
                         mDislike++
                     }
                     Reaction.Love -> {
-                        imgFavorite?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                        Glide.with(context).load(R.drawable.loved).into(imgFavorite)
                         mLove++
                     }
                 }
@@ -139,16 +141,16 @@ class ReactionView @JvmOverloads constructor(context: Context?,
         tvComment?.text = comment.toString()
         when(reaction){
             Reaction.Like -> {
-                imgLike?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                Glide.with(context).load(R.drawable.btnlike).into(imgLike)
+                mLike++
             }
             Reaction.Dislike ->{
-                imgDislike?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
+                Glide.with(context).load(R.drawable.dislike_selected).into(imgDislike)
+                mDislike++
             }
             Reaction.Love -> {
-                imgFavorite?.setColorFilter(ContextCompat.getColor(context, R.color.color_main_blue), PorterDuff.Mode.MULTIPLY)
-            }
-            else ->{
-
+                Glide.with(context).load(R.drawable.loved).into(imgFavorite)
+                mLove++
             }
         }
         changeLabel()
