@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.domain.v2.Post
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
@@ -19,10 +20,14 @@ import com.anhtam.gate9.adapter.v2.CommentAdapter
 import com.anhtam.gate9.adapter.v2.PhotoAdapter
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.restful.BackgroundTasks
+import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.share.view.donate.DonateDialog
 import com.anhtam.gate9.utils.convertInt
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.auth.login.LoginScreen
+import com.anhtam.gate9.v2.bxh.ChartsAdapter
+import com.anhtam.gate9.v2.bxh.Ranking
+import com.anhtam.gate9.v2.bxh.RankingEntity
 import com.anhtam.gate9.v2.game_detail.DetailGameFragment
 import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
 import com.anhtam.gate9.v2.reaction.ReactionScreen
@@ -31,6 +36,7 @@ import com.anhtam.gate9.v2.shared.AbstractGalleryFragment
 import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 import com.anhtam.gate9.vo.Reaction
 import com.anhtam.gate9.vo.Reactions
+import com.anhtam.gate9.vo.model.Category
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.squareup.phrase.Phrase
@@ -74,7 +80,7 @@ class DetailPostScreen private constructor(
         val love = mPost?.totalLove ?: 0
         val comment = mPost?.totalReply ?: 0
         val view = mPost?.totalView ?: 0
-        val mReactions = Reactions(view, like, dislike, love, comment)
+        val mReactions = Reactions(view + 1, like, dislike, love, comment)
         navigation?.addFragment(ReactionScreen.newInstance(commentId, user, mReactions))
     }
 
@@ -90,6 +96,7 @@ class DetailPostScreen private constructor(
     @field:Named("avatar") @Inject lateinit var avatarOptions: RequestOptions
     @field:Named("banner") @Inject lateinit var bannerOptions: RequestOptions
 
+    @Inject lateinit var mRankingAdapter: ChartsAdapter
     @Inject lateinit var mPhotoAdapter: PhotoAdapter
     @Inject lateinit var mAdapter: CommentAdapter
     @Inject lateinit var mGalleryAdapter: ChooseGalleryAdapter
@@ -114,6 +121,7 @@ class DetailPostScreen private constructor(
         mIsRefresh = true
         viewModel.initialize(postId)
         viewModel.getChildComment()
+        viewModel.getRankingInPost(isRefresh = true)
         initView()
         initEvents()
         observer()
@@ -126,6 +134,13 @@ class DetailPostScreen private constructor(
         initRvPhoto()
         initRvComment()
         initGalleryRv()
+        initRankingRv()
+    }
+
+    private fun initRankingRv() {
+        rvRanking?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        rvRanking?.isNestedScrollingEnabled = false
+        rvRanking?.adapter = mRankingAdapter
     }
 
     private fun onUpdateFollow(){
@@ -195,6 +210,74 @@ class DetailPostScreen private constructor(
                 }
                 else -> {
                     hideProgress()
+                    mAdapter.loadMoreFail()
+                }
+            }
+        })
+        observerRanking()
+    }
+
+    private fun observerRanking() {
+
+        viewModel.users.observe(viewLifecycleOwner, Observer {
+            when(it) {
+                is Resource.Success -> {
+                    val data = it.data
+
+
+
+                    if (viewModel.mRankingPage == 0) {
+                        if (data.isNullOrEmpty()) {
+                            moreTextView?.visibility = View.GONE
+                            rvRanking?.visibility = View.GONE
+                            mRankingAdapter.loadMoreEnd()
+                            return@Observer
+                        } else {
+                            rvRanking?.visibility = View.VISIBLE
+                            if (data.size < 10) moreTextView?.visibility = View.GONE else moreTextView?.visibility = View.VISIBLE
+                        }
+                    }
+                    if (data.isNullOrEmpty()) {
+                        mRankingAdapter.loadMoreEnd()
+                        moreTextView?.visibility = View.GONE
+                    } else {
+                        if (data.size < 5) {
+
+                        }
+                        if (viewModel.mRankingPage == 0) {
+                            //
+                            val source = mutableListOf<RankingEntity>()
+                            when(data.size){
+                                1 -> {
+                                    source.add(RankingEntity(data.first(), Ranking.CHAMPIONS.ranking))
+                                }
+                                2 -> {
+                                    source.add(RankingEntity(data.first(), Ranking.CHAMPIONS.ranking))
+                                    source.add(RankingEntity(data[1], Ranking.RUNNER_UP.ranking))
+                                }
+                                3 -> {
+                                    source.add(RankingEntity(data.first(), Ranking.CHAMPIONS.ranking))
+                                    source.add(RankingEntity(data[1], Ranking.RUNNER_UP.ranking))
+                                    source.add(RankingEntity(data[2], Ranking.SECOND_RUNNER_UP.ranking))
+                                }
+                                else -> {
+                                    source.add(RankingEntity(data.first(), Ranking.CHAMPIONS.ranking))
+                                    source.add(RankingEntity(data[1], Ranking.RUNNER_UP.ranking))
+                                    source.add(RankingEntity(data[2], Ranking.SECOND_RUNNER_UP.ranking))
+                                    source.addAll(data.subList(3, data.size).map { user -> RankingEntity(user, Ranking.OTHERS.ranking) })
+                                }
+                            }
+                            mRankingAdapter.setNewData(source)
+                        } else {
+                            mRankingAdapter.addData(data.map { user -> RankingEntity(user, Ranking.OTHERS.ranking) })
+                        }
+                        mAdapter.loadMoreComplete()
+                    }
+                }
+                is Resource.Loading -> {
+
+                }
+                else -> {
                     mAdapter.loadMoreFail()
                 }
             }
@@ -307,6 +390,10 @@ class DetailPostScreen private constructor(
                 onUpdateFollow()
                 BackgroundTasks.postFollowGame(id)
             }
+        }
+
+        moreTextView?.setOnClickListener {
+            viewModel.getRankingInPost()
         }
 
         swipeRefreshLayout?.setOnRefreshListener {

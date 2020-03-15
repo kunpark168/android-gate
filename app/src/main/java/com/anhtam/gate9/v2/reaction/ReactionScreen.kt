@@ -43,6 +43,12 @@ class ReactionScreen private constructor(
     override fun menuRes() = R.menu.menu_chat_search_more
 
     private fun initViewPager(){
+        viewTextView?.text = mReactions.mView.toString()
+        favoriteTextView?.text = mReactions.mLove.toString()
+        likeTextView?.text = mReactions.mLike.toString()
+        dislikeTextView?.text = mReactions.mDislike.toString()
+        commentTextView?.text = mReactions.mComment.toString()
+
         val context = context ?: return
         val fragments = ArrayList<Fragment>()
         fragments.add(ReactionFragment.newInstance(mCommentId, CODE_VIEW, mUser))
@@ -67,46 +73,36 @@ class ReactionScreen private constructor(
                 when(mPrevious) {
                     0 -> {
                         Glide.with(context).load(R.drawable.ic_view_detail).into(viewIcon)
-                        viewTextView?.text = getString(R.string.view_label)
                     }
                     1 -> {
                         Glide.with(context).load(R.drawable.ic_reaction_love).into(favoriteIcon)
-                        favoriteTextView?.text = getString(R.string.favorite_label)
                     }
                     2 -> {
                         Glide.with(context).load(R.drawable.ic_like_post).into(likeIcon)
-                        likeTextView?.text = getString(R.string.like_label)
                     }
                     3 -> {
                         Glide.with(context).load(R.drawable.ic_dislike_post).into(dislikeIcon)
-                        dislikeTextView?.text = getString(R.string.dislike_label)
                     }
                     4 -> {
                         Glide.with(context).load(R.drawable.ic_chat_gray).into(commentIcon)
-                        commentTextView?.text = getString(R.string.comment)
                     }
                 }
                 mPrevious = position
                 when(position) {
                     0 -> {
                         Glide.with(context).load(R.drawable.viewed).into(viewIcon)
-                        viewTextView?.text = mReactions.mView.toString()
                     }
                     1 -> {
                         Glide.with(context).load(R.drawable.loved).into(favoriteIcon)
-                        favoriteTextView?.text = mReactions.mView.toString()
                     }
                     2 -> {
                         Glide.with(context).load(R.drawable.btnlike).into(likeIcon)
-                        likeTextView?.text = mReactions.mView.toString()
                     }
                     3 -> {
                         Glide.with(context).load(R.drawable.dislike_selected).into(dislikeIcon)
-                        dislikeTextView?.text = mReactions.mView.toString()
                     }
                     4 -> {
                         Glide.with(context).load(R.drawable.comment_selected).into(commentIcon)
-                        commentTextView?.text = mReactions.mView.toString()
                     }
                 }
             }

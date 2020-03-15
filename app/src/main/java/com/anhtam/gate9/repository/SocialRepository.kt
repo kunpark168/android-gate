@@ -152,4 +152,8 @@ class SocialRepository @Inject constructor(
     fun getChiTietBaiViet(id: Int, articleType: Int) = object: Lv2FetchResource<WrapArticle>(){
         override fun createCall() = service.getChiTietBaiViet(id, articleType)
     }.asLiveData()
+
+    fun getRankingInPost(commentId: Int, page: Int, limit: Int = 10) = object: Lv2FetchResource<List<Userv1>>(){
+        override fun createCall() = service.getRankingInPost(commentId, page, limit)
+    }.asLiveData()
 }

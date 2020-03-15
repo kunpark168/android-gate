@@ -198,6 +198,27 @@
                             android:layout_marginTop="@dimen/layout_margin_8dp"
                             app:layout_constraintTop_toBottomOf="@id/tvContent" />
 
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvRanking"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/layout_margin_8dp"
+                            app:layout_constraintTop_toBottomOf="@id/rvPhotos"/>
+
+                        <TextView
+                            android:id="@+id/moreTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_10"
+                            android:background="@drawable/bg_btn_more"
+                            android:fontFamily="@font/roboto_regular"
+                            android:padding="@dimen/padding_8dp"
+                            android:text="Xem thêm"
+                            android:textColor="@color/colorWhite"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/rvRanking" />
+
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:id="@+id/csOriPost"
                             android:layout_width="wrap_content"
@@ -206,7 +227,7 @@
                             android:layout_marginTop="@dimen/dp5"
                             android:visibility="visible"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/rvPhotos">
+                            app:layout_constraintTop_toBottomOf="@+id/moreTextView">
 
                             <TextView
                                 android:id="@+id/tvPrePost"

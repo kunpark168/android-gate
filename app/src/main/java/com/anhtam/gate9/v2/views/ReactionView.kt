@@ -142,15 +142,12 @@ class ReactionView @JvmOverloads constructor(context: Context?,
         when(reaction){
             Reaction.Like -> {
                 Glide.with(context).load(R.drawable.btnlike).into(imgLike)
-                mLike++
             }
             Reaction.Dislike ->{
                 Glide.with(context).load(R.drawable.dislike_selected).into(imgDislike)
-                mDislike++
             }
             Reaction.Love -> {
                 Glide.with(context).load(R.drawable.loved).into(imgFavorite)
-                mLove++
             }
         }
         changeLabel()

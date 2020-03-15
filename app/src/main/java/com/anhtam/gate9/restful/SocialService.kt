@@ -210,4 +210,11 @@ interface SocialService {
             @Query("articleId") id: Int,
             @Query("articleType") type: Int
     ): LiveData<ApiResponse<RestResponse<WrapArticle>>>
+
+    @GET("user/ranking-in-post")
+    fun getRankingInPost(
+            @Query("commentId") commentId: Int,
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
+    ): LiveData<ApiResponse<RestResponse<List<Userv1>>>>
 }

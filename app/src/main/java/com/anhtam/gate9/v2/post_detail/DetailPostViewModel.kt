@@ -5,6 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.anhtam.domain.Base
 import com.anhtam.domain.v2.Post
+import com.anhtam.domain.v2.Userv1
 import com.anhtam.domain.v2.wrap.WrapComments
 import com.anhtam.gate9.repository.SocialRepository
 import com.anhtam.gate9.restful.SocialService
@@ -29,6 +30,11 @@ class DetailPostViewModel @Inject constructor(
     private val mComments = MediatorLiveData<Resource<WrapComments>>()
     val comments: LiveData<Resource<WrapComments>>
         get() = mComments
+
+    var mRankingPage = 0
+    private val mUsers = MediatorLiveData<Resource<List<Userv1>>>()
+    val users: LiveData<Resource<List<Userv1>>>
+        get() = mUsers
 
     fun initialize(id: Long) {
         _commentId = id.toInt()
@@ -63,5 +69,13 @@ class DetailPostViewModel @Inject constructor(
         }
         params["userId"] = mSessionManager.cachedUser.value?.data?.mId ?: 0
         return repository.react(params)
+    }
+
+    fun getRankingInPost(isRefresh: Boolean = false) {
+        if (isRefresh) mRankingPage = 0 else mRankingPage++
+        val source = repository.getRankingInPost(_commentId, mRankingPage)
+        mUsers.addSource(source) {
+            mUsers.value = it
+        }
     }
 }

@@ -95,7 +95,8 @@ class PhotoAdapter @Inject constructor(
             }
         }
         if (item.type == PhotoEntity.GRID_N) {
-            val more = data.size - default
+            val size = mPhoto?.size ?: return
+            val more = size - default
             view.tvMore.text = "+".plus(more.toString())
         }
         view.imgPhoto?.setOnClickListener { openGalleryScreen() }
