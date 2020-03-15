@@ -13,6 +13,7 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.PhotoAdapter
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.ChiTietBaiVietScreen
+import com.anhtam.gate9.v2.game_detail.download.DownloadGameFragment
 import com.bumptech.glide.Glide
 import com.squareup.phrase.Phrase
 import kotlinx.android.synthetic.main.chi_tiet_anh_screen.*
@@ -47,6 +48,9 @@ class ChiTietBaiVietHinhAnhScreen private constructor(
         imgNewGame?.setOnClickListener { navigateToGame() }
         imgGame?.setOnClickListener { navigateToGame() }
         tvTitle?.setOnClickListener { navigateToGame() }
+        tvDownload?.setOnClickListener {
+            navigation?.addFragment(DownloadGameFragment.newInstance(mArticle?.mGame ?: return@setOnClickListener))
+        }
     }
 
     private fun initView() {

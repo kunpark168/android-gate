@@ -16,6 +16,7 @@ import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.BackgroundViewModel
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.ChiTietBaiVietScreen
+import com.anhtam.gate9.v2.game_detail.download.DownloadGameFragment
 import com.anhtam.gate9.v2.newfeed.SliderAdapter
 import com.bumptech.glide.Glide
 import com.squareup.phrase.Phrase
@@ -52,6 +53,9 @@ class ChiTietBaiVietTinGameScreen private constructor(
         imgNewGame?.setOnClickListener { navigateToGame() }
         imgGame?.setOnClickListener { navigateToGame() }
         tvTitle?.setOnClickListener { navigateToGame() }
+        tvDownload?.setOnClickListener {
+            navigation?.addFragment(DownloadGameFragment.newInstance(mArticle?.mGame ?: return@setOnClickListener))
+        }
     }
 
     private fun observerBanner() {

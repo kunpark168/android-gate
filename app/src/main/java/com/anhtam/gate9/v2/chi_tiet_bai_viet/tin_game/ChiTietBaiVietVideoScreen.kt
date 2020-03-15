@@ -12,6 +12,7 @@ import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.ChiTietBaiVietScreen
+import com.anhtam.gate9.v2.game_detail.download.DownloadGameFragment
 import com.anhtam.gate9.v2.newfeed.SliderAdapter
 import com.bumptech.glide.Glide
 import com.squareup.phrase.Phrase
@@ -43,6 +44,9 @@ class ChiTietBaiVietVideoScreen private constructor(
         imgGame?.setOnClickListener { navigateToGame() }
         imgNewGame?.setOnClickListener { navigateToGame() }
         tvTitle?.setOnClickListener { navigateToGame() }
+        tvDownload?.setOnClickListener {
+            navigation?.addFragment(DownloadGameFragment.newInstance(mArticle?.mGame ?: return@setOnClickListener))
+        }
     }
 
 

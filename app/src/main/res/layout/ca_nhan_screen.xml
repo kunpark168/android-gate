@@ -8,16 +8,11 @@
     android:background="@color/white"
     android:clickable="true"
     android:focusable="true">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/status_bar_height"
-        android:background="@color/status_color_blue"/>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:layout_marginTop="@dimen/status_bar_height">
+        android:background="@color/white">
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,7 +21,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/status_bar_height">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/csCover"
                     android:visibility="visible"
@@ -158,13 +154,19 @@
                     app:layout_constraintTop_toBottomOf="@id/imgAvatar"
                     android:layout_marginTop="@dimen/layout_margin_16dp"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/status_bar_height"
+                android:background="@color/status_color_blue"
+                app:layout_collapseMode="pin"/>
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:contentInsetRight="0dp"
                 app:title=""
-                app:layout_collapseMode="pin">
+                app:layout_collapseMode="pin"
+                android:layout_marginTop="@dimen/status_bar_height">
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgBack"
                     android:src="@drawable/ic_setting"
