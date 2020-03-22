@@ -4,6 +4,7 @@ interface User{
     var mId: Int?
     var mEmail: String?
     var mAvatar: String?
+    var mAvatarPath: String?
     var mStatus: String?
     var mRoleId: Int?
     var mNote: String?

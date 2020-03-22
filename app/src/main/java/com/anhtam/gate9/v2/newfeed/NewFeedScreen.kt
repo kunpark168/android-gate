@@ -96,7 +96,7 @@ class NewFeedScreen : DaggerNavigationFragment(R.layout.new_feed_screen) {
             if (it == null) return@Observer
             val avatar = when(it) {
                 is Resource.Loading, is Resource.Error -> ""
-                is Resource.Success -> it.data?.mAvatar
+                is Resource.Success -> it.data?.mAvatarPath
             }
             if (avatar.isNullOrEmpty()) return@Observer
             avatar.run {

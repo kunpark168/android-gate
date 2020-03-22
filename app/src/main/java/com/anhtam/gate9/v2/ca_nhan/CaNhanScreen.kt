@@ -53,7 +53,7 @@ class CaNhanScreen : DaggerNavigationFragment(R.layout.ca_nhan_screen) {
                         else -> R.drawable.ic_gender
                     }
                     tvTitle?.setCompoundDrawablesWithIntrinsicBounds(0, 0, icon, 0)
-                    Config.IMG_URL + it.data?.mAvatar
+                    Config.IMG_URL + it.data?.mAvatarPath
                 }
             }
 

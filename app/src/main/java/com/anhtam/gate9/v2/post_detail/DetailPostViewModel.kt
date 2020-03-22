@@ -31,11 +31,6 @@ class DetailPostViewModel @Inject constructor(
     val comments: LiveData<Resource<WrapComments>>
         get() = mComments
 
-    var mRankingPage = 0
-    private val mUsers = MediatorLiveData<Resource<List<Userv1>>>()
-    val users: LiveData<Resource<List<Userv1>>>
-        get() = mUsers
-
     fun initialize(id: Long) {
         _commentId = id.toInt()
     }
@@ -69,13 +64,5 @@ class DetailPostViewModel @Inject constructor(
         }
         params["userId"] = mSessionManager.cachedUser.value?.data?.mId ?: 0
         return repository.react(params)
-    }
-
-    fun getRankingInPost(isRefresh: Boolean = false) {
-        if (isRefresh) mRankingPage = 0 else mRankingPage++
-        val source = repository.getRankingInPost(_commentId, mRankingPage)
-        mUsers.addSource(source) {
-            mUsers.value = it
-        }
     }
 }

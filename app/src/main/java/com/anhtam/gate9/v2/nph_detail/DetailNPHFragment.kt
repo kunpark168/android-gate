@@ -75,6 +75,7 @@ class DetailNPHFragment(private val mId: Int) : DaggerNavigationFragment(R.layou
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
             override fun onPageSelected(position: Int) {
+                onTabChanged(position)
                 mFragments.forEachIndexed { index, fragment -> fragment.changeVisible(position == index)}
             }
         })

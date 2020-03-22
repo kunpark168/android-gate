@@ -10,6 +10,8 @@ data class Userv2(
         override var mEmail: String? = null,
         @Json(name = "avatar")
         override var mAvatar: String? = null,
+        @Json(name = "avatar_path")
+        override var mAvatarPath: String? = null,
         @Json(name = "status")
         override var mStatus: String? = null,
         @Json(name = "role_id")

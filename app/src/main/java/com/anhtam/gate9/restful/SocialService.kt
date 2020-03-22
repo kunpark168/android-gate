@@ -217,4 +217,15 @@ interface SocialService {
             @Query("page") page: Int,
             @Query("limit") limit: Int
     ): LiveData<ApiResponse<RestResponse<List<Userv1>>>>
+
+    /*
+     *
+     */
+    @GET("social/get-list-article-by-game")
+    fun getDuLieuGame(
+            @Query("articleType") articleType: Int,
+            @Query("gameId") gameId: Int,
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
+    ) : LiveData<ApiResponse<RestResponse<List<Article>>>>
 }

@@ -14,6 +14,7 @@ import com.anhtam.gate9.utils.format
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.createpost.CreatePostScreen
 import com.anhtam.gate9.v2.game_detail.danh_gia.DanhGiaGameFragment
+import com.anhtam.gate9.v2.game_detail.du_lieu.DuLieuFragment
 import com.anhtam.gate9.v2.game_detail.thao_luan.ThaoLuanFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.main.home.HomeFragment
@@ -72,6 +73,7 @@ class DetailGameFragment constructor(private val mGameId: Int) : DaggerNavigatio
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
             override fun onPageSelected(position: Int) {
+                onTabChanged(position)
                 mFragments.forEachIndexed { index, fragment -> fragment.changeVisible(position == index)}
             }
         })
@@ -230,8 +232,8 @@ class DetailGameFragment constructor(private val mGameId: Int) : DaggerNavigatio
     private fun initViewPager(){
         mFragments.add(ThaoLuanFragment.newInstance())
         mFragments.add(DanhGiaGameFragment.newInstance())
-        mFragments.add(ThaoLuanFragment.newInstance())
-        mFragments.add(ThaoLuanFragment.newInstance())
+        mFragments.add(DuLieuFragment.newInstance())
+        mFragments.add(DuLieuFragment.newInstance())
         mAdapter = SharePageAdapter(childFragmentManager, mFragments)
         viewPager?.adapter = mAdapter
         viewPager?.offscreenPageLimit = mFragments.size

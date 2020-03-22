@@ -76,6 +76,7 @@ class DetailUserFragment(private val mId: Int) : DaggerNavigationFragment(R.layo
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
 
             override fun onPageSelected(position: Int) {
+                onTabChanged(position)
                 mFragments.forEachIndexed { index, fragment -> fragment.changeVisible(position == index)}
             }
         })
@@ -178,7 +179,7 @@ class DetailUserFragment(private val mId: Int) : DaggerNavigationFragment(R.layo
         onUpdateFollow()
         //header
         Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder))
-                .load(user?.mAvatar?.toImage())
+                .load(user?.mAvatarPath?.toImage())
                 .into(imgAvatar)
 
         tvUserName?.text = user?.mName

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.anhtam.domain.v2.Post
 import com.anhtam.domain.v2.wrap.WrapThaoLuan
 import com.anhtam.gate9.repository.SocialRepository
-import com.anhtam.gate9.v2.newfeed.PagingViewModel
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 

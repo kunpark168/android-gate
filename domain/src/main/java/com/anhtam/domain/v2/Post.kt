@@ -7,7 +7,7 @@ data class Post(
     @Json(name = "comment_id")
     var commentId: Long? = null,
     @Json(name = "user")
-    var user: Userv2? = null,
+    var user: Userv1? = null,
     @Json(name = "content")
     var content: String? = null,
     @Json(name = "photo")
@@ -31,7 +31,7 @@ data class Post(
     @Json(name = "point")
     var point: Int?,
     @Json(name = "game")
-    var game: Gamev2? = null,
+    var game: Gamev1? = null,
     @Json(name = "child")
     var child: List<Post>? = null
 ) : Base()

@@ -2,14 +2,14 @@ package com.anhtam.gate9.v2.game_detail
 
 import androidx.lifecycle.ViewModel
 import com.anhtam.gate9.di.ViewModelKey
-import com.anhtam.gate9.v2.discussion.common.data.DataFragment
-import com.anhtam.gate9.v2.discussion.common.data.DataModule
 import com.anhtam.gate9.v2.discussion.common.discussion.DiscussionGameFragment
 import com.anhtam.gate9.v2.discussion.common.discussion.DiscussionGameModule
 import com.anhtam.gate9.v2.discussion.common.game.GGameFragment
 import com.anhtam.gate9.v2.discussion.common.game.GGameModule
 import com.anhtam.gate9.v2.game_detail.danh_gia.DanhGiaGameFragment
 import com.anhtam.gate9.v2.game_detail.danh_gia.DanhGiaModule
+import com.anhtam.gate9.v2.game_detail.du_lieu.DuLieuFragment
+import com.anhtam.gate9.v2.game_detail.du_lieu.DuLieuModule
 import com.anhtam.gate9.v2.game_detail.thao_luan.ThaoLuanFragment
 import com.anhtam.gate9.v2.game_detail.thao_luan.ThaoLuanModule
 import dagger.Binds
@@ -26,9 +26,9 @@ abstract class DetailGameModule {
     abstract fun contributeRatingFragment(): DanhGiaGameFragment
 
     @ContributesAndroidInjector(
-            modules = [DataModule::class]
+            modules = [DuLieuModule::class]
     )
-    abstract fun contributeDataFragment(): DataFragment
+    abstract fun contributeDataFragment(): DuLieuFragment
 
     @ContributesAndroidInjector(
             modules = [ThaoLuanModule::class]

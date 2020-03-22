@@ -38,7 +38,7 @@ class CommentAdapter @Inject constructor(
         private const val DEFAULT_DISPLAY_CHILD_NUM = 2
     }
 
-    private var mGame: Gamev2? = null
+    private var mGame: Gamev1? = null
 
     init {
         setOnItemChildClickListener { _, view, position ->
@@ -59,7 +59,7 @@ class CommentAdapter @Inject constructor(
         }
     }
 
-    fun initialize(game: Gamev2?){
+    fun initialize(game: Gamev1?){
         mGame = game
     }
     override fun convert(helper: BaseViewHolder?, item: Post?) {
