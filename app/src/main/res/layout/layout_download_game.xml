@@ -4,6 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/colorBlurDialog"
+    android:clickable="true"
+    android:focusable="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -20,7 +22,8 @@
             android:fontFamily="@font/roboto_regular"
             android:gravity="center_vertical"
             android:textSize="@dimen/sp_13"
-            android:paddingStart="@dimen/dp15"
+            android:paddingStart="@dimen/padding_16dp"
+            android:paddingEnd="@dimen/padding_16dp"
             android:textColor="@color/black"
             android:textAllCaps="true"
             android:text="@string/choose_download_source"
@@ -38,7 +41,7 @@
 
         <!--Google Play-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/csGooglePlay"
+            android:id="@+id/googlePlayLayout"
             app:layout_constraintTop_toBottomOf="@+id/vCantDownload"
             android:layout_width="match_parent"
             android:paddingStart="@dimen/dp5"
@@ -76,8 +79,8 @@
 
         <!--APK-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/csAPK"
-            app:layout_constraintTop_toBottomOf="@+id/csGooglePlay"
+            android:id="@+id/apkLayout"
+            app:layout_constraintTop_toBottomOf="@+id/googlePlayLayout"
             android:layout_width="match_parent"
             android:paddingStart="@dimen/dp5"
             android:layout_height="@dimen/dp50">
@@ -115,7 +118,7 @@
         <!--App Store-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/csAppStore"
-            app:layout_constraintTop_toBottomOf="@+id/csAPK"
+            app:layout_constraintTop_toBottomOf="@+id/apkLayout"
             android:layout_width="match_parent"
             android:paddingStart="@dimen/dp5"
             android:layout_height="@dimen/dp50">
@@ -299,7 +302,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="@dimen/dp5"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/download"
+                android:text="@string/bao_cao"
                 android:textColor="@color/colorWhite"
                 android:gravity="center"
                 app:layout_constraintWidth_percent="0.44"
