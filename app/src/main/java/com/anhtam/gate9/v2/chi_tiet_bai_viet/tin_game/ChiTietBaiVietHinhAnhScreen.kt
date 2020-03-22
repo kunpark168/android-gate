@@ -127,7 +127,11 @@ class ChiTietBaiVietHinhAnhScreen private constructor(
 
 
     private fun updatePhoto() {
-        val photos = mArticle?.mPhotos ?: return
+        val photos = mArticle?.mPhotos
+        if(photos == null) {
+            rvPhotos?.visibility = View.GONE
+            return
+        }
 //        val isFormat = "[[.*]]".toRegex().matches(photos) TODO Regex
         val isFormat = (photos.startsWith('[') && photos.endsWith(']'))
         val stringConcat = if (!isFormat) {
@@ -136,6 +140,9 @@ class ChiTietBaiVietHinhAnhScreen private constructor(
             photos.substring(1, photos.length - 1)
         }
         val spanCount = mPhotoAdapter!!.setPhoto(stringConcat)
+        if(mPhotoAdapter?.data == null || mPhotoAdapter!!.data.size == 0) {
+            rvPhotos?.visibility = View.GONE
+        }
         rvPhotos?.layoutManager = GridLayoutManager(context, spanCount)
     }
 }

@@ -4,6 +4,7 @@ import android.view.View
 import com.anhtam.domain.v2.Article
 import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.gate9.R
+import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.utils.toImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -14,10 +15,12 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ArticleAdapter @Inject constructor(
+        private val navigation: Navigation,
         @Named("banner") val bannerOptions: RequestOptions
-): BaseQuickAdapter<Article, BaseViewHolder>(R.layout.mxh_gate_tin_game_item_layout){
+) : BaseQuickAdapter<Article, BaseViewHolder>(R.layout.mxh_gate_tin_game_item_layout) {
 
-    override fun convert(helper: BaseViewHolder?, item: Article?) {val view = helper?.itemView ?: return
+    override fun convert(helper: BaseViewHolder?, item: Article?) {
+        val view = helper?.itemView ?: return
         val article = item ?: return
         view.tvTinTuc?.text = article.mTitle
         view.tvTime?.text = "${article.mCreatedDate ?: ""} ${article.mCategory?.mCategoryName ?: ""}"
@@ -39,9 +42,10 @@ class ArticleAdapter @Inject constructor(
 
             helper.addOnClickListener(R.id.tvTitleGame)
                     .addOnClickListener(R.id.imgGame)
-                    .addOnClickListener(R.id.tvTinTuc)
-                    .addOnClickListener(R.id.imgTinTuc)
 
         }
+
+        helper.addOnClickListener(R.id.tvTinTuc)
+                .addOnClickListener(R.id.imgTinTuc)
     }
 }
