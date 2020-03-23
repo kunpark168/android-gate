@@ -1,9 +1,7 @@
 package com.anhtam.gate9.v2.reaction
 
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.anhtam.domain.v2.protocol.User
@@ -40,7 +38,7 @@ class ReactionScreen private constructor(
         initControl()
     }
 
-    override fun menuRes() = R.menu.menu_chat_search_more
+    override fun menuRes() = R.menu.menu_search_avatar_more
 
     private fun initViewPager(){
         viewTextView?.text = mReactions.mView.toString()

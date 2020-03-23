@@ -11,7 +11,6 @@ import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
 import com.anhtam.gate9.v2.categories.CategoryModule
 import com.anhtam.gate9.v2.categories.FeatureScreen
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.ChiTietBaiVietModule
-import com.anhtam.gate9.v2.chi_tiet_bai_viet.ChiTietBaiVietScreen
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietHinhAnhScreen
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietTinGameScreen
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietVideoScreen
@@ -227,7 +226,6 @@ abstract class FragmentBuildersModule {
 
     @ContributesAndroidInjector
     abstract fun contributeUploadRating(): RatingFragment
-
 
     @ContributesAndroidInjector
     abstract fun contributeDownloadGame(): DownloadGameFragment

@@ -14,7 +14,6 @@ import com.anhtam.gate9.adapter.chat.ChannelAdapter
 import com.anhtam.gate9.v2.lib.then
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.messenger.chat.ChatFragment
-import com.anhtam.gate9.v2.messenger.inbox.InboxFragment
 import kotlinx.android.synthetic.main.channel_fragment.*
 import of.bum.network.helper.Resource
 
@@ -47,7 +46,7 @@ class ChannelFragment : DaggerNavigationFragment(R.layout.channel_fragment) {
         events()
     }
 
-    override fun menuRes() = R.menu.menu_chat_search_more
+    override fun menuRes() = R.menu.menu_search_avatar_more
 
     private fun initRv() {
         mAdapter = ChannelAdapter(this)
@@ -68,9 +67,6 @@ class ChannelFragment : DaggerNavigationFragment(R.layout.channel_fragment) {
     private fun events() {
         mAdapter?.setOnItemClickListener { _, _, position ->
             navigation?.addFragment(ChatFragment.newInstance(mAdapter?.data?.get(position)?.user?.mId?.toString()))
-        }
-        label?.setOnClickListener {
-            navigation?.addFragment(InboxFragment.newInstance())
         }
         tvStartDate?.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

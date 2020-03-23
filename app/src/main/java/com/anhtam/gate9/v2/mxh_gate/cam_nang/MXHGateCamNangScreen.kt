@@ -23,7 +23,7 @@ class MXHGateCamNangScreen(tab: Int) : MXHGateTinGameScreen<ArticleAdapter>(tab)
                     navigation?.addFragment(DetailGameFragment.newInstance(id))
                 }
                 R.id.imgTinTuc, R.id.tvTinTuc -> {
-                    val id = mAdapter.getItem(position)?.mId ?: return@setOnItemClickListener
+                    val id = mAdapter.getItem(position)?.mArticleId ?: return@setOnItemClickListener
                     val article = mAdapter.getItem(position)
                     navigation?.addFragment(ChiTietBaiVietTinGameScreen.newInstance(id, article, mTab))
                 }

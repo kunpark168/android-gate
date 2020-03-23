@@ -1,62 +1,72 @@
 package com.anhtam.gate9.v2.chi_tiet_bai_viet
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
-import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.anhtam.domain.v2.Article
 import com.anhtam.domain.v2.protocol.Game
-import com.anhtam.domain.v2.protocol.User
 import com.anhtam.domain.v2.wrap.WrapArticle
 import com.anhtam.gate9.R
-import com.anhtam.gate9.adapter.GroupBannerAdapter
-import com.anhtam.gate9.adapter.v2.PhotoAdapter
+import com.anhtam.gate9.adapter.v2.ChooseGalleryAdapter
+import com.anhtam.gate9.adapter.v2.CommentAdapter
 import com.anhtam.gate9.adapter.v2.du_lieu.RelatedAdapter
-import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.utils.format
 import com.anhtam.gate9.utils.toImage
-import com.anhtam.gate9.v2.BackgroundViewModel
 import com.anhtam.gate9.v2.game_detail.DetailGameFragment
-import com.anhtam.gate9.v2.main.DaggerNavigationFragment
-import com.anhtam.gate9.v2.newfeed.SliderAdapter
 import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
+import com.anhtam.gate9.v2.shared.AbstractGalleryFragment
 import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.squareup.phrase.Phrase
+import kotlinx.android.synthetic.main.bottom_bar_type_layout.*
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 import javax.inject.Named
 
 abstract class ChiTietBaiVietScreen(private val mId: Int,
-                           private val mArticle: Article?,
-                           @LayoutRes private val layoutRes: Int,
-                           private val mTab: Int) : DaggerNavigationFragment(layoutRes) {
+                                    private val mArticle: Article?,
+                                    @LayoutRes private val layoutRes: Int,
+                                    private val mTab: Int) : AbstractGalleryFragment(layoutRes) {
 
     private val mViewModel: ChiTietBaiVietViewModel by viewModels { vmFactory }
-    @Inject @field:Named("banner") lateinit var bannerOptions: RequestOptions
-    @Inject @field:Named("avatar") lateinit var avatarOptions: RequestOptions
-    @Inject lateinit var mConcernAdapter: RelatedAdapter
-    @Inject lateinit var mNewListAdapter: RelatedAdapter
+    @Inject
+    @field:Named("banner")
+    lateinit var bannerOptions: RequestOptions
+    @Inject
+    @field:Named("avatar")
+    lateinit var avatarOptions: RequestOptions
+    @Inject
+    lateinit var mConcernAdapter: RelatedAdapter
+    @Inject
+    lateinit var mNewListAdapter: RelatedAdapter
     protected var mWrapArticle: WrapArticle? = null
 
+    private var mIsRefresh = false
+    @Inject
+    lateinit var mAdapter: CommentAdapter
+    @Inject
+    lateinit var mGalleryAdapter: ChooseGalleryAdapter
+
     abstract fun updateUI()
-    override fun menuRes() = R.menu.menu_chat_search_more
+    override fun menuRes() = R.menu.menu_search_avatar_more
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadData()
+        initGalleryRv()
+        initRvComment()
+        initEvent()
         observer()
     }
 
@@ -65,7 +75,7 @@ abstract class ChiTietBaiVietScreen(private val mId: Int,
         val user = mArticle?.mUser ?: return
         val roleId = user.mRoleId ?: return
         val id = user.mId ?: return
-        if (roleId != 5){
+        if (roleId != 5) {
             navigation?.addFragment(DetailUserFragment.newInstance(id))
         } else {
             navigation?.addFragment(DetailNPHFragment.newInstance(id))
@@ -82,16 +92,61 @@ abstract class ChiTietBaiVietScreen(private val mId: Int,
         mViewModel.setId(mId, mTab)
     }
 
+    private fun initEvent() {
+
+
+        etPost.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (etPost.length() > 0) readySendMode()
+                if (etPost.length() == 0 && mGalleryAdapter.data.isEmpty()) noneTypeMode()
+            }
+        })
+
+        imgSend?.setOnClickListener {
+            hideKeyboard()
+            showProgress()
+            postComment()
+        }
+
+        imgFrameLayout?.setOnClickListener {
+            hideKeyboard()
+            selectedMultiImages()
+        }
+    }
+
     private fun observer() {
         mViewModel.mArticle.observe(viewLifecycleOwner, Observer {
             when (it) {
                 is Resource.Success -> {
                     hideProgress()
                     mWrapArticle = it.data
-                    updateUI()
+                    if (mIsRefresh) {
+                        mIsRefresh = false
+                        updateUI()
+                    }
+                    val data = mWrapArticle?.mArticle?.mComments
+                    if (data.isNullOrEmpty()) {
+                        mAdapter.loadMoreEnd()
+                    } else {
+                        if (mViewModel.mPage == 0) {
+                            mAdapter.setNewData(data)
+                        } else {
+                            mAdapter.addData(data)
+                        }
+                        mAdapter.loadMoreComplete()
+                    }
                 }
                 is Resource.Error -> {
                     hideProgress()
+                    mAdapter.loadMoreFail()
                 }
             }
         })
@@ -139,5 +194,68 @@ abstract class ChiTietBaiVietScreen(private val mId: Int,
             ratingTextView?.text = "${game.mAvgRate?.format(1) ?: "0"} /"
             amountRateTextView?.text = game.mNumRating?.toString() ?: "0"
         }
+    }
+
+    override fun onSelectedImage(urls: List<String>) {
+        super.onSelectedImage(urls)
+        mGalleryAdapter.setNewData(urls)
+        rvImage?.visibility = View.VISIBLE
+        rvImage?.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        readySendMode()
+    }
+
+    private fun postComment() {
+        val content = etPost?.text?.toString()
+        mViewModel.postComment(content, mGalleryAdapter.data.joinToString(",")).observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is Resource.Success -> {
+                    hideProgress()
+                    mViewModel.setId(mId, mTab)
+                }
+                is Resource.Error -> {
+                    hideProgress()
+                }
+                else -> {
+                }
+            }
+        })
+        initializeState()
+    }
+
+    private fun initRvComment() {
+        val rvComment = view?.findViewById<RecyclerView>(R.id.rvComment)
+        rvComment?.layoutManager = LinearLayoutManager(context)
+        rvComment?.adapter = mAdapter
+        rvComment?.isNestedScrollingEnabled = false
+    }
+
+    private fun initGalleryRv() {
+        mIsRefresh = true
+        mGalleryAdapter.setOnItemChildClickListener { _, _, position ->
+            mGalleryAdapter.remove(position)
+            if (mGalleryAdapter.data.isEmpty()) {
+                rvImage?.visibility = View.GONE
+                noneTypeMode()
+            }
+        }
+        rvImage?.adapter = mGalleryAdapter
+        rvImage?.layoutManager = LinearLayoutManager(context)
+    }
+
+    private fun readySendMode() {
+        imgSend?.visibility = View.VISIBLE
+        dataIcon?.visibility = View.GONE
+    }
+
+    private fun noneTypeMode() {
+        imgSend?.visibility = View.GONE
+        dataIcon?.visibility = View.VISIBLE
+    }
+
+    private fun initializeState() {
+        etPost?.setText("")
+        mGalleryAdapter.data.clear()
+        noneTypeMode()
+        rvImage?.visibility = View.GONE
     }
 }

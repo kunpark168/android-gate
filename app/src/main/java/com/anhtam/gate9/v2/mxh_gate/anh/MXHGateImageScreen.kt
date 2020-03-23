@@ -30,7 +30,7 @@ class MXHGateImageScreen: MXHGateTinGameScreen<HinhAnhAdapter>(4){
                     }
                 }
                 R.id.imgTinTuc, R.id.tvTinTuc -> {
-                    val id = mAdapter.getItem(position)?.mId ?: return@setOnItemClickListener
+                    val id = mAdapter.getItem(position)?.mArticleId ?: return@setOnItemClickListener
                     val article = mAdapter.getItem(position)
                     navigation?.addFragment(ChiTietBaiVietHinhAnhScreen.newInstance(id, article, mTab))
                 }

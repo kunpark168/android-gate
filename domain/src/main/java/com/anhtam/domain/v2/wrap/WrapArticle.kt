@@ -1,6 +1,7 @@
 package com.anhtam.domain.v2.wrap
 
 import com.anhtam.domain.v2.Article
+import com.anhtam.domain.v2.Post
 import com.squareup.moshi.Json
 
 data class WrapArticle(

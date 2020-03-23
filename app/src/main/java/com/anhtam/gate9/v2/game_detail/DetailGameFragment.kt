@@ -50,7 +50,7 @@ class DetailGameFragment constructor(private val mGameId: Int) : DaggerNavigatio
         observeGame()
     }
 
-    override fun menuRes() = R.menu.menu_chat_search_more
+    override fun menuRes() = R.menu.menu_search_avatar_more
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){

@@ -50,7 +50,7 @@ class RegisterScreen : DaggerNavigationFragment(R.layout.register_screen) {
         }
     }
 
-    override fun menuRes() = R.menu.menu_chat_search_more
+    override fun menuRes() = R.menu.menu_search_avatar_more
 
     private fun setColorText() {
         val styledText = "<font color='red'>Note: </font> Trong vào 48h, bạn cần vào Email đã đăng ký để kích hoạt tài khoản trước khi sử dụng"

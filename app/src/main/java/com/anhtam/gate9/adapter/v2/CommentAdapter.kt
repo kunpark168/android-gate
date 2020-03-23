@@ -49,7 +49,7 @@ class CommentAdapter @Inject constructor(
                     toDetailComment(data[position])
                 }
                 R.id.userNameTextView, R.id.avatarImageView -> {
-                    val user = data[position].user ?: return@setOnItemChildClickListener
+                    val user = data[position].user ?: data[position].createdUser  ?: return@setOnItemChildClickListener
                     toUserDiscussion(user)
                 }
                 R.id.moreImageView ->{
@@ -71,7 +71,7 @@ class CommentAdapter @Inject constructor(
         view.dateTextView.text = comment.createdDate
 
         // Set user
-        val user = comment.user ?: return
+        val user = comment.user ?: comment.createdUser  ?: return
         view.userNameTextView.text = user.mName
         Glide.with(mContext)
                 .load(user.mAvatar?.toImage())

@@ -48,12 +48,12 @@ class BXHScreen(
                 .apply(avatarOptions)
                 .into(imgAvatar)
         // follow
-        tvPoint?.text = user.mPoint?.toString()
+        tvPoint?.text = user.mPoint?.toString() ?: "0"
         tvRanking?.text = user.mRanking
     }
 
 
-    override fun menuRes() = R.menu.menu_chat_search_more
+    override fun menuRes() = R.menu.menu_search_avatar_more
 
     private fun observerRanking(){
         viewModel.data.observe(viewLifecycleOwner, Observer {

@@ -44,7 +44,6 @@ class DetailPostViewModel @Inject constructor(
         }
     }
 
-
     fun postComment(content: String? = null, imageUrl: String? = "") = object: FetchBoundResource<Base>(){
         override fun createCall() = socialService.postComment(_commentId.toLong(), content, imageUrl)
     }.asLiveData()

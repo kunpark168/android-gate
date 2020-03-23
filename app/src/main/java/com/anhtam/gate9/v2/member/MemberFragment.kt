@@ -31,7 +31,7 @@ class MemberFragment : DaggerNavigationFragment(R.layout.member_fragment), INavi
         navigation?.addFragment(MemberListFragment.newInstance(type))
     }
 
-    override fun menuRes() = R.menu.menu_chat_search_more
+    override fun menuRes() = R.menu.menu_search_avatar_more
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

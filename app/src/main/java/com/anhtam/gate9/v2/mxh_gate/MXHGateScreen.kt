@@ -28,7 +28,7 @@ class MXHGateScreen : DaggerNavigationFragment(R.layout.mxh_gate_screen) {
         init()
     }
 
-    override fun menuRes() = R.menu.menu_chat_search_more
+    override fun menuRes() = R.menu.menu_search_avatar_more
 
     private fun init() {
         setUpViewPager()

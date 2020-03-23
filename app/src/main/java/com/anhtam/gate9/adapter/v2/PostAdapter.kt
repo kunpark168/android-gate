@@ -48,7 +48,7 @@ class PostAdapter @Inject constructor(
                     }
                 }
                 R.id.userNameTextView, R.id.avatarImageView -> {
-                    val user = data[position].user ?: return@setOnItemChildClickListener
+                    val user = data[position].user ?: data[position].createdUser ?: return@setOnItemChildClickListener
                     navigateToMemberDiscussion(user)
                 }
                 R.id.gameImageView, R.id.titleGameTextView -> {
@@ -125,7 +125,7 @@ class PostAdapter @Inject constructor(
         }
 
         // Set user
-        val user = unwrapPost.user ?: return
+        val user = unwrapPost.user ?:  unwrapPost.createdUser ?: return
         view.userNameTextView.text = user.mName
         //logic image
         val avatar = if(user.mAvatar?.startsWith("http") == true) {

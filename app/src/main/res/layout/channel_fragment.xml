@@ -14,78 +14,9 @@
         android:layout_height="@dimen/status_bar_height"
         android:background="@color/status_color_blue"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:padding="@dimen/padding_16dp"
-        android:background="@color/colorAccent">
+    <include
+        layout="@layout/shared_blue_toolbar_layout"/>
 
-        <ImageView
-            android:id="@+id/iconMore"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_more"
-            android:padding="2dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgAvatar"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="14dp"
-            android:src="@color/color_loading_gray_darker"
-            app:layout_constraintEnd_toStartOf="@id/iconMore"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:padding="2dp"
-            app:layout_constraintEnd_toStartOf="@id/imgAvatar"
-            android:layout_marginEnd="14dp"
-            android:src="@drawable/ic_search"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <ImageView
-            android:id="@+id/iconBack"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:padding="4dp"
-            android:src="@drawable/ic_back"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <TextView
-            android:id="@+id/label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/tin_nhan"
-            android:textColor="@color/white"
-            android:textSize="18sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iconBack"
-            android:layout_marginStart="@dimen/layout_margin_4dp"
-            android:text="@string/back"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="16sp"/>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/csSearch"
         android:layout_width="match_parent"
         android:layout_height="@dimen/search_view_height"

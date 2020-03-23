@@ -44,8 +44,16 @@ interface SocialService {
                        @Query("limit") limit: Int = 15
     ) : LiveData<ApiResponse<RestResponse<WrapComments>>>
 
+
     @POST("social/post-comment")
     fun postComment(
+            @Query("parentId")parentId: Long,
+            @Query("content")content: String? = null,
+            @Query("imageUrl") imageUrl: String? = ""
+    ): LiveData<ApiResponse<RestResponse<Base>>>
+
+    @POST("social/post-article-comment")
+    fun postArticleComment(
             @Query("parentId")parentId: Long,
             @Query("content")content: String? = null,
             @Query("imageUrl") imageUrl: String? = ""

@@ -23,7 +23,7 @@ class DuLieuGameAdapter @Inject constructor(
             when(view.id) {
                 R.id.tvTinTuc, R.id.imgTinTuc -> {
                     val article = data[position] ?: return@setOnItemChildClickListener
-                    val id = article.mId ?: return@setOnItemChildClickListener
+                    val id = article.mArticleId ?: return@setOnItemChildClickListener
                     val type = article.mArticleType ?: return@setOnItemChildClickListener
                     navigation.addFragment(ChiTietBaiVietTinGameScreen.newInstance(id, article, type))
                 }

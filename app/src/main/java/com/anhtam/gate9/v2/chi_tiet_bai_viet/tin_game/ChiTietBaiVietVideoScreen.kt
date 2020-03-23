@@ -61,7 +61,7 @@ class ChiTietBaiVietVideoScreen private constructor(
         concernRecyclerView?.apply {
             mConcernAdapter.setOnItemClickListener { _, _, position ->
                 val article = mConcernAdapter.getItem(position)
-                val id = article?.mId ?: return@setOnItemClickListener
+                val id = article?.mArticleId ?: return@setOnItemClickListener
 
                 when(val type = article.mArticleType ?: return@setOnItemClickListener) {
                     0, 3 -> navigation?.addFragment(ChiTietBaiVietTinGameScreen.newInstance(id, article, type))
@@ -76,7 +76,7 @@ class ChiTietBaiVietVideoScreen private constructor(
         newRecyclerView?.apply {
             mNewListAdapter.setOnItemClickListener { _, _, position ->
                 val article = mNewListAdapter.getItem(position)
-                val id = article?.mId ?: return@setOnItemClickListener
+                val id = article?.mArticleId ?: return@setOnItemClickListener
 
                 when(val type = article.mArticleType ?: return@setOnItemClickListener) {
                     0, 3 -> navigation?.addFragment(newInstance(id, article, type))

@@ -53,7 +53,7 @@ class DetailUserFragment(private val mId: Int) : DaggerNavigationFragment(R.layo
         observeGame()
     }
 
-    override fun menuRes() = R.menu.menu_chat_search_more
+    override fun menuRes() = R.menu.menu_search_avatar_more
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){

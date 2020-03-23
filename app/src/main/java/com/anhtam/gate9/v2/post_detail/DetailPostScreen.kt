@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.domain.v2.Post
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
@@ -101,7 +102,7 @@ class DetailPostScreen private constructor(
         init()
     }
 
-    override fun menuRes() = R.menu.menu_chat_search_more
+    override fun menuRes() = R.menu.menu_search_avatar_more
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -168,6 +169,7 @@ class DetailPostScreen private constructor(
         super.onSelectedImage(urls)
         mGalleryAdapter.setNewData(urls)
         rvImage?.visibility = View.VISIBLE
+        rvImage?.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         readySendMode()
     }
 
@@ -356,6 +358,7 @@ class DetailPostScreen private constructor(
         }
 
         imgFrameLayout?.setOnClickListener {
+            hideKeyboard()
             selectedMultiImages()
         }
 
@@ -377,12 +380,12 @@ class DetailPostScreen private constructor(
 
     private fun readySendMode(){
         imgSend?.visibility = View.VISIBLE
-        iconFrameLayout?.visibility = View.GONE
+        dataIcon?.visibility = View.GONE
     }
 
     private fun noneTypeMode(){
         imgSend?.visibility = View.GONE
-        iconFrameLayout?.visibility = View.VISIBLE
+        dataIcon?.visibility = View.VISIBLE
     }
 
     private fun postComment(){

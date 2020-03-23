@@ -20,7 +20,7 @@ class SearchScreen : DaggerNavigationFragment(R.layout.search_screen) {
         initEvents()
     }
 
-    override fun menuRes() = R.menu.menu_chat_search_more
+    override fun menuRes() = R.menu.menu_search_avatar_more
 
     private fun initEvents() {
         imgSearch?.setOnClickListener {

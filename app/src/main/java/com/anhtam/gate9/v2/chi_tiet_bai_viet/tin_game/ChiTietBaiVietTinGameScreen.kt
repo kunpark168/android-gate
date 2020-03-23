@@ -7,12 +7,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.anhtam.domain.v2.Article
 import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
-import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.share.view.donate.DonateDialog
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.BackgroundViewModel
@@ -21,6 +19,7 @@ import com.anhtam.gate9.v2.game_detail.download.DownloadGameFragment
 import com.anhtam.gate9.v2.newfeed.SliderAdapter
 import com.bumptech.glide.Glide
 import com.squareup.phrase.Phrase
+import kotlinx.android.synthetic.main.bottom_bar_type_layout.*
 import kotlinx.android.synthetic.main.chi_tiet_bai_viet_screen.*
 import of.bum.network.helper.Resource
 
@@ -76,7 +75,7 @@ class ChiTietBaiVietTinGameScreen private constructor(
         concernRecyclerView?.apply {
             mConcernAdapter.setOnItemClickListener { _, _, position ->
                 val article = mConcernAdapter.getItem(position)
-                val id = article?.mId ?: return@setOnItemClickListener
+                val id = article?.mArticleId ?: return@setOnItemClickListener
                 when(val type = article.mArticleType ?: return@setOnItemClickListener) {
                     0, 3 -> navigation?.addFragment(newInstance(id, article, type))
                     2 -> navigation?.addFragment(ChiTietBaiVietVideoScreen.newInstance(id, article, type))
@@ -90,7 +89,7 @@ class ChiTietBaiVietTinGameScreen private constructor(
         newRecyclerView?.apply {
             mNewListAdapter.setOnItemClickListener { _, _, position ->
                 val article = mNewListAdapter.getItem(position)
-                val id = article?.mId ?: return@setOnItemClickListener
+                val id = article?.mArticleId ?: return@setOnItemClickListener
 
                 when(val type = article.mArticleType ?: return@setOnItemClickListener) {
                     0, 3 -> navigation?.addFragment(newInstance(id, article, type))
@@ -137,5 +136,4 @@ class ChiTietBaiVietTinGameScreen private constructor(
         mConcernAdapter.setNewData(mWrapArticle?.mConcernList)
         mNewListAdapter.setNewData(mWrapArticle?.mNewList)
     }
-
 }

@@ -8,6 +8,8 @@ data class Post(
     var commentId: Long? = null,
     @Json(name = "user")
     var user: Userv1? = null,
+    @Json(name = "created_user")
+    var createdUser: Userv1? = null,
     @Json(name = "content")
     var content: String? = null,
     @Json(name = "photo")
