@@ -24,6 +24,7 @@ class ReactionView @JvmOverloads constructor(context: Context?,
     private var mLike: Int = 0
     private var mDislike: Int = 0
     private var mLove: Int = 0
+    private var mGoToReactionListener: (()->Unit)? = null
 
     init {
         View.inflate(context, R.layout.reaction_view, this)
@@ -39,6 +40,12 @@ class ReactionView @JvmOverloads constructor(context: Context?,
         }
         csDisLike?.setOnClickListener {
             react(Reaction.Dislike)
+        }
+        viewLayout?.setOnClickListener {
+            mGoToReactionListener?.invoke()
+        }
+        replyLayout?.setOnClickListener {
+            mGoToReactionListener?.invoke()
         }
     }
 
@@ -131,7 +138,8 @@ class ReactionView @JvmOverloads constructor(context: Context?,
         tvDislike?.text = mDislike.toString()
     }
 
-    fun initialize(like: Int, dislike: Int, love: Int, reaction: Reaction, view: Int, comment: Int){
+    fun initialize(like: Int, dislike: Int, love: Int, reaction: Reaction, view: Int, comment: Int, listener: () -> Unit){
+        mGoToReactionListener = listener
         // set new reaction
         mLike = like
         mDislike = dislike

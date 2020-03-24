@@ -25,7 +25,7 @@ class PhotoAdapter @Inject constructor(
 
     }
     
-    lateinit var user: User
+    var user: User? = null
     private var default = DEFAULT_MORE
     private var mPhoto: List<String>? = null
     
@@ -104,7 +104,7 @@ class PhotoAdapter @Inject constructor(
     
     private fun openGalleryScreen(){
         val unwrapPhoto = mPhoto ?: return
-        navigation.addFragment(GalleryScreen.newInstance(unwrapPhoto, user))
+        navigation.addFragment(GalleryScreen.newInstance(unwrapPhoto, user ?: return))
     }
 }
 

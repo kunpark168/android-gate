@@ -156,7 +156,6 @@ class DetailPostScreen private constructor(
         rvPhotos?.layoutManager = LinearLayoutManager(context)
         rvPhotos?.adapter = mPhotoAdapter
         rvPhotos?.isNestedScrollingEnabled = false
-        mPhotoAdapter.user = mPost?.user ?: return
     }
 
     private fun initRvComment() {
@@ -180,6 +179,7 @@ class DetailPostScreen private constructor(
                     hideProgress()
                     if (mIsRefresh) {
                         mPost = resource.data?.mDetails
+                        mPhotoAdapter.user = mPost?.user
                         mIsRefresh = false
                         updateUI()
                     }
@@ -235,7 +235,7 @@ class DetailPostScreen private constructor(
         val love = unwrapPost.totalLove ?: 0
         val comment = unwrapPost.totalReply ?: 0
         val view = unwrapPost.totalView ?: 0
-        reactionView?.initialize(like, dislike, love, Reaction.react(react), view + 1, comment)
+        reactionView?.initialize(like, dislike, love, Reaction.react(react), view + 1, comment, ::toReact)
 
         // Set photo
         // photos
