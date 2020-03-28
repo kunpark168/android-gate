@@ -75,8 +75,9 @@ class MemberAdapter @Inject constructor(
         val view = helper?.itemView ?: return
         view.nameTextView?.text = user.mName ?: ""
         view.userIdTextView?.text = user.mId?.toString() ?: ""
+        val avatar = if (user.mAvatarPath.isNullOrEmpty()) user.mAvatar else user.mAvatarPath
         Glide.with(mContext)
-                .load(user.mAvatar?.toImage())
+                .load(avatar?.toImage())
                 .apply(avatarRequestOptions)
                 .into(view.avatarImageView)
         helper.addOnClickListener(R.id.nameTextView)

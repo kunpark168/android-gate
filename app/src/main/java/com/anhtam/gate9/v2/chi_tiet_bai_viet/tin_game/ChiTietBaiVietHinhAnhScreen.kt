@@ -113,8 +113,11 @@ class ChiTietBaiVietHinhAnhScreen private constructor(
                 .format()
         tvFollowNumber?.text = follow
 
+
+        // Set post
         val article = mWrapArticle?.mArticle
         articleSapoTextView?.text = article?.mSapo
+        totalPointTextView?.text = "-"
         articleTitleTextView?.text = mArticle?.mTitle
         articleCreateTimeTextView?.text = mArticle?.mCreatedDate
         articleTypeTextView?.text = mArticle?.mCategory?.mCategoryName

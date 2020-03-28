@@ -227,6 +227,10 @@ class DetailPostScreen private constructor(
 
         tvFollowNumber.text = follow
         // Set post
+        val point = Phrase.from(getString(R.string.point_phrase))
+                .put("point", unwrapPost.point?.toString() ?: "0")
+                .format()
+        totalPointTextView?.text = point
         tvContent?.text = Html.fromHtml(unwrapPost.content ?: "")
         tvTime?.text = unwrapPost.createdDate
         val react = unwrapPost.like?.convertInt() ?: 0
@@ -369,7 +373,6 @@ class DetailPostScreen private constructor(
         imgNewGame?.setOnClickListener { toGameDiscussion() }
         tvTitle?.setOnClickListener { toGameDiscussion() }
 
-        tvAction?.setOnClickListener {toReact() }
         ichome?.setOnClickListener { navigation?.back() }
         tvPrePost?.setOnClickListener { navigation?.back() }
     }
