@@ -19,14 +19,11 @@ class NotificationFragment : DaggerNavigationFragment(R.layout.notification_acti
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
+        setUpViewPager()
         initEvents()
     }
 
-    private fun initView() {
-        toolbar?.title = resources.getString(R.string.notify)
-        setUpViewPager()
-    }
+    override fun menuRes() = R.menu.menu_search_avatar
 
     private fun initEvents() {
         tabNotify.debounceClick {
@@ -34,7 +31,7 @@ class NotificationFragment : DaggerNavigationFragment(R.layout.notification_acti
         }
         tabSystem.debounceClick {
             vpNotification?.currentItem = 1
-        }
+        } 
         vpNotification?.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
             override fun onPageScrollStateChanged(state: Int) {
             }

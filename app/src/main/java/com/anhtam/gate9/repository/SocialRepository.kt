@@ -8,6 +8,7 @@ import com.anhtam.domain.v2.wrap.WrapComments
 import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.domain.v2.wrap.WrapThaoLuan
 import com.anhtam.gate9.restful.SocialService
+import com.anhtam.gate9.restful.entities.Notification
 import com.anhtam.gate9.vo.Rating
 import of.bum.network.FetchBoundResource
 import of.bum.network.helper.Lv1FetchResource
@@ -21,6 +22,12 @@ import javax.inject.Singleton
 class SocialRepository @Inject constructor(
         val service: SocialService
 ) {
+
+    companion object {
+        const val DEFAULT_LIMIT_5 = 5
+        const val DEFAULT_LIMIT_10 = 10
+    }
+
     fun getPostAndCommentByUser(userId: Int, type: Int, page: Int, limit: Int) = object: Lv2FetchResource<List<Post>>(){
         override fun createCall() = service.getPostAndCommentByUser(userId, type, page, limit)
     }.asLiveData()
@@ -163,5 +170,10 @@ class SocialRepository @Inject constructor(
      */
     fun getDuLieuGame(gameId: Int, page: Int, limit: Int = 5) = object: Lv2FetchResource<List<Article>>() {
         override fun createCall() = service.getDuLieuGame(0, gameId, page, limit)
+    }.asLiveData()
+
+    // --> Notification
+    fun getNotificationList(page: Int, limit: Int = DEFAULT_LIMIT_10) = object: Lv2FetchResource<List<Notification>>() {
+        override fun createCall() = service.getNotificationList(page, limit)
     }.asLiveData()
 }
