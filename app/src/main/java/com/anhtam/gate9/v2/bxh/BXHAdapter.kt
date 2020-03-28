@@ -73,10 +73,11 @@ class ChartsAdapter @Inject constructor(
             else -> unFollowing(tvFollow)
         }
 
+        val avatar = if (user.mAvatarPath.isNullOrEmpty()) user.mAvatar else user.mAvatarPath
         val imgAvatar = holder.getView<ImageView>(R.id.imgAvatar)
         imgAvatar?.run {
             Glide.with(mContext)
-                    .load(user.mAvatar?.toImage())
+                    .load(avatar?.toImage())
                     .apply(avatarOptions)
                     .into(this)
         }

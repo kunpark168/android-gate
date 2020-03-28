@@ -43,8 +43,9 @@ class BXHScreen(
         val user = mSessionManager.cachedUser.value?.data ?: return
         tvName?.text = user.mName
         tvId?.text = user.mId?.toString()
+        val avatar = if(user.mAvatarPath.isNullOrEmpty()) user.mAvatar else user.mAvatarPath
         Glide.with(this)
-                .load(user.mAvatar?.toImage())
+                .load(avatar?.toImage())
                 .apply(avatarOptions)
                 .into(imgAvatar)
         // follow
