@@ -40,6 +40,10 @@ interface Game {
     var mState: Int?
     var googlePlay: String?
     var appleStore: String?
+    var androidLink: String?
+    var windowPhoneLink: String?
+    var pcLink: String?
+    var iosLink: String?
     var releasedDate: String?
     var country: Country?
     var mAvgRate: Double?

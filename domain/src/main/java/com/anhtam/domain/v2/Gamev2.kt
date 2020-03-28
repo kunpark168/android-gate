@@ -80,5 +80,13 @@ class Gamev2(
         @Json(name = "category")
         override var country: Country? = null,
         @Json(name = "releasedDate")
-        override var releasedDate: String? = null
+        override var releasedDate: String? = null,
+        @Json(name = "android_link")
+        override var androidLink: String? = null,
+        @Json(name = "ios_link")
+        override var iosLink: String? = null,
+        @Json(name = "link_wp")
+        override var windowPhoneLink: String? = null,
+        @Json(name = "link_pc")
+        override var pcLink: String? = null
 ): Game

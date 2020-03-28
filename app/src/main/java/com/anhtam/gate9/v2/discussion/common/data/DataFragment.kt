@@ -11,6 +11,7 @@ import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietTinGameScree
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietVideoScreen
 import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
 import com.anhtam.gate9.v2.game_detail.DetailGameFragment
+import com.anhtam.gate9.v2.game_detail.download.DownloadGameFragment
 
 class DataFragment: CommonDiscussionFragment<Article, ArticleAdapter, DataViewModel>() {
     private var mUserId: Int = 0
@@ -48,6 +49,10 @@ class DataFragment: CommonDiscussionFragment<Article, ArticleAdapter, DataViewMo
                 R.id.tvTitleGame, R.id.imgGame -> {
                     val id = (adapter.data[position] as? Article)?.mGame?.gameId ?: return@setOnItemChildClickListener
                     navigation?.addFragment(DetailGameFragment.newInstance(id))
+                }
+                R.id.tvDownload -> {
+                    val game = (adapter.data[position] as? Article?)?.mGame ?: return@setOnItemChildClickListener
+                    navigation?.addFragment(DownloadGameFragment.newInstance(game))
                 }
             }
         }
