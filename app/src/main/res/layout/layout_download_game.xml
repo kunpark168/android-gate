@@ -44,9 +44,10 @@
             android:id="@+id/googlePlayLayout"
             app:layout_constraintTop_toBottomOf="@+id/vCantDownload"
             android:layout_width="match_parent"
-            android:paddingStart="@dimen/dp5"
+            android:paddingStart="@dimen/padding_4dp"
+            android:paddingEnd="@dimen/padding_4dp"
             android:layout_height="@dimen/dp50">
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:padding="@dimen/dp_10"
                 app:layout_constraintStart_toStartOf="parent"
                 android:src="@drawable/ic_google_play"
@@ -62,13 +63,24 @@
                 android:textSize="@dimen/sp_13"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
-            <ImageView
-                android:id="@+id/imgGooglePlay"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/googlePlayRadioButton"
                 android:padding="@dimen/dp15"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:src="@drawable/ic_checked_radio"
+                android:src="@drawable/ic_non_check"
                 android:layout_width="@dimen/dp45"
                 android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/googlePlayTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center_vertical"
+                android:layout_marginEnd="@dimen/layout_margin_8dp"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="@dimen/sp_13"
+                android:text="@string/not_yet"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
             <View
                 android:background="@color/colorGray"
                 android:alpha="0.3"
@@ -82,9 +94,10 @@
             android:id="@+id/apkLayout"
             app:layout_constraintTop_toBottomOf="@+id/googlePlayLayout"
             android:layout_width="match_parent"
-            android:paddingStart="@dimen/dp5"
+            android:paddingStart="@dimen/padding_4dp"
+            android:paddingEnd="@dimen/padding_4dp"
             android:layout_height="@dimen/dp50">
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:padding="@dimen/dp_10"
                 app:layout_constraintStart_toStartOf="parent"
                 android:src="@drawable/ic_apk"
@@ -100,13 +113,24 @@
                 android:textSize="@dimen/sp_13"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
-            <ImageView
-                android:id="@+id/imgAPK"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/apkRadioButton"
                 android:padding="@dimen/dp15"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:src="@drawable/ic_non_check"
                 android:layout_width="@dimen/dp45"
                 android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/apkTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center_vertical"
+                android:layout_marginEnd="@dimen/layout_margin_8dp"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="@dimen/sp_13"
+                android:text="@string/not_yet"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
             <View
                 android:background="@color/colorGray"
                 android:alpha="0.3"
@@ -117,12 +141,13 @@
 
         <!--App Store-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/csAppStore"
+            android:id="@+id/appStoreLayout"
             app:layout_constraintTop_toBottomOf="@+id/apkLayout"
             android:layout_width="match_parent"
-            android:paddingStart="@dimen/dp5"
+            android:paddingStart="@dimen/padding_4dp"
+            android:paddingEnd="@dimen/padding_4dp"
             android:layout_height="@dimen/dp50">
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:padding="@dimen/dp_10"
                 app:layout_constraintStart_toStartOf="parent"
                 android:src="@drawable/ic_app_store"
@@ -138,13 +163,24 @@
                 android:textSize="@dimen/sp_13"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
-            <ImageView
-                android:id="@+id/imgAppStore"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/appStoreRadioButton"
                 android:padding="@dimen/dp15"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:src="@drawable/ic_non_check"
                 android:layout_width="@dimen/dp45"
                 android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/appStoreTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center_vertical"
+                android:layout_marginEnd="@dimen/layout_margin_8dp"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="@dimen/sp_13"
+                android:text="@string/not_yet"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
             <View
                 android:background="@color/colorGray"
                 android:alpha="0.3"
@@ -155,12 +191,13 @@
 
         <!--IPA-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/csIPA"
-            app:layout_constraintTop_toBottomOf="@+id/csAppStore"
+            android:id="@+id/ipaLayout"
+            app:layout_constraintTop_toBottomOf="@+id/appStoreLayout"
             android:layout_width="match_parent"
-            android:paddingStart="@dimen/dp5"
+            android:paddingStart="@dimen/padding_4dp"
+            android:paddingEnd="@dimen/padding_4dp"
             android:layout_height="@dimen/dp50">
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:padding="@dimen/dp_10"
                 app:layout_constraintStart_toStartOf="parent"
                 android:src="@drawable/ic_ipa"
@@ -176,13 +213,24 @@
                 android:textSize="@dimen/sp_13"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
-            <ImageView
-                android:id="@+id/imgIPA"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ipaRadioButton"
                 android:padding="@dimen/dp15"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:src="@drawable/ic_non_check"
                 android:layout_width="@dimen/dp45"
                 android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/ipaTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center_vertical"
+                android:layout_marginEnd="@dimen/layout_margin_8dp"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="@dimen/sp_13"
+                android:text="@string/not_yet"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
             <View
                 android:background="@color/colorGray"
                 android:alpha="0.3"
@@ -193,12 +241,13 @@
 
         <!--WindownsPhone-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/csWindowsPhone"
-            app:layout_constraintTop_toBottomOf="@+id/csIPA"
+            android:id="@+id/windowPhoneLayout"
+            app:layout_constraintTop_toBottomOf="@+id/ipaLayout"
             android:layout_width="match_parent"
-            android:paddingStart="@dimen/dp5"
+            android:paddingStart="@dimen/padding_4dp"
+            android:paddingEnd="@dimen/padding_4dp"
             android:layout_height="@dimen/dp50">
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:padding="@dimen/dp_10"
                 app:layout_constraintStart_toStartOf="parent"
                 android:src="@drawable/ic_windowns_phone"
@@ -214,7 +263,8 @@
                 android:textSize="@dimen/sp_13"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/windowPhoneRadioButton"
                 android:padding="@dimen/dp15"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -222,9 +272,10 @@
                 android:layout_width="@dimen/dp45"
                 android:layout_height="match_parent" />
             <TextView
+                android:id="@+id/windowPhoneTextView"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:gravity="center_vertical"
-                android:paddingEnd="@dimen/dp15"
+                android:layout_marginEnd="@dimen/layout_margin_8dp"
                 android:fontFamily="@font/roboto_regular"
                 android:textSize="@dimen/sp_13"
                 android:text="@string/not_yet"
@@ -240,12 +291,13 @@
 
         <!--PC-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/csPC"
-            app:layout_constraintTop_toBottomOf="@+id/csWindowsPhone"
+            android:id="@+id/pcLayout"
+            app:layout_constraintTop_toBottomOf="@+id/windowPhoneLayout"
             android:layout_width="match_parent"
-            android:paddingStart="@dimen/dp5"
+            android:paddingStart="@dimen/padding_4dp"
+            android:paddingEnd="@dimen/padding_4dp"
             android:layout_height="@dimen/dp50">
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:padding="@dimen/dp_10"
                 app:layout_constraintStart_toStartOf="parent"
                 android:src="@drawable/ic_pc"
@@ -261,13 +313,24 @@
                 android:textSize="@dimen/sp_13"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
-            <ImageView
-                android:id="@+id/imgPC"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/pcRadioButton"
                 android:padding="@dimen/dp15"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:src="@drawable/ic_non_check"
                 android:layout_width="@dimen/dp45"
                 android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/pcTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center_vertical"
+                android:layout_marginEnd="@dimen/layout_margin_8dp"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="@dimen/sp_13"
+                android:text="@string/not_yet"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
             <View
                 android:background="@color/colorGray"
                 android:alpha="0.3"
@@ -277,7 +340,9 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            app:layout_constraintTop_toBottomOf="@+id/csPC"
+            app:layout_constraintTop_toBottomOf="@+id/pcLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/layout_margin_16dp"
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/dp15"
             android:layout_height="wrap_content">

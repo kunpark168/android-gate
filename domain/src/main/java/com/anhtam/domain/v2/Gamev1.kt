@@ -81,5 +81,13 @@ class Gamev1(
         @Json(name = "apple_store")
         override var appleStore: String? = null,
         @Json(name = "google_play")
-        override var googlePlay: String? = null
+        override var googlePlay: String? = null,
+        @Json(name = "android_link")
+        override var androidLink: String? = null,
+        @Json(name = "ios_link")
+        override var iosLink: String? = null,
+        @Json(name = "link_wp")
+        override var windowPhoneLink: String? = null,
+        @Json(name = "link_pc")
+        override var pcLink: String? = null
 ): Game

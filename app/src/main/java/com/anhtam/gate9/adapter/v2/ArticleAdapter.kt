@@ -15,7 +15,6 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ArticleAdapter @Inject constructor(
-        private val navigation: Navigation,
         @Named("banner") val bannerOptions: RequestOptions
 ) : BaseQuickAdapter<Article, BaseViewHolder>(R.layout.mxh_gate_tin_game_item_layout) {
 
@@ -42,7 +41,7 @@ class ArticleAdapter @Inject constructor(
 
             helper.addOnClickListener(R.id.tvTitleGame)
                     .addOnClickListener(R.id.imgGame)
-
+                    .addOnClickListener(R.id.tvDownload)
         }
 
         helper.addOnClickListener(R.id.tvTinTuc)

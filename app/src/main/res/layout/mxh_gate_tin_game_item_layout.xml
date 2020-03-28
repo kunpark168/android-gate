@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:lines="1"
-        android:text="12.5 19:44 Tin Nóng"
+        tools:text="12.5 19:44 Tin Nóng"
         app:layout_constraintBottom_toBottomOf="@id/imgTinTuc"
         app:layout_constraintStart_toStartOf="@id/tvTinTuc" />
 
@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvTitleGame" />
 
     <TextView
-        android:id="@+id/followGameTextView"
+        android:id="@+id/tvDownload"
         android:layout_width="80dp"
         android:layout_height="25dp"
         android:layout_marginEnd="@dimen/layout_margin_16dp"
@@ -93,7 +93,7 @@
         tools:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="tvTitleGame,tvTypeGame,imgGame,followGameTextView"
+        app:constraint_referenced_ids="tvTitleGame,tvTypeGame,imgGame,tvDownload"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp"
         android:visibility="gone"/>

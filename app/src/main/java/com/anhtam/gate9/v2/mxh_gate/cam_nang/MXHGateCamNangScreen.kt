@@ -9,6 +9,7 @@ import com.anhtam.gate9.adapter.v2.ArticleAdapter
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.ChiTietBaiVietScreen
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietTinGameScreen
 import com.anhtam.gate9.v2.game_detail.DetailGameFragment
+import com.anhtam.gate9.v2.game_detail.download.DownloadGameFragment
 import com.anhtam.gate9.v2.mxh_gate.tin_game.MXHGateTinGameScreen
 
 class MXHGateCamNangScreen(tab: Int) : MXHGateTinGameScreen<ArticleAdapter>(tab) {
@@ -26,6 +27,10 @@ class MXHGateCamNangScreen(tab: Int) : MXHGateTinGameScreen<ArticleAdapter>(tab)
                     val id = mAdapter.getItem(position)?.mArticleId ?: return@setOnItemClickListener
                     val article = mAdapter.getItem(position)
                     navigation?.addFragment(ChiTietBaiVietTinGameScreen.newInstance(id, article, mTab))
+                }
+                R.id.tvDownload -> {
+                    val game = mAdapter.data[position].mGame ?: return@setOnItemClickListener
+                    navigation?.addFragment(DownloadGameFragment.newInstance(game))
                 }
                 else -> {
                 }
