@@ -110,6 +110,7 @@ class ChiTietBaiVietVideoScreen private constructor(
         val content = article?.mContent
         articleContentWebView?.loadData(getHtmlData(content), "text/html", "UTF-8")
         articleSapoTextView?.text = article?.mSapo
+        totalPointTextView?.text = "-"
         articleTitleTextView?.text = mArticle?.mTitle
         articleCreateTimeTextView?.text = mArticle?.mCreatedDate
         articleTypeTextView?.text = mArticle?.mCategory?.mCategoryName

@@ -126,6 +126,7 @@ class ChiTietBaiVietTinGameScreen private constructor(
 
         val article = mWrapArticle?.mArticle
         val content = article?.mContent
+        totalPointTextView?.text = "-"
         articleContentWebView?.loadData(getHtmlData(content), "text/html", "UTF-8")
         articleTitleTextView?.text = mArticle?.mTitle
         articleCreateTimeTextView?.text = mArticle?.mCreatedDate
