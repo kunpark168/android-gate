@@ -241,4 +241,16 @@ interface SocialService {
     fun report(@Query("id") id: Long,
                @Query("type") type: Int,
                @Query("note") note: String): LiveData<ApiResponse<RestResponse<Base>>>
+
+    // --> Search
+    @GET("social/search-game")
+    fun searchGame(@Query("key") key: String?,
+                   @Query("page") page: Int,
+                   @Query("limit") limit: Int): LiveData<ApiResponse<RestResponse<Gamev2>>>
+
+    @GET("user/list-user")
+    fun searchUser(@Query("key") key: String?,
+                   @Query("page") page: Int,
+                   @Query("limit") limit: Int): LiveData<ApiResponse<RestResponse<Gamev2>>>
+
 }

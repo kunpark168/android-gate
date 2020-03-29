@@ -46,10 +46,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/csSearch"
         android:layout_width="match_parent"
         android:layout_height="@dimen/search_view_height"
-        android:layout_marginStart="@dimen/layout_margin_8dp"
-        android:layout_marginTop="@dimen/layout_margin_4dp"
-        android:layout_marginEnd="@dimen/layout_margin_8dp"
-        android:layout_marginBottom="@dimen/layout_margin_4dp">
+        android:layout_margin="@dimen/dp12">
 
         <EditText
             android:id="@+id/edtSearch"

@@ -91,6 +91,7 @@ class NewFeedScreen : DaggerNavigationFragment(R.layout.new_feed_screen), MoreDi
     private val mTopViewModel: BackgroundViewModel by viewModels({requireActivity()},{vmFactory})
     private var mCurrentPost = -1
     private var mNewFeedHeaderView: NewFeedHeaderView? = null
+    private var mSearchHeaderView: SearchHeaderView? = null
 
     @Inject lateinit var mAdapter : PostAdapter
     @Inject @field:Named("avatar") lateinit var avatarOptions: RequestOptions
@@ -172,7 +173,9 @@ class NewFeedScreen : DaggerNavigationFragment(R.layout.new_feed_screen), MoreDi
 
     private fun initCommentRecyclerView() {
         mNewFeedHeaderView = NewFeedHeaderView(context)
-        mAdapter.addHeaderView(SearchHeaderView(context))
+        mSearchHeaderView = SearchHeaderView(context)
+        mSearchHeaderView?.initialize(navigation)
+        mAdapter.addHeaderView(mSearchHeaderView)
         mNewFeedHeaderView?.initialize(navigation, bannerOptions)
         mAdapter.addHeaderView(mNewFeedHeaderView)
         mAdapter.setLoadMoreView(CustomLoadMoreView())
