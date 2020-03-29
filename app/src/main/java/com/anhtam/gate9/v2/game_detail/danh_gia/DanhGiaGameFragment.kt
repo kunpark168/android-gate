@@ -11,12 +11,7 @@ import com.anhtam.gate9.vo.model.Category
 import kotlinx.android.synthetic.main.danh_gia_game_header_view.view.*
 import of.bum.network.helper.RestResponse
 
-class DanhGiaGameFragment : AbstractTabGameFragment<Rating, RatingGameAdapter, DanhGiaViewModel>(), FragmentResultListener{
-    override fun onFragmentResult(args: Bundle) {
-        mViewModel.loadData(refresh = true)
-    }
-
-
+class DanhGiaGameFragment : AbstractTabGameFragment<Rating, RatingGameAdapter, DanhGiaViewModel>(){
     override fun initViewModel(id: Int) {
         mViewModel.initialize(id)
     }
@@ -29,8 +24,8 @@ class DanhGiaGameFragment : AbstractTabGameFragment<Rating, RatingGameAdapter, D
     override fun setUpAdapter() {
         super.setUpAdapter()
         mHeaderView = DanhGiaGameHeaderView(context)
-        mHeaderView.navigateToRatingFragment{
-            navigation?.addFragment(RatingFragment.newInstance(mGameId, isUser = false, rating = it ))
+        mHeaderView.navigateToRatingFragment{ rating, content ->
+            navigation?.addFragment(RatingFragment.newInstance(mGameId, isUser = false, rating = rating , content = content, callback = Runnable { mViewModel.loadData(refresh = true) }))
         }
         mAdapter.addHeaderView(mHeaderView)
     }
@@ -43,7 +38,11 @@ class DanhGiaGameFragment : AbstractTabGameFragment<Rating, RatingGameAdapter, D
         val point3 = rate?.get("point3") as? Double ?: 0.0
         val point4 = rate?.get("point4") as? Double ?: 0.0
         val point5 = rate?.get("point5") as? Double ?: 0.0
-        mHeaderView.ratingComponent?.ratingInfo(Category.Member)
+
+        val userRating = response?.mMeta?.get("urate") as? Map<String, Any>
+        val point = userRating?.get("point") as? Double ?: 0.0
+        val content = userRating?.get("content") as? String
+        mHeaderView.ratingComponent?.ratingInfo(Category.Member, point, content)
         mHeaderView.ratingComponent?.initView(arrayOf(point1, point2, point3, point4, point5))
     }
 
