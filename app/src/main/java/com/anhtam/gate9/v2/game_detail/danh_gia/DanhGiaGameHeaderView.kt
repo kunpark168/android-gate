@@ -12,14 +12,14 @@ class DanhGiaGameHeaderView @JvmOverloads constructor(context: Context?, attrs: 
 
     init {
         View.inflate(context, R.layout.danh_gia_game_header_view, this)
-        ratingComponent?.onRatingButtonClicked {
-            mListener?.invoke(it)
+        ratingComponent?.onRatingButtonClicked { rating, content ->
+            mListener?.invoke(rating, content)
         }
     }
 
-    private var mListener: ((Float)->Unit)? = null
+    private var mListener: ((Float, String?)->Unit)? = null
 
-    fun navigateToRatingFragment(listener: (Float)-> Unit) {
+    fun navigateToRatingFragment(listener: (Float, String?)-> Unit) {
         mListener = listener
     }
 

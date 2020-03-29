@@ -36,7 +36,7 @@ abstract class CommonDiscussionFragment<T, A: BaseQuickAdapter<T, BaseViewHolder
     open fun onResponseSuccess(data: RestResponse<*>?){}
     abstract val colorTextTab: Int
     abstract val tabTitle: List<Int>
-    private val tabAmount = mutableListOf<Int>()
+    protected val tabAmount = mutableListOf<Int>()
     open fun configTabLayout(){
         tabLayout.apply {
             repeat(tabTitle.size) {

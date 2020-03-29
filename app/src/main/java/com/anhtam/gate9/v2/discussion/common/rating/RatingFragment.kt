@@ -10,13 +10,10 @@ import com.anhtam.gate9.v2.discussion.common.CommonDiscussionFragment
 import com.anhtam.gate9.v2.shared.RatingComponent
 import com.anhtam.gate9.vo.Rating
 import com.anhtam.gate9.vo.model.Category
+import kotlinx.android.synthetic.main.fragment_rating.*
 import of.bum.network.helper.RestResponse
 
-class RatingFragment: CommonDiscussionFragment<Rating, RatingAdapter, RatingViewModel>(),FragmentResultListener {
-
-    override fun onFragmentResult(args: Bundle) {
-        loadData()
-    }
+class RatingFragment: CommonDiscussionFragment<Rating, RatingAdapter, RatingViewModel>() {
 
     private var mUserId: Int = 0
     private var mType = Category.Member
@@ -45,8 +42,8 @@ class RatingFragment: CommonDiscussionFragment<Rating, RatingAdapter, RatingView
         super.initView()
         mRatingView = RatingComponent(context)
         mAdapter.setHeaderView(mRatingView)
-        mRatingView?.onRatingButtonClicked() {
-            navigation?.addFragment(com.anhtam.gate9.v2.danh_gia.RatingFragment.newInstance(mUserId, isUser = true, rating = it))
+        mRatingView?.onRatingButtonClicked{ rating, content ->
+            navigation?.addFragment(com.anhtam.gate9.v2.danh_gia.RatingFragment.newInstance(mUserId, isUser = true, rating = rating, content = content, callback = Runnable { tabAmount.clear(); loadData() }))
         }
     }
 
@@ -58,7 +55,11 @@ class RatingFragment: CommonDiscussionFragment<Rating, RatingAdapter, RatingView
         val point3 = rate?.get("point3") as? Double ?: 0.0
         val point4 = rate?.get("point4") as? Double ?: 0.0
         val point5 = rate?.get("point5") as? Double ?: 0.0
-        mRatingView?.ratingInfo(mType)
+
+        val userRating = data?.mMeta?.get("urate") as? Map<String, Any>
+        val point = userRating?.get("point") as? Double ?: 0.0
+        val content = userRating?.get("content") as? String
+        mRatingView?.ratingInfo(mType, point, content)
         mRatingView?.initView(arrayOf(point1, point2, point3, point4, point5))
     }
 

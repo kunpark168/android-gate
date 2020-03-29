@@ -19,9 +19,12 @@ class RatingFragment : DaggerNavigationFragment(R.layout.rating_fragment) {
     private var mGameId: Int? = null
     private var mUserId: Int? = null
     private var mRating: Float = 0.0f
+    private var mContent: String? = null
+    private var mIsUpdate = false
+    private var callback: Runnable? = null
 
     companion object {
-        fun newInstance(id: Int, isUser: Boolean = true, rating: Float): RatingFragment {
+        fun newInstance(id: Int, isUser: Boolean = true, rating: Float, content: String?, callback: Runnable): RatingFragment {
             val fragment = RatingFragment()
             if (isUser) {
                 fragment.mUserId = id
@@ -29,6 +32,9 @@ class RatingFragment : DaggerNavigationFragment(R.layout.rating_fragment) {
                 fragment.mGameId = id
             }
             fragment.mRating = rating
+            fragment.mContent = content
+            fragment.mIsUpdate = rating != 0.0f && !content.isNullOrEmpty()
+            fragment.callback = callback
             return fragment
         }
     }
@@ -36,6 +42,7 @@ class RatingFragment : DaggerNavigationFragment(R.layout.rating_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         rtReview?.rating = mRating
+        edtPostContent?.setText(mContent)
         initEvent()
     }
 
@@ -56,6 +63,7 @@ class RatingFragment : DaggerNavigationFragment(R.layout.rating_fragment) {
                     hideProgress()
                     if (response.isSuccessful && response.code() == 200) {
                         navigation?.returnResult(Bundle())
+                        callback?.run()
                     }
                 }
             })

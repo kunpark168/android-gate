@@ -19,7 +19,7 @@ class RatingComponent @JvmOverloads constructor(
         arrayOf(oneStarProgress, twoStarProgress, threeStarProgress, fourStarProgress, fiveStarProgress)
     }
 
-    private var mListener: ((Float)->Unit)? = null
+    private var mListener: ((Float, String?)->Unit)? = null
 
     init {
         View.inflate(context, R.layout.rating_view_header, this)
@@ -34,14 +34,18 @@ class RatingComponent @JvmOverloads constructor(
             }
         }
         ratingButton?.setOnClickListener {
-            mListener?.invoke(0.0f)
+            val rating = rtReview.rating
+            val content = descriptionTextView?.text?.toString()
+            mListener?.invoke(rating, content)
         }
-        rtReview?.setOnRatingBarChangeListener { _, rating, _ ->
-            mListener?.invoke(rating)
+        rtReview?.setOnClickListener {
+            val rating = rtReview.rating
+            val content = descriptionTextView?.text?.toString()
+            mListener?.invoke(rating, content)
         }
     }
 
-    fun onRatingButtonClicked(listener: (Float)-> Unit) {
+    fun onRatingButtonClicked(listener: (Float, String?)-> Unit) {
         mListener = listener
     }
 
@@ -71,11 +75,19 @@ class RatingComponent @JvmOverloads constructor(
         ratingBar?.rating = arg.toFloat()
     }
 
-    fun ratingInfo(mType: Category) {
-        when (mType) {
-            Category.Member -> descriptionTextView?.text = "Bạn viết bài rất hay!"
-            Category.Publisher -> descriptionTextView?.text = resources?.getString(R.string.ban_nghi_gi_ve_nph_nay) ?: ""
+    fun ratingInfo(mType: Category, point: Double, content: String?) {
+        descriptionTextView?.text = content ?: when (mType) {
+            Category.Member -> "Bạn viết bài rất hay!"
+            Category.Publisher -> resources?.getString(R.string.ban_nghi_gi_ve_nph_nay) ?: ""
         }
-
+        rtReview?.rating = point.toFloat()
+        when (point.toInt()) {
+            in 0..1 -> {
+                tvStatusRating?.text = "Poor"
+            }
+            else -> {
+                tvStatusRating?.text = "Good"
+            }
+        }
     }
 }
