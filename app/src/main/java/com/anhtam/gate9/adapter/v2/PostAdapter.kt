@@ -7,21 +7,11 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anhtam.domain.v2.Post
-import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.navigation.Navigation
-import com.anhtam.gate9.restful.BackgroundTasks
-import com.anhtam.gate9.share.view.MoreDialog
-import com.anhtam.gate9.storage.StorageManager
 import com.anhtam.gate9.utils.convertInt
-import com.anhtam.gate9.v2.auth.login.LoginScreen
-import com.anhtam.gate9.v2.game_detail.DetailGameFragment
-import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
-import com.anhtam.gate9.v2.post_detail.DetailPostScreen
-import com.anhtam.gate9.v2.report.post.ReportPostActivity
-import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 import com.anhtam.gate9.vo.Reaction
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -37,58 +27,6 @@ class PostAdapter @Inject constructor(
         @Named("avatar") val avatarOptions: RequestOptions,
         @Named("banner") val bannerOptions: RequestOptions)
     : BaseQuickAdapter<Post, BaseViewHolder>(R.layout.shared_post_item_layout, ArrayList()) {
-
-    init {
-        setOnItemChildClickListener { _, view, position ->
-            when(view.id){
-                R.id.readMoreTextView, R.id.contentTextView, R.id.commentImageView -> {
-                    val post = data[position]
-                    navigateToPostDetail(post){
-                        changeReaction(it, position)
-                    }
-                }
-                R.id.userNameTextView, R.id.avatarImageView -> {
-                    val user = data[position].user ?: data[position].createdUser ?: return@setOnItemChildClickListener
-                    navigateToMemberDiscussion(user)
-                }
-                R.id.gameImageView, R.id.titleGameTextView -> {
-                    val game = data[position].game ?: return@setOnItemChildClickListener
-                    navigateToGameDiscussion(game)
-                }
-                R.id.moreImageView -> {
-                    val mMoreDialog = MoreDialog(mContext, object : MoreDialog.IMore {
-                        override fun delete() {
-
-                        }
-
-                        override fun update() {
-
-                        }
-
-                        override fun onReport() {
-                            navigation.addFragment(ReportPostActivity.newInstance())
-                        }
-                    })
-                    mMoreDialog.idPost = data[position].commentId?.toString()
-                    mMoreDialog.show()
-                }
-                R.id.followGameTextView -> {
-                    if (checkLogin()) {
-                        BackgroundTasks.postFollowGame(data[position].game?.gameId ?: return@setOnItemChildClickListener)
-                        if(view.followGameTextView?.text == mContext.getString(R.string.follow)) {
-                            setFollowing(view.followGameTextView)
-                            //sending request
-                        } else {
-                            setFollow(view.followGameTextView)
-                            //sending request
-                        }
-                    } else {
-                        navigation.addFragment(LoginScreen.newInstance(false))
-                    }
-                }
-            }
-        }
-    }
 
     override fun convert(helper: BaseViewHolder?, item: Post?) {
         val unwrapPost = item ?: return
@@ -179,32 +117,6 @@ class PostAdapter @Inject constructor(
                 .addOnClickListener(R.id.followGameTextView)
     }
 
-    private fun checkLogin() : Boolean {
-        val accessToken = StorageManager.getAccessToken()
-        return accessToken.isNotEmpty()
-    }
-
-    private fun navigateToMemberDiscussion(user: User) {
-        val roleId = user.mRoleId ?: return
-        val id = user.mId ?: return
-        if (roleId != 5){
-            navigation.addFragment(DetailUserFragment.newInstance(id))
-        } else {
-            navigation.addFragment(DetailNPHFragment.newInstance(id))
-        }
-    }
-
-    private fun navigateToPostDetail(post: Post, listener: (Reaction)->Unit) {
-        val id = post.commentId ?: return
-        navigation.addFragment(DetailPostScreen.newInstance(id, DetailPostScreen.Detail.POST, listener), tag = Config.DETAIL_POST_FRAGMENT_TAG)
-    }
-
-    private fun navigateToGameDiscussion(game: Game){
-        val id = game.gameId ?: return
-        navigation.addFragment(DetailGameFragment.newInstance(id))
-    }
-
-
     private fun setFollow(tvFollowGame: TextView) {
         tvFollowGame.text = mContext.getString(R.string.follow)
         tvFollowGame.setBackgroundResource(R.drawable.bg_follow)
@@ -215,36 +127,6 @@ class PostAdapter @Inject constructor(
         tvFollowGame.text = mContext.getString(R.string.following)
         tvFollowGame.setBackgroundResource(R.drawable.bg_following)
         tvFollowGame.setTextColor(ContextCompat.getColor(mContext, R.color.text_color_blue))
-    }
-
-    private fun changeReaction(react: Reaction, position: Int){
-        val post = data[position]
-        val preReact = Reaction.react(data[position].like?.convertInt() ?: 0)
-        post.like = Reaction.value(react).toString()
-        // count
-        when(preReact){
-            Reaction.Love -> {
-                post.totalLove = (post.totalLove ?: 0) - 1
-            }
-            Reaction.Like -> {
-                post.totalLike = (post.totalLike ?: 0) - 1
-            }
-            Reaction.Dislike -> {
-                post.totalDislike = (post.totalDislike ?: 0) - 1
-            }
-        }
-        when(react){
-            Reaction.Love -> {
-                post.totalLove = (post.totalLove ?: 0) + 1
-            }
-            Reaction.Like -> {
-                post.totalLike = (post.totalLike ?: 0) + 1
-            }
-            Reaction.Dislike -> {
-                post.totalDislike = (post.totalDislike ?: 0) + 1
-            }
-        }
-        notifyDataSetChanged()
     }
 
     private fun initPhoto(photo: String?, rv: RecyclerView, user: User){

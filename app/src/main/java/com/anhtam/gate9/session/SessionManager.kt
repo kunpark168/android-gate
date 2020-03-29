@@ -29,6 +29,7 @@ class SessionManager @Inject constructor(
     val cachedAccessToken: MutableLiveData<AuthResource<String>>
         get() = mAccessToken
 
+
     fun initialize(){
         mAccessToken.value = AuthResource.loading(null)
         val cachedAccessToken = StorageManager.getAccessToken()

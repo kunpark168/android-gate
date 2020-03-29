@@ -116,7 +116,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(getString(R.string.title_notification_comment))
                 .setContentText(content.toString())
-                .setAutoCancel(false)
+                .setAutoCancel(true)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setNumber(3)
                 .setContentIntent(pendingIntent)

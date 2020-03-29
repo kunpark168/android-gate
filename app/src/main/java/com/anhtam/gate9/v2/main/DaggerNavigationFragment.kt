@@ -2,22 +2,20 @@ package com.anhtam.gate9.v2.main
 
 import android.content.Context
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
+import com.afollestad.materialdialogs.MaterialDialog
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.fcm.FCMService
 import com.anhtam.gate9.navigation.NavigationFragment
 import com.anhtam.gate9.session.SessionManager
-import com.anhtam.gate9.utils.DialogProgressUtils
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.viewmodel.ViewModelProviderFactory
 import com.bumptech.glide.Glide
@@ -40,7 +38,7 @@ abstract class DaggerNavigationFragment constructor(
     @Inject lateinit var vmFactory: ViewModelProviderFactory
     @Inject lateinit var mSessionManager: SessionManager
 
-    private var mProgressDialog: DialogProgressUtils? = null
+    private var mProgressDialog: MaterialDialog? = null
     private var mAvatar: String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,6 +50,7 @@ abstract class DaggerNavigationFragment constructor(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initToolbar(view)
+        initProgressDialog()
         observer()
     }
 
@@ -70,6 +69,18 @@ abstract class DaggerNavigationFragment constructor(
         })
     }
 
+    private fun initProgressDialog() {
+        mProgressDialog = this.context?.let {
+            MaterialDialog.Builder(it)
+                    .content(getString(R.string.please_wait))
+                    .progress(true, 0)
+                    .widgetColorRes(R.color.colorPrimary)
+                    .canceledOnTouchOutside(false)
+                    .build()
+        }
+    }
+
+
     private fun initToolbar(view: View){
         menuRes()?.run {
             setHasOptionsMenu(true)
@@ -80,24 +91,9 @@ abstract class DaggerNavigationFragment constructor(
         }
     }
 
-    fun showProgress() {
-        mProgressDialog = DialogProgressUtils(context, false)
-        mProgressDialog?.setOnCancelListener { mProgressDialog = null }
+    fun showProgress(content: String = getString(R.string.please_wait)) {
+        mProgressDialog?.setContent(content)
         mProgressDialog?.show()
-
-        object : CountDownTimer(10000, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-
-            }
-
-            override fun onFinish() {
-                if(mProgressDialog != null && mProgressDialog?.isShowing == true) {
-                    mProgressDialog?.cancel()
-                    Toast.makeText(context, resources.getString(R.string.unable_connect_server), Toast.LENGTH_SHORT).show()
-                }
-            }
-
-        }.start()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -115,9 +111,8 @@ abstract class DaggerNavigationFragment constructor(
     }
 
     fun hideProgress() {
-        if (mProgressDialog != null && mProgressDialog?.isShowing == true) {
-            mProgressDialog?.cancel()
-        }
+        if(isDetached) return
+        mProgressDialog?.dismiss()
     }
 
     private fun setSupportActionBar(toolbar: Toolbar) {

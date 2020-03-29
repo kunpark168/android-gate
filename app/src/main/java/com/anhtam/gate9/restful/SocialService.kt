@@ -166,19 +166,6 @@ interface SocialService {
             @Query("page") page: Int,
             @Query("limit") limit: Int = 40): LiveData<ApiResponse<RestResponse<List<Post>>>>
 
-    /*
-     *  POST
-     *  - create
-     *  - update
-     *  - delete
-     */
-
-    @DELETE("social/delete-post-forum")
-    fun delete(@Query("commentId") id: Int): LiveData<ApiResponse<RestResponse<Base>>>
-
-    @POST("social/update-post-forum")
-    fun update()
-
     @GET("user/list-user")
     fun listUser(@Query("role") role: Int,
                  @Query("page") page: Int,
@@ -241,4 +228,17 @@ interface SocialService {
     // --> Notification
     @GET("social/get-notification-list")
     fun getNotificationList(@Query("page") page: Int, @Query("limit") limit: Int) : LiveData<ApiResponse<RestResponse<List<Notification>>>>
+
+    // --> Post
+    // DELETE
+    @DELETE("social/delete-post-forum")
+    fun deletePost(@Query("commentId") id: Long): LiveData<ApiResponse<RestResponse<Base>>>
+
+    @POST("social/update-post-forum")
+    fun update()
+
+    @POST("social/post-report")
+    fun report(@Query("id") id: Long,
+               @Query("type") type: Int,
+               @Query("note") note: String): LiveData<ApiResponse<RestResponse<Base>>>
 }
