@@ -8,6 +8,9 @@ interface MediaService {
 
 
     @POST("social/post-forum")
+    fun createPostForum(@Body params: @JvmSuppressWildcards Map<String, Any?>): Call<ResponseBody>
+
+    @POST("social/update-post-forum")
     fun updatePostForum(@Body params: @JvmSuppressWildcards Map<String, Any?>): Call<ResponseBody>
 
     @POST("social/post-rate")

@@ -176,4 +176,14 @@ class SocialRepository @Inject constructor(
     fun getNotificationList(page: Int, limit: Int = DEFAULT_LIMIT_10) = object: Lv2FetchResource<List<Notification>>() {
         override fun createCall() = service.getNotificationList(page, limit)
     }.asLiveData()
+
+    // --> Post
+    // DELETE
+    fun deletePost(id: Long) = object: Lv2FetchResource<Base>(){
+        override fun createCall() = service.deletePost(id)
+    }.asLiveData()
+
+    fun report(id: Long, type: Int, note: String) = object: Lv2FetchResource<Base>(){
+        override fun createCall() = service.report(id, type, note)
+    }.asLiveData()
 }

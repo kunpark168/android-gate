@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class NewFeedViewModel @Inject constructor(
         val repository: SocialRepository) : PagingViewModel<Post>() {
-    override fun fetchData() = repository.getListingPost(mPage, 10)
+    override fun fetchData() = repository.getListingPost(mPage, 5)
 
 
     fun loadFirstPage(tab: Int){

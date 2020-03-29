@@ -78,6 +78,10 @@ dependencies {
     implementation 'com.jakewharton.rxbinding:rxbinding:0.3.0'
     implementation 'com.squareup.phrase:phrase:1.1.0'
 
+    def material_dialog_version = '0.9.6.0'
+    implementation "com.afollestad.material-dialogs:core:$material_dialog_version"
+    implementation "com.afollestad.material-dialogs:commons:$material_dialog_version"
+
     //UI
     implementation 'me.relex:circleindicator:2.1.4'
 

@@ -5,15 +5,13 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import com.anhtam.domain.Base
 import com.anhtam.domain.v2.Banner
-import com.anhtam.domain.v2.Gamev1
 import com.anhtam.domain.v2.Gamev2
 import com.anhtam.gate9.repository.SocialRepository
-import of.bum.network.FetchBoundResource
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 
 class BackgroundViewModel @Inject constructor(
-        private val repository: SocialRepository
+        private val repos: SocialRepository
 
 ): ViewModel(){
 
@@ -31,15 +29,19 @@ class BackgroundViewModel @Inject constructor(
     }
 
     fun getBanner(){
-        _banners.addSource(repository.getBanners()){
+        _banners.addSource(repos.getBanners()){
             _banners.value = it
         }
     }
 
     fun getGames(){
-        _games.addSource(repository.getGameNominate()){
+        _games.addSource(repos.getGameNominate()){
             _games.value = it
         }
+    }
+
+    fun delete(id: Long): LiveData<Resource<Base>> {
+        return repos.deletePost(id)
     }
 
 }

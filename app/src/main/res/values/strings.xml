@@ -331,4 +331,5 @@
     <string name="chanel_id_notification">9Gate Chanel</string>
     <string name="title_notification_comment">Bài viết của bạn có 1 comment </string>
     <string name="point_phrase">{point} Point</string>
+    <string name="please_wait">Please Wait</string>
 </resources>

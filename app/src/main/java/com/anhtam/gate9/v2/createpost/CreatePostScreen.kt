@@ -3,6 +3,8 @@ package com.anhtam.gate9.v2.createpost
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
+import com.anhtam.domain.v2.Post
 import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.v2.ChooseGalleryAdapter
@@ -23,7 +25,8 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class CreatePostScreen(
-        private val mGame: Game?
+        private val mGame: Game?,
+        private val mPost: Post?
 ) : AbstractGalleryFragment(R.layout.create_post_screen) {
 
     @Inject lateinit var mediaService: MediaService
@@ -32,7 +35,7 @@ class CreatePostScreen(
     private var mIsFollowing = false
 
     companion object {
-        fun newInstance(game: Game? = null) = CreatePostScreen(game)
+        fun newInstance(game: Game? = null, post: Post? = null) = CreatePostScreen(game, post)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,29 +52,35 @@ class CreatePostScreen(
             }
         }
         imageRecyclerView?.adapter = mAdapter
-        if (mGame != null){
-            mIsFollowing = mGame.follow ?: false
+        val game = mGame ?: mPost?.game
+        if (game != null){
+            mIsFollowing = game.follow ?: false
             gameLayout?.visibility = View.VISIBLE
 
             Glide.with(this)
-                    .load(mGame.avatar?.toImage())
+                    .load(game.avatar?.toImage())
                     .apply(bannerOptions)
                     .into(imgNewGame)
-            tvTitle?.text = mGame.name
+            tvTitle?.text = game.name
             val contentStr = Phrase.from(getString(R.string.follower_amount_and_post_amount))
-                    .put("follower", mGame.follower?.toString() ?: "0")
-                    .put("post", mGame.post?.toString() ?: "0")
+                    .put("follower", game.follower?.toString() ?: "0")
+                    .put("post", game.post?.toString() ?: "0")
                     .format()
             tvContentGame?.text = contentStr
             onUpdateFollow()
             tvFollowGame?.setOnClickListener {
-                val id = mGame.gameId ?: return@setOnClickListener
+                val id = game.gameId ?: return@setOnClickListener
                 if (mSessionManager.checkLogin(isDirect = true)){
                     mIsFollowing = !mIsFollowing
                     onUpdateFollow()
                     BackgroundTasks.postFollowGame(id)
                 }
             }
+        }
+
+        mPost?.let {
+            edtPostContent?.setText(mPost.content)
+            initPhoto(mPost.photo, imageRecyclerView)
         }
     }
 
@@ -107,7 +116,7 @@ class CreatePostScreen(
         }
         tvPost?.setOnClickListener {
             hideKeyboard()
-            postForum()
+            if (mPost == null) postForum() else updateForum()
         }
     }
 
@@ -130,6 +139,28 @@ class CreatePostScreen(
         params["photos"] = mAdapter.data
         params["title"] = "Tao new post"
 
+        mediaService.createPostForum(params).enqueue(object: Callback<ResponseBody>{
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Timber.d("")
+                hideProgress()
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                hideProgress()
+                if (response.isSuccessful && response.code() == 200) {
+                    navigation?.returnResult(Bundle())
+                }
+            }
+        })
+    }
+
+    private fun updateForum() {
+        val params = HashMap<String, Any>()
+        params["content"] = edtPostContent?.text?.toString() ?: ""
+        params["commentId"] = mPost?.commentId ?: 0
+        params["photos"] = mAdapter.data
+        params["title"] = "Update post"
+
         mediaService.updatePostForum(params).enqueue(object: Callback<ResponseBody>{
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Timber.d("")
@@ -143,5 +174,21 @@ class CreatePostScreen(
                 }
             }
         })
+    }
+
+    private fun initPhoto(photo: String?, rv: RecyclerView){
+        if(photo.isNullOrEmpty() || photo.length == 2){//[]
+            return
+        }
+        rv.visibility = View.VISIBLE
+//        val isFormat = "[[.+]]".toRegex().matches(photos) TODO Regex
+        val isFormat = (photo.startsWith('[') && photo.endsWith(']'))
+        val stringConcat = if (!isFormat) {
+            photo
+        } else {
+            photo.substring(1, photo.length - 1)
+        }
+        val photos = stringConcat.replace("\\","").replace("\"", "").split(',').map { it.trim().toImage() }
+        mAdapter.setNewData(photos)
     }
 }

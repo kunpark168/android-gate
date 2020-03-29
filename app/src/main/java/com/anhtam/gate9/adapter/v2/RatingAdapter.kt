@@ -73,20 +73,7 @@ class RatingAdapter @Inject constructor(
                     navigateToGameDiscussion(data[position].mGame ?: return@setOnItemChildClickListener)
                 }
                 R.id.moreImageView -> {
-                    val mMoreDialog = MoreDialog(mContext, object : MoreDialog.IMore {
-                        override fun delete() {
-
-                        }
-
-                        override fun update() {
-
-                        }
-
-                        override fun onReport() {
-                            navigation.addFragment(ReportPostActivity.newInstance())
-                        }
-                    })
-                    mMoreDialog.idPost = data[position].mCommentId?.toString()
+                    val mMoreDialog = MoreDialog.newInstance(mContext)
                     mMoreDialog.show()
                 }
                 R.id.tvFollow -> {

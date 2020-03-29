@@ -15,6 +15,7 @@ import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietHinhAnhScree
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietTinGameScreen
 import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietVideoScreen
 import com.anhtam.gate9.v2.createimage.CreateImageScreen
+import com.anhtam.gate9.v2.createpost.CreatePostModule
 import com.anhtam.gate9.v2.createpost.CreatePostScreen
 import com.anhtam.gate9.v2.danh_gia.RatingFragment
 import com.anhtam.gate9.v2.discussion.UserDiscussionModule
@@ -68,7 +69,9 @@ import dagger.multibindings.IntoMap
 @Suppress("unused")
 abstract class FragmentBuildersModule {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(
+            modules = [CreatePostModule::class]
+    )
     abstract fun contributeCreatePostScreen(): CreatePostScreen
 
     @ContributesAndroidInjector

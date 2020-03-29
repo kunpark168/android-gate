@@ -107,7 +107,7 @@ class DetailPostScreen private constructor(
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.icReport -> {
-                navigation?.addFragment(ReportPostActivity.newInstance())
+                navigation?.addFragment(ReportPostActivity.newInstance(mPost?.commentId ?: return false))
             }
         }
         return super.onOptionsItemSelected(item)

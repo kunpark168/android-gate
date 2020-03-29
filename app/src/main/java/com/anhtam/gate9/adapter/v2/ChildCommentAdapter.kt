@@ -62,20 +62,7 @@ class ChildCommentAdapter @Inject constructor(
     }
 
     private fun showMoreDialog(comment: Post){
-        val mMoreDialog = MoreDialog(mContext, object : MoreDialog.IMore {
-            override fun delete() {
-
-            }
-
-            override fun update() {
-
-            }
-
-            override fun onReport() {
-                navigation.addFragment(ReportPostActivity.newInstance())
-            }
-        })
-        mMoreDialog.idPost = comment.commentId?.toString()
+        val mMoreDialog = MoreDialog.newInstance(mContext)
         mMoreDialog.show()
     }
 
