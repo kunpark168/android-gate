@@ -8,6 +8,8 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.components.custom.BadgeTabItem
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.search.SearchViewModel
+import com.anhtam.gate9.v2.search.game.GameSearchFragment
+import com.anhtam.gate9.v2.search.result.game.GameSearchResultFragment
 import kotlinx.android.synthetic.main.fragment_result_search.*
 
 /**
@@ -26,6 +28,7 @@ class ResultSearchFragment : DaggerNavigationFragment(R.layout.fragment_result_s
 
     private fun initView() {
         setUpRecyclerView()
+        childFragmentManager.beginTransaction().add(R.id.container, GameSearchResultFragment()).commit()
     }
 
     private fun observer() {

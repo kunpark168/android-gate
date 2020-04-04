@@ -55,8 +55,8 @@ class SearchScreen : DaggerNavigationFragment(R.layout.search_screen) {
 
     private fun initView() {
         childFragmentManager.beginTransaction().add(R.id.container, fragmentTemp).hide(fragmentTemp).commit()
-        childFragmentManager.beginTransaction().add(R.id.container, fragmentResultSearch).hide(fragmentResultSearch).commit()
-        childFragmentManager.beginTransaction().add(R.id.container, fragmentChartSearch).commit()
+        childFragmentManager.beginTransaction().add(R.id.container, fragmentResultSearch).commit()
+        childFragmentManager.beginTransaction().add(R.id.container, fragmentChartSearch).hide(fragmentChartSearch).commit()
     }
 
     companion object {

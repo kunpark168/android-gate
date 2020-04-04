@@ -186,4 +186,9 @@ class SocialRepository @Inject constructor(
     fun report(id: Long, type: Int, note: String) = object: Lv2FetchResource<Base>(){
         override fun createCall() = service.report(id, type, note)
     }.asLiveData()
+
+    // --> Search
+    fun searchGame(keyword: String, page: Int, limit: Int = DEFAULT_LIMIT_10) = object : Lv2FetchResource<List<Gamev2>>() {
+        override fun createCall() = service.searchGame(keyword, page, limit)
+    }.asLiveData()
 }
