@@ -40,6 +40,9 @@ class ChannelLetterFragment(private val mUser: User) : DaggerNavigationFragment(
     override fun menuRes() = R.menu.menu_search_avatar
 
     private fun initRv() {
+        mAdapter.setOnLoadMoreListener({
+            if (viewModel.mIsFilter) viewModel.loadMore() else viewModel.loadData()
+        }, rv)
         rv?.adapter = mAdapter
         rv?.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
     }
