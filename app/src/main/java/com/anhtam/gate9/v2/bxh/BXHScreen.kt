@@ -38,6 +38,7 @@ class BXHScreen(
     }
 
     private fun initUserView(){
+        showProgress()
         viewModel.setId(mRoleId)
         viewModel.loadData(refresh = true)
         val user = mSessionManager.cachedUser.value?.data ?: return
@@ -50,7 +51,7 @@ class BXHScreen(
                 .into(imgAvatar)
         // follow
         tvPoint?.text = user.mPoint?.toString() ?: "0"
-        tvRanking?.text = user.mRanking
+        tvRanking?.text = if(user.mRoleId == 5) "-" else user.mRanking
     }
 
 
@@ -60,6 +61,7 @@ class BXHScreen(
         viewModel.data.observe(viewLifecycleOwner, Observer {
             when(it) {
                 is Resource.Success -> {
+                    hideProgress()
                     val data = it.data
 
                     if (data.isNullOrEmpty()) {
@@ -98,7 +100,12 @@ class BXHScreen(
                 is Resource.Loading -> {
 
                 }
+                is Resource.Error -> {
+                    hideProgress()
+                    mAdapter.loadMoreFail()
+                }
                 else -> {
+
                     mAdapter.loadMoreFail()
                 }
             }

@@ -7,6 +7,7 @@ import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.utils.toImage
 import com.anhtam.gate9.v2.game_detail.DetailGameFragment
+import com.anhtam.gate9.v2.game_detail.download.DownloadGameFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -25,6 +26,13 @@ class GameQuickAdapter @Inject constructor(
         setOnItemClickListener { _, _, position ->
             val id = data[position].gameId ?: return@setOnItemClickListener
             navigation.addFragment(DetailGameFragment.newInstance(id))
+        }
+        setOnItemChildClickListener { _, view, position ->
+            when(view.id) {
+                R.id.tvDownload -> {
+                    navigation.addFragment(DownloadGameFragment.newInstance(data[position]))
+                }
+            }
         }
     }
 
@@ -53,7 +61,8 @@ class GameQuickAdapter @Inject constructor(
             tvCategoryGame?.text = Phrase.from(context?.getString(R.string.game_type_and_download))
                     .put("type", unwrappedGame.gameType?.name ?: "-")
                     .put("size", unwrappedGame.capacity?.plus("MB") ?: "0MB").format()
-            csRating?.init(unwrappedGame.point ?: "0", "-")
+            csRating?.init(unwrappedGame.mRating?.toString() ?: "0", unwrappedGame.mNumRating?.toString() ?: "0")
         }
+        helper.addOnClickListener(R.id.tvDownload)
     }
 }

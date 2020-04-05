@@ -39,7 +39,7 @@ class TempSearchFragment : DaggerNavigationFragment(R.layout.fragment_temp_searc
         rvRecent?.addItemDecoration(dividerItemDecoration)
         rvRecent?.adapter = mRecentAdapter
         rvRecent?.isNestedScrollingEnabled = false
-        mRecentAdapter.setNewData(games)
+//        mRecentAdapter.setNewData(games)
     }
 
     companion object {

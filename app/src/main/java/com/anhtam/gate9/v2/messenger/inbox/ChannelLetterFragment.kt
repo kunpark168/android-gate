@@ -114,12 +114,24 @@ class ChannelLetterFragment(private val mUser: User) : DaggerNavigationFragment(
                 shimmer?.stopShimmerAnimation()
                 shimmer?.visibility = View.GONE
                 rv?.visibility = View.VISIBLE
-                mAdapter.setNewData(it.data)
+                val data = it.data
+                if (data.isNullOrEmpty()) {
+                    mAdapter.loadMoreEnd()
+                } else {
+                    if (viewModel.mPage == 0) {
+                        mAdapter.setNewData(data)
+                    } else {
+                        mAdapter.addData(data)
+                    }
+                    mAdapter.loadMoreComplete()
+                }
+
             }
             (it is Resource.Error).then {
                 shimmer?.stopShimmerAnimation()
                 shimmer?.visibility = View.GONE
                 rv?.visibility = View.VISIBLE
+                mAdapter.loadMoreFail()
             }
         })
     }
