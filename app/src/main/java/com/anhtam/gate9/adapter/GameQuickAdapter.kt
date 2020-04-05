@@ -1,6 +1,7 @@
 package com.anhtam.gate9.adapter
 
 import android.view.View
+import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.gate9.R
 import com.anhtam.gate9.navigation.Navigation
@@ -18,19 +19,19 @@ import javax.inject.Inject
 class GameQuickAdapter @Inject constructor(
         private val navigation: Navigation
 ) :
-        BaseQuickAdapter<WrapGame, BaseViewHolder>(R.layout.shared_item_game_layout) {
+        BaseQuickAdapter<Game, BaseViewHolder>(R.layout.shared_item_game_layout) {
 
     init {
         setOnItemClickListener { _, _, position ->
-            val id = data[position].wrap.gameId ?: return@setOnItemClickListener
+            val id = data[position].gameId ?: return@setOnItemClickListener
             navigation.addFragment(DetailGameFragment.newInstance(id))
         }
     }
 
 
-    override fun convert(helper: BaseViewHolder?, item: WrapGame?) {
+    override fun convert(helper: BaseViewHolder?, item: Game?) {
         val unwrappedHolder = helper ?: return
-        val unwrappedGame = item?.wrap ?: return
+        val unwrappedGame = item ?: return
         unwrappedHolder.itemView.apply {
             tvTitle?.text = unwrappedGame.name
             Glide.with(mContext)
