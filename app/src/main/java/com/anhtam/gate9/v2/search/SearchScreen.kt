@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.anhtam.gate9.R
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.search.chart.ChartSearchFragment
@@ -13,6 +14,8 @@ import kotlinx.android.synthetic.main.search_screen.*
 
 
 class SearchScreen : DaggerNavigationFragment(R.layout.search_screen) {
+
+    private val mViewModel: SearchViewModel by viewModels { vmFactory }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,7 +38,15 @@ class SearchScreen : DaggerNavigationFragment(R.layout.search_screen) {
                 false
             }
         }
+        edtSearch?.setOnTouchListener { _, _ ->
+            show(fragmentTemp)
+            false
+        }
+    }
 
+    private fun show(fragment: Fragment) {
+        childFragmentManager.beginTransaction().hide(currentFragment).show(fragment).commit()
+        currentFragment = fragment
     }
 
     private fun search(content: String){
@@ -43,8 +54,8 @@ class SearchScreen : DaggerNavigationFragment(R.layout.search_screen) {
         if(content.isEmpty()){
             return
         } else {
-            childFragmentManager.beginTransaction().hide(currentFragment).show(fragmentResultSearch).commit()
-            currentFragment = fragmentTemp
+            mViewModel.mKey.value = content
+            show(fragmentResultSearch)
         }
     }
 
@@ -55,8 +66,8 @@ class SearchScreen : DaggerNavigationFragment(R.layout.search_screen) {
 
     private fun initView() {
         childFragmentManager.beginTransaction().add(R.id.container, fragmentTemp).hide(fragmentTemp).commit()
-        childFragmentManager.beginTransaction().add(R.id.container, fragmentResultSearch).commit()
-        childFragmentManager.beginTransaction().add(R.id.container, fragmentChartSearch).hide(fragmentChartSearch).commit()
+        childFragmentManager.beginTransaction().add(R.id.container, fragmentResultSearch).hide(fragmentResultSearch).commit()
+        childFragmentManager.beginTransaction().add(R.id.container, fragmentChartSearch).commit()
     }
 
     companion object {

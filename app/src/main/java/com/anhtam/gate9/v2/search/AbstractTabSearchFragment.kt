@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,13 +21,16 @@ import javax.inject.Inject
 
 abstract class AbstractTabSearchFragment<D, A: BaseQuickAdapter<D, BaseViewHolder>, VM: PagingViewModel<D>> : AbstractVisibleFragment(R.layout.shared_only_recycler_view_layout) {
     abstract val mViewModel: VM
+    private val searchViewModel: SearchViewModel by viewModels({requireParentFragment().requireParentFragment()}, {vmFactory})
     @Inject lateinit var mAdapter: A
     open fun onResponseSuccess(response: RestResponse<*>?){}
     open fun setUpAdapter(){}
+    abstract fun setKey(key: String)
     protected var mGameId: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mViewModel.loadData(refresh = true)
         initView()
         initEvent()
         observer()
@@ -64,6 +68,14 @@ abstract class AbstractTabSearchFragment<D, A: BaseQuickAdapter<D, BaseViewHolde
 
     private fun observer() {
         observerData()
+        observerKey()
+    }
+
+    private fun observerKey() {
+        searchViewModel.mKey.observe(viewLifecycleOwner, Observer {
+            setKey(it)
+            mViewModel.loadData(refresh = true)
+        })
     }
 
     private fun observerData(){
