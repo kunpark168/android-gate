@@ -3,6 +3,7 @@ package com.anhtam.gate9.v2
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import com.anhtam.domain.v2.Post
 import com.anhtam.gate9.R
 import com.anhtam.gate9.config.Config
@@ -42,6 +43,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
     }
 
     override fun onBackPressed() {
+        hideKeyboard()
         val visibleFragment = supportFragmentManager.fragments.lastOrNull() as? OnFragmentListener
         visibleFragment?.onBack()
         super.onBackPressed()
@@ -78,6 +80,15 @@ class MainActivity : DaggerAppCompatActivity(), NavigationProvider {
                     mNavigation.addFragment(DetailPostScreen.newInstance(postId, DetailPostScreen.Detail.POST, null))
 
             }
+        }
+    }
+
+
+    fun hideKeyboard() {
+        val view = currentFocus
+        if (view != null) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 }

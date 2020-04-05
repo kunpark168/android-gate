@@ -20,6 +20,8 @@ import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.main.home.HomeFragment
+import com.anhtam.gate9.v2.messenger.inbox.ChannelLetterFragment
+import com.anhtam.gate9.v2.messenger.inbox.CreateLetterFragment
 import com.anhtam.gate9.v2.report.user.ReportUserActivity
 import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import com.anhtam.gate9.vo.model.Category
@@ -44,6 +46,7 @@ class DetailUserFragment(private val mId: Int) : DaggerNavigationFragment(R.layo
     private var mCurrent: Int = 0
     @Inject @field:Named("banner") lateinit var bannerOption: RequestOptions
     private var mIsFollowing: Boolean = false
+    private var mUser: User? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -109,6 +112,9 @@ class DetailUserFragment(private val mId: Int) : DaggerNavigationFragment(R.layo
         tabNewFeed?.setOnClickListener {
             navigation?.newRootFragment(HomeFragment.newInstance())
         }
+        tabMessage?.setOnClickListener {
+            navigation?.addFragment(ChannelLetterFragment.newInstance(mUser ?: return@setOnClickListener))
+        }
     }
 
     private fun onUpdateFollow(){
@@ -165,6 +171,7 @@ class DetailUserFragment(private val mId: Int) : DaggerNavigationFragment(R.layo
             when(it){
                 is Resource.Success -> {
                     updateDetailNPH(it.data)
+                    mUser = it.data
                 }
                 is Resource.Error -> {
                     updateDetailNPH(null)

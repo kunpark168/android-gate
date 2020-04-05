@@ -19,6 +19,7 @@ import com.anhtam.gate9.v2.discussion.common.newfeed.NewFeedFragment
 import com.anhtam.gate9.v2.discussion.common.rating.RatingFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.main.home.HomeFragment
+import com.anhtam.gate9.v2.messenger.inbox.CreateLetterFragment
 import com.anhtam.gate9.v2.report.user.ReportUserActivity
 import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import com.anhtam.gate9.vo.model.Category
@@ -43,9 +44,11 @@ class DetailNPHFragment(private val mId: Int) : DaggerNavigationFragment(R.layou
     private var mCurrent: Int = 0
     @Inject @field:Named("banner") lateinit var bannerOption: RequestOptions
     private var mIsFollowing: Boolean = false
+    private var mUser: User? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showProgress()
         mViewModel.mUserId.value = mId
         initView()
         initEvents()
@@ -112,6 +115,9 @@ class DetailNPHFragment(private val mId: Int) : DaggerNavigationFragment(R.layou
         imgChart?.setOnClickListener {
             navigation?.addFragment(BXHScreen.newInstance(5))
         }
+        tabMessage?.setOnClickListener {
+            navigation?.addFragment(CreateLetterFragment.newInstance(mUser ?: return@setOnClickListener))
+        }
     }
 
     private fun onUpdateFollow(){
@@ -167,9 +173,12 @@ class DetailNPHFragment(private val mId: Int) : DaggerNavigationFragment(R.layou
         mViewModel.mUser.observe(viewLifecycleOwner, Observer {
             when(it){
                 is Resource.Success -> {
+                    hideProgress()
                     updateDetailNPH(it.data)
+                    mUser = it.data
                 }
                 is Resource.Error -> {
+                    hideProgress()
                     updateDetailNPH(null)
                 }
                 else -> {}
@@ -181,8 +190,9 @@ class DetailNPHFragment(private val mId: Int) : DaggerNavigationFragment(R.layou
         mIsFollowing = user?.mIsFollowing ?: false
         onUpdateFollow()
         // tab thong tin
+        val avatar =if (user?.mAvatarPath.isNullOrEmpty()) user?.mAvatar else user?.mAvatarPath
         Glide.with(this).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder))
-                .load(user?.mAvatar?.toImage())
+                .load(avatar?.toImage())
                 .into(imgAvatar)
         tvUserName?.text = user?.mName
 

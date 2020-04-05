@@ -8,6 +8,7 @@ import com.anhtam.domain.v2.wrap.WrapComments
 import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.domain.v2.wrap.WrapThaoLuan
 import com.anhtam.gate9.restful.entities.Notification
+import com.anhtam.gate9.vo.Letter
 import com.anhtam.gate9.vo.Rating
 import of.bum.network.helper.ApiResponse
 import of.bum.network.helper.RestResponse
@@ -259,4 +260,23 @@ interface SocialService {
                    @Query("page") page: Int,
                    @Query("limit") limit: Int): LiveData<ApiResponse<RestResponse<List<Article>>>>
 
+    @POST("user/letter-send")
+    fun createLetter(
+            @Query("userId") userId: Int,
+            @Query("content") content: String,
+            @Query("title") title: String): LiveData<ApiResponse<RestResponse<Letter>>>
+
+    @GET("user/letter-detail")
+    fun getLetterByUser(
+            @Query("userId") userId: Int): LiveData<ApiResponse<RestResponse<List<Letter>>>>
+
+    @GET("user/letter-list")
+    fun filterLetter(
+            @Query("keyword") keyword: String?,
+            @Query("start") startDate: String?,
+            @Query("end") endDate: String?,
+            @Query("type") type: Int,
+            @Query("page") page: Int,
+            @Query("limit") limit: Int
+    ): LiveData<ApiResponse<RestResponse<List<Letter>>>>
 }

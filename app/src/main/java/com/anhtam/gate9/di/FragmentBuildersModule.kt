@@ -31,11 +31,11 @@ import com.anhtam.gate9.v2.member.MemberFragment
 import com.anhtam.gate9.v2.member.MemberModule
 import com.anhtam.gate9.v2.member.all.MemberListFragment
 import com.anhtam.gate9.v2.member.all.MemberListModule
-import com.anhtam.gate9.v2.messenger.ChannelFragment
 import com.anhtam.gate9.v2.messenger.ChannelModule
 import com.anhtam.gate9.v2.messenger.chat.ChatFragment
 import com.anhtam.gate9.v2.messenger.chat.ChatModule
-import com.anhtam.gate9.v2.messenger.inbox.InboxFragment
+import com.anhtam.gate9.v2.messenger.inbox.ChannelLetterFragment
+import com.anhtam.gate9.v2.messenger.inbox.CreateLetterFragment
 import com.anhtam.gate9.v2.mxh_game.MXHGameModule
 import com.anhtam.gate9.v2.mxh_game.MXHGameScreen
 import com.anhtam.gate9.v2.mxh_gate.DuLieuModule
@@ -115,10 +115,10 @@ abstract class FragmentBuildersModule {
     @ContributesAndroidInjector(
             modules = [ChannelModule::class]
     )
-    abstract fun contributeMessengerFragment(): ChannelFragment
+    abstract fun contributeMessengerFragment(): ChannelLetterFragment
 
     @ContributesAndroidInjector
-    abstract fun contributeInboxFragment(): InboxFragment
+    abstract fun contributeInboxFragment(): CreateLetterFragment
 
     @ContributesAndroidInjector(
             modules = [ChatModule::class]

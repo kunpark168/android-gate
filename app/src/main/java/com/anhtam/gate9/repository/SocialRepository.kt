@@ -9,6 +9,7 @@ import com.anhtam.domain.v2.wrap.WrapGame
 import com.anhtam.domain.v2.wrap.WrapThaoLuan
 import com.anhtam.gate9.restful.SocialService
 import com.anhtam.gate9.restful.entities.Notification
+import com.anhtam.gate9.vo.Letter
 import com.anhtam.gate9.vo.Rating
 import of.bum.network.FetchBoundResource
 import of.bum.network.helper.Lv1FetchResource
@@ -198,5 +199,18 @@ class SocialRepository @Inject constructor(
 
     fun searchArticle(keyword: String, page: Int, limit: Int = DEFAULT_LIMIT_10) = object : Lv2FetchResource<List<Article>>() {
         override fun createCall() = service.searchArticle(keyword, page, limit)
+    }.asLiveData()
+
+    // --> Letter
+    fun createLetter(userId: Int, title: String, content: String) = object : Lv2FetchResource<Letter>() {
+        override fun createCall() = service.createLetter(userId, content, title)
+    }.asLiveData()
+
+    fun getLetterByUser(userId: Int) = object : Lv2FetchResource<List<Letter>>() {
+        override fun createCall() = service.getLetterByUser(userId)
+    }.asLiveData()
+
+    fun filterLetter(keyword: String = "", startDate: String = "", endData: String = "", type: Int, page: Int) = object : Lv2FetchResource<List<Letter>>() {
+        override fun createCall() = service.filterLetter(keyword, startDate, endData, type, page, DEFAULT_LIMIT_10)
     }.asLiveData()
 }
