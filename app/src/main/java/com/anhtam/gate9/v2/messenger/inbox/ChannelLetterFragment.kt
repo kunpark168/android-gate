@@ -11,6 +11,7 @@ import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.chat.ChannelAdapter
 import com.anhtam.gate9.navigation.FragmentResultListener
+import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.v2.lib.then
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.messenger.ChannelViewModel
@@ -40,8 +41,9 @@ class ChannelLetterFragment(private val mUser: User) : DaggerNavigationFragment(
     override fun menuRes() = R.menu.menu_search_avatar
 
     private fun initRv() {
+        mAdapter.setLoadMoreView(CustomLoadMoreView())
         mAdapter.setOnLoadMoreListener({
-            if (viewModel.mIsFilter) viewModel.loadMore() else viewModel.loadData()
+            if (viewModel.mIsFilter) viewModel.loadMore() else mAdapter.loadMoreEnd()
         }, rv)
         rv?.adapter = mAdapter
         rv?.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
