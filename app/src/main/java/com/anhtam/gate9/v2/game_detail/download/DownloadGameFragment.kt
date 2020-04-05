@@ -47,8 +47,9 @@ class DownloadGameFragment constructor(
         initElement(mGame.appleStore, appStoreTextView, appStoreRadioButton, 1)
         initElement(mGame.androidLink, apkTextView, apkRadioButton,2)
         initElement(mGame.iosLink, ipaTextView, ipaRadioButton,3)
-        initElement(mGame.windowPhoneLink, windowPhoneTextView, windowPhoneRadioButton,5)
-        initElement(mGame.pcLink, pcTextView, pcRadioButton,4)
+        initElement(mGame.windowPhoneLink, windowPhoneTextView, windowPhoneRadioButton,4)
+        initElement(mGame.pcLink, pcTextView, pcRadioButton,5)
+        initElement(mGame.homepage, homeTextView, homeRadioButton, 6)
         btDownload?.setOnClickListener { openLink() }
     }
 
@@ -59,6 +60,7 @@ class DownloadGameFragment constructor(
         ipaLayout?.setOnClickListener { eventElement(mGame.iosLink, ipaRadioButton, 3) }
         windowPhoneLayout?.setOnClickListener { eventElement(mGame.windowPhoneLink, windowPhoneRadioButton, 4) }
         pcLayout?.setOnClickListener { eventElement(mGame.pcLink, pcRadioButton, 5) }
+        homeLayout?.setOnClickListener { eventElement(mGame.homepage, homeRadioButton, 6) }
     }
 
     private fun eventElement(link: String?, imageView: ImageView, index: Int) {
@@ -70,6 +72,7 @@ class DownloadGameFragment constructor(
             3 -> Glide.with(this).load(R.drawable.ic_non_check).into(ipaRadioButton)
             4 -> Glide.with(this).load(R.drawable.ic_non_check).into(windowPhoneRadioButton)
             5 -> Glide.with(this).load(R.drawable.ic_non_check).into(pcRadioButton)
+            6 -> Glide.with(this).load(R.drawable.ic_non_check).into(homeRadioButton)
         }
         mCurrentRadioButton = index
         Glide.with(this).load(R.drawable.ic_checked_radio).into(imageView)
@@ -83,6 +86,7 @@ class DownloadGameFragment constructor(
             3 -> mGame.iosLink
             4 -> mGame.windowPhoneLink
             5 -> mGame.pcLink
+            6 -> mGame.homepage
             else -> null
         } ?: return
         val intent = Intent(Intent.ACTION_VIEW)

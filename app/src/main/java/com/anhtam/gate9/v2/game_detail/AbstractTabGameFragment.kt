@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anhtam.gate9.R
 import com.anhtam.gate9.share.view.CustomLoadMoreView
+import com.anhtam.gate9.v2.game_detail.du_lieu.GiftCodeHeaderView
 import com.anhtam.gate9.v2.newfeed.PagingViewModel
 import com.anhtam.gate9.v2.shared.views.AbstractVisibleFragment
 import com.chad.library.adapter.base.BaseQuickAdapter

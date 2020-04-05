@@ -338,9 +338,58 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+        <!--PC-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/homeLayout"
+            app:layout_constraintTop_toBottomOf="@+id/pcLayout"
+            android:layout_width="match_parent"
+            android:paddingStart="@dimen/padding_4dp"
+            android:paddingEnd="@dimen/padding_4dp"
+            android:layout_height="@dimen/dp50">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:padding="@dimen/dp_10"
+                app:layout_constraintStart_toStartOf="parent"
+                android:src="@drawable/ic_home_grey"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_marginStart="@dimen/dp60"
+                android:text="@string/home"
+                android:textColor="@color/colorText"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="@dimen/sp_13"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/homeRadioButton"
+                android:padding="@dimen/dp15"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:src="@drawable/ic_non_check"
+                android:layout_width="@dimen/dp45"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/homeTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center_vertical"
+                android:layout_marginEnd="@dimen/layout_margin_8dp"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="@dimen/sp_13"
+                android:text="@string/not_yet"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="gone"/>
+            <View
+                android:background="@color/colorGray"
+                android:alpha="0.3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            app:layout_constraintTop_toBottomOf="@+id/pcLayout"
+            app:layout_constraintTop_toBottomOf="@+id/homeLayout"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="@dimen/layout_margin_16dp"
             android:layout_width="match_parent"

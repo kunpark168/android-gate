@@ -332,4 +332,5 @@
     <string name="title_notification_comment">Bài viết của bạn có 1 comment </string>
     <string name="point_phrase">{point} Point</string>
     <string name="please_wait">Please Wait</string>
+    <string name="gift_code">Gift code</string>
 </resources>

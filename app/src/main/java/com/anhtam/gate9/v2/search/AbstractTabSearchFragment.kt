@@ -30,7 +30,6 @@ abstract class AbstractTabSearchFragment<D, A: BaseQuickAdapter<D, BaseViewHolde
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mViewModel.loadData(refresh = true)
         initView()
         initEvent()
         observer()
@@ -73,6 +72,8 @@ abstract class AbstractTabSearchFragment<D, A: BaseQuickAdapter<D, BaseViewHolde
 
     private fun observerKey() {
         searchViewModel.mKey.observe(viewLifecycleOwner, Observer {
+            mAdapter.setNewData(null)
+            showProgress()
             setKey(it)
             mViewModel.loadData(refresh = true)
         })
