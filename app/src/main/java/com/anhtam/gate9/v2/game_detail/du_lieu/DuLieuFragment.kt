@@ -12,7 +12,7 @@ class DuLieuFragment : AbstractTabGameFragment<Article, DuLieuGameAdapter, DuLie
         mViewModel.initialize(id)
     }
 
-    private var mHeader: GiftCodeHeaderView? = null
+    private lateinit var mHeader: GiftCodeHeaderView
 
     companion object {
         fun newInstance() = DuLieuFragment()
@@ -20,8 +20,8 @@ class DuLieuFragment : AbstractTabGameFragment<Article, DuLieuGameAdapter, DuLie
 
     override val mViewModel: DuLieuViewModel by viewModels { vmFactory }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun setUpAdapter() {
+        super.setUpAdapter()
         mHeader = GiftCodeHeaderView(context)
         mAdapter.addHeaderView(mHeader)
     }
