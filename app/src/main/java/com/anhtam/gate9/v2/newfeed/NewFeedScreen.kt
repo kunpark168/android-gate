@@ -29,7 +29,7 @@ import com.anhtam.gate9.v2.createpost.CreatePostScreen
 import com.anhtam.gate9.v2.game_detail.DetailGameFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.member.MemberFragment
-import com.anhtam.gate9.v2.messenger.ChannelFragment
+import com.anhtam.gate9.v2.messenger.inbox.ChannelLetterFragment
 import com.anhtam.gate9.v2.notification.NotificationFragment
 import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
 import com.anhtam.gate9.v2.post_detail.DetailPostScreen
@@ -247,7 +247,7 @@ class NewFeedScreen : DaggerNavigationFragment(R.layout.new_feed_screen), MoreDi
             navigation?.addFragment(NotificationFragment.newInstance())
         }
         icChat?.setOnClickListener {
-            navigation?.addFragment(ChannelFragment.newInstance())
+//            navigation?.addFragment(ChannelLetterFragment.newInstance())
         }
         icGroup?.setOnClickListener { navigation?.addFragment(MemberFragment.newInstance()) }
         imgAvatar?.setOnClickListener {
