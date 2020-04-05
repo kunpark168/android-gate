@@ -83,6 +83,19 @@
             app:layout_constraintVertical_bias="0.0"
             tools:text="@tools:sample/lorem/random" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="68dp"
+        android:background="@color/white">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPhotos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/layout_margin_16dp"
+            android:paddingTop="@dimen/layout_margin_8dp"/>
+    </FrameLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChildComment"
         android:layout_width="match_parent"

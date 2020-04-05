@@ -3,29 +3,20 @@ package com.anhtam.gate9.v2.categories
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
-import com.anhtam.domain.Banner
-import com.anhtam.domain.Game
-import com.anhtam.gate9.repository.GameRepository
-import com.anhtam.gate9.repository.PostRepository
-import com.anhtam.gate9.storage.StorageManager
-import com.anhtam.gate9.utils.setValueDiff
+import com.anhtam.domain.v2.Banner
+import com.anhtam.domain.v2.Gamev1
 import of.bum.network.helper.Resource
 import javax.inject.Inject
 
-class CategoryViewmodel @Inject constructor(private val gameRepository: GameRepository,
-                                            private val postRepository: PostRepository) : ViewModel() {
+class CategoryViewmodel @Inject constructor() : ViewModel() {
 
     private val mBanner: MediatorLiveData<Resource<Banner>> = MediatorLiveData()
     val banner: LiveData<Resource<Banner>>
         get() = mBanner
 
-    private val mNewGame = MediatorLiveData<Resource<List<Game>>>()
-    val newGame: LiveData<Resource<List<Game>>>
+    private val mNewGame = MediatorLiveData<Resource<List<Gamev1>>>()
+    val newGame: LiveData<Resource<List<Gamev1>>>
         get() = mNewGame
-
-    private val mPosts: MediatorLiveData<Resource<List<com.anhtam.domain.Post>>> = MediatorLiveData()
-    val posts: LiveData<Resource<List<com.anhtam.domain.Post>>>
-        get() = mPosts
 
     private var mUserAvatar: String?= null
     val userAvatar: String?
@@ -36,23 +27,6 @@ class CategoryViewmodel @Inject constructor(private val gameRepository: GameRepo
         get() = mUserId
 
     fun requestData(){
-        mUserAvatar = StorageManager.getUserAvatar()
-        mUserId = StorageManager.getUserId()
-
-        val newDataBanner = gameRepository.getMainBanner()
-        mBanner.addSource(newDataBanner) {
-            it?.let { mBanner.setValueDiff(it) }
-        }
-
-        val newDataGane = gameRepository.getGroupBannerGames()
-        mNewGame.addSource(newDataGane) {
-            it?.let { mNewGame.setValueDiff(it) }
-        }
-
-        val newData = postRepository.getAllPosts(1)
-        mPosts.addSource(newData) {
-            it?.let { mPosts.setValueDiff(it) }
-        }
     }
 
 }

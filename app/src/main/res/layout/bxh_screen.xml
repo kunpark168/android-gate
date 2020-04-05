@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:clickable="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/status_bar_height"
+        android:background="@color/status_color_blue"/>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_gravity="top"
+        android:layout_width="match_parent"
+        android:background="@color/colorPrimary"
+        app:title=""
+        app:contentInsetLeft="0dp"
+        app:contentInsetStart="0dp"
+        android:layout_height="?attr/actionBarSize">
+
+        <FrameLayout
+            android:id="@+id/backFrameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgBack"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/ic_back"
+                android:layout_width="7dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/tvBack"
+                android:textSize="15sp"
+                android:textAllCaps="true"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="@color/colorWhite"
+                android:gravity="center"
+                android:text="@string/back"
+                android:layout_marginStart="33dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/tab_component_height"
+        android:orientation="horizontal">
+        <com.anhtam.gate9.v2.shared.NotificationTabItem
+            android:id="@+id/tabNotify"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:notifyText="@string/total"
+            app:notifyEnable="true"
+            app:notifyColorIndicator="@color/colorIndicatorNotification"/>
+        <com.anhtam.gate9.v2.shared.NotificationTabItem
+            android:id="@+id/tabSystem"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:notifyText="@string/mouth"
+            app:notifyColorIndicator="@color/colorIndicatorNotification"/>
+    </LinearLayout>
+    <View
+        android:background="@color/colorGray"
+        android:alpha="0.5"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <!--Personal-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csPersonal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp40">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgCup"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_cup"
+            android:layout_marginStart="@dimen/dp20"
+            android:layout_width="@dimen/dp20"
+            android:layout_height="match_parent" />
+        <TextView
+            android:gravity="center_vertical"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/sp_15"
+            android:layout_marginStart="@dimen/layout_margin_16dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/personal"
+            app:layout_constraintStart_toEndOf="@+id/imgCup"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            />
+        <View
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/colorGray"
+            android:alpha="0.5"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csAdmin"
+        app:layout_constraintTop_toBottomOf="@+id/csPersonal"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAvatar"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginStart="@dimen/dp20"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/img_avatar_holder"
+            android:layout_width="@dimen/dp40"
+            android:layout_height="@dimen/dp40">
+        </de.hdodenhof.circleimageview.CircleImageView>
+        <androidx.appcompat.widget.AppCompatImageView
+            app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+            app:layout_constraintEnd_toEndOf="@+id/imgAvatar"
+            android:src="@drawable/ic_cup"
+            android:padding="@dimen/dp3"
+            android:tint="@color/colorWhite"
+            android:background="@drawable/bg_circle_red"
+            android:layout_width="@dimen/dp15"
+            android:layout_height="@dimen/dp15" />
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+            app:layout_constraintTop_toTopOf="@+id/imgAvatar"
+            app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+            android:layout_width="wrap_content"
+            android:paddingStart="@dimen/dp15"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvName"
+                tools:text="Kun Park"
+                android:textSize="@dimen/sp_15"
+                android:fontFamily="@font/roboto_regular"
+                android:textColor="@color/black"
+                app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+                app:layout_constraintTop_toTopOf="@+id/imgAvatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="@dimen/sp11"
+                tools:text="ID : 83648"
+                android:layout_marginTop="@dimen/dp3"
+                android:fontFamily="@font/roboto_regular"
+                android:id="@+id/tvId"
+                app:layout_constraintStart_toEndOf="@+id/imgAvatar"
+                app:layout_constraintBottom_toBottomOf="@+id/imgAvatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!--No.-->
+        <LinearLayout
+            android:id="@+id/llNo"
+            android:layout_marginEnd="@dimen/dp20"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@+id/llPoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvRanking"
+                tools:text="73674"
+                android:textSize="@dimen/sp_15"
+                android:textStyle="bold"
+                android:textColor="@color/colorNoCharts"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="@string/no_charts"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dp3"
+                android:fontFamily="@font/roboto_regular"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="@dimen/sp11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!--Point-->
+        <LinearLayout
+            android:id="@+id/llPoint"
+            android:layout_marginEnd="@dimen/dp20"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvPoint"
+                tools:text="73674"
+                android:textSize="@dimen/sp_15"
+                android:textStyle="bold"
+                android:textColor="@color/colorPointCharts"
+                android:fontFamily="@font/roboto_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="@string/point"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dp3"
+                android:fontFamily="@font/roboto_regular"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="@dimen/sp11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <View
+            android:background="#eeeeee"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/imgAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--Time-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/csTime"
+        android:paddingTop="@dimen/dp5"
+        app:layout_constraintTop_toBottomOf="@+id/csAdmin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvTimeTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/black"
+            android:text="@string/times"
+            android:fontFamily="@font/roboto_medium"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/sp_14"
+            android:paddingStart="@dimen/dp20"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+        <TextView
+            android:text="12h:37 30/09/2019"
+            android:paddingStart="@dimen/dp15"
+            android:textSize="@dimen/sp_12"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toEndOf="@+id/tvTimeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:layout_marginEnd="@dimen/dp20"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_information_charts"
+            android:layout_width="@dimen/dp15"
+            android:layout_height="@dimen/dp15" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCharts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

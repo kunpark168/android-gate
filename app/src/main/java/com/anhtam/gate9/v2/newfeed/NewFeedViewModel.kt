@@ -1,10 +1,7 @@
 package com.anhtam.gate9.v2.newfeed
 
-import androidx.lifecycle.ViewModel
-import com.anhtam.domain.v2.WrappedHome
-import com.anhtam.gate9.v2.InfoService
-import of.bum.network.FetchBoundResource
-import of.bum.network.v2.SocialService
+import com.anhtam.domain.v2.Post
+import com.anhtam.gate9.repository.SocialRepository
 import javax.inject.Inject
 
 /*
@@ -15,13 +12,28 @@ import javax.inject.Inject
  */
 
 class NewFeedViewModel @Inject constructor(
-        val socialService: SocialService,
-        val infoService: InfoService) : ViewModel() {
+        val repository: SocialRepository) : PagingViewModel<Post>() {
+    override fun fetchData() = repository.getListingPost(mPage, 5)
 
-    fun getListingPost() = object : FetchBoundResource<WrappedHome>(){
-        override fun createCall() = socialService.getListPosts()
-    }.asLiveData()
 
-    fun getInfoUser() = infoService.getInfo()
-    fun react(params: Map<String, Int>) = infoService.react(params)
+    fun loadFirstPage(tab: Int){
+        mPage = 0
+        val fetchData = repository.getFollowingInfo(tab, mPage)
+        _data.addSource(fetchData){
+            _data.value = it
+        }
+    }
+
+    fun loadMore(tab: Int){
+        mPage++
+        val fetchData = repository.getFollowingInfo(tab, mPage)
+        _data.addSource(fetchData){
+            _data.value = it
+        }
+    }
+
+    fun follow(){
+        repository.follow()
+    }
+
 }

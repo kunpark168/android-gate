@@ -1,8 +1,7 @@
 package com.anhtam.gate9.v2.mxh_game
 
 import android.os.Bundle
-import android.view.*
-import androidx.core.content.ContextCompat
+import android.view.View
 import androidx.viewpager.widget.ViewPager
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.SharePageAdapter
@@ -12,7 +11,7 @@ import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import kotlinx.android.synthetic.main.mxh_game_screen.*
 
-class MXHGameScreen : DaggerNavigationFragment(){
+class MXHGameScreen : DaggerNavigationFragment(R.layout.mxh_game_screen){
 
     companion object {
         fun newInstance() = MXHGameScreen()
@@ -21,24 +20,14 @@ class MXHGameScreen : DaggerNavigationFragment(){
     private var mAdapter: SharePageAdapter by autoCleared()
     private val mTabs by lazy { arrayOf(tabAll, tabLove, tabDownload, tabFollowing)}
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_blue)
-        setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.mxh_game_screen, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_search_avatar, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+    override fun menuRes() = R.menu.menu_search_avatar
 
     private fun init(){
-        setSupportActionBar(toolbar)
         setUpViewPager()
         initEvents()
         observer()
@@ -58,14 +47,11 @@ class MXHGameScreen : DaggerNavigationFragment(){
                     if(checkLogin()){
                         //continue
                     } else {
-                        navigation?.addFragment(LoginScreen.newInstance())
+                        navigation?.addFragment(LoginScreen.newInstance(false))
                         return@setOnClickListener
                     }
                 }
             }
-        }
-        backFrameLayout?.setOnClickListener {
-            navigation?.back()
         }
     }
 
@@ -82,7 +68,7 @@ class MXHGameScreen : DaggerNavigationFragment(){
         fragments.add(MXHGameTabFragment.newInstance(MXHGameTab.FOLLOWING))
         mAdapter = SharePageAdapter(childFragmentManager,fragments)
         vpGame?.adapter = mAdapter
-        vpGame?.offscreenPageLimit = 0
+        vpGame?.offscreenPageLimit = 4
         vpGame?.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
             override fun onPageScrollStateChanged(state: Int) {
 

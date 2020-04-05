@@ -4,10 +4,10 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/transparent"
     android:layout_marginEnd="@dimen/layout_margin_8dp">
 
-    <ImageView
+    <com.anhtam.gate9.share.view.RoundRectCornerImageView
         android:id="@+id/imgPhoto"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -16,11 +16,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/tvCancel"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:text="X"
+        android:layout_margin="@dimen/layout_margin_4dp"
+        android:src="@drawable/icon_circle_delete_black"
         app:layout_constraintTop_toTopOf="@id/imgPhoto"
         app:layout_constraintEnd_toEndOf="@id/imgPhoto"/>
 

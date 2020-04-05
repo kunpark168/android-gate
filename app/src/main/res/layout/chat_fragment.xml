@@ -1,258 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:clickable="true"
-    android:focusable="true">
-
-    <LinearLayout
+    android:layout_height="match_parent">
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginBottom="56dp">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:paddingTop="@dimen/padding_8dp"
-            android:paddingBottom="@dimen/padding_8dp"
-            android:paddingStart="@dimen/padding_16dp"
-            android:paddingEnd="@dimen/padding_16dp"
-            android:layout_gravity="top"
-            android:background="@color/colorIndicator">
+        android:layout_height="@dimen/status_bar_height"
+        android:background="@color/status_color_blue"/>
 
-            <ImageView
-                android:id="@+id/iconMore"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_more"
-                android:padding="2dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:paddingTop="@dimen/padding_8dp"
+        android:paddingBottom="@dimen/padding_8dp"
+        android:paddingStart="@dimen/padding_16dp"
+        android:paddingEnd="@dimen/padding_16dp"
+        android:layout_gravity="top"
+        android:background="@color/colorIndicator">
 
-            <ImageView
-                android:id="@+id/iconChat"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="14dp"
-                android:src="@drawable/ic_message"
-                app:layout_constraintEnd_toStartOf="@id/iconSearch"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+        <ImageView
+            android:id="@+id/iconMore"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_more"
+            android:padding="2dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iconChat"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="14dp"
+            android:src="@drawable/ic_message"
+            app:layout_constraintEnd_toStartOf="@id/iconSearch"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
 
-            <ImageView
-                android:id="@+id/iconSearch"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:padding="2dp"
-                app:layout_constraintEnd_toStartOf="@id/iconMore"
-                android:layout_marginEnd="14dp"
-                android:src="@drawable/ic_search"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+        <ImageView
+            android:id="@+id/iconSearch"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="2dp"
+            app:layout_constraintEnd_toStartOf="@id/iconMore"
+            android:layout_marginEnd="14dp"
+            android:src="@drawable/ic_search"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <ImageView
-                android:id="@+id/iconBack"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:padding="4dp"
-                android:src="@drawable/ic_back"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+        <ImageView
+            android:id="@+id/iconBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="4dp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-            <io.supercharge.shimmerlayout.ShimmerLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                app:layout_constraintStart_toEndOf="@id/tvBack"
-                app:layout_constraintEnd_toStartOf="@id/iconChat"
-                android:layout_marginStart="@dimen/layout_margin_16dp"
-                android:layout_marginEnd="@dimen/layout_margin_16dp"
-                android:id="@+id/shimmer">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/imgAvatarShimmer"
-                        android:layout_width="30dp"
-                        android:layout_height="match_parent"
-                        android:src="@color/color_loading_gray_darker"
-                        app:layout_constraintStart_toStartOf="parent"/>
-
-                    <View
-                        android:id="@+id/tvNameShimmer"
-                        android:layout_width="86dp"
-                        android:layout_height="14dp"
-                        app:layout_constraintTop_toTopOf="@id/imgAvatarShimmer"
-                        app:layout_constraintStart_toEndOf="@id/imgAvatarShimmer"
-                        app:layout_constraintBottom_toTopOf="@id/tvIdShimmer"
-                        android:layout_marginStart="@dimen/layout_margin_8dp"
-                        android:background="@color/color_loading_gray"/>
-
-                    <View
-                        android:id="@+id/tvIdShimmer"
-                        android:layout_width="48dp"
-                        android:layout_height="14dp"
-                        android:background="@color/color_loading_gray"
-                        android:layout_marginTop="@dimen/dp_4"
-                        app:layout_constraintBottom_toBottomOf="@id/imgAvatarShimmer"
-                        app:layout_constraintStart_toEndOf="@id/imgAvatarShimmer"
-                        app:layout_constraintTop_toBottomOf="@id/tvNameShimmer"
-                        android:layout_marginStart="@dimen/layout_margin_8dp"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </io.supercharge.shimmerlayout.ShimmerLayout>
-
+        <io.supercharge.shimmerlayout.ShimmerLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toEndOf="@id/tvBack"
+            app:layout_constraintEnd_toStartOf="@id/iconChat"
+            android:layout_marginStart="@dimen/layout_margin_16dp"
+            android:layout_marginEnd="@dimen/layout_margin_16dp"
+            android:id="@+id/shimmer">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/shimmerRoot"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                app:layout_constraintStart_toEndOf="@id/tvBack"
-                app:layout_constraintEnd_toStartOf="@id/iconChat"
-                android:layout_marginStart="@dimen/layout_margin_16dp"
-                android:layout_marginEnd="@dimen/layout_margin_16dp"
-                android:visibility="invisible">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgAvatar"
+                    android:id="@+id/imgAvatarShimmer"
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
                     android:src="@color/color_loading_gray_darker"
                     app:layout_constraintStart_toStartOf="parent"/>
 
-                <TextView
-                    android:id="@+id/tvName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    app:layout_constraintTop_toTopOf="@id/imgAvatar"
-                    app:layout_constraintStart_toEndOf="@id/imgAvatar"
-                    app:layout_constraintBottom_toTopOf="@id/tvId"
+                <View
+                    android:id="@+id/tvNameShimmer"
+                    android:layout_width="86dp"
+                    android:layout_height="14dp"
+                    app:layout_constraintTop_toTopOf="@id/imgAvatarShimmer"
+                    app:layout_constraintStart_toEndOf="@id/imgAvatarShimmer"
+                    app:layout_constraintBottom_toTopOf="@id/tvIdShimmer"
                     android:layout_marginStart="@dimen/layout_margin_8dp"
-                    tools:text="BQT 9Gate"
-                    android:textColor="@color/white"
-                    android:textSize="14sp"/>
+                    android:background="@color/color_loading_gray"/>
 
-                <TextView
-                    android:id="@+id/tvId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="@id/imgAvatar"
-                    app:layout_constraintStart_toEndOf="@id/imgAvatar"
-                    app:layout_constraintTop_toBottomOf="@id/tvName"
-                    android:layout_marginStart="@dimen/layout_margin_8dp"
-                    tools:text="ID: 8888"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"/>
+                <View
+                    android:id="@+id/tvIdShimmer"
+                    android:layout_width="48dp"
+                    android:layout_height="14dp"
+                    android:background="@color/color_loading_gray"
+                    android:layout_marginTop="@dimen/dp_4"
+                    app:layout_constraintBottom_toBottomOf="@id/imgAvatarShimmer"
+                    app:layout_constraintStart_toEndOf="@id/imgAvatarShimmer"
+                    app:layout_constraintTop_toBottomOf="@id/tvNameShimmer"
+                    android:layout_marginStart="@dimen/layout_margin_8dp"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+        </io.supercharge.shimmerlayout.ShimmerLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/shimmerRoot"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toEndOf="@id/tvBack"
+            app:layout_constraintEnd_toStartOf="@id/iconChat"
+            android:layout_marginStart="@dimen/layout_margin_16dp"
+            android:layout_marginEnd="@dimen/layout_margin_16dp"
+            android:visibility="invisible">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgAvatar"
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:src="@color/color_loading_gray_darker"
+                app:layout_constraintStart_toStartOf="parent"/>
+
             <TextView
-                android:id="@+id/tvBack"
+                android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/iconBack"
-                android:text="@string/back"
-                android:textAllCaps="true"
-                android:textColor="@color/white"/>
+                android:lines="1"
+                android:ellipsize="end"
+                app:layout_constraintTop_toTopOf="@id/imgAvatar"
+                app:layout_constraintStart_toEndOf="@id/imgAvatar"
+                app:layout_constraintBottom_toTopOf="@id/tvId"
+                android:layout_marginStart="@dimen/layout_margin_8dp"
+                tools:text="BQT 9Gate"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
 
+            <TextView
+                android:id="@+id/tvId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/imgAvatar"
+                app:layout_constraintStart_toEndOf="@id/imgAvatar"
+                app:layout_constraintTop_toBottomOf="@id/tvName"
+                android:layout_marginStart="@dimen/layout_margin_8dp"
+                tools:text="ID: 8888"
+                android:textColor="@color/white"
+                android:textSize="10sp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/tvBack"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_16dp"
-            android:text="@string/sample_title_inbox"
-            android:textSize="14sp"
-            android:textColor="@color/text_color_black"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iconBack"
+            android:text="@string/back"
+            android:textAllCaps="true"
+            android:textColor="@color/white"/>
 
-        <include
-            layout="@layout/share_divider_item_layout"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvChatBox"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:reverseLayout="true"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical" />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.bottomappbar.BottomAppBar
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.BottomAppBar"
-        android:layout_gravity="bottom">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
-            <ImageView
-                style="@style/MaterialIconSize"
-                android:src="@drawable/ic_home_grey"
-                android:layout_marginTop="@dimen/layout_margin_16dp"
-                android:padding="2dp"
-                android:layout_marginBottom="@dimen/layout_margin_16dp"/>
+            android:orientation="vertical"
+            android:layout_marginBottom="56dp">
 
-            <EditText
-                android:id="@+id/edtMessage"
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:lines="5"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/layout_margin_16dp"
-                android:layout_marginEnd="@dimen/layout_margin_16dp"
-                android:inputType="text"
-                android:hint="@string/chem_gio"
-                android:padding="@dimen/layout_margin_4dp"
-                android:paddingStart="@dimen/padding_16dp"
-                android:paddingEnd="@dimen/padding_16dp"
-                android:imeOptions="actionSend"
+                android:padding="@dimen/padding_16dp"
+                android:text="@string/sample_title_inbox"
                 android:textSize="14sp"
-                android:background="@drawable/bg_search"/>
+                android:textColor="@color/text_color_black"/>
 
-            <ImageView
-                style="@style/MaterialIconSize"
-                android:src="@drawable/ic_aa"
-                android:layout_marginEnd="@dimen/layout_margin_16dp"
-                android:padding="2dp"
-                android:layout_marginTop="@dimen/layout_margin_16dp"
-                android:layout_marginBottom="@dimen/layout_margin_16dp"/>
+            <include
+                layout="@layout/share_divider_item_layout"/>
 
-            <ImageView
-                style="@style/MaterialIconSize"
-                android:src="@drawable/ic_sight_white"
-                android:tint="@color/grey"
-                android:padding="2dp"
-                android:layout_marginEnd="@dimen/layout_margin_16dp"
-                android:layout_marginTop="@dimen/layout_margin_16dp"
-                android:layout_marginBottom="@dimen/layout_margin_16dp"/>
-
-            <ImageView
-                style="@style/MaterialIconSize"
-                android:src="@drawable/ic_smile_face"
-                android:tint="@color/grey"
-                android:padding="2dp"
-                android:layout_marginEnd="@dimen/layout_margin_16dp"
-                android:layout_marginTop="@dimen/layout_margin_16dp"
-                android:layout_marginBottom="@dimen/layout_margin_16dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvChatBox"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:reverseLayout="true"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical" />
         </LinearLayout>
 
-    </com.google.android.material.bottomappbar.BottomAppBar>
+        <com.google.android.material.bottomappbar.BottomAppBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.BottomAppBar"
+            android:layout_gravity="bottom">
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <ImageView
+                    style="@style/MaterialIconSize"
+                    android:src="@drawable/ic_home_grey"
+                    android:layout_marginTop="@dimen/layout_margin_16dp"
+                    android:padding="2dp"
+                    android:layout_marginBottom="@dimen/layout_margin_16dp"/>
+
+                <EditText
+                    android:id="@+id/edtMessage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:lines="5"
+                    android:layout_weight="1"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
+                    android:layout_marginEnd="@dimen/layout_margin_16dp"
+                    android:inputType="text"
+                    android:hint="@string/chem_gio"
+                    android:padding="@dimen/layout_margin_4dp"
+                    android:paddingStart="@dimen/padding_16dp"
+                    android:paddingEnd="@dimen/padding_16dp"
+                    android:imeOptions="actionSend"
+                    android:textSize="14sp"
+                    android:background="@drawable/bg_search"/>
+
+                <ImageView
+                    style="@style/MaterialIconSize"
+                    android:src="@drawable/ic_aa"
+                    android:layout_marginEnd="@dimen/layout_margin_16dp"
+                    android:padding="2dp"
+                    android:layout_marginTop="@dimen/layout_margin_16dp"
+                    android:layout_marginBottom="@dimen/layout_margin_16dp"/>
+
+                <ImageView
+                    style="@style/MaterialIconSize"
+                    android:src="@drawable/ic_sight_white"
+                    android:tint="@color/grey"
+                    android:padding="2dp"
+                    android:layout_marginEnd="@dimen/layout_margin_16dp"
+                    android:layout_marginTop="@dimen/layout_margin_16dp"
+                    android:layout_marginBottom="@dimen/layout_margin_16dp"/>
+
+                <ImageView
+                    style="@style/MaterialIconSize"
+                    android:src="@drawable/ic_smile_face"
+                    android:tint="@color/grey"
+                    android:padding="2dp"
+                    android:layout_marginEnd="@dimen/layout_margin_16dp"
+                    android:layout_marginTop="@dimen/layout_margin_16dp"
+                    android:layout_marginBottom="@dimen/layout_margin_16dp"/>
+            </LinearLayout>
+
+        </com.google.android.material.bottomappbar.BottomAppBar>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

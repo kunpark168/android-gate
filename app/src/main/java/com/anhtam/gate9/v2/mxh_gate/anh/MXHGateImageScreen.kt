@@ -1,43 +1,42 @@
 package com.anhtam.gate9.v2.mxh_gate.anh
 
 import android.os.Bundle
-import android.view.*
+import android.view.View
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.anhtam.gate9.R
-import com.anhtam.gate9.utils.autoCleared
-import com.anhtam.gate9.v2.main.DaggerNavigationFragment
-import com.anhtam.gate9.v2.mxh_gate.MXHGateScreen
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseViewHolder
-import kotlinx.android.synthetic.main.mxh_gate_anh_screen.*
+import com.anhtam.gate9.adapter.v2.du_lieu.HinhAnhAdapter
+import com.anhtam.gate9.v2.chi_tiet_bai_viet.ChiTietBaiVietScreen
+import com.anhtam.gate9.v2.chi_tiet_bai_viet.tin_game.ChiTietBaiVietHinhAnhScreen
+import com.anhtam.gate9.v2.mxh_gate.tin_game.MXHGateTinGameScreen
+import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
+import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 
-class MXHGateImageScreen : DaggerNavigationFragment() {
-
-    companion object{
-        fun newInstance() = MXHGateImageScreen()
-    }
-
-    private var mAdapter: Adapter by autoCleared()
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.mxh_gate_anh_screen, container, false)
-    }
+class MXHGateImageScreen: MXHGateTinGameScreen<HinhAnhAdapter>(4){
+    override var mLayoutManager: RecyclerView.LayoutManager? = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        init()
-    }
-    private fun init(){
-        mAdapter = Adapter()
-        val data = arrayListOf<MXHGateScreen.EmptyData>()
-        for(index in 1..10) data.add(MXHGateScreen.EmptyData())
-        mAdapter.setNewData(data)
-        rvImage?.adapter = mAdapter
-    }
-
-    class Adapter: BaseQuickAdapter<MXHGateScreen.EmptyData, BaseViewHolder>(R.layout.mxh_gate_anh_item_layout, arrayListOf()){
-        override fun convert(helper: BaseViewHolder?, item: MXHGateScreen.EmptyData?) {
-
+        mAdapter.setOnItemChildClickListener setOnItemClickListener@{ _, childView, position ->
+            when (childView.id) {
+                R.id.tvName, R.id.imgUser -> {
+                    val user = mAdapter.data[position]?.mUser
+                    val roleId = user?.mRoleId ?: return@setOnItemClickListener
+                    val id = user.mId ?: return@setOnItemClickListener
+                    if (roleId != 5){
+                        navigation?.addFragment(DetailUserFragment.newInstance(id))
+                    } else {
+                        navigation?.addFragment(DetailNPHFragment.newInstance(id))
+                    }
+                }
+                R.id.imgTinTuc, R.id.tvTinTuc -> {
+                    val id = mAdapter.getItem(position)?.mArticleId ?: return@setOnItemClickListener
+                    val article = mAdapter.getItem(position)
+                    navigation?.addFragment(ChiTietBaiVietHinhAnhScreen.newInstance(id, article, mTab))
+                }
+                else -> {
+                }
+            }
         }
-
     }
 }

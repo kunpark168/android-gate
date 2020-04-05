@@ -18,6 +18,7 @@ abstract class NavigationActivity : AppCompatActivity()
     override fun provideNavigation() = HideKeyboardNavigation(dispatcher)
 
     override fun onBackPressed() {
+
         if (!dispatcher.onBackPressed())
         super.onBackPressed()
     }

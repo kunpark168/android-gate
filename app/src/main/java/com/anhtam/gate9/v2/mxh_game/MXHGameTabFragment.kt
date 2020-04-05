@@ -1,9 +1,7 @@
 package com.anhtam.gate9.v2.mxh_game
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -11,10 +9,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.anhtam.domain.v2.GameEntity
+import com.anhtam.domain.v2.protocol.Game
 import com.anhtam.gate9.R
+import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.share.view.CustomLoadMoreView
 import com.anhtam.gate9.utils.autoCleared
+import com.anhtam.gate9.utils.toImage
+import com.anhtam.gate9.v2.game_detail.DetailGameFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -25,8 +26,10 @@ import kotlinx.android.synthetic.main.mxh_game_item_layout.view.*
 import kotlinx.android.synthetic.main.mxh_game_tab_fragment.*
 import kotlinx.android.synthetic.main.shared_play_banner_game_layout.view.*
 import of.bum.network.helper.Resource
+import javax.inject.Inject
+import javax.inject.Named
 
-class MXHGameTabFragment : DaggerNavigationFragment() {
+class MXHGameTabFragment : DaggerNavigationFragment(R.layout.mxh_game_tab_fragment) {
     companion object{
         fun newInstance(type: MXHGameScreen.MXHGameTab): MXHGameTabFragment{
             val fragment = MXHGameTabFragment()
@@ -38,9 +41,8 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
     private var mType : MXHGameScreen.MXHGameTab = MXHGameScreen.MXHGameTab.ALL
     private var mAdapter by autoCleared<Adapter>()
     private var mLoading = false
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.mxh_game_tab_fragment, container, false)
-    }
+
+    @field:Named("banner") @Inject lateinit var bannerOptions: RequestOptions
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,7 +61,15 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
         mViewModel.type = mType
         mViewModel.request(mType)
         initRecyclerView()
+        initEvents()
         observer()
+    }
+
+    private fun initEvents(){
+        swipeRefreshLayout?.setOnRefreshListener {
+            swipeRefreshLayout?.isRefreshing = false
+            mViewModel.request(mType)
+        }
     }
 
     private fun initRecyclerView() {
@@ -82,7 +92,7 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
             when(resource) {
                 is Resource.Success -> {
                     hideProgress()
-                    val data = resource.data?.mGames
+                    val data = resource.data
                     if (data.isNullOrEmpty()) {
                         mAdapter.loadMoreEnd()
                     } else {
@@ -104,25 +114,35 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
         })
     }
 
-    class Adapter : BaseQuickAdapter<GameEntity, BaseViewHolder>(R.layout.mxh_game_item_layout, arrayListOf()){
-        override fun convert(helper: BaseViewHolder?, item: GameEntity?) {
+    inner class Adapter : BaseQuickAdapter<Game, BaseViewHolder>(R.layout.mxh_game_item_layout, arrayListOf()){
+
+        init {
+            setOnItemClickListener { _, _, position ->
+                val id = data[position].gameId ?: return@setOnItemClickListener
+                navigation?.addFragment(DetailGameFragment.newInstance(id))
+            }
+        }
+
+
+        override fun convert(helper: BaseViewHolder?, item: Game?) {
             val view = helper?.itemView ?: return
             val data = item ?: return
             view.tvTitle.text = item.name
             Glide.with(mContext)
-                    .applyDefaultRequestOptions(
-                            RequestOptions()
-                                    .placeholder(R.drawable.img_holder_banner)
-                                    .error(R.drawable.img_holder_banner)
-                    ).load(data.avatar)
+                    .load(data.imgCover?.toImage())
+                    .apply(bannerOptions)
                     .into(view.imgBannerGame)
+            Glide.with(mContext)
+                    .load(data.avatar?.toImage())
+                    .apply(bannerOptions)
+                    .into(view.imgAvatarGame)
             val followDescription = mContext.getString(R.string.follower_amount_and_post_amount)
             val followGame = Phrase.from(followDescription)
-                    .put("follower", data.follower ?: "0")
-                    .put("post", data.post.toString())
+                    .put("follower", data.follower?.toString() ?: "0")
+                    .put("post", data.post?.toString() ?: "0")
                     .format()
             view.tvFollowAmount.text = followGame
-            if (data.follow == "true") {
+            if (data.follow == true) {
                 setFollowing(view.tvFollow)
             } else {
                 // check follow here
@@ -130,6 +150,7 @@ class MXHGameTabFragment : DaggerNavigationFragment() {
             }
 
             view.tvFollow.setOnClickListener {
+                BackgroundTasks.postFollowGame(data.gameId ?: return@setOnClickListener)
                 if(view.tvFollow?.text == mContext.getString(R.string.follow)) {
                     setFollowing(view.tvFollow)
                 } else {

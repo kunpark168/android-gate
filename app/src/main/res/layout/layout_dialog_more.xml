@@ -22,17 +22,18 @@
             <!--You want-->
             <LinearLayout
                 android:id="@+id/llWant"
-                android:paddingStart="@dimen/dp15"
+                android:paddingStart="@dimen/padding_16dp"
+                android:paddingEnd="@dimen/padding_16dp"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_dialog">
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:src="@drawable/ic_more_hor"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
                 <TextView
-                    android:paddingLeft="@dimen/dp20"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
                     android:gravity="center_vertical"
                     android:textColor="@color/colorText"
                     android:text="@string/you_want"
@@ -50,20 +51,21 @@
 
             <!--Share-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/llSahre"
-                android:paddingStart="@dimen/dp15"
+                android:id="@+id/shareLayout"
+                android:paddingStart="@dimen/padding_16dp"
+                android:paddingEnd="@dimen/padding_16dp"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_dialog">
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgShare"
                     app:layout_constraintStart_toStartOf="parent"
                     android:src="@drawable/ic_share"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
                 <TextView
-                    android:paddingStart="@dimen/dp20"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/sp_13"
                     app:layout_constraintStart_toEndOf="@+id/imgShare"
@@ -76,13 +78,14 @@
 
             <!--Coppy Link-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csCoppyLink"
-                android:paddingStart="@dimen/dp15"
+                android:id="@+id/copyLinkLayout"
+                android:paddingStart="@dimen/padding_16dp"
+                android:paddingEnd="@dimen/padding_16dp"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_dialog">
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgCoppy"
                     app:layout_constraintStart_toStartOf="parent"
                     android:src="@drawable/ic_copy"
@@ -91,7 +94,7 @@
                 <TextView
                     android:id="@+id/tvCoppyLink"
                     app:layout_constraintStart_toEndOf="@+id/imgCoppy"
-                    android:paddingStart="@dimen/dp20"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
                     android:textSize="@dimen/sp_13"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center_vertical"
@@ -110,19 +113,19 @@
 
             <!--On/Off Notification-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csOnOffNotification"
-                android:paddingStart="@dimen/dp15"
-                android:paddingEnd="@dimen/dp15"
+                android:id="@+id/notificationLayout"
+                android:paddingStart="@dimen/padding_16dp"
+                android:paddingEnd="@dimen/padding_16dp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_dialog">
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgOnOff"
                     app:layout_constraintStart_toStartOf="parent"
                     android:src="@drawable/ic_bell"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
                 <TextView
-                    android:paddingStart="@dimen/dp20"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/sp_13"
                     app:layout_constraintStart_toEndOf="@+id/imgOnOff"
@@ -131,27 +134,27 @@
                     android:text="@string/on_off_post"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
-                <FrameLayout
-                    android:id="@+id/frCheckOnOff"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/notificationSwitchButton"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_check"
+                    android:layout_width="@dimen/dp20"
+                    android:layout_height="@dimen/dp20"
+                    android:layout_marginEnd="@dimen/layout_margin_8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="@dimen/dp50"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_checked"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-                </FrameLayout>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!--Report with Admin-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csReport"
-                android:paddingStart="@dimen/dp15"
+                android:id="@+id/reportLayout"
+                android:paddingStart="@dimen/padding_16dp"
+                android:paddingEnd="@dimen/padding_16dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_dialog">
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgReport"
                     app:layout_constraintStart_toStartOf="parent"
                     android:src="@drawable/ic_report"
@@ -160,7 +163,7 @@
                 <TextView
                     android:id="@+id/tvReport"
                     app:layout_constraintStart_toEndOf="@+id/imgReport"
-                    android:paddingStart="@dimen/dp20"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
                     android:textSize="@dimen/sp_13"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center_vertical"
@@ -172,12 +175,13 @@
 
             <!--UnFollow-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csUnfollow"
-                android:paddingStart="@dimen/dp15"
+                android:id="@+id/unfollowLayout"
+                android:paddingStart="@dimen/padding_16dp"
+                android:paddingEnd="@dimen/padding_16dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_dialog">
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgUnfollow"
                     app:layout_constraintStart_toStartOf="parent"
                     android:src="@drawable/ic_unfollow"
@@ -186,7 +190,8 @@
                 <TextView
                     android:id="@+id/tvUnfollow"
                     app:layout_constraintStart_toEndOf="@+id/imgUnfollow"
-                    android:paddingStart="@dimen/dp20"
+                    android:paddingStart="@dimen/padding_16dp"
+                    android:paddingEnd="@dimen/padding_16dp"
                     android:textSize="@dimen/sp_13"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center_vertical"
@@ -198,13 +203,14 @@
 
             <!--Hide post-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csHidePost"
-                android:paddingStart="@dimen/dp15"
+                android:id="@+id/hidePostLayout"
+                android:paddingStart="@dimen/padding_16dp"
+                android:paddingEnd="@dimen/padding_16dp"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_dialog">
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgHidePost"
                     app:layout_constraintStart_toStartOf="parent"
                     android:src="@drawable/ic_hide_post"
@@ -213,7 +219,7 @@
                 <TextView
                     android:id="@+id/tvHidePost"
                     app:layout_constraintStart_toEndOf="@+id/imgHidePost"
-                    android:paddingStart="@dimen/dp20"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
                     android:textSize="@dimen/sp_13"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center_vertical"
@@ -232,12 +238,14 @@
 
             <!--Edit Post-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csEditPost"
-                android:paddingStart="@dimen/dp15"
+                android:id="@+id/editLayout"
+                android:paddingStart="@dimen/padding_16dp"
+                android:paddingEnd="@dimen/padding_16dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_dialog">
-                <ImageView
+                android:layout_height="@dimen/height_dialog"
+                android:visibility="gone">
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgEditPost"
                     app:layout_constraintStart_toStartOf="parent"
                     android:src="@drawable/ic_edit_post"
@@ -246,7 +254,7 @@
                 <TextView
                     android:id="@+id/tvEditPost"
                     app:layout_constraintStart_toEndOf="@+id/imgEditPost"
-                    android:paddingStart="@dimen/dp20"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
                     android:textSize="@dimen/sp_13"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center_vertical"
@@ -258,12 +266,14 @@
 
             <!--Delete Post-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csDeletePost"
-                android:paddingStart="@dimen/dp15"
+                android:id="@+id/deleteLayout"
+                android:paddingStart="@dimen/padding_16dp"
+                android:paddingEnd="@dimen/padding_16dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/height_dialog">
-                <ImageView
+                android:layout_height="@dimen/height_dialog"
+                android:visibility="gone">
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgDeletePost"
                     app:layout_constraintStart_toStartOf="parent"
                     android:src="@drawable/ic_delete_post"
@@ -272,7 +282,7 @@
                 <TextView
                     android:id="@+id/tvDeletePost"
                     app:layout_constraintStart_toEndOf="@+id/imgDeletePost"
-                    android:paddingStart="@dimen/dp20"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
                     android:textSize="@dimen/sp_13"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center_vertical"
@@ -282,24 +292,23 @@
                     android:layout_height="match_parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!--Block PostEntity-->
+            <!--Block Post-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csBlockComment"
-                android:paddingStart="@dimen/dp15"
-                android:paddingEnd="@dimen/dp15"
+                android:id="@+id/commentLayout"
+                android:paddingStart="@dimen/padding_16dp"
+                android:paddingEnd="@dimen/padding_16dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_dialog">
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgBlockComment"
                     app:layout_constraintStart_toStartOf="parent"
                     android:src="@drawable/ic_block_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
                 <TextView
-                    android:id="@+id/tvBlockComment"
                     app:layout_constraintStart_toEndOf="@+id/imgBlockComment"
-                    android:paddingStart="@dimen/dp20"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
                     android:textSize="@dimen/sp_13"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center_vertical"
@@ -307,37 +316,35 @@
                     android:text="@string/block_comment"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
-                <FrameLayout
-                    android:id="@+id/frCheckBlockComment"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/blockCommentSwitchButton"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_check"
+                    android:layout_width="@dimen/dp20"
+                    android:layout_height="@dimen/dp20"
+                    android:layout_marginEnd="@dimen/layout_margin_8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="@dimen/dp50"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_check"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-                </FrameLayout>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!--Disable Account-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csDisableAccount"
-                android:paddingStart="@dimen/dp15"
-                android:paddingEnd="@dimen/dp15"
+                android:id="@+id/blockAccountLayout"
+                android:paddingStart="@dimen/padding_16dp"
+                android:paddingEnd="@dimen/padding_16dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dp45">
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgDisableAccount"
                     app:layout_constraintStart_toStartOf="parent"
                     android:src="@drawable/ic_disable_account"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
                 <TextView
-                    android:id="@+id/tvDisableAccpunt"
                     app:layout_constraintStart_toEndOf="@+id/imgDisableAccount"
-                    android:paddingStart="@dimen/dp20"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
                     android:textSize="@dimen/sp_13"
                     android:fontFamily="@font/roboto_regular"
                     android:gravity="center_vertical"
@@ -345,17 +352,16 @@
                     android:text="@string/disable_account"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
-                <FrameLayout
-                    android:id="@+id/frCheckOnDisableAccount"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/blockAccountSwitchButton"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_check"
+                    android:layout_width="@dimen/dp20"
+                    android:layout_height="@dimen/dp20"
+                    android:layout_marginEnd="@dimen/layout_margin_8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="@dimen/dp50"
-                    android:layout_height="match_parent">
-                    <ImageView
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_check"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent" />
-                </FrameLayout>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
     </ScrollView>

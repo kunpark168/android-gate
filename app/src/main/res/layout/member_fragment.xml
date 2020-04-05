@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent" xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,9 +9,14 @@
     android:clickable="true"
     android:focusable="true">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/status_bar_height"
+        android:background="@color/status_color_blue"/>
+
     <include
         android:id="@+id/toolbar"
-        layout="@layout/shared_toolbar_with_back_layout"
+        layout="@layout/shared_blue_toolbar_layout"
         />
 
     <!--Search-->
@@ -20,8 +26,7 @@
         android:layout_height="35dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        android:layout_marginRight="10dp">
 
         <EditText
             tools:ignore="AutoFill"
@@ -44,9 +49,7 @@
 
     <!--Charts-->
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/csCharts"
-        app:layout_constraintTop_toBottomOf="@+id/csSearch"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="45dp">
         <ImageView
             app:layout_constraintStart_toStartOf="parent"
@@ -77,13 +80,12 @@
     <!--TOP-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/csTop"
-        app:layout_constraintTop_toBottomOf="@+id/csCharts"
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:padding="15dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/csGamerNo1"
+            android:id="@+id/topBXHUserLayout"
             android:layout_width="0dp"
             app:layout_constraintWidth_percent="0.48"
             app:layout_constraintStart_toStartOf="parent"
@@ -150,7 +152,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/csNPH"
+            android:id="@+id/topBXHNPHLayout"
             android:layout_width="0dp"
             app:layout_constraintWidth_percent="0.48"
             app:layout_constraintEnd_toEndOf="parent"
@@ -222,14 +224,12 @@
 
     <View
         android:background="#eeeeee"
-        app:layout_constraintTop_toBottomOf="@+id/csTop"
         android:layout_width="match_parent"
         android:layout_height="5dp"/>
 
     <!--Tab bar-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/csTab"
-        app:layout_constraintTop_toBottomOf="@+id/csTop"
         android:layout_width="match_parent"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
@@ -337,10 +337,8 @@
     <!--ViewPager-->
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vpTop"
-        app:layout_constraintTop_toBottomOf="@+id/csTab"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="match_parent">
     </androidx.viewpager.widget.ViewPager>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

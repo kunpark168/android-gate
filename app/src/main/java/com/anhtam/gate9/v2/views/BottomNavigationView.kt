@@ -25,6 +25,8 @@ class BottomNavigationView @JvmOverloads constructor(
     private var mListener: (()->Unit)? = null
     private var mListenerGate: (()->Unit)? = null
 
+    private var mViewPager: ViewPager? = null
+
     private val defaultIcon = mutableListOf(R.drawable.ic_new_feed_grey, R.drawable.ic_follow_grey, R.drawable.ic_person_grey, R.drawable.ic_tab_data)
     private val activeIcon = mutableListOf(R.drawable.ic_new_feed_blue, R.drawable.ic_follow_blue, R.drawable.ic_person_blue, R.drawable.ic_tab_data)
     private val icon by lazy {  mutableListOf(iconNewFeed, iconFollow, iconPerson, iconGate) }
@@ -46,6 +48,8 @@ class BottomNavigationView @JvmOverloads constructor(
         changeActiveState(position)
         previous = position
         mPosition = position
+        if(mPosition == 2 || mPosition == 3) return
+        mViewPager?.currentItem = mPosition
     }
 
     private fun onPersonalClick() {
@@ -65,8 +69,7 @@ class BottomNavigationView @JvmOverloads constructor(
     }
 
     fun syncWithViewPager(viewPager: ViewPager?) {
-        if(mPosition == 2 || mPosition == 3) return
-        viewPager?.currentItem = mPosition
+        mViewPager = viewPager
     }
 
 

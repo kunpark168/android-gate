@@ -1,35 +1,26 @@
 package com.anhtam.gate9.v2.main.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.anhtam.gate9.R
 import com.anhtam.gate9.adapter.SharePageAdapter
 import com.anhtam.gate9.navigation.FragmentResultListener
-import com.anhtam.gate9.v2.createimage.CreateImageScreen
-import com.anhtam.gate9.v2.createpost.CreatePostScreen
-import com.anhtam.gate9.v2.main.DaggerNavigationFragment
-import com.anhtam.gate9.v2.newfeed.NewFeedScreen
-import com.anhtam.gate9.v2.views.BlankFragment
-import kotlinx.android.synthetic.main.main_fragment.*
-import android.view.animation.OvershootInterpolator
-import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import com.anhtam.gate9.storage.StorageManager
-import com.anhtam.gate9.v2.MainActivity
 import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.ca_nhan.CaNhanScreen
+import com.anhtam.gate9.v2.createimage.CreateImageScreen
+import com.anhtam.gate9.v2.createpost.CreatePostScreen
+import com.anhtam.gate9.v2.follow.FollowScreen
+import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.mxh_gate.MXHGateScreen
-import kotlinx.android.synthetic.main.rating_view_header01.*
+import com.anhtam.gate9.v2.newfeed.NewFeedScreen
+import kotlinx.android.synthetic.main.main_fragment.*
 
 
-class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
+class HomeFragment : DaggerNavigationFragment(R.layout.main_fragment), FragmentResultListener {
 
     override fun onFragmentResult(args: Bundle) {
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_blue)
-        MainActivity.mColor = MainActivity.ColorStatus.BLUE
         mNewFeedScreen?.update()
     }
 
@@ -41,11 +32,6 @@ class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
     /* Manager bottom view vars */
     private var mStateFb = false
     private var mNewFeedScreen: NewFeedScreen? = null
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_blue)
-        return inflater.inflate(R.layout.main_fragment, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -81,7 +67,7 @@ class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
     private fun checkLogin() : Boolean {
         val accessToken = StorageManager.getAccessToken()
         return if (accessToken.isEmpty()) {
-            navigation?.addFragment(LoginScreen.newInstance())
+            navigation?.addFragment(LoginScreen.newInstance(false))
             false
         } else {
             true
@@ -110,13 +96,11 @@ class HomeFragment : DaggerNavigationFragment(), FragmentResultListener {
         val fragments = arrayListOf<Fragment>()
         mNewFeedScreen = NewFeedScreen.newInstance()
         fragments.add(mNewFeedScreen!!)
-        fragments.add(BlankFragment.newInstance("2"))
-        fragments.add(BlankFragment.newInstance("3"))
-        fragments.add(BlankFragment.newInstance("4"))
+        fragments.add(FollowScreen.newInstance())
         childFragmentManager.run {
             val adapter = SharePageAdapter(this, fragments)
             viewPager?.adapter = adapter
-            viewPager?.offscreenPageLimit = 4
+            viewPager?.offscreenPageLimit = 2
         }
         bottomView?.syncWithViewPager(viewPager)
         bottomView?.openPersonal {

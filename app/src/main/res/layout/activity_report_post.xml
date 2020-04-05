@@ -1,91 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true">
 
-    <!--Header-->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/csHeader"
-        android:fitsSystemWindows="true"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/colorHome"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp50">
+        android:layout_height="@dimen/status_bar_height"
+        android:background="@color/status_color_blue"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/csBack"
-            android:layout_marginStart="@dimen/dp20"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imgBack"
-                android:src="@drawable/ic_back"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_width="7dp"
-                android:layout_height="match_parent" />
-            <TextView
-                android:id="@+id/tvBack"
-                android:textSize="15sp"
-                android:textAllCaps="true"
-                android:fontFamily="@font/roboto_medium"
-                android:textColor="@color/colorWhite"
-                android:gravity="center"
-                android:text="@string/back"
-                android:layout_marginStart="@dimen/dp5"
-                app:layout_constraintStart_toEndOf="@+id/imgBack"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <TextView
-            android:textSize="16sp"
-            android:gravity="center"
-            android:text="@string/report_post_title"
-            android:fontFamily="@font/roboto_regular"
-            android:textAllCaps="true"
-            android:textColor="@color/colorWhite"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <ImageView
-            app:layout_constraintEnd_toStartOf="@+id/imgAvatar"
-            android:layout_marginEnd="@dimen/dp_10"
-            android:src="@drawable/ic_message"
-            android:layout_width="@dimen/dp25"
-            android:layout_height="match_parent" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgAvatar"
-            app:layout_constraintEnd_toStartOf="@+id/imgMore"
-            android:src="@drawable/img_avatar_holder"
-            android:layout_width="@dimen/dp25"
-            android:layout_marginEnd="@dimen/dp5"
-            android:layout_height="match_parent" />
-        <ImageView
-            android:id="@+id/imgMore"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:padding="5dp"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/ic_more"
-            android:layout_width="30dp"
-            android:layout_height="match_parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <include
+        layout="@layout/shared_blue_toolbar_layout"/>
 
     <ScrollView
         android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@+id/csHeader"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
             <!--Game Information-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/csGameInformation"
@@ -97,7 +39,7 @@
 
                 <!--Avatar Game-->
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/imgAvatarGame"
+                    android:id="@+id/avatarImageView"
                     android:scaleType="centerCrop"
                     android:src="@drawable/img_temp_game"
                     app:layout_constraintTop_toTopOf="parent"
@@ -110,44 +52,44 @@
                 <LinearLayout
                     android:gravity="center_vertical"
                     android:orientation="vertical"
-                    app:layout_constraintStart_toEndOf="@+id/imgAvatarGame"
-                    app:layout_constraintTop_toTopOf="@+id/imgAvatarGame"
-                    app:layout_constraintBottom_toBottomOf="@+id/imgAvatarGame"
+                    app:layout_constraintStart_toEndOf="@+id/avatarImageView"
+                    app:layout_constraintTop_toTopOf="@+id/avatarImageView"
+                    app:layout_constraintBottom_toBottomOf="@+id/avatarImageView"
                     android:layout_width="wrap_content"
-                    android:paddingStart="@dimen/dp15"
+                    android:layout_marginStart="@dimen/layout_margin_16dp"
                     android:layout_height="wrap_content">
                     <TextView
-                        android:id="@+id/tvGameTitle"
-                        android:text="Kun Park"
+                        android:id="@+id/nameTextView"
+                        tools:text="Kun Park"
                         android:textStyle="bold"
                         android:textSize="@dimen/sp_13"
                         android:fontFamily="@font/roboto_bold"
                         android:textColor="@color/black"
-                        app:layout_constraintStart_toEndOf="@+id/imgAvatarGame"
-                        app:layout_constraintTop_toTopOf="@+id/imgAvatarGame"
+                        app:layout_constraintStart_toEndOf="@+id/avatarImageView"
+                        app:layout_constraintTop_toTopOf="@+id/avatarImageView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView
-                        android:id="@+id/tvCountFollow"
+                        android:id="@+id/descriptionTextView"
                         android:textSize="@dimen/text_size_11"
-                        android:text="10 giờ trước   từ iphone 6 plus"
+                        tools:text="10 giờ trước   từ iphone 6 plus"
                         android:fontFamily="@font/roboto_regular"
                         android:layout_marginTop="@dimen/dp3"
-                        app:layout_constraintStart_toEndOf="@+id/imgAvatarGame"
-                        app:layout_constraintBottom_toBottomOf="@+id/imgAvatarGame"
+                        app:layout_constraintStart_toEndOf="@+id/avatarImageView"
+                        app:layout_constraintBottom_toBottomOf="@+id/avatarImageView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tvFollowGame"
+                    android:id="@+id/detailTextView"
                     android:textColor="@color/colorError"
                     android:text="@string/watch"
                     android:fontFamily="@font/roboto_light"
                     android:background="@drawable/bg_follow"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/imgAvatarGame"
-                    app:layout_constraintBottom_toBottomOf="@+id/imgAvatarGame"
+                    app:layout_constraintTop_toTopOf="@+id/avatarImageView"
+                    app:layout_constraintBottom_toBottomOf="@+id/avatarImageView"
                     android:layout_width="@dimen/dp60"
                     android:gravity="center"
                     android:textSize="@dimen/sp_12"
@@ -155,13 +97,15 @@
                 
                 <!--Content-->
                 <TextView
+                    android:id="@+id/contentTextView"
                     android:maxLines="3"
-                    android:text="Cường hoá trang bị là tính năng giúp trang bị gia tăng chỉ số căn bản vốn có. Cấp độ năng cấp cường hoá càng cao thì trang bị càng mạnh…"
+                    tools:text="Cường hoá trang bị là tính năng giúp trang bị gia tăng chỉ số căn bản vốn có. Cấp độ năng cấp cường hoá càng cao thì trang bị càng mạnh…"
                     android:textColor="@color/colorText"
                     android:fontFamily="@font/roboto_regular"
                     android:layout_marginTop="@dimen/dp_10"
-                    app:layout_constraintTop_toBottomOf="@+id/imgAvatarGame"
+                    app:layout_constraintTop_toBottomOf="@+id/avatarImageView"
                     android:layout_width="match_parent"
+                    android:ellipsize="end"
                     android:layout_height="wrap_content" />
             </androidx.constraintlayout.widget.ConstraintLayout>
             <View
@@ -172,11 +116,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
             <TextView
-                android:id="@+id/tvCantDownload"
+                android:id="@+id/header"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="center_vertical"
                 android:textSize="@dimen/sp_13"
-                android:paddingStart="@dimen/dp15"
+                android:layout_marginStart="@dimen/dp15"
                 android:text="@string/content_problem"
                 app:layout_constraintTop_toBottomOf="@+id/vInforGame"
                 android:layout_width="match_parent"
@@ -184,7 +128,7 @@
 
             <View
                 android:id="@+id/vCantDownload"
-                app:layout_constraintTop_toBottomOf="@+id/tvCantDownload"
+                app:layout_constraintTop_toBottomOf="@+id/header"
                 android:background="@color/colorGray"
                 android:alpha="0.3"
                 android:layout_width="match_parent"
@@ -192,10 +136,10 @@
 
             <!--Google Play-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csGooglePlay"
+                android:id="@+id/reason1Layout"
                 app:layout_constraintTop_toBottomOf="@+id/vCantDownload"
                 android:layout_width="match_parent"
-                android:paddingStart="@dimen/dp20"
+                android:layout_marginStart="@dimen/layout_margin_16dp"
                 android:layout_height="@dimen/dp50">
 
                 <TextView
@@ -207,8 +151,8 @@
                     android:textSize="@dimen/sp_13"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
-                <ImageView
-                    android:id="@+id/imgGooglePlay"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/reason1ImageView"
                     android:padding="@dimen/dp15"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:src="@drawable/ic_checked_radio"
@@ -224,10 +168,10 @@
 
             <!--APK-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csAPK"
-                app:layout_constraintTop_toBottomOf="@+id/csGooglePlay"
+                android:id="@+id/reason2Layout"
+                app:layout_constraintTop_toBottomOf="@+id/reason1Layout"
                 android:layout_width="match_parent"
-                android:paddingStart="@dimen/dp20"
+                android:layout_marginStart="@dimen/layout_margin_16dp"
                 android:layout_height="@dimen/dp50">
                 <TextView
                     android:text="@string/report_post_not_suitable"
@@ -238,8 +182,8 @@
                     android:textSize="@dimen/sp_13"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
-                <ImageView
-                    android:id="@+id/imgAPK"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/reason2ImageView"
                     android:padding="@dimen/dp15"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:src="@drawable/ic_non_check"
@@ -255,10 +199,10 @@
 
             <!--App Store-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csAppStore"
-                app:layout_constraintTop_toBottomOf="@+id/csAPK"
+                android:id="@+id/reason3Layout"
+                app:layout_constraintTop_toBottomOf="@+id/reason2Layout"
                 android:layout_width="match_parent"
-                android:paddingStart="@dimen/dp20"
+                android:layout_marginStart="@dimen/layout_margin_16dp"
                 android:layout_height="@dimen/dp50">
                 <TextView
                     android:text="@string/report_post_not_shouldnot_appare"
@@ -269,8 +213,8 @@
                     android:textSize="@dimen/sp_13"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
-                <ImageView
-                    android:id="@+id/imgAppStore"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/reason3ImageView"
                     android:padding="@dimen/dp15"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:src="@drawable/ic_non_check"
@@ -286,10 +230,10 @@
 
             <!--IPA-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csIPA"
-                app:layout_constraintTop_toBottomOf="@+id/csAppStore"
+                android:id="@+id/reason4Layout"
+                app:layout_constraintTop_toBottomOf="@+id/reason3Layout"
                 android:layout_width="match_parent"
-                android:paddingStart="@dimen/dp20"
+                android:layout_marginStart="@dimen/layout_margin_16dp"
                 android:layout_height="@dimen/dp50">
                 <TextView
                     android:text="@string/report_post_not_spam"
@@ -300,8 +244,8 @@
                     android:textSize="@dimen/sp_13"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
-                <ImageView
-                    android:id="@+id/imgIPA"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/reason4ImageView"
                     android:padding="@dimen/dp15"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:src="@drawable/ic_non_check"
@@ -318,10 +262,10 @@
 
             <!--Other reason-->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/csOtherReason"
-                app:layout_constraintTop_toBottomOf="@+id/csIPA"
+                android:id="@+id/otherReasonLayout"
+                app:layout_constraintTop_toBottomOf="@+id/reason4Layout"
                 android:layout_width="match_parent"
-                android:paddingStart="@dimen/dp20"
+                android:layout_marginStart="@dimen/layout_margin_16dp"
                 android:layout_height="@dimen/dp50">
                 <TextView
                     android:text="@string/other_reason"
@@ -332,8 +276,8 @@
                     android:textSize="@dimen/sp_13"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
-                <ImageView
-                    android:id="@+id/imgUnknow"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/otherReasonImageView"
                     android:padding="@dimen/dp15"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:src="@drawable/ic_non_check"
@@ -347,19 +291,24 @@
                     android:layout_height="1dp"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/reasonEditText"
                 android:textSize="@dimen/sp_13"
                 android:paddingTop="@dimen/dp15"
-                android:paddingStart="@dimen/dp15"
+                android:enabled="false"
+                android:layout_marginStart="@dimen/layout_margin_16dp"
                 android:background="@android:color/transparent"
                 android:hint="@string/write_information"
-                app:layout_constraintTop_toBottomOf="@+id/csOtherReason"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                app:layout_constraintTop_toBottomOf="@+id/otherReasonLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <TextView
+        android:id="@+id/confirmButton"
         android:layout_marginStart="@dimen/dp20"
         android:layout_marginEnd="@dimen/dp20"
         android:text="@string/confirm"
@@ -372,4 +321,4 @@
         android:background="@drawable/bg_button_color_home"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp45" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

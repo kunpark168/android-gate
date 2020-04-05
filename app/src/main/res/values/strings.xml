@@ -113,6 +113,7 @@
     <string name="so_point_and_danh_hieu">Số point | Danh hiệu</string>
     <string name="long_text_to_scroll">Where does it come from?  Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.  The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</string>
     <string name="thong_bao">Thông báo</string>
+    <string name="bao_cao">Báo cáo</string>
     <string name="game_thu">Game thủ</string>
     <string name="nph_short">NPH</string>
     <string name="you_want">Bạn muốn</string>
@@ -145,8 +146,8 @@
     <string name="input_point_donate">Điền số (Point) từ:</string>
     <string name="share_feelling">Share</string>
     <string name="favourite_feelling">Favourite</string>
-    <string name="like_feelling">Like</string>
-    <string name="dislike_feelling">Dislike</string>
+    <string name="like_label">Like</string>
+    <string name="dislike_label">Dislike</string>
     <string name="comment_feelling">Comment</string>
     <string name="tab_follow">Follow</string>
     <string name="tab_information">Thông Tin</string>
@@ -311,4 +312,25 @@
     <string name="moi_nhat">Mới nhất</string>
     <string name="xem_them_amount_comment">Xem thêm {number} comment{s}</string>
     <string name="nhap_noi_dung">Nhập nội dung</string>
+    <string name="reply">Reply</string>
+    <string name="favorite_label">Favorite</string>
+    <string name="camera">Camera</string>
+    <string name="next">Next</string>
+    <string name="view_label">View</string>
+    <string name="gallery">Gallery</string>
+    <string name="nha_phat_hanh">Nhà Phat Hành</string>
+    <string name="splash_phrase">{rating_avg}/{num_rating}</string>
+    <string name="required_email_register">Please enter your email</string>
+    <string name="required_password_register">Please enter your password</string>
+    <string name="required_confirm_password_register">Please enter your confirm password</string>
+    <string name="required_display_name_register">Please enter your display name</string>
+    <string name="password_register_not_match">Password not match</string>
+    <string name="email_invalid">Email is invalid</string>
+    <string name="bai_lien_quan">Bài Liên Quan</string>
+    <string name="cung_chuyen_muc">Cùng Chuyên Mục</string>
+    <string name="chanel_id_notification">9Gate Chanel</string>
+    <string name="title_notification_comment">Bài viết của bạn có 1 comment </string>
+    <string name="point_phrase">{point} Point</string>
+    <string name="please_wait">Please Wait</string>
+    <string name="gift_code">Gift code</string>
 </resources>

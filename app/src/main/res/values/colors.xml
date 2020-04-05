@@ -63,16 +63,25 @@
     <color name="white">#ffffff</color>
     <color name="text_color_black">#000000</color>
 
+    <color name="color_react_grey">#f5f4f8</color>
+    <color name="color_react_grey_dark">#828687</color>
+
     <color name="color_loading_gray">#eeeeee</color>
     <color name="color_loading_gray_darker">#dddddd</color>
     <color name="bg_color_message_receiver">#55b3f9</color>
     <color name="orange">#fa5a36</color>
     <color name="color_solid_grey">#f4f2f0</color>
     <color name="color_main_blue">#55b3f9</color>
+    <color name="color_main_blue_alpha">#8855b3f9</color>
     <color name="color_main_orange">#fa5a36</color>
     <color name="default_color_text">#777777</color>
     <color name="text_color_blue">#55b3f9</color>
     <color name="text_color_red_light">#fa5a36</color>
     <color name="text_color_dark">#333333</color>
     <color name="background_color_dark">#DDDDDD</color>
+    <color name="background_color_grey">#f4f2f0</color>
+    <color name="toolbar_color_orange">#fa5a36</color>
+    <color name="toolbar_color_blue">#55b3f9</color>
+    <color name="status_color_blue">#55b3f9</color>
+    <color name="status_color_orange">#fa5a36</color>
 </resources>

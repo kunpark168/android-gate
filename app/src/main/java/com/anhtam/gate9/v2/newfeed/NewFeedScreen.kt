@@ -1,56 +1,81 @@
 package com.anhtam.gate9.v2.newfeed
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.anhtam.domain.Banner
-import com.anhtam.domain.Base
-import com.anhtam.domain.Game
-import com.anhtam.domain.v2.PostEntity
-import com.anhtam.domain.v2.User
+import com.anhtam.domain.v2.Post
+import com.anhtam.domain.v2.protocol.Game
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
-import com.anhtam.gate9.adapter.GroupBannerAdapter
-import com.anhtam.gate9.adapter.v2.CommentAdapter
+import com.anhtam.gate9.adapter.v2.PostAdapter
+import com.anhtam.gate9.config.Config
+import com.anhtam.gate9.restful.BackgroundTasks
 import com.anhtam.gate9.share.view.CustomLoadMoreView
+import com.anhtam.gate9.share.view.MoreDialog
 import com.anhtam.gate9.storage.StorageManager
-import com.anhtam.gate9.ui.search.SearchActivity
-import com.anhtam.gate9.utils.autoCleared
-import com.anhtam.gate9.v2.InfoService
-import com.anhtam.gate9.v2.categories.CategoryTab
-import com.anhtam.gate9.v2.categories.FeatureScreen
-import com.anhtam.gate9.v2.mxh_game.MXHGameScreen
-import com.anhtam.gate9.v2.notification.NotificationFragment
-import com.anhtam.gate9.v2.main.member.MemberHomeFragment
+import com.anhtam.gate9.utils.convertInt
+import com.anhtam.gate9.utils.toImage
+import com.anhtam.gate9.v2.BackgroundViewModel
+import com.anhtam.gate9.v2.auth.login.LoginScreen
+import com.anhtam.gate9.v2.createpost.CreatePostScreen
+import com.anhtam.gate9.v2.game_detail.DetailGameFragment
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
-import com.anhtam.gate9.v2.messenger.ChannelFragment
+import com.anhtam.gate9.v2.member.MemberFragment
+import com.anhtam.gate9.v2.messenger.inbox.ChannelLetterFragment
+import com.anhtam.gate9.v2.notification.NotificationFragment
+import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
+import com.anhtam.gate9.v2.post_detail.DetailPostScreen
+import com.anhtam.gate9.v2.report.post.ReportPostActivity
+import com.anhtam.gate9.v2.user_detail.DetailUserFragment
+import com.anhtam.gate9.vo.Reaction
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.new_feed_screen.*
-import kotlinx.android.synthetic.main.new_feed_screen.imgBanner
-import kotlinx.android.synthetic.main.new_feed_screen.tvEvent
-import kotlinx.android.synthetic.main.new_feed_screen.tvGame
-import kotlinx.android.synthetic.main.new_feed_screen.tvSpecial
-import kotlinx.android.synthetic.main.new_feed_screen.tvTheme
-import kotlinx.android.synthetic.main.new_feed_screen.tvVideo
 import kotlinx.android.synthetic.main.toolbar_new_feed.*
 import of.bum.network.helper.Resource
-import of.bum.network.helper.RestResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Named
 
-class NewFeedScreen : DaggerNavigationFragment() {
+class NewFeedScreen : DaggerNavigationFragment(R.layout.new_feed_screen), MoreDialog.IMore {
+
+    override fun delete() {
+        if (mCurrentPost == -1) return
+        val id = mAdapter.data[mCurrentPost]?.commentId ?: return
+        showProgress()
+        mTopViewModel.delete(id).observe(viewLifecycleOwner, Observer {
+            when(it) {
+                is Resource.Success -> {
+                    mAdapter.remove(mCurrentPost)
+                    mCurrentPost = -1
+                    hideProgress()
+                }
+                is Resource.Error -> {
+                    hideProgress()
+                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                    mCurrentPost = -1
+                }
+            }
+        })
+    }
+
+    override fun edit() {
+        if (mCurrentPost == -1) return
+        navigation?.addFragment(CreatePostScreen.newInstance(post = mAdapter.data[mCurrentPost]))
+    }
+
+    override fun report() {
+        if (mCurrentPost == -1) return
+        navigation?.addFragment(ReportPostActivity.newInstance(mAdapter.data[mCurrentPost]?.commentId ?: return))
+    }
 
     fun update() {
         Timber.d("War")
@@ -62,120 +87,146 @@ class NewFeedScreen : DaggerNavigationFragment() {
         fun newInstance() = NewFeedScreen()
     }
 
-    private var mGroup4Adapter by autoCleared<GroupBannerAdapter>()
-    private var mCommentAdapter by autoCleared<CommentAdapter>()
-    private var mUserId: Int = 0
-    private val mViewModel: NewFeedViewModel by viewModels { vmFactory }
-    private val mPostViewModel: com.anhtam.gate9.ui.discussion.common.newfeed.NewFeedViewModel by viewModels { vmFactory }
-    @Inject lateinit var mInfoService: InfoService
+    private val mViewModel: NewFeedViewModel by viewModels ({requireActivity()}, {vmFactory })
+    private val mTopViewModel: BackgroundViewModel by viewModels({requireActivity()},{vmFactory})
+    private var mCurrentPost = -1
+    private var mNewFeedHeaderView: NewFeedHeaderView? = null
+    private var mSearchHeaderView: SearchHeaderView? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_blue)
-        return inflater.inflate(R.layout.new_feed_screen, container, false)
-    }
+    @Inject lateinit var mAdapter : PostAdapter
+    @Inject @field:Named("avatar") lateinit var avatarOptions: RequestOptions
+    @Inject @field:Named("banner") lateinit var bannerOptions: RequestOptions
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Timber.d("ACCESS TOKEN ${StorageManager.getAccessToken()}")
         init()
     }
 
     private fun init() {
         loadData()
         initCommentRecyclerView()
-        initGamesRecyclerView()
         initEventListener()
         observer()
     }
 
     private fun observer(){
-        mPostViewModel._post.observe(viewLifecycleOwner, Observer {resource ->
-            when(resource) {
+        mViewModel.data.observe(viewLifecycleOwner, Observer {
+            when(it) {
                 is Resource.Success -> {
-                    val data = resource.data?.wrap
+                    hideProgress()
+                    val data = it.data
                     if (data.isNullOrEmpty()) {
-                        mCommentAdapter.loadMoreEnd()
+                        mAdapter.loadMoreEnd()
                     } else {
-                        if (mPostViewModel.page == 0) {
-                            mCommentAdapter.setNewData(data)
+                        if (mViewModel.mPage == 0) {
+                            mAdapter.setNewData(data)
                         } else {
-                            mCommentAdapter.addData(data)
+                            mAdapter.addData(data)
                         }
-                        mCommentAdapter.loadMoreComplete()
+                        mAdapter.loadMoreComplete()
                     }
                 }
                 is Resource.Loading -> {
 
                 }
                 else -> {
-                    mCommentAdapter.loadMoreFail()
+                    hideProgress()
+                    mAdapter.loadMoreFail()
                 }
+            }
+        })
+        observerGroup()
+        observerBanner()
+
+        mSessionManager.cachedUser.observe(viewLifecycleOwner, Observer {
+            if (it == null) return@Observer
+            val avatar = when(it) {
+                is Resource.Loading, is Resource.Error -> ""
+                is Resource.Success -> it.data?.mAvatarPath
+            }
+            if (avatar.isNullOrEmpty()) return@Observer
+            avatar.run {
+                Glide.with(this@NewFeedScreen)
+                        .load(avatar.toImage())
+                        .apply {avatarOptions}
+                        .into(imgAvatar)
             }
         })
     }
 
-    private fun loadMore(){
-        mPostViewModel.requestMore(mUserId)
+    private fun observerGroup(){
+        mTopViewModel.banners.observe(viewLifecycleOwner, Observer {
+            if (it is Resource.Success) mNewFeedHeaderView?.bindingBanner(it.data)
+        })
+    }
+
+    private fun observerBanner(){
+        mTopViewModel.games.observe(viewLifecycleOwner, Observer {
+            if (it is Resource.Success) mNewFeedHeaderView?.bindingGroupGames(it.data)
+        })
     }
 
     private fun loadData() {
-        Timber.d(StorageManager.getAccessToken())
-        mViewModel.getListingPost().observe(viewLifecycleOwner, Observer {
-            Timber.d("Status $it")
-            when(it) {
-                is Resource.Success -> {
-                    hideProgress()
-                    bindingBanner(it.data?.mBanner)
-                    bindingGroupGames(it.data?.mGames)
-                    bindingComment(it.data?.mListing)
-                }
-                is Resource.Error ->{
-                    hideProgress()
-                }
-                else -> {
-
-                }
-            }
-        })
-        mViewModel.getInfoUser().enqueue(object: Callback<RestResponse<User>>{
-            override fun onFailure(call: Call<RestResponse<User>>, t: Throwable) {
-                Timber.d("Fail to load user info")
-            }
-
-            override fun onResponse(call: Call<RestResponse<User>>, response: Response<RestResponse<User>>) {
-                if(response.isSuccessful && response.code() == 200) {
-                    val data = response.body() ?: return
-                    mUserId = data.data?.mUserId ?: return
-                    Glide.with(this@NewFeedScreen).applyDefaultRequestOptions(RequestOptions().placeholder(R.drawable.img_avatar_holder).error(R.drawable.img_avatar_holder)).load(data.data?.mAvatarPath).into(imgAvatar)
-                }
-            }
-        })
+        mViewModel.loadData(refresh = true)
     }
 
     private fun initCommentRecyclerView() {
-        mCommentAdapter = CommentAdapter(navigation) { data, type ->
-            val id = data.commentId?.toInt() ?: 0
-            val params = hashMapOf<String, Int>()
-            params["commentId"] = id
-            params["type"] = type
-            params["userId"] = mUserId
-            mViewModel.react(params).enqueue(object: Callback<Base>{
-                override fun onFailure(call: Call<Base>, t: Throwable) {
-                    Timber.d("Failure")
+        mNewFeedHeaderView = NewFeedHeaderView(context)
+        mSearchHeaderView = SearchHeaderView(context)
+        mSearchHeaderView?.initialize(navigation)
+        mAdapter.addHeaderView(mSearchHeaderView)
+        mNewFeedHeaderView?.initialize(navigation, bannerOptions)
+        mAdapter.addHeaderView(mNewFeedHeaderView)
+        mAdapter.setLoadMoreView(CustomLoadMoreView())
+        mAdapter.setOnItemChildClickListener { _, view, position ->
+            val post = mAdapter.data[position]
+            when(view.id){
+                R.id.readMoreTextView, R.id.contentTextView, R.id.commentImageView -> {
+                    navigateToPostDetail(post){
+                        changeReaction(it, position)
+                    }
                 }
-
-                override fun onResponse(call: Call<Base>, response: Response<Base>) {
-                    Timber.d(StorageManager.getAccessToken())
-                    Timber.d("Success")
+                R.id.userNameTextView, R.id.avatarImageView -> {
+                    val user = post.user ?: post.createdUser ?: return@setOnItemChildClickListener
+                    navigateToMemberDiscussion(user)
                 }
-
-            })
+                R.id.gameImageView, R.id.titleGameTextView -> {
+                    val game = post.game ?: return@setOnItemChildClickListener
+                    navigateToGameDiscussion(game)
+                }
+                R.id.moreImageView -> {
+                    mCurrentPost = position
+                    val unwrapContext = context ?: return@setOnItemChildClickListener
+                    val user = post.user ?: post.createdUser ?: return@setOnItemChildClickListener
+                    val isOwner = user.mId == mSessionManager.cachedUser.value?.data?.mId
+                    val mMoreDialog = MoreDialog.newInstance(unwrapContext, isOwner)
+                    mMoreDialog.setMoreListener(this)
+                    mMoreDialog.show()
+                }
+                R.id.followGameTextView -> {
+                    val followView = view as? TextView
+                    if (checkLogin()) {
+                        BackgroundTasks.postFollowGame(post.game?.gameId ?: return@setOnItemChildClickListener)
+                        if(followView?.text == context?.getString(R.string.follow)) {
+                            setFollowing(followView)
+                            //sending request
+                        } else {
+                            setFollow(followView)
+                            //sending request
+                        }
+                    } else {
+                        navigation?.addFragment(LoginScreen.newInstance(false))
+                    }
+                }
+            }
         }
-        mCommentAdapter.setLoadMoreView(CustomLoadMoreView())
-        mCommentAdapter.setOnLoadMoreListener({
-            loadMore()
+
+        mAdapter.setOnLoadMoreListener({
+            mViewModel.loadData()
         }, rvComment)
         rvComment?.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        rvComment?.adapter = mCommentAdapter
+        rvComment?.adapter = mAdapter
         val unwrappedContext = context ?: return
         val dividerItemDecoration = DividerItemDecoration(unwrappedContext, LinearLayout.VERTICAL)
         val drawableDivider = ContextCompat.getDrawable(unwrappedContext, R.drawable.divider_item_decorator) ?: return
@@ -183,78 +234,107 @@ class NewFeedScreen : DaggerNavigationFragment() {
         rvComment?.addItemDecoration(dividerItemDecoration)
     }
 
-    private fun initGamesRecyclerView() {
-        mGroup4Adapter = GroupBannerAdapter(navigation, Glide.with(this))
-        rv4Banners?.layoutManager = GridLayoutManager(context, 2)
-        rv4Banners?.adapter= mGroup4Adapter
-    }
-
-    private fun bindingBanner(data: Banner?) {
-        if (data == null) return
-        Glide.with(this)
-                .applyDefaultRequestOptions(
-                        RequestOptions()
-                                .centerCrop()
-                                .placeholder(R.drawable.img_holder_banner)
-                                .error(R.drawable.img_holder_banner)
-                ).load(data.picture)
-                .into(imgBanner)
-    }
-
-    private fun bindingComment(data: List<PostEntity>?) {
-        if (data == null) return
-        mCommentAdapter.setNewData(data)
-    }
-
-    private fun bindingGroupGames(data: List<Game>?) {
-        if (data == null) return
-        val games: List<Game> = if (data.size < 4) {
-            data
-        } else {
-            data.subList(0, 4)
-        }
-        rv4Banners?.visibility = View.VISIBLE
-        mGroup4Adapter.setNewData(games)
-    }
-
     private fun initEventListener() {
         swipeRefreshLayout?.setOnRefreshListener {
             swipeRefreshLayout?.isRefreshing = false
-//            showProgress()
-//            loadData()
+            showProgress()
+            mTopViewModel.getBanner()
+            mTopViewModel.getGames()
+            loadData()
         }
 
         icNotification?.setOnClickListener {
             navigation?.addFragment(NotificationFragment.newInstance())
         }
         icChat?.setOnClickListener {
-            navigation?.addFragment(ChannelFragment.newInstance())
+//            navigation?.addFragment(ChannelLetterFragment.newInstance())
         }
-        icGroup?.setOnClickListener { navigation?.addFragment(MemberHomeFragment.newInstance()) }
-        imgSearch?.setOnClickListener{
-            SearchActivity.start(context)
-        }
-        tvSearch?.setOnClickListener {
-            SearchActivity.start(context)
-        }
-        tvVideo?.setOnClickListener {
-            navigation?.addFragment(FeatureScreen.newInstance(CategoryTab.VIDEO.tab))
-        }
-        tvTheme?.setOnClickListener {
-            navigation?.addFragment(FeatureScreen.newInstance(CategoryTab.THEME.tab))
-        }
-        tvSpecial?.setOnClickListener {
-            navigation?.addFragment(FeatureScreen.newInstance(CategoryTab.SPECIAL.tab))
-        }
-        tvEvent?.setOnClickListener {
-            navigation?.addFragment(FeatureScreen.newInstance(CategoryTab.EVENT.tab))
-        }
-        tvGame?.setOnClickListener {
-            navigation?.addFragment(MXHGameScreen.newInstance())
-        }
+        icGroup?.setOnClickListener { navigation?.addFragment(MemberFragment.newInstance()) }
         imgAvatar?.setOnClickListener {
-
+            val user = mSessionManager.cachedUser.value?.data ?: return@setOnClickListener
+            val roleId = user.mRoleId ?: return@setOnClickListener
+            val id = user.mId ?: return@setOnClickListener
+            if (roleId != 5){
+                navigation?.addFragment(DetailUserFragment.newInstance(id))
+            } else {
+                navigation?.addFragment(DetailNPHFragment.newInstance(id))
+            }
         }
+    }
 
+
+
+    private fun checkLogin() : Boolean {
+        val accessToken = StorageManager.getAccessToken()
+        return accessToken.isNotEmpty()
+    }
+
+    private fun navigateToMemberDiscussion(user: User) {
+        val roleId = user.mRoleId ?: return
+        val id = user.mId ?: return
+        if (roleId != 5){
+            navigation?.addFragment(DetailUserFragment.newInstance(id))
+        } else {
+            navigation?.addFragment(DetailNPHFragment.newInstance(id))
+        }
+    }
+
+    private fun navigateToPostDetail(post: Post, listener: (Reaction)->Unit) {
+        val id = post.commentId ?: return
+        navigation?.addFragment(DetailPostScreen.newInstance(id, DetailPostScreen.Detail.POST, listener), tag = Config.DETAIL_POST_FRAGMENT_TAG)
+    }
+
+    private fun navigateToGameDiscussion(game: Game){
+        val id = game.gameId ?: return
+        navigation?.addFragment(DetailGameFragment.newInstance(id))
+    }
+
+
+
+    private fun changeReaction(react: Reaction, position: Int){
+        val data = mAdapter.data
+        val post = data[position]
+        val preReact = Reaction.react(data[position].like?.convertInt() ?: 0)
+        post.like = Reaction.value(react).toString()
+        // count
+        when(preReact){
+            Reaction.Love -> {
+                post.totalLove = (post.totalLove ?: 0) - 1
+            }
+            Reaction.Like -> {
+                post.totalLike = (post.totalLike ?: 0) - 1
+            }
+            Reaction.Dislike -> {
+                post.totalDislike = (post.totalDislike ?: 0) - 1
+            }
+        }
+        when(react){
+            Reaction.Love -> {
+                post.totalLove = (post.totalLove ?: 0) + 1
+            }
+            Reaction.Like -> {
+                post.totalLike = (post.totalLike ?: 0) + 1
+            }
+            Reaction.Dislike -> {
+                post.totalDislike = (post.totalDislike ?: 0) + 1
+            }
+        }
+        mAdapter.notifyDataSetChanged()
+    }
+
+
+
+    private fun setFollow(tvFollowGame: TextView?) {
+        val unwrapContext = context ?: return
+        tvFollowGame?.text = getString(R.string.follow)
+        tvFollowGame?.setBackgroundResource(R.drawable.bg_follow)
+        tvFollowGame?.setTextColor(ContextCompat.getColor(unwrapContext, R.color.text_color_red_light))
+    }
+
+    private fun setFollowing(tvFollowGame: TextView?) {
+        val unwrapContext = context ?: return
+        tvFollowGame?.text = getString(R.string.following)
+        tvFollowGame?.setBackgroundResource(R.drawable.bg_following)
+        tvFollowGame?.setTextColor(ContextCompat.getColor(unwrapContext, R.color.text_color_blue))
     }
 }

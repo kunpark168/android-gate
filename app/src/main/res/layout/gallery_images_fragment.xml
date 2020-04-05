@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/status_bar_height"
+        android:background="@color/status_color_blue"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvImages"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="@dimen/padding_8dp"
+        android:layout_marginTop="@dimen/status_bar_height"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnChoose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/color_main_blue"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:text="Choose"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="32dp"/>
+</FrameLayout>

@@ -5,6 +5,11 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.*
 import com.anhtam.gate9.R
 
+
+/*
+ * back stack != fragments exist
+ * clear back stack and replace == new root
+ */
 class NavigationDispatcher(
         private val activity: FragmentActivity,
         @IdRes private val containerId: Int
@@ -43,11 +48,11 @@ class NavigationDispatcher(
         }
     }
 
-    override fun changeFragment(fragment: Fragment, backStack: Boolean) = activity.run {
+    override fun changeFragment(fragment: Fragment, backStack: Boolean, tag: String?) = activity.run {
         supportFragmentManager.commitTransaction {
-            if (backStack) placeToBackStack()
+            if (backStack) placeToBackStack(tag)
             setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-            add(containerId, fragment)
+            add(containerId, fragment, tag)
         }
     }
 
@@ -67,8 +72,8 @@ class NavigationDispatcher(
 
     private fun FragmentManager.isBackStackEmpty() = backStackEntryCount == 0
 
-    private fun FragmentTransaction.placeToBackStack() {
-        addToBackStack(null)
+    private fun FragmentTransaction.placeToBackStack(tag: String?) {
+        addToBackStack(tag)
         setTransition(FragmentTransaction.TRANSIT_NONE)
     }
 
@@ -84,6 +89,10 @@ class NavigationDispatcher(
     }
 
     override fun onBackPressed() = (getCurrentFragment() as? BackListener ?: EMPTY_BACK_LISTENER).onBackPressed()
+
+    override fun clear(upToTag: String, includeMatch: Boolean) {
+        activity.supportFragmentManager.popBackStack(upToTag, if (includeMatch) FragmentManager.POP_BACK_STACK_INCLUSIVE else 0)
+    }
 
     private fun getCurrentFragment() =
             activity.supportFragmentManager.findFragmentById(containerId)

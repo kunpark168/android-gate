@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/status_color_blue"
+    android:clickable="true"
+    android:focusable="true"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
+        <include
+            layout="@layout/shared_blue_toolbar_layout"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/csSearch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/search_view_height"
+            android:layout_margin="@dimen/dp12">
+
+            <EditText
+                android:id="@+id/edtSearch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/roboto_regular"
+                android:background="@drawable/bg_search"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:inputType="text"
+                android:hint="@string/search"
+                android:imeOptions="actionSearch"/>
+
+            <ImageView
+                android:id="@+id/imgSearch"
+                android:layout_width="@dimen/search_icon_width"
+                android:layout_height="match_parent"
+                android:background="@drawable/img_seach"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@null"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,310 +1,164 @@
 package com.anhtam.gate9.adapter.v2
 
-import android.content.Context
 import android.text.Html
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import com.anhtam.gate9.adapter.navigator.IPostNavigator
-import com.anhtam.domain.v2.PostEntity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.anhtam.domain.v2.Gamev1
+import com.anhtam.domain.v2.Gamev2
+import com.anhtam.domain.v2.Post
+import com.anhtam.domain.v2.protocol.User
 import com.anhtam.gate9.R
-import com.anhtam.gate9.config.Config
 import com.anhtam.gate9.navigation.Navigation
 import com.anhtam.gate9.share.view.MoreDialog
-import com.anhtam.gate9.storage.StorageManager
-import com.anhtam.gate9.ui.base.BaseActivity
-import com.anhtam.gate9.ui.discussion.user.UserDiscussionActivity
-import com.anhtam.gate9.ui.report.post.ReportPostActivity
-import com.anhtam.gate9.v2.auth.login.LoginScreen
-import com.anhtam.gate9.v2.post.DetailPostScreen
-import com.anhtam.gate9.vo.model.Category
+import com.anhtam.gate9.utils.toImage
+import com.anhtam.gate9.v2.nph_detail.DetailNPHFragment
+import com.anhtam.gate9.v2.post_detail.DetailPostScreen
+import com.anhtam.gate9.v2.post_detail.ShowMoreFooterView
+import com.anhtam.gate9.v2.report.post.ReportPostActivity
+import com.anhtam.gate9.v2.user_detail.DetailUserFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.squareup.phrase.Phrase
-import kotlinx.android.synthetic.main.photo_n_item_layout.view.*
-import kotlinx.android.synthetic.main.shared_post_item_layout.view.*
+import kotlinx.android.synthetic.main.comment_item_layout.view.*
+import javax.inject.Inject
+import javax.inject.Named
 
 
-class CommentAdapter(private val navigation: Navigation?, private val listener: (PostEntity,Int)->Unit)
-    : BaseQuickAdapter<PostEntity, BaseViewHolder>(R.layout.shared_post_item_layout, ArrayList()), IPostNavigator {
+class CommentAdapter @Inject constructor(
+        val navigation: Navigation,
+        @Named("avatar") val avatarOptions: RequestOptions,
+        @Named("banner") val bannerOptions: RequestOptions
+) : BaseQuickAdapter<Post, BaseViewHolder>(R.layout.comment_item_layout, arrayListOf()){
 
-    private var more = 0
+    companion object{
+        private const val DEFAULT_DISPLAY_CHILD_NUM = 2
+    }
 
-    override fun convert(helper: BaseViewHolder?, item: PostEntity?) {
-        val unwrapPost = item ?: return
-        val view = helper?.itemView ?: return
-        when(unwrapPost.like) {
-            "like" -> item.mReactionId = 1
-            "dislike" -> item.mReactionId = 2
-            "love" -> item.mReactionId = 3
-            else -> item.mReactionId = 0
+    private var mGame: Gamev1? = null
+
+    init {
+        setOnItemChildClickListener { _, view, position ->
+            when(view.id){
+                R.id.contentTextView, R.id.commentImageView -> {
+                    val comment = data[position]
+                    comment.game = mGame
+                    toDetailComment(data[position])
+                }
+                R.id.userNameTextView, R.id.avatarImageView -> {
+                    val user = data[position].user ?: data[position].createdUser  ?: return@setOnItemChildClickListener
+                    toUserDiscussion(user)
+                }
+                R.id.moreImageView ->{
+                    showMoreDialog(data[position])
+                }
+            }
         }
+    }
+
+    fun initialize(game: Gamev1?){
+        mGame = game
+    }
+    override fun convert(helper: BaseViewHolder?, item: Post?) {
+
+        val comment = item ?: return
+        val view = helper?.itemView ?: return
         // Set content of Post
-        view.contentTextView.text = unwrapPost.content?.let { Html.fromHtml(it) }
-        view.likeTextView.text = unwrapPost.totalLike
-        view.dislikeTextView.text = unwrapPost.totalDislike
-        view.commentTextView.text = unwrapPost.totalReply
-        view.loveTextView.text = unwrapPost.totalLove
-        view.dateTextView.text = unwrapPost.createdDate
+        view.contentTextView.text = comment.content?.let { Html.fromHtml(it) }
+        view.dateTextView.text = comment.createdDate
 
         // Set user
-        val user = unwrapPost.user ?: return
+        val user = comment.user ?: comment.createdUser  ?: return
         view.userNameTextView.text = user.mName
         Glide.with(mContext)
-                .applyDefaultRequestOptions(
-                        RequestOptions()
-                                .placeholder(R.drawable.img_avatar_holder)
-                                .error(R.drawable.img_avatar_holder)
-                ).load(Config.IMG_URL + user.mAvatar)
+                .load(user.mAvatar?.toImage())
+                .apply(avatarOptions)
                 .into(view.avatarImageView)
 
-        // Set game
-        val game = unwrapPost.game
-        if (game == null) {
-            view.gameConstraintLayout.visibility = View.GONE
+        // Check has reply comment
+        val totalReply = comment.totalReply ?: 0
+        val childComment = comment.child
+        if (totalReply == 0 || childComment.isNullOrEmpty()){
+            view.rvChildComment?.visibility = View.GONE
         } else {
-            view.gameConstraintLayout.visibility = View.VISIBLE
-            Glide.with(mContext)
-                    .applyDefaultRequestOptions(
-                            RequestOptions()
-                                    .placeholder(R.drawable.img_holder_banner)
-                                    .error(R.drawable.img_holder_banner)
-                    ).load(Config.IMG_URL + game.avatar)
-                    .into(view.gameImageView)
-            view.titleGameTextView.text = game.name
-            val followDescription = mContext.getString(R.string.follower_amount_and_post_amount)
-            val followGame = Phrase.from(followDescription)
-                    .put("follower", game.follower ?: "0")
-                    .put("post", game.post.toString())
-                    .format()
-            view.contentGameTextView.text = followGame
-            if (game.follow == "false") {
-                // check follow here
-                setFollow(view.followGameTextView)
-            } else {
-                setFollowing(view.followGameTextView)
+            view.rvChildComment?.visibility = View.VISIBLE
+            val childAdapter = ChildCommentAdapter(navigation, avatarOptions)
+            childAdapter.setNewData(if(childComment.size <= DEFAULT_DISPLAY_CHILD_NUM) childComment else childComment.subList(0, DEFAULT_DISPLAY_CHILD_NUM))
+            // Add footer
+            if(totalReply > DEFAULT_DISPLAY_CHILD_NUM) {
+                val footer = ShowMoreFooterView(mContext)
+                footer.setOnClickListener {
+                    toUserDiscussion(user ?: return@setOnClickListener)
+                }
+                childAdapter.addFooterView(footer)
+                val remain = totalReply - DEFAULT_DISPLAY_CHILD_NUM
+                val showMoreText = Phrase.from(mContext.getString(R.string.xem_them_amount_comment))
+                        .put("number", remain)
+                        .put("s", if(remain > 1) "s" else "")
+                        .format()
+                        .toString()
+                footer.setText(showMoreText) {
+                    // set show more here
+                    toDetailComment(comment)
+                }
             }
+            view.rvChildComment?.adapter = childAdapter
+            view.rvChildComment?.layoutManager = LinearLayoutManager(mContext)
         }
 
         // photos
-        val photos = unwrapPost.photo?.subSequence(1,unwrapPost.photo!!.length - 1)
-        if (!photos.isNullOrEmpty()) {
-            view.rvPhotos.visibility = View.VISIBLE
-            val listPhotos = photos.split(",").toMutableList()
-            val photoEntity = listPhotos.map { PhotoEntity(when(listPhotos.size) {
-                1 -> PhotoEntity.GRID_1
-                in 2..4 -> PhotoEntity.GRID_4
-                else -> PhotoEntity.GRID_N
-            }, it)}
-            val adapter = PhotoAdapter()
-            adapter.setSpanSizeLookup { _, position ->
-                adapter.data[position].getSpanSize()
-            }
-            if (photoEntity.size > 4){
-                more = photoEntity.size - 4
-                val morePhotoList = arrayListOf<PhotoEntity>()
-                for (index in 0..3) {
-                    if (index == 3) {
-                        morePhotoList.add(PhotoEntity(PhotoEntity.GRID_N, photoEntity[index].photo))
-                    } else {
-                        morePhotoList.add(PhotoEntity(PhotoEntity.GRID_4, photoEntity[index].photo))
-                    }
-                }
-                adapter.setNewData(morePhotoList)
-            } else {
-                adapter.setNewData(photoEntity)
-            }
-            if (photoEntity.size == 1){
-                view.rvPhotos.layoutManager = GridLayoutManager(mContext, 1)
-            } else {
-                view.rvPhotos.layoutManager = GridLayoutManager(mContext, 2)
-            }
-            view.rvPhotos.adapter = adapter
-        }
+        val photos = comment.photo
+        initPhoto(photos, view.rvPhotos, user)
 
-        // initEvent
-        // user discussion
-        user.mId?.let {id ->
-            view.userNameTextView.setOnClickListener { navigateToMemberDiscussion(id) }
-            view.avatarImageView.setOnClickListener { navigateToMemberDiscussion(id) }
-        }
-        // post detail
-        view.readMoreTextView.setOnClickListener { navigateToPostDetail(mContext, unwrapPost) }
-        view.contentTextView.setOnClickListener { navigateToPostDetail(mContext, unwrapPost) }
-        view.commentImageView.setOnClickListener { navigateToPostDetail(mContext, unwrapPost) }
-        view.moreImageView.setOnClickListener {
-            val mMoreDialog = MoreDialog(mContext, object : MoreDialog.IMore {
-                override fun onreport() {
-                    ReportPostActivity.start(mContext as BaseActivity)
-                }
-            })
-            mMoreDialog.idPost = unwrapPost.commentId?.toString()
-            mMoreDialog.show()
-        }
-        view.likeLayout.setOnClickListener {
-            if(checkLogin()){
-                // change icon color and send request
-                reaction(view, 1, unwrapPost)
-            } else {
-                navigation?.addFragment(LoginScreen.newInstance())
-            }
-        }
-        view.loveLayout.setOnClickListener {
-            if(checkLogin()){
-                // change icon color and send request
-                reaction(view, 3, unwrapPost)
-            } else {
-                navigation?.addFragment(LoginScreen.newInstance())
-            }
-        }
-        view.dislikeLayout.setOnClickListener {
-            if(checkLogin()){
-                // change icon color and send request
-                reaction(view, 2, unwrapPost)
-            } else {
-                navigation?.addFragment(LoginScreen.newInstance())
-            }
-        }
-        view.commentIcon.setOnClickListener {
-            if(checkLogin()){
-                // change icon color and send request
-                navigateToPostDetail(mContext, unwrapPost)
-            } else {
-                navigation?.addFragment(LoginScreen.newInstance())
-            }
-        }
-        view.followGameTextView.setOnClickListener {
-            if (checkLogin()) {
-                if(view.followGameTextView?.text == mContext.getString(R.string.follow)) {
-                    setFollowing(view.followGameTextView)
-                    //sending request
-                } else {
-                    setFollow(view.followGameTextView)
-                    //sending request
-                }
-            } else {
-                navigation?.addFragment(LoginScreen.newInstance())
-            }
+        // event click
+        helper.addOnClickListener(R.id.contentTextView)
+                .addOnClickListener(R.id.commentImageView)
+                .addOnClickListener(R.id.userNameTextView)
+                .addOnClickListener(R.id.avatarImageView)
+                .addOnClickListener(R.id.moreImageView)
+    }
+
+    private fun showMoreDialog(comment: Post){
+        val mMoreDialog = MoreDialog.newInstance(mContext)
+        mMoreDialog.show()
+    }
+
+    private fun toDetailComment(comment: Post){
+        val id = comment.commentId ?: return
+        navigation.addFragment(DetailPostScreen.newInstance(id, DetailPostScreen.Detail.COMMENT))
+    }
+
+    private fun toUserDiscussion(user: User){
+        val roleId = user.mRoleId ?: return
+        val id = user.mId ?: return
+        if (roleId != 5){
+            navigation.addFragment(DetailUserFragment.newInstance(id))
+        } else {
+            navigation.addFragment(DetailNPHFragment.newInstance(id))
         }
     }
 
-    private fun checkLogin() : Boolean {
-        val accessToken = StorageManager.getAccessToken()
-        return accessToken.isNotEmpty()
-    }
-
-    override fun navigateToMemberDiscussion(userId: Int) {
-        navigation?.addFragment(UserDiscussionActivity.newInstance(userId, Category.Member))
-    }
-
-    override fun navigateToPostDetail(context: Context?, postEntity: PostEntity) {
-        context?:return
-        navigation?.addFragment(DetailPostScreen.newInstance(postEntity, DetailPostScreen.Detail.POST))
-    }
-
-    private fun setFollow(tvFollowGame: TextView) {
-        tvFollowGame.text = mContext.getString(R.string.follow)
-        tvFollowGame.setBackgroundResource(R.drawable.bg_follow)
-        tvFollowGame.setTextColor(ContextCompat.getColor(mContext, R.color.text_color_red_light))
-    }
-
-    private fun setFollowing(tvFollowGame: TextView) {
-        tvFollowGame.text = mContext.getString(R.string.following)
-        tvFollowGame.setBackgroundResource(R.drawable.bg_following)
-        tvFollowGame.setTextColor(ContextCompat.getColor(mContext, R.color.text_color_blue))
-    }
-
-    private fun reaction(view: View, type: Int, data: PostEntity) {
-        when (data.mReactionId) {
-            0 -> {//change icon color and increase number}
-            }
-            1 -> {
-                // change icon like
-                val like = view.likeTextView.text.toString().toInt()  - 1
-                view.likeTextView.text = like.toString()
-
-            }
-            2 -> {
-                // change icon dislike
-                val dislike = view.dislikeTextView.text.toString().toInt()  - 1
-                view.dislikeTextView.text = dislike.toString()
-            }
-            3 -> {
-                // change icon love
-                val love = view.loveTextView.text.toString().toInt()  - 1
-                view.loveTextView.text = love.toString()
-            }
-        }
-        if(data.mReactionId == type) {
-            data.mReactionId = 0
+    private fun initPhoto(photo: String?, rv: RecyclerView, user: User){
+        if(photo.isNullOrEmpty() || photo.length == 2){//[]
+            rv.visibility = View.GONE
             return
         }
-        reactionRequest(view, type, data)
-    }
-
-    private fun reactionRequest(view: View, type: Int, data: PostEntity) {
-        data.mReactionId = type
-        when(type) {
-            1 -> {
-                val like = view.likeTextView.text.toString().toInt()  + 1
-                view.likeTextView.text = like.toString()
-            }
-            2 -> {
-                val dislike = view.dislikeTextView.text.toString().toInt()  + 1
-                view.dislikeTextView.text = dislike.toString()
-            }
-            3 -> {
-                val love = view.loveTextView.text.toString().toInt()  + 1
-                view.loveTextView.text = love.toString()
-            }
+        rv.visibility = View.VISIBLE
+        rv.isNestedScrollingEnabled = false
+//        val isFormat = "[[.+]]".toRegex().matches(photos) TODO Regex
+        val isFormat = (photo.startsWith('[') && photo.endsWith(']'))
+        val stringConcat = if (!isFormat) {
+            photo
+        } else {
+            photo.substring(1, photo.length - 1)
         }
-        // request api
-        listener(data, type)
-
-    }
-
-    inner class PhotoAdapter : BaseMultiItemQuickAdapter<PhotoEntity, BaseViewHolder>(mutableListOf()){
-        init {
-            addItemType(PhotoEntity.GRID_1, R.layout.photo_1_item_layout)
-            addItemType(PhotoEntity.GRID_4, R.layout.photo_4_item_layout)
-            addItemType(PhotoEntity.GRID_N, R.layout.photo_n_item_layout)
-        }
-
-        override fun convert(helper: BaseViewHolder?, item: PhotoEntity?) {
-            val photo = item?.photo ?: return
-            val view = helper?.itemView ?: return
-            val imgPhoto = view.findViewById<ImageView>(R.id.imgPhoto)
-            Glide.with(mContext)
-                    .applyDefaultRequestOptions(
-                            RequestOptions()
-                                    .placeholder(R.drawable.img_holder_banner)
-                                    .error(R.drawable.img_holder_banner)
-                                    .centerCrop()
-                    ).load(Config.IMG_URL + photo)
-                    .into(imgPhoto)
-            if (item.type == PhotoEntity.GRID_N) {
-                view.tvMore.text = "+".plus(more.toString())
-            }
-        }
-    }
-
-    class PhotoEntity(val type: Int, val photo: String) :MultiItemEntity{
-        companion object {
-            const val GRID_1 = 1
-            const val GRID_4 = 2
-            const val GRID_N = 3
-        }
-        override fun getItemType() = type
-
-        fun getSpanSize():Int = when(type) {
-            GRID_1 -> 1
-            else -> 1
-        }
+        val adapter = PhotoAdapter(navigation, bannerOptions)
+        adapter.user = user
+        val spanCount = adapter.setPhoto(stringConcat, isComment = true)
+        rv.layoutManager = GridLayoutManager(mContext, spanCount)
+        rv.adapter = adapter
     }
 }

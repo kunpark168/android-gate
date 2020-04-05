@@ -1,18 +1,16 @@
 package com.anhtam.gate9.v2.auth.login
 
-
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.anhtam.gate9.R
+import com.anhtam.gate9.session.AuthResource
 import com.anhtam.gate9.v2.auth.register.RegisterScreen
 import com.anhtam.gate9.v2.lib.invisible
 import com.anhtam.gate9.v2.lib.then
@@ -21,36 +19,42 @@ import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.main.home.HomeFragment
 import kotlinx.android.synthetic.main.login_screen.*
 
-class LoginScreen : DaggerNavigationFragment() {
+class LoginScreen(private val isDirect: Boolean) : DaggerNavigationFragment(R.layout.login_screen) {
 
     companion object {
-        fun newInstance() = LoginScreen()
+        fun newInstance(isDirect: Boolean) = LoginScreen(isDirect)
     }
 
     private val loginViewModel: LoginViewModel by viewModels { vmFactory }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        activity?.window?.statusBarColor = ContextCompat.getColor(context!!, R.color.color_main_orange)
-        return inflater.inflate(R.layout.login_screen, container, false)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         events()
+        observers()
     }
 
+    private fun observers(){
+        mSessionManager.cachedAccessToken.observe(viewLifecycleOwner, Observer {
+            when(it.status){
+                AuthResource.AuthStatus.AUTHENTICATED -> {
+                    hideProgress()
+                    if (isDirect){
+                        navigation?.newRootFragment(HomeFragment.newInstance())
+                    } else {
+                        navigation?.back()
+                    }
+                }
+                else -> {}
+            }
+        })
+    }
     private fun events() {
         btnConfirm.setOnClickListener {
             showProgress()
             loginViewModel.loginWithEmailAndPassword(etEmail.text.toString(), etPassword.text.toString()
-                    , {
+            ) {
+                hideProgress()
                 displayError(it)
-                hideProgress()
-            }
-            ){
-                navigation?.newRootFragment(HomeFragment.newInstance())
-                hideProgress()
             }
         }
 

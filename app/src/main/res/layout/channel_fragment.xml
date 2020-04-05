@@ -1,238 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:clickable="true"
-    android:focusable="true">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:padding="@dimen/padding_16dp"
-        android:background="@color/colorAccent">
-
-        <ImageView
-            android:id="@+id/iconMore"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_more"
-            android:padding="2dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgAvatar"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="14dp"
-            android:src="@color/color_loading_gray_darker"
-            app:layout_constraintEnd_toStartOf="@id/iconMore"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:padding="2dp"
-            app:layout_constraintEnd_toStartOf="@id/imgAvatar"
-            android:layout_marginEnd="14dp"
-            android:src="@drawable/ic_search"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <ImageView
-            android:id="@+id/iconBack"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:padding="4dp"
-            android:src="@drawable/ic_back"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <TextView
-            android:id="@+id/label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/tin_nhan"
-            android:textColor="@color/white"
-            android:textSize="18sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iconBack"
-            android:layout_marginStart="@dimen/layout_margin_4dp"
-            android:text="@string/back"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="16sp"/>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/csSearch"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/search_view_height"
-        android:layout_marginStart="@dimen/layout_margin_8dp"
-        android:layout_marginTop="@dimen/layout_margin_4dp"
-        android:layout_marginEnd="@dimen/layout_margin_8dp"
-        android:layout_marginBottom="@dimen/layout_margin_4dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_search_orange"
-            android:gravity="center"
-            android:textSize="14sp"
-            android:text="@string/search" />
-
-        <FrameLayout
-            android:layout_width="45dp"
-            android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent">
-            <ImageView
-                android:id="@+id/imgSearch"
-                android:layout_width="@dimen/search_icon_width"
-                android:layout_height="match_parent"
-                android:background="@drawable/ic_search_orange"
-                android:contentDescription="@null"/>
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:src="@drawable/ic_search"
-                android:layout_gravity="center"
-                android:layout_marginEnd="2dp"/>
-        </FrameLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
+    android:layout_height="match_parent">
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_8dp"
-        android:background="@color/white">
-        <TextView
-            android:id="@+id/tvStartDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_16dp_radius_color_accent"
-            android:layout_marginEnd="@dimen/layout_margin_16dp"
-            android:hint="@string/tu_ngay"
-            android:textSize="12sp"
-            android:paddingStart="10dp"
-            android:padding="@dimen/dp4"/>
-        <TextView
-            android:id="@+id/tvEndDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/bg_16dp_radius_color_accent"
-            android:padding="@dimen/dp4"
-            android:hint="@string/den_ngay"
-            android:paddingStart="10dp"
-            android:textSize="12sp"
-            android:paddingEnd="@dimen/padding_16dp"
-            android:drawableEnd="@drawable/ic_calendar_orange"/>
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true">
 
-    <include
-        layout="@layout/share_divider_item_layout"/>
-
-    <LinearLayout
-        android:id="@+id/llHeader"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/white">
-        <com.anhtam.gate9.v2.shared.CustomTabItem
-            android:id="@+id/tabReceived"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_box_message"
-            app:text="@string/da_nhan"
-            app:colorIndicator="@color/tab_blue"
-            app:enable="true"/>
-        <com.anhtam.gate9.v2.shared.CustomTabItem
-            android:id="@+id/tabSent"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_message_orange"
-            app:text="@string/da_gui"
-            app:colorIndicator="@color/tab_orange"
-            app:colorTint="@color/tab_orange"/>
-        <com.anhtam.gate9.v2.shared.CustomTabItem
-            android:id="@+id/tabSystem"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            app:icon="@drawable/ic_message_pink"
-            app:text="@string/he_thong"
-            app:colorIndicator="@color/tab_purple"/>
-    </LinearLayout>
-
-    <include
-        layout="@layout/share_divider_item_layout"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <io.supercharge.shimmerlayout.ShimmerLayout
-            android:id="@+id/shimmer"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <LinearLayout
+            android:layout_height="@dimen/status_bar_height"
+            android:background="@color/status_color_orange"/>
+
+        <include
+            layout="@layout/shared_orange_toolbar_layout"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/csSearch"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/search_view_height"
+            android:layout_marginStart="@dimen/layout_margin_8dp"
+            android:layout_marginTop="@dimen/layout_margin_4dp"
+            android:layout_marginEnd="@dimen/layout_margin_8dp"
+            android:layout_marginBottom="@dimen/layout_margin_4dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/searchEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-                <include
-                    layout="@layout/item_channel_shimmer"/>
-                <include
-                    layout="@layout/item_channel_shimmer"/>
-                <include
-                    layout="@layout/item_channel_shimmer"/>
-                <include
-                    layout="@layout/item_channel_shimmer"/>
-                <include
-                    layout="@layout/item_channel_shimmer"/>
-                <include
-                    layout="@layout/item_channel_shimmer"/>
-                <include
-                    layout="@layout/item_channel_shimmer"/>
-                <include
-                    layout="@layout/item_channel_shimmer"/>
-                <include
-                    layout="@layout/item_channel_shimmer"/>
-                <include
-                    layout="@layout/item_channel_shimmer"/>
-                <include
-                    layout="@layout/item_channel_shimmer"/>
-            </LinearLayout>
+                android:background="@drawable/bg_search_orange"
+                android:gravity="center"
+                android:inputType="text"
+                android:imeOptions="actionDone"
+                android:textSize="14sp"
+                android:hint="@string/search" />
 
-        </io.supercharge.shimmerlayout.ShimmerLayout>
+            <FrameLayout
+                android:id="@+id/searchButton"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent">
+                <ImageView
+                    android:id="@+id/imgSearch"
+                    android:layout_width="@dimen/search_icon_width"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_search_orange"
+                    android:contentDescription="@null"/>
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@drawable/ic_search"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="2dp"/>
+            </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="vertical"
-            tools:listitem="@layout/item_channel"
-            android:background="@color/white"
-            android:visibility="invisible"/>
-    </FrameLayout>
-</LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_8dp"
+            android:background="@color/white">
+            <TextView
+                android:id="@+id/tvStartDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_16dp_radius_orange"
+                android:layout_marginEnd="@dimen/layout_margin_16dp"
+                android:hint="@string/tu_ngay"
+                android:textSize="12sp"
+                android:paddingStart="10dp"
+                android:padding="@dimen/dp4"/>
+            <TextView
+                android:id="@+id/tvEndDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_16dp_radius_orange"
+                android:padding="@dimen/dp4"
+                android:hint="@string/den_ngay"
+                android:paddingStart="10dp"
+                android:textSize="12sp"
+                android:paddingEnd="@dimen/padding_16dp"
+                android:drawableEnd="@drawable/ic_calendar_orange"/>
+        </LinearLayout>
+
+        <include
+            layout="@layout/share_divider_item_layout"/>
+
+        <LinearLayout
+            android:id="@+id/llHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/white">
+            <com.anhtam.gate9.v2.shared.CustomTabItem
+                android:id="@+id/tabReceived"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_box_message"
+                app:text="@string/da_nhan"
+                app:colorIndicator="@color/tab_blue"
+                app:enable="true"/>
+            <com.anhtam.gate9.v2.shared.CustomTabItem
+                android:id="@+id/tabSent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_message_orange"
+                app:text="@string/da_gui"
+                app:colorIndicator="@color/tab_orange"
+                app:colorTint="@color/tab_orange"/>
+            <com.anhtam.gate9.v2.shared.CustomTabItem
+                android:id="@+id/tabSystem"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                app:icon="@drawable/ic_message_pink"
+                app:text="@string/he_thong"
+                app:colorIndicator="@color/tab_purple"/>
+        </LinearLayout>
+
+        <include
+            layout="@layout/share_divider_item_layout"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <io.supercharge.shimmerlayout.ShimmerLayout
+                android:id="@+id/shimmer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <include
+                        layout="@layout/item_channel_shimmer"/>
+                    <include
+                        layout="@layout/item_channel_shimmer"/>
+                    <include
+                        layout="@layout/item_channel_shimmer"/>
+                    <include
+                        layout="@layout/item_channel_shimmer"/>
+                    <include
+                        layout="@layout/item_channel_shimmer"/>
+                    <include
+                        layout="@layout/item_channel_shimmer"/>
+                    <include
+                        layout="@layout/item_channel_shimmer"/>
+                    <include
+                        layout="@layout/item_channel_shimmer"/>
+                    <include
+                        layout="@layout/item_channel_shimmer"/>
+                    <include
+                        layout="@layout/item_channel_shimmer"/>
+                    <include
+                        layout="@layout/item_channel_shimmer"/>
+                </LinearLayout>
+
+            </io.supercharge.shimmerlayout.ShimmerLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="vertical"
+                tools:listitem="@layout/item_channel"
+                android:background="@color/white"
+                android:visibility="invisible"/>
+        </FrameLayout>
+    </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/createFloatingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/layout_margin_16dp"
+        android:src="@drawable/ic_add_24dp"
+        android:backgroundTint="@color/color_main_orange"/>
+</FrameLayout>

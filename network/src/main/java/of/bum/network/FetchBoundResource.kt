@@ -42,12 +42,8 @@ abstract class FetchBoundResource<RequestType> {
                     Timber.d("ApiSuccessResponse")
                     val unwrapped: RequestType? = response.body.run {
                         data?.let { return@run data}
-                        banner?.let { return@run banner }
-                        game?.let { return@run game }
-                        favorite?.let { return@run favorite}
-                        download?.let { return@run download }
                     }
-                    result.value = Resource.Success(unwrapped)
+                    result.value = Resource.Success(unwrapped, response)
                 }
                 is ApiEmptyResponse -> {
                     Timber.d("ApiEmptyResponse")

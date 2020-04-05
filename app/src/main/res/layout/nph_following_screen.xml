@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/csOrder"
+        android:background="@color/colorWhite"
+        android:layout_height="@dimen/dp35"
+        app:layout_constraintTop_toBottomOf="@id/rv4Banners">
+        <TextView
+            android:textSize="13sp"
+            android:gravity="center"
+            android:text="@string/sort"
+            android:fontFamily="@font/roboto_medium"
+            android:layout_marginStart="@dimen/layout_margin_16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"/>
+
+        <TextView
+            android:textSize="13sp"
+            android:layout_gravity="end"
+            android:gravity="center"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/sort_as"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/layout_margin_16dp"
+            android:drawablePadding="8dp"
+            android:drawableEnd="@drawable/ic_dropdown"/>
+    </FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/csOrder"
+        android:layout_marginTop="1dp"
+        android:nestedScrollingEnabled="false"
+        tools:listitem="@layout/shared_post_item_layout"/>
+
+</LinearLayout>

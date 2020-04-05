@@ -12,7 +12,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
+        versionName "1.2.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
@@ -78,6 +78,10 @@ dependencies {
     implementation 'com.jakewharton.rxbinding:rxbinding:0.3.0'
     implementation 'com.squareup.phrase:phrase:1.1.0'
 
+    def material_dialog_version = '0.9.6.0'
+    implementation "com.afollestad.material-dialogs:core:$material_dialog_version"
+    implementation "com.afollestad.material-dialogs:commons:$material_dialog_version"
+
     //UI
     implementation 'me.relex:circleindicator:2.1.4'
 
@@ -91,8 +95,17 @@ dependencies {
     implementation project(':network')
     implementation project(':reactLibs')
     implementation project(':domain')
+    implementation project(':wstompclient')
+    // coroutines
+    def coroutines_version = "1.2.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+    //FCM
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
 
     testImplementation TestLibs.jUnit
     androidTestImplementation TestLibs.testRunner
     androidTestImplementation TestLibs.testEspresso
 }
+apply plugin: 'com.google.gms.google-services'

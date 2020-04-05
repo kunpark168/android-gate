@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.anhtam.gate9.v2.shared.GalleryItemView
+    android:id="@+id/itemView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"/>

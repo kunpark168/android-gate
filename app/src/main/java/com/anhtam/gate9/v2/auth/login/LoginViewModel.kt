@@ -1,33 +1,19 @@
 package com.anhtam.gate9.v2.auth.login
 
 import androidx.lifecycle.ViewModel
-import com.anhtam.gate9.session.AuthCallBack
-import com.anhtam.gate9.session.AuthClient
-import com.anhtam.gate9.storage.StorageManager
-import timber.log.Timber
+import com.anhtam.gate9.session.SessionManager
 import javax.inject.Inject
 
 
-class LoginViewModel @Inject
-constructor(private val mAuthClient: AuthClient) : ViewModel() {
+class LoginViewModel @Inject constructor(
+        private val mSessionManager: SessionManager) : ViewModel() {
 
-    fun loginWithEmailAndPassword(email: String, password: String, errorLogin: (String)->Unit, success: () -> Unit) {
+    fun loginWithEmailAndPassword(email: String, password: String, errorLogin: (String)->Unit) {
         /* Local validate */
         if(!validate(email, password, errorLogin)) return
 
         /* Send request */
-        mAuthClient.loginWithPassword(email, password, object: AuthCallBack{
-            override fun onAuthorized() {
-                success()
-                Timber.d(StorageManager.getAccessToken())
-            }
-
-            override fun onUnauthorized(message: String) {
-                errorLogin(message)
-            }
-
-        })
-
+        mSessionManager.authenticatedWithEmail(email, password)
     }
 
     private fun validate(email: String, password: String, errorLogin: (String) -> Unit): Boolean {

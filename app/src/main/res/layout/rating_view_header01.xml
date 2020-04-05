@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_medium"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/text_color_red_light"
         android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="@id/oneStarLabel"
         app:layout_constraintEnd_toStartOf="@id/fiveStarLabel"
@@ -31,6 +31,7 @@
         android:stepSize="0.5"
         android:scaleX="0.7"
         android:scaleY="0.7"
+        android:theme="@style/SmallRatingBar"
         style="?android:attr/ratingBarStyleSmall"
         app:layout_constraintStart_toStartOf="@id/txtPoint"
         app:layout_constraintEnd_toEndOf="@id/txtPoint"
@@ -92,12 +93,12 @@
         android:layout_height="0dp"
         android:background="@color/colorFiveRating"
         app:layout_constraintBottom_toBottomOf="@id/fiveStarLabel"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
         app:layout_constraintTop_toTopOf="@id/fiveStarLabel"
-        app:layout_constraintWidth_percent="0.25" />
+        app:layout_constraintWidth_percent="0"/>
 
     <View
         android:id="@+id/fourStarProgress"
@@ -105,12 +106,12 @@
         android:layout_height="0dp"
         android:background="@color/colorFourRating"
         app:layout_constraintBottom_toBottomOf="@id/fourStarLabel"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
         app:layout_constraintTop_toTopOf="@id/fourStarLabel"
-        app:layout_constraintWidth_percent="0.05" />
+        app:layout_constraintWidth_percent="0" />
 
     <View
         android:id="@+id/threeStarProgress"
@@ -118,12 +119,12 @@
         android:layout_height="0dp"
         android:background="@color/colorThreeRating"
         app:layout_constraintBottom_toBottomOf="@id/threeStarLabel"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
         app:layout_constraintTop_toTopOf="@id/threeStarLabel"
-        app:layout_constraintWidth_percent="0.05" />
+        app:layout_constraintWidth_percent="0" />
 
     <View
         android:id="@+id/twoStarProgress"
@@ -131,12 +132,12 @@
         android:layout_height="0dp"
         android:background="@color/colorTwoRating"
         app:layout_constraintBottom_toBottomOf="@id/twoStarLabel"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
         app:layout_constraintTop_toTopOf="@id/twoStarLabel"
-        app:layout_constraintWidth_percent="0.15" />
+        app:layout_constraintWidth_percent="0" />
 
     <View
         android:id="@+id/oneStarProgress"
@@ -144,13 +145,67 @@
         android:layout_height="0dp"
         android:background="@color/colorOneRating"
         app:layout_constraintBottom_toBottomOf="@id/oneStarLabel"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/endGuideline"
         app:layout_constraintHeight_percent="0.15"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/centerGuideline"
         app:layout_constraintTop_toTopOf="@id/oneStarLabel"
-        app:layout_constraintWidth_percent="0.1" />
+        app:layout_constraintWidth_percent="0" />
 
+    <TextView
+        android:id="@+id/tvOneStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/oneStarProgress"
+        app:layout_constraintBottom_toBottomOf="@id/oneStarProgress"
+        app:layout_constraintStart_toEndOf="@id/oneStarProgress"
+        android:layout_marginStart="@dimen/layout_margin_8dp"
+        style="@style/SmallText"
+        tools:text="1"/>
+
+    <TextView
+        android:id="@+id/tvTwoStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/twoStarProgress"
+        app:layout_constraintBottom_toBottomOf="@id/twoStarProgress"
+        app:layout_constraintStart_toEndOf="@id/twoStarProgress"
+        android:layout_marginStart="@dimen/layout_margin_8dp"
+        style="@style/SmallText"
+        tools:text="1"/>
+
+    <TextView
+        android:id="@+id/tvThreeStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/threeStarProgress"
+        app:layout_constraintBottom_toBottomOf="@id/threeStarProgress"
+        app:layout_constraintStart_toEndOf="@id/threeStarProgress"
+        android:layout_marginStart="@dimen/layout_margin_8dp"
+        style="@style/SmallText"
+        tools:text="1"/>
+
+    <TextView
+        android:id="@+id/tvFourStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/fourStarProgress"
+        app:layout_constraintBottom_toBottomOf="@id/fourStarProgress"
+        app:layout_constraintStart_toEndOf="@id/fourStarProgress"
+        android:layout_marginStart="@dimen/layout_margin_8dp"
+        style="@style/SmallText"
+        tools:text="1"/>
+
+    <TextView
+        android:id="@+id/tvFiveStar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/fiveStarProgress"
+        app:layout_constraintBottom_toBottomOf="@id/fiveStarProgress"
+        app:layout_constraintStart_toEndOf="@id/fiveStarProgress"
+        android:layout_marginStart="@dimen/layout_margin_8dp"
+        style="@style/SmallText"
+        tools:text="1"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/centerGuideline"
@@ -158,6 +213,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/endGuideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

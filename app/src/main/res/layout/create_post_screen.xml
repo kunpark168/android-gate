@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#dddddd"
-    android:orientation="vertical">
+    android:background="@color/status_color_blue"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutTitle"
@@ -62,6 +63,70 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="#fff">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/gameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp75"
+                android:background="@color/colorWhite"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <com.anhtam.gate9.share.view.RoundRectCornerImageView
+                    android:id="@+id/imgNewGame"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="@dimen/dp20"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/img_holder_banner" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="@dimen/dp20"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/imgNewGame"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_bold"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvContentGame"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/roboto_regular"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/colorText"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvFollowGame"
+                    android:layout_width="80dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="@dimen/dp20"
+                    android:background="@drawable/bg_follow"
+                    android:fontFamily="@font/roboto_light"
+                    android:gravity="center"
+                    android:textColor="@color/colorError"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <EditText
                 android:id="@+id/edtPostContent"
@@ -88,12 +153,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/imageRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="64dp"
         app:layout_constraintBottom_toTopOf="@id/csBottom"
         tools:listitem="@layout/select_photo_item_layout"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="horizontal"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/padding_16dp"
+        android:layout_marginTop="@dimen/layout_margin_8dp"
+        android:layout_marginBottom="@dimen/layout_margin_8dp"
+        android:paddingEnd="@dimen/padding_16dp"/>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/csBottom"
         android:layout_width="match_parent"

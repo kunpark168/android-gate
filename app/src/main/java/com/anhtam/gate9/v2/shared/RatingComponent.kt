@@ -19,6 +19,7 @@ class RatingComponent @JvmOverloads constructor(
         arrayOf(oneStarProgress, twoStarProgress, threeStarProgress, fourStarProgress, fiveStarProgress)
     }
 
+    private var mListener: ((Float, String?)->Unit)? = null
 
     init {
         View.inflate(context, R.layout.rating_view_header, this)
@@ -32,24 +33,61 @@ class RatingComponent @JvmOverloads constructor(
                 }
             }
         }
-        txtPoint?.text = "9.1"
+        ratingButton?.setOnClickListener {
+            val rating = rtReview.rating
+            val content = descriptionTextView?.text?.toString()
+            mListener?.invoke(rating, content)
+        }
+        rtReview?.setOnClickListener {
+            val rating = rtReview.rating
+            val content = descriptionTextView?.text?.toString()
+            mListener?.invoke(rating, content)
+        }
     }
 
-    fun initView(percent: Array<Float>) {
+    fun onRatingButtonClicked(listener: (Float, String?)-> Unit) {
+        mListener = listener
+    }
+
+    fun initView(percent: Array<Double>) {
         var params: LayoutParams?
+        val sum = percent.mapIndexed {  index, item ->
+            (index + 1) * item
+        }.sum()
+        val num = percent.sum()
+        if (sum == 0.0 || num == 0.0){
+            txtPoint?.text = "0"
+            ratingBar?.rating = 0.0f
+            return
+        }
+        val arg = sum / num
         for (index in progresses.indices) {
             params = progresses[index].layoutParams as? LayoutParams
-            params?.matchConstraintPercentWidth = percent[index]
+            params?.matchConstraintPercentWidth = percent[index].toFloat() * (index + 1) * 0.4f / sum.toFloat() + 0.001f
             progresses[index].layoutParams = params
         }
-
+        tvOneStar?.text = percent[0].toInt().toString()
+        tvTwoStar?.text = percent[1].toInt().toString()
+        tvThreeStar?.text = percent[2].toInt().toString()
+        tvFourStar?.text = percent[3].toInt().toString()
+        tvFiveStar?.text = percent[4].toInt().toString()
+        txtPoint?.text = String.format("%.1f", arg)
+        ratingBar?.rating = arg.toFloat()
     }
 
-    fun ratingInfo(mType: Category) {
-        when (mType) {
-            Category.Member -> descriptionTextView?.text = "Bạn viết bài rất hay!"
-            Category.Publisher -> descriptionTextView?.text = resources?.getString(R.string.ban_nghi_gi_ve_nph_nay) ?: ""
+    fun ratingInfo(mType: Category, point: Double, content: String?) {
+        descriptionTextView?.text = content ?: when (mType) {
+            Category.Member -> "Bạn viết bài rất hay!"
+            Category.Publisher -> resources?.getString(R.string.ban_nghi_gi_ve_nph_nay) ?: ""
         }
-
+        rtReview?.rating = point.toFloat()
+        when (point.toInt()) {
+            in 0..1 -> {
+                tvStatusRating?.text = "Poor"
+            }
+            else -> {
+                tvStatusRating?.text = "Good"
+            }
+        }
     }
 }

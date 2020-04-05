@@ -1,37 +1,44 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
-        android:layout_height="@dimen/category_height"
-        app:tabIndicator="@null"
-        app:tabTextAppearance="@style/SmallText"
-        app:tabGravity="center"
-        app:tabRippleColor="@android:color/transparent"/>
-
-    <include
-        layout="@layout/share_divider_item_layout"/>
-
-    <com.anhtam.gate9.v2.shared.RatingComponent
-        android:id="@+id/ratingComponent"
+    android:id="@+id/swipeRefreshLayout">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical">
 
-    <include
-        layout="@layout/share_divider_item_layout"/>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="@dimen/category_height"
+            app:tabIndicator="@null"
+            app:tabTextAppearance="@style/SmallText"
+            app:tabGravity="center"
+            app:tabRippleColor="@android:color/transparent"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvShareDiscussion"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        <include
+            layout="@layout/share_divider_item_layout"/>
+
+        <com.anhtam.gate9.v2.shared.RatingComponent
+            android:id="@+id/ratingComponent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <include
+            layout="@layout/share_divider_item_layout"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvShareDiscussion"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 
-</LinearLayout>
+    </LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
