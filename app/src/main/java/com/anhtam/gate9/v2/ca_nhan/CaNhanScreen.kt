@@ -11,9 +11,11 @@ import com.anhtam.gate9.v2.auth.login.LoginScreen
 import com.anhtam.gate9.v2.auth.register.RegisterScreen
 import com.anhtam.gate9.v2.main.DaggerNavigationFragment
 import com.anhtam.gate9.v2.main.home.HomeFragment
+import com.anhtam.gate9.v2.messenger.inbox.ChannelLetterFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.ca_nhan_screen.*
+import kotlinx.android.synthetic.main.he_thong_quan_ly_game_thu_layout.*
 import of.bum.network.helper.Resource
 
 class CaNhanScreen : DaggerNavigationFragment(R.layout.ca_nhan_screen) {
@@ -90,6 +92,10 @@ class CaNhanScreen : DaggerNavigationFragment(R.layout.ca_nhan_screen) {
         logoutLayout?.setOnClickListener {
             mSessionManager.logout()
             navigation?.newRootFragment(HomeFragment.newInstance())
+        }
+        letterLayout?.setOnClickListener {
+            val user = mSessionManager.cachedUser.value?.data ?: return@setOnClickListener
+            navigation?.addFragment(ChannelLetterFragment.newInstance(user))
         }
     }
 }
